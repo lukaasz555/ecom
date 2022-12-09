@@ -4,6 +4,7 @@ import Shop from './pages/shop/Shop';
 import Books from './pages/books/Books';
 import Music from './components/organisms/music/Music';
 import Contact from './pages/contact/Contact';
+import Product from './pages/product/Product';
 
 function App() {
 	return (
@@ -13,6 +14,7 @@ function App() {
 				<Route path='/shop/books' element={<Books />} />
 				<Route path='/shop/music' element={<Music />} />
 				<Route path='/contact' element={<Contact />} />
+				<Route path={`/shop/product/:id`} element={<Product />} />
 			</Routes>
 		</div>
 	);

@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { Link } from 'react-router-dom';
 
 interface IItemCard {
 	id: string;
@@ -10,7 +11,7 @@ interface IItemCard {
 
 const ItemCard: FC<IItemCard> = ({ id, title, price, img, discount }) => {
 	return (
-		<div className='flex flex-col my-5 w-[340px] px-10'>
+		<div className='flex flex-col mb-20 w-[340px] px-10'>
 			<section className=''>
 				<div
 					className={`group w-[100%] flex justify-center border-[1px] border-solid border-grey relative
@@ -29,12 +30,18 @@ const ItemCard: FC<IItemCard> = ({ id, title, price, img, discount }) => {
 					/>
 				</div>
 				<div className='flex flex-col px-2 mt-2'>
-					<h3 className='text-xl text-clip w-[100%]'>{title}</h3>
+					<h3 className='text-xl text-clip w-[100%]'>
+						<Link to={`/shop/product/${id}`}>{title}</Link>
+					</h3>
 					<div className='flex justify-between'>
 						<div>
 							<h4 className='text-l text-sparkle font-light'>
-								{(price - discount).toFixed(2)}
-								{discount > 0 ? <del className='ml-2'>{price}</del> : null}
+								{(price - discount).toFixed(2).replace('.', ',')}
+								{discount > 0 ? (
+									<del className='ml-2'>
+										{price.toString().replace('.', ',')}
+									</del>
+								) : null}
 							</h4>
 						</div>
 						<div>

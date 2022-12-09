@@ -7,7 +7,7 @@ interface ILayout {
 
 const Layout: FC<ILayout> = ({ children }) => {
 	return (
-		<div className='min-h-screen max-w-screen bg-white mx-auto lg:px-20'>
+		<div className='min-h-screen max-w-screen bg-white mx-auto xl:px-20'>
 			<Top />
 			<main className='px-5'>{children}</main>
 		</div>

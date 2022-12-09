@@ -12,12 +12,12 @@ module.exports = {
 			blush: '#EA638C',
 			brownSugar: '#B96D40',
 		},
-		screens: {
+		/* 		screens: {
 			s: '350px',
 			sm: '576px',
 			md: '960px',
 			lg: '1280px',
-		},
+		}, */
 		extend: {
 			fontFamily: {
 				montserrat: ['Montserrat', 'sans-serif'],
