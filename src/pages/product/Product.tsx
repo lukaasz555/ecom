@@ -37,7 +37,7 @@ const Product = () => {
 
 	return (
 		<Layout>
-			<div className='mb-5'>
+			<div className='mb-10 pb-5 border-b-[1px]'>
 				<button
 					className='flex justify-between items-center uppercase group'
 					onClick={() => navigate(-1)}>
@@ -53,7 +53,7 @@ const Product = () => {
 					powrót
 				</button>
 			</div>
-			<section className='flex justify-center mb-10'>
+			<section className='flex justify-center my-10'>
 				{product.id === '' ? (
 					<h2>Przepraszamy, nie udało załadować się strony tego produktu.</h2>
 				) : (
