@@ -11,7 +11,7 @@ const Top = () => {
 			<DesktopMenu />
 			<MobileMenu />
 			<div className='flex justify-center '>
-				<h1 className='font-semibold text-2xl text-center font-montserrat '>
+				<h1 className='font-medium text-2xl text-center font-montserrat'>
 					<Link to={`/`}>someStore</Link>
 				</h1>
 			</div>
