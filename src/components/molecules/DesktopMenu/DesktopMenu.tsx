@@ -20,7 +20,7 @@ const DesktopMenu = () => {
 				Płyty
 			</NavLink>
 			<NavLink
-				to={`/#`}
+				to={`/contact`}
 				className={({ isActive }) => (isActive ? activeLink : defaultLink)}>
 				Kontakt
 			</NavLink>

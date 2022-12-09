@@ -12,7 +12,11 @@ const ItemCard: FC<IItemCard> = ({ id, title, price, img, discount }) => {
 	return (
 		<div className='flex flex-col my-5 w-[340px] px-10'>
 			<section className=''>
-				<div className='group w-[100%] flex justify-center border-[1px] border-solid border-grey relative'>
+				<div
+					className={`group w-[100%] flex justify-center border-[1px] border-solid border-grey relative
+                after:content-[''] after:absolute after:left-0 after:top-0 after:h-[100%] after:w-full after:shadow-xl
+                after:opacity-0 hover:after:opacity-100
+                `}>
 					<div className='absolute h-[100%] w-full bg-whiteBg z-20 flex justify-center items-center opacity-0 hover:opacity-100 duration-300'>
 						<button className='px-5 py-2 bg-black font-light text-white text-l uppercase'>
 							do koszyka
