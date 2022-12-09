@@ -11,6 +11,7 @@ export const books = [
 		discount: 0,
 		category: 'literatura faktu',
 		img: 'https://ecsmedia.pl/c/czerwony-alert-jak-zostalem-wrogiem-numer-jeden-putina-w-iext83136297.jpg',
+		description: '',
 	},
 
 	{
@@ -25,6 +26,7 @@ export const books = [
 		price: 34.99,
 		discount: 5,
 		category: 'biografie',
+		description: '',
 		img: 'https://ecsmedia.pl/c/goniac-czarne-jednorozce-jak-polski-wilk-z-wall-street-zostal-afrykanskim-terrorysta-w-iext54161540.jpg',
 	},
 
@@ -39,6 +41,7 @@ export const books = [
 		price: 49.99,
 		discount: 15,
 		category: 'biografie',
+		description: '',
 		img: 'https://ecsmedia.pl/c/steve-jobs-w-iext122295446.jpg',
 	},
 
@@ -53,6 +56,7 @@ export const books = [
 		price: 37.99,
 		discount: 0,
 		category: 'biografie',
+		description: '',
 		img: 'https://ecsmedia.pl/c/elon-musk-biografia-tworcy-paypala-tesli-spacex-w-iext74413953.jpg',
 	},
 
@@ -67,6 +71,7 @@ export const books = [
 		price: 27.99,
 		discount: 0,
 		category: 'biografie',
+		description: '',
 		img: 'https://s.lubimyczytac.pl/upload/books/7000/7534/352x500.jpg',
 	},
 
@@ -81,6 +86,7 @@ export const books = [
 		price: 24.99,
 		discount: 0,
 		category: 'literatura faktu',
+		description: '',
 		img: 'https://ecsmedia.pl/c/szramy-jak-psychosystem-niszczy-nasze-dzieci-w-iext115641281.jpg',
 	},
 
@@ -95,6 +101,7 @@ export const books = [
 		price: 49.9,
 		discount: 14.61,
 		category: 'kryminał',
+		description: '',
 		img: 'https://ecsmedia.pl/c/dziewiec-w-iext122297813.jpg',
 	},
 
@@ -109,6 +116,7 @@ export const books = [
 		price: 44.9,
 		discount: 12,
 		category: 'kryminał',
+		description: '',
 		img: 'https://ecsmedia.pl/c/polowanie-na-psy-w-iext122294704.jpg',
 	},
 
@@ -123,6 +131,7 @@ export const books = [
 		price: 28,
 		discount: 0,
 		category: 'kryminał',
+		description: '',
 		img: 'https://ecsmedia.pl/c/zemsta-w-iext115553016.jpg',
 	},
 
@@ -137,6 +146,7 @@ export const books = [
 		price: 69,
 		discount: 0,
 		category: 'biznes/ekonomia',
+		description: '',
 		img: 'https://ecsmedia.pl/c/analiza-formacji-na-wykresach-gieldowych-wprowadzenie-w-iext108244856.jpg',
 	},
 
@@ -152,6 +162,7 @@ export const books = [
 		price: 58.99,
 		discount: 0,
 		category: 'biznes/ekonomia',
+		description: '',
 		img: 'https://ecsmedia.pl/c/wspomnienia-gracza-gieldowego-z-komentarzem-historycznym-jona-d-markmana-w-iext120664477.jpg',
 	},
 
@@ -167,6 +178,7 @@ export const books = [
 		price: 69,
 		discount: 22,
 		category: 'biznes/ekonomia',
+		description: '',
 		img: 'https://ecsmedia.pl/c/inteligentny-inwestor-najlepsza-ksiazka-o-inwestowaniu-wartosciowym-w-iext115635955.jpg',
 	},
 
@@ -181,6 +193,7 @@ export const books = [
 		price: 54.99,
 		discount: 17.5,
 		category: 'biznes/ekonomia',
+		description: '',
 		img: 'https://ecsmedia.pl/c/standard-bitcoina-w-iext65682095.jpg',
 	},
 
@@ -195,6 +208,7 @@ export const books = [
 		price: 89,
 		discount: 0,
 		category: 'biznes/ekonomia',
+		description: '',
 		img: 'https://ecsmedia.pl/c/najwazniejsza-rzecz-w-iext76691010.jpg',
 	},
 
@@ -210,6 +224,7 @@ export const books = [
 		price: 59,
 		discount: 0,
 		category: 'biznes/ekonomia',
+		description: '',
 		img: 'https://ecsmedia.pl/c/w-transie-inwestowania-podbij-rynek-pewnoscia-siebie-zelazna-dyscyplina-i-postawa-zwyciezcy-w-iext119458606.jpg',
 	},
 
@@ -224,6 +239,7 @@ export const books = [
 		price: 29.9,
 		discount: 11.4,
 		category: 'literatura piękna obca',
+		description: '',
 		img: 'https://ecsmedia.pl/c/rok-1984-w-iext121665451.jpg',
 	},
 
@@ -237,6 +253,7 @@ export const books = [
 		language: 'polski',
 		price: 13.99,
 		discount: 0,
+		description: '',
 		category: 'literatura piękna obca',
 		img: 'https://ecsmedia.pl/c/folwark-zwierzecy-w-iext116520596.jpg',
 	},
@@ -252,6 +269,7 @@ export const books = [
 		price: 78.99,
 		discount: 0,
 		category: 'literatura piękna obca',
+		description: '',
 		img: 'https://i.ibb.co/ZfJv4FR/truman-capote-z-zimna-krwia-6-9788371208560.jpg',
 	},
 
@@ -265,6 +283,7 @@ export const books = [
 		language: 'polski',
 		price: 39.9,
 		discount: 11.41,
+		description: '',
 		category: 'literatura piękna obca',
 		img: 'https://ecsmedia.pl/c/buszujacy-w-zbozu-w-iext122297790.jpg',
 	},
@@ -280,6 +299,7 @@ export const books = [
 		price: 44.9,
 		discount: 15,
 		category: 'rozwój',
+		description: '',
 		img: 'https://ecsmedia.pl/c/atomowe-nawyki-drobne-zmiany-niezwykle-efekty-w-iext116603262.jpg',
 	},
 
@@ -294,6 +314,7 @@ export const books = [
 		price: 42.49,
 		discount: 0,
 		category: 'rozwój',
+		description: '',
 		img: 'https://ecsmedia.pl/c/psychologia-sprzedazy-w-iext115554212.jpg',
 	},
 ];

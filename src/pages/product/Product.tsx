@@ -1,14 +1,18 @@
-import React, { useEffect, FC, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Layout from '../../components/templates/Layout/Layout';
 import { books } from '../../data/books';
 import { ProductModel } from '../../models/Product';
+import ProductHead from '../../components/molecules/ProductHead/ProductHead';
+import ProductDesc from '../../components/atoms/ProductDesc/ProductDesc';
+import ProductDetails from '../../components/atoms/ProductDetails/ProductDetails';
 
 const initValue: ProductModel = {
 	id: '',
 	title: '',
 	authors: [''],
 	releaseYear: '',
+	description: '',
 	img: '',
 	price: 0,
 	discount: 0,
@@ -33,7 +37,7 @@ const Product = () => {
 
 	return (
 		<Layout>
-			<div>
+			<div className='mb-5'>
 				<button
 					className='flex justify-between items-center uppercase group'
 					onClick={() => navigate(-1)}>
@@ -49,13 +53,21 @@ const Product = () => {
 					powrót
 				</button>
 			</div>
-			<section>
+			<section className='flex justify-center mb-10'>
 				{product.id === '' ? (
-					<h2>Przepraszamy, nie udało załadować się artykułu.</h2>
+					<h2>Przepraszamy, nie udało załadować się strony tego produktu.</h2>
 				) : (
-					<div>
-						<h2>{product.title}</h2>
-					</div>
+					<article className='flex flex-col items-center'>
+						<ProductHead
+							discount={product.discount}
+							authors={product.authors}
+							title={product.title}
+							img={product.img}
+							price={product.price}
+						/>
+						<ProductDesc description={product.description} />
+						<ProductDetails product={product} />
+					</article>
 				)}
 			</section>
 		</Layout>

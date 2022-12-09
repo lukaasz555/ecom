@@ -29,8 +29,10 @@ const Books = () => {
 			</Routes>
 			<nav className='my-10 flex items-start flex-col xl:flex-row  xl:justify-center'>
 				{getCategories().map((cat) => (
-					<button className='xl:border-r-[1px] px-5 last:border-none'>
-						<p className='text-[16px] font-extralight'>{cat.toUpperCase()}</p>
+					<button className='xl:border-r-[1px] border-sparkle px-5 last:border-none '>
+						<p className='text-[16px] font-extralight text-sparkle hover:text-black'>
+							{cat.toUpperCase()}
+						</p>
 					</button>
 				))}
 			</nav>

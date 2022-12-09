@@ -3,12 +3,13 @@ export interface ProductModel {
 	title: string;
 	authors: string[];
 	releaseYear: string;
-	//description: string;
+	description: string;
 	img: string;
 	price: number;
 	discount: number;
 	category: string;
 	// ??
+
 	pages?: number;
 	language?: string;
 	label?: string;

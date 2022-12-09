@@ -1,5 +1,7 @@
 import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
+import CTA from '../../atoms/CTA/CTA';
+import Price from '../../atoms/Price/Price';
 
 interface IItemCard {
 	id: string;
@@ -19,9 +21,7 @@ const ItemCard: FC<IItemCard> = ({ id, title, price, img, discount }) => {
                 after:opacity-0 hover:after:opacity-100
                 `}>
 					<div className='absolute h-[100%] w-full bg-whiteBg z-20 flex justify-center items-center opacity-0 hover:opacity-100 duration-300'>
-						<button className='px-5 py-2 bg-black font-light text-white text-l uppercase'>
-							do koszyka
-						</button>
+						<CTA body='do koszyka' />
 					</div>
 					<img
 						src={img}
@@ -35,14 +35,7 @@ const ItemCard: FC<IItemCard> = ({ id, title, price, img, discount }) => {
 					</h3>
 					<div className='flex justify-between'>
 						<div>
-							<h4 className='text-l text-sparkle font-light'>
-								{(price - discount).toFixed(2).replace('.', ',')}
-								{discount > 0 ? (
-									<del className='ml-2'>
-										{price.toString().replace('.', ',')}
-									</del>
-								) : null}
-							</h4>
+							<Price atProductPage={false} discount={discount} price={price} />
 						</div>
 						<div>
 							{discount > 0 ? (
