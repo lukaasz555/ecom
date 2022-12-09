@@ -3,9 +3,9 @@ import Insta from '../../../assets/logos/instagram-seeklogo.com.svg';
 
 const Socials = () => {
 	return (
-		<div className='hidden md:flex items-center mt-5 gap-x-3 lg:mr-5 lg:gap-x-0 lg:mt-0'>
+		<div className='flex items-center mt-5 gap-x-1 md:mt-0 mr-0 md:mr-4'>
 			<a href='https://instagram.com' className='mr-2'>
-				<img src={Insta} alt='Our instagram account' width={'16px'} />
+				<img src={Insta} alt='Our instagram account' width={'17px'} />
 			</a>
 
 			<a href='https://facebook.com/'>

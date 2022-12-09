@@ -5,6 +5,10 @@ module.exports = {
 		colors: {
 			fab: '#fab',
 			white: '#fff',
+			black: '#140004',
+			gray: '#f5f5f6',
+			lightGray: '#f3f3f3',
+			sparkle: '#4A5859',
 		},
 		screens: {
 			s: '350px',

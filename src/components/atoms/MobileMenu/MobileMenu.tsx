@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import Socials from '../../molecules/Socials/Socials';
+import Socials from '../Socials/Socials';
 
 const MobileMenu = () => {
 	const [isOpen, setOpen] = useState(false);
@@ -9,8 +9,8 @@ const MobileMenu = () => {
 			<button onClick={() => setOpen(!isOpen)}>CLC</button>
 			<nav
 				className={`${
-					isOpen ? 'scale-y-full' : 'scale-y-0'
-				} absolute -bottom-[150%] left-[50%] -translate-x-[50%] flex flex-col z-20 w-full items-center justify-center bg-fab py-8`}>
+					isOpen ? '-translate-x-[50%]' : '-translate-x-[150%]'
+				} absolute -bottom-[150%] left-[50%] flex flex-col z-20 w-full items-center justify-center bg-fab py-8 duration-300 origin-left`}>
 				<NavLink to={`/#`} className='text-2xl'>
 					Książki
 				</NavLink>
