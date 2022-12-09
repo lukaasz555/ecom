@@ -1,18 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import DesktopMenu from '../../atoms/DesktopMenu/DesktopMenu';
-import MobileMenu from '../../atoms/MobileMenu/MobileMenu';
+import DesktopMenu from '../../molecules/DesktopMenu/DesktopMenu';
+import MobileMenu from '../../molecules/MobileMenu/MobileMenu';
 import Socials from '../../atoms/Socials/Socials';
 import Cart from '../../atoms/Cart/Cart';
 
 const Top = () => {
 	return (
-		<div className='flex justify-between items-center min-h-[120px] min-w-s px-5 lg:px-2 relative'>
+		<div className='mb-10 mt-2 md:mt-5 lg:mt-10 flex justify-between items-center min-h-[120px] min-w-s px-5 relative'>
 			<DesktopMenu />
 			<MobileMenu />
-			<div className='basis-[40%] self-center flex justify-center '>
-				<h1 className='font-semibold text-xl text-center font-poppins '>
-					<Link to={`/`}>Ecommerce Store</Link>
+			<div className='flex justify-center '>
+				<h1 className='font-semibold text-2xl text-center font-montserrat '>
+					<Link to={`/`}>someStore</Link>
 				</h1>
 			</div>
 			<div className='flex items-center'>

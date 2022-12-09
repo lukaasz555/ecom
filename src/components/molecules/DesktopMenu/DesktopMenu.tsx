@@ -3,8 +3,9 @@ import { NavLink } from 'react-router-dom';
 
 const DesktopMenu = () => {
 	const activeLink =
-		'border-b-[1px] border-solid border-black mr-3 font-poppins last:mr-0';
-	const defaultLink = 'border-none mr-3 font-poppins last:mr-0 text-sparkle';
+		'border-b-[1px] border-solid border-black font-lato pb-1 mr-3 last:mr-0 font-light';
+	const defaultLink =
+		'border-none mr-3 font-lato last:mr-0 pb-1 text-sparkle font-light';
 
 	return (
 		<nav className='hidden md:block'>

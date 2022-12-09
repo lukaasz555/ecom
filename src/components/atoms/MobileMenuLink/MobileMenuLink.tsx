@@ -1,0 +1,17 @@
+import React, { FC } from 'react';
+import { NavLink } from 'react-router-dom';
+
+type MobileLink = {
+	to: string;
+	body: string;
+};
+
+const MobileMenuLink: FC<MobileLink> = ({ to, body }) => {
+	return (
+		<NavLink to={to} className='text-2xl my-2 py-1 font-lato font-light'>
+			{body}
+		</NavLink>
+	);
+};
+
+export default MobileMenuLink;
