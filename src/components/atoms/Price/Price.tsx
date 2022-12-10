@@ -8,7 +8,7 @@ type PriceProps = {
 
 const Price: FC<PriceProps> = ({ atProductPage, price, discount }) => {
 	return (
-		<div className='text-center'>
+		<div className='text-left'>
 			<h4
 				className={`text-l text-sparkle font-light ${
 					atProductPage ? 'flex flex-col-reverse' : 'block'
@@ -20,7 +20,9 @@ const Price: FC<PriceProps> = ({ atProductPage, price, discount }) => {
 					{(price - discount).toFixed(2).replace('.', ',')}
 				</span>
 				{discount > 0 ? (
-					<del className='ml-2'>{price.toString().replace('.', ',')}</del>
+					<del className={`${atProductPage ? 'ml-0' : 'ml-2'}`}>
+						{price.toString().replace('.', ',')}
+					</del>
 				) : null}
 			</h4>
 		</div>

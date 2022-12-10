@@ -18,20 +18,25 @@ const ProductHead: FC<ProductHeadProps> = ({
 	discount,
 }) => {
 	return (
-		<>
-			<div>
+		<div className=' md:flex'>
+			<div className='flex justify-center mr-10'>
 				<img src={img} alt={title} />
 			</div>
-			<div className='text-center'>
+			<div className='text-center md:text-left'>
 				<h2 className='text-2xl mt-5'>{title}</h2>
 				<h3 className='text-xl mt-1 text-sparkle'>{authors}</h3>
+
+				<div className='hidden md:flex flex-col items-start mt-10'>
+					<Price discount={discount} price={price} atProductPage={true} />
+					<CTA body='dodaj do koszyka' />
+				</div>
 			</div>
 
-			<div>
+			<div className='flex flex-col items-center md:hidden'>
 				<Price discount={discount} price={price} atProductPage={true} />
 				<CTA body='dodaj do koszyka' />
 			</div>
-		</>
+		</div>
 	);
 };
 
