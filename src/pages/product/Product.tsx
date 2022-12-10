@@ -39,6 +39,7 @@ const Product = () => {
 			const id = category.replace('music/', '');
 			setProduct(getCurrentProduct(id, music));
 		}
+		console.log(product.type);
 	}, []);
 
 	return (

@@ -12,6 +12,7 @@ module.exports = {
 			blush: '#EA638C',
 			brownSugar: '#B96D40',
 			green: '#7AC74F',
+			pencil: '#707070',
 		},
 		extend: {
 			fontFamily: {

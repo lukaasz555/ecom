@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '../../components/templates/Layout/Layout';
 import { music } from '../../data/music';
 import ItemCard from '../../components/molecules/ItemCard/ItemCard';
 import { ProductModel } from '../../models/Product';
 
 const Music = () => {
-	const [items, setItems] = useState<ProductModel[] | []>(music);
+	const [items, setItems] = useState<ProductModel[] | []>([]);
 
 	const getCategories = () => {
 		const cats = new Set(items.map((i) => i.category));
 		const arr = Array.from(cats);
 		return [...arr, 'sale'];
 	};
+
+	useEffect(() => {
+		setItems(music);
+	}, []);
 
 	return (
 		<Layout>
