@@ -11,16 +11,20 @@ type PAsideProps = {
 
 const ProductAside: FC<PAsideProps> = ({ discount, price }) => {
 	return (
-		<aside className='hidden md:flex flex-col items-center max-w-[300px] bg-gray self-end px-8 py-5'>
+		<aside className='hidden lg:flex flex-col items-center max-w-[300px] bg-gray px-8 py-5 ml-3'>
 			<div className='mb-10 text-center'>
-				<h5 className='text-brownSugar font-medium text-xl'>Trwa wyprzedaż!</h5>
-				<Link to='/#' className='hover:underline'>
+				<h5 className='text-brownSugar font-medium text-[18px]'>
+					Trwa wyprzedaż!
+				</h5>
+				<Link to='/#' className='hover:underline text-[16px]'>
 					Zobacz przecenione produkty
 				</Link>
 			</div>
 			<div className='border-b-[1px] pb-5 mb-5 text-center'>
-				<p className='font-montserrat'>Darmowa dostawa od 99pln</p>
-				<p className='text-green text-montserrat'>Wysyłamy w ciągu 48h</p>
+				<p className='font-montserrat text-[14px]'>Darmowa dostawa od 99pln</p>
+				<p className='text-green text-montserrat text-[14px]'>
+					Wysyłamy w ciągu 48h
+				</p>
 			</div>
 			<div className='hidden md:flex flex-col items-center pb-5 mb-5 '>
 				<div className='mb-2'>
@@ -29,7 +33,9 @@ const ProductAside: FC<PAsideProps> = ({ discount, price }) => {
 				<CTA body='do koszyka' />
 			</div>
 			<div className='flex flex-col items-center'>
-				<h5 className='mb-4 text-center'>Potrzebujesz pomocy z zamówieniem?</h5>
+				<h5 className='mb-4 text-center text-[14px]'>
+					Potrzebujesz pomocy z zamówieniem?
+				</h5>
 				<ALT to='/contact' body='kontakt' />
 			</div>
 		</aside>
