@@ -7,6 +7,8 @@ import { ProductModel } from '../../models/Product';
 import ProductHead from '../../components/molecules/ProductHead/ProductHead';
 import ProductDesc from '../../components/atoms/ProductDesc/ProductDesc';
 import ProductDetails from '../../components/atoms/ProductDetails/ProductDetails';
+import { music } from '../../data/music';
+import { getCurrentProduct } from '../../helpers/getCurrentProduct';
 
 const initValue: ProductModel = {
 	id: '',
@@ -18,6 +20,8 @@ const initValue: ProductModel = {
 	price: 0,
 	discount: 0,
 	category: '',
+	format: '',
+	type: 'music',
 };
 
 const Product = () => {
@@ -25,16 +29,16 @@ const Product = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const myRef = useRef(null);
-	let productId;
-
-	const getProduct = (id: string) => {
-		const arr: ProductModel[] = books.filter((book) => book.id === id);
-		setProduct(arr[0]);
-	};
+	const category = location.pathname.replace('/shop/product/', '');
 
 	useEffect(() => {
-		productId = location.pathname.replace('/shop/product/', '');
-		getProduct(productId);
+		if (category.includes('book')) {
+			const id = category.replace('book/', '');
+			setProduct(getCurrentProduct(id, books));
+		} else if (category.includes('music')) {
+			const id = category.replace('music/', '');
+			setProduct(getCurrentProduct(id, music));
+		}
 	}, []);
 
 	return (

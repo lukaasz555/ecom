@@ -8,8 +8,9 @@ export interface ProductModel {
 	price: number;
 	discount: number;
 	category: string;
-	// ??
-
+	format: string;
+	type: 'book' | 'music';
+	//
 	pages?: number;
 	language?: string;
 	label?: string;
@@ -27,8 +28,9 @@ export interface ProductModel2 {
 		price: number;
 		discount: number;
 		category: string;
-		// ??
-
+		format: string;
+		type: 'book' | 'music';
+		//
 		pages?: number;
 		language?: string;
 		label?: string;

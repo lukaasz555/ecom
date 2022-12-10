@@ -17,11 +17,11 @@ const Price: FC<PriceProps> = ({ atProductPage, price, discount }) => {
 					className={`${
 						atProductPage ? 'text-2xl' : 'text-l'
 					} text-black font-semibold`}>
-					{(price - discount).toFixed(2).replace('.', ',')}
+					{(price - discount).toFixed(2).replace('.', ',')}zł
 				</span>
 				{discount > 0 ? (
 					<del className={`${atProductPage ? 'ml-0 text-xl' : 'ml-2'}`}>
-						{price.toString().replace('.', ',')}
+						{price.toFixed(2).toString().replace('.', ',')}zł
 					</del>
 				) : null}
 			</h4>

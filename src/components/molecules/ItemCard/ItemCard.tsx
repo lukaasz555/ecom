@@ -9,9 +9,19 @@ interface IItemCard {
 	price: number;
 	img: string;
 	discount: number;
+	authors: string[];
+	type: 'book' | 'music';
 }
 
-const ItemCard: FC<IItemCard> = ({ id, title, price, img, discount }) => {
+const ItemCard: FC<IItemCard> = ({
+	id,
+	title,
+	price,
+	img,
+	discount,
+	type,
+	authors,
+}) => {
 	return (
 		<div className='flex flex-col mb-20 w-[340px] px-10'>
 			<section className=''>
@@ -26,14 +36,17 @@ const ItemCard: FC<IItemCard> = ({ id, title, price, img, discount }) => {
 					<img
 						src={img}
 						alt={title}
-						className='h-[360px] w-full px-5 py-5 z-10'
+						className={`${
+							type === 'book' ? 'h-[360px]' : 'h-auto'
+						} w-full px-5 py-5 z-10`}
 					/>
 				</div>
 				<div className='flex flex-col px-2 mt-2'>
 					<h3 className='text-xl text-clip w-[100%]'>
-						<Link to={`/shop/product/${id}`}>{title}</Link>
+						<Link to={`/shop/product/${type}/${id}`}>{title}</Link>
 					</h3>
-					<div className='flex justify-between'>
+					<h4>{authors}</h4>
+					<div className='flex justify-between mt-1'>
 						<div>
 							<Price atProductPage={false} discount={discount} price={price} />
 						</div>

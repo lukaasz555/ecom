@@ -1,23 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Layout from '../../components/templates/Layout/Layout';
-import { books } from '../../data/books';
+import { music } from '../../data/music';
 import ItemCard from '../../components/molecules/ItemCard/ItemCard';
 import { ProductModel } from '../../models/Product';
 
-const Books = () => {
-	const [items, setItems] = useState<ProductModel[] | []>([]);
+const Music = () => {
+	const [items, setItems] = useState<ProductModel[] | []>(music);
 
 	const getCategories = () => {
 		const cats = new Set(items.map((i) => i.category));
 		const arr = Array.from(cats);
 		return [...arr, 'sale'];
 	};
-
-	getCategories();
-
-	useEffect(() => {
-		setItems(books);
-	}, []);
 
 	return (
 		<Layout>
@@ -33,7 +27,7 @@ const Books = () => {
 				))}
 			</nav>
 			<main className='flex flex-wrap justify-center'>
-				{items.map(({ id, title, price, img, discount, authors }) => (
+				{items.map(({ id, title, price, img, discount, authors, type }) => (
 					<ItemCard
 						key={id}
 						id={id}
@@ -42,7 +36,7 @@ const Books = () => {
 						img={img}
 						discount={discount}
 						authors={authors}
-						type='book'
+						type={type}
 					/>
 				))}
 			</main>
@@ -50,4 +44,4 @@ const Books = () => {
 	);
 };
 
-export default Books;
+export default Music;

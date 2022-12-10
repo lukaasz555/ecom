@@ -1,8 +1,10 @@
-export const books = [
+import { ProductModel } from '../models/Product';
+
+export const books: ProductModel[] = [
 	{
-		id: '1',
+		id: '101',
 		title: 'Czerwony alert. Jak zostałem wrogiem numer jeden Putina',
-		authors: ['Browder Bill'],
+		authors: ['Bill Browder'],
 		releaseYear: '2015',
 		publisher: 'Wydawnictwo Sonia Draga',
 		pages: 432,
@@ -12,13 +14,15 @@ export const books = [
 		category: 'literatura faktu',
 		img: 'https://ecsmedia.pl/c/czerwony-alert-jak-zostalem-wrogiem-numer-jeden-putina-w-iext83136297.jpg',
 		description: '',
+		format: 'Książka (twarda okładka)',
+		type: 'book',
 	},
 
 	{
-		id: '2',
+		id: '102',
 		title:
 			'Goniąc czarne jednorożce. Jak polski Wilk z Wall Street został afrykańskim terrorystą',
-		authors: ['Zmysłowski Marek'],
+		authors: ['Marek Zmysłowski'],
 		releaseYear: '2019',
 		publisher: 'Wydawnictwo Agora',
 		pages: 347,
@@ -28,10 +32,12 @@ export const books = [
 		category: 'biografie',
 		description: '',
 		img: 'https://ecsmedia.pl/c/goniac-czarne-jednorozce-jak-polski-wilk-z-wall-street-zostal-afrykanskim-terrorysta-w-iext54161540.jpg',
+		format: 'Książka (twarda okładka)',
+		type: 'book',
 	},
 
 	{
-		id: '3',
+		id: '103',
 		title: 'Steve Jobs',
 		authors: ['Isaacson Walter'],
 		releaseYear: '2011',
@@ -43,12 +49,14 @@ export const books = [
 		category: 'biografie',
 		description: '',
 		img: 'https://ecsmedia.pl/c/steve-jobs-w-iext122295446.jpg',
+		format: 'Książka (miękka okładka)',
+		type: 'book',
 	},
 
 	{
-		id: '4',
+		id: '104',
 		title: 'Elon Musk. Biografia twórcy PayPala, Tesli, SpaceX',
-		authors: ['Vance Ashlee'],
+		authors: ['Ashlee Vance'],
 		releaseYear: '2016',
 		publisher: 'Społeczny Instytut Wydawniczy Znak',
 		pages: 448,
@@ -58,10 +66,12 @@ export const books = [
 		category: 'biografie',
 		description: '',
 		img: 'https://ecsmedia.pl/c/elon-musk-biografia-tworcy-paypala-tesli-spacex-w-iext74413953.jpg',
+		format: 'Książka (miękka okładka)',
+		type: 'book',
 	},
 
 	{
-		id: '5',
+		id: '105',
 		title: 'Od nędzy do pieniędzy',
 		authors: ['Tad Witkowicz'],
 		releaseYear: '2006',
@@ -73,10 +83,12 @@ export const books = [
 		category: 'biografie',
 		description: '',
 		img: 'https://s.lubimyczytac.pl/upload/books/7000/7534/352x500.jpg',
+		format: 'Książka (miękka okładka)',
+		type: 'book',
 	},
 
 	{
-		id: '6',
+		id: '106',
 		title: 'Szramy. Jak psychosystem niszczy nasze dzieci',
 		authors: ['Witold Bereś', 'Janusz Schwertner'],
 		releaseYear: '2020',
@@ -88,10 +100,12 @@ export const books = [
 		category: 'literatura faktu',
 		description: '',
 		img: 'https://ecsmedia.pl/c/szramy-jak-psychosystem-niszczy-nasze-dzieci-w-iext115641281.jpg',
+		format: 'Książka (miękka okładka)',
+		type: 'book',
 	},
 
 	{
-		id: '7',
+		id: '107',
 		title: 'Dziewięć',
 		authors: ['Mieczysław Gorzka'],
 		releaseYear: '2022',
@@ -103,10 +117,12 @@ export const books = [
 		category: 'kryminał',
 		description: '',
 		img: 'https://ecsmedia.pl/c/dziewiec-w-iext122297813.jpg',
+		format: 'Książka (miękka okładka)',
+		type: 'book',
 	},
 
 	{
-		id: '8',
+		id: '108',
 		title: 'Polowanie na psy',
 		authors: ['Mieczysław Gorzka'],
 		releaseYear: '2021',
@@ -118,40 +134,46 @@ export const books = [
 		category: 'kryminał',
 		description: '',
 		img: 'https://ecsmedia.pl/c/polowanie-na-psy-w-iext122294704.jpg',
+		format: 'Książka (miękka okładka)',
+		type: 'book',
 	},
 
 	{
-		id: '9',
+		id: '109',
 		title: 'Zemsta',
 		authors: ['Jo Nesbo'],
 		releaseYear: '2022',
-		publisher: 'Bukowy Las',
+		publisher: 'Wydawnictwo Dolnośląskie',
 		pages: 416,
 		language: 'polski',
-		price: 28,
+		price: 28.99,
 		discount: 0,
 		category: 'kryminał',
 		description: '',
 		img: 'https://ecsmedia.pl/c/zemsta-w-iext115553016.jpg',
+		format: 'Książka (miękka okładka)',
+		type: 'book',
 	},
 
 	{
-		id: '10',
+		id: '110',
 		title: 'Analiza formacji na wykresach giełdowych. Wprowadzenie',
 		authors: ['Thomas Bulkowski'],
 		releaseYear: '2011',
 		publisher: 'Linia',
 		pages: 330,
 		language: 'polski',
-		price: 69,
+		price: 71.99,
 		discount: 0,
 		category: 'biznes/ekonomia',
 		description: '',
 		img: 'https://ecsmedia.pl/c/analiza-formacji-na-wykresach-gieldowych-wprowadzenie-w-iext108244856.jpg',
+		format: 'Książka (miękka okładka)',
+		type: 'book',
 	},
 
 	{
-		id: '11',
+		id: '111',
 		title:
 			'Wspomnienia gracza giełdowego. Z komentarzem historycznym Jona D. Markmana',
 		authors: ['Edwin Lefevre', 'Jon Markman'],
@@ -164,10 +186,12 @@ export const books = [
 		category: 'biznes/ekonomia',
 		description: '',
 		img: 'https://ecsmedia.pl/c/wspomnienia-gracza-gieldowego-z-komentarzem-historycznym-jona-d-markmana-w-iext120664477.jpg',
+		format: 'Książka (miękka okładka)',
+		type: 'book',
 	},
 
 	{
-		id: '12',
+		id: '112',
 		title:
 			'Inteligentny inwestor. Najlepsza książka o inwestowaniu wartościowym',
 		authors: ['Benjamin Graham'],
@@ -175,15 +199,17 @@ export const books = [
 		publisher: 'Wydawnictwo Studio EMKA',
 		pages: 536,
 		language: 'polski',
-		price: 69,
-		discount: 22,
+		price: 69.99,
+		discount: 22.2,
 		category: 'biznes/ekonomia',
 		description: '',
 		img: 'https://ecsmedia.pl/c/inteligentny-inwestor-najlepsza-ksiazka-o-inwestowaniu-wartosciowym-w-iext115635955.jpg',
+		format: 'Książka (twarda okładka)',
+		type: 'book',
 	},
 
 	{
-		id: '13',
+		id: '113',
 		title: 'Standard Bitcoina',
 		authors: ['Saifedean Ammous'],
 		releaseYear: '2020',
@@ -195,25 +221,29 @@ export const books = [
 		category: 'biznes/ekonomia',
 		description: '',
 		img: 'https://ecsmedia.pl/c/standard-bitcoina-w-iext65682095.jpg',
+		format: 'Książka (miękka okładka)',
+		type: 'book',
 	},
 
 	{
-		id: '14',
+		id: '114',
 		title: 'Najważniejsza rzecz',
 		authors: ['Howard Marks'],
 		releaseYear: '2019',
 		publisher: 'Maklerska',
 		pages: 250,
 		language: 'polski',
-		price: 89,
+		price: 89.99,
 		discount: 0,
 		category: 'biznes/ekonomia',
 		description: '',
 		img: 'https://ecsmedia.pl/c/najwazniejsza-rzecz-w-iext76691010.jpg',
+		format: 'Książka (twarda okładka)',
+		type: 'book',
 	},
 
 	{
-		id: '15',
+		id: '115',
 		title:
 			'W transie inwestowania. Podbij rynek pewnością siebie, żelazną dyscypliną i postawą zwycięzcy',
 		authors: ['Mark Douglas'],
@@ -221,15 +251,17 @@ export const books = [
 		publisher: 'Onepress',
 		pages: 232,
 		language: 'polski',
-		price: 59,
+		price: 59.0,
 		discount: 0,
 		category: 'biznes/ekonomia',
 		description: '',
 		img: 'https://ecsmedia.pl/c/w-transie-inwestowania-podbij-rynek-pewnoscia-siebie-zelazna-dyscyplina-i-postawa-zwyciezcy-w-iext119458606.jpg',
+		format: 'Książka (miękka okładka)',
+		type: 'book',
 	},
 
 	{
-		id: '16',
+		id: '116',
 		title: 'Rok 1984',
 		authors: ['George Orwell'],
 		releaseYear: '2010',
@@ -241,10 +273,12 @@ export const books = [
 		category: 'literatura piękna obca',
 		description: '',
 		img: 'https://ecsmedia.pl/c/rok-1984-w-iext121665451.jpg',
+		format: 'Książka (pocket)',
+		type: 'book',
 	},
 
 	{
-		id: '17',
+		id: '117',
 		title: 'Folwark zwierzęcy',
 		authors: ['George Orwell'],
 		releaseYear: '2021',
@@ -256,10 +290,12 @@ export const books = [
 		description: '',
 		category: 'literatura piękna obca',
 		img: 'https://ecsmedia.pl/c/folwark-zwierzecy-w-iext116520596.jpg',
+		format: 'Książka (miękka okładka)',
+		type: 'book',
 	},
 
 	{
-		id: '18',
+		id: '118',
 		title: 'Z zimną krwią',
 		authors: ['Truman Capote'],
 		releaseYear: '2001',
@@ -271,10 +307,12 @@ export const books = [
 		category: 'literatura piękna obca',
 		description: '',
 		img: 'https://i.ibb.co/ZfJv4FR/truman-capote-z-zimna-krwia-6-9788371208560.jpg',
+		format: 'Książka (twarda okładka)',
+		type: 'book',
 	},
 
 	{
-		id: '19',
+		id: '119',
 		title: 'Buszujący w zbożu',
 		authors: ['Jerome D. Salinger'],
 		releaseYear: '2017',
@@ -286,10 +324,12 @@ export const books = [
 		description: '',
 		category: 'literatura piękna obca',
 		img: 'https://ecsmedia.pl/c/buszujacy-w-zbozu-w-iext122297790.jpg',
+		format: 'Książka (twarda okładka)',
+		type: 'book',
 	},
 
 	{
-		id: '20',
+		id: '120',
 		title: 'Atomowe nawyki',
 		authors: ['James Clear'],
 		releaseYear: '2019',
@@ -301,10 +341,12 @@ export const books = [
 		category: 'rozwój',
 		description: '',
 		img: 'https://ecsmedia.pl/c/atomowe-nawyki-drobne-zmiany-niezwykle-efekty-w-iext116603262.jpg',
+		format: 'Książka (miękka okładka)',
+		type: 'book',
 	},
 
 	{
-		id: '21',
+		id: '121',
 		title: 'Psychologia sprzedaży',
 		authors: ['Brian Tracy'],
 		releaseYear: '2014',
@@ -316,5 +358,7 @@ export const books = [
 		category: 'rozwój',
 		description: '',
 		img: 'https://ecsmedia.pl/c/psychologia-sprzedazy-w-iext115554212.jpg',
+		format: 'Książka (miękka okładka)',
+		type: 'book',
 	},
 ];

@@ -1,0 +1,63 @@
+import { ProductModel } from '../models/Product';
+
+export const music: ProductModel[] = [
+	{
+		id: '497',
+		title: 'Collapsed in Sunbeams',
+		authors: ['Arlo Parks'],
+		releaseYear: '2021',
+		description: '',
+		img: 'https://ecsmedia.pl/c/collapsed-in-sunbeams-w-iext120309470.jpg',
+		price: 39.99,
+		discount: 7.5,
+		category: 'alt',
+		label: 'Transgressive',
+		format: 'Płyta CD',
+		type: 'music',
+	},
+
+	{
+		id: '223',
+		title: 'Doolittle',
+		authors: ['Pixies'],
+		releaseYear: '1988',
+		description: '',
+		img: 'https://ecsmedia.pl/c/doolittle-w-iext97885507.jpg',
+		price: 58.99,
+		discount: 0,
+		category: 'alt',
+		label: '4AD',
+		format: 'Płyta CD',
+		type: 'music',
+	},
+
+	{
+		id: '280',
+		title: 'In Rainbows',
+		authors: ['Radiohead'],
+		releaseYear: '2007',
+		description: '',
+		img: 'https://ecsmedia.pl/c/in-rainbows-w-iext120971159.jpg',
+		price: 47,
+		discount: 0,
+		category: 'alt',
+		label: 'XL Recordings',
+		format: 'Płyta CD',
+		type: 'music',
+	},
+
+	{
+		id: '543',
+		title: 'Observatory',
+		authors: ['Aeon Station'],
+		releaseYear: '2021',
+		description: '',
+		img: 'https://ecsmedia.pl/c/observatory-w-iext119253801.jpg',
+		price: 87,
+		discount: 0,
+		category: 'alt',
+		label: 'Sub Pop Records',
+		format: 'Płyta CD',
+		type: 'music',
+	},
+];
