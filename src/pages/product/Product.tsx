@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Layout from '../../components/templates/Layout/Layout';
 import { books } from '../../data/books';
@@ -6,6 +6,8 @@ import { ProductModel } from '../../models/Product';
 import ProductHead from '../../components/molecules/ProductHead/ProductHead';
 import ProductDesc from '../../components/atoms/ProductDesc/ProductDesc';
 import ProductDetails from '../../components/atoms/ProductDetails/ProductDetails';
+import TestComponent from './TestComponent';
+import { scrollToRef } from '../../helpers/scrollToRef';
 
 const initValue: ProductModel = {
 	id: '',
@@ -23,6 +25,7 @@ const Product = () => {
 	const [product, setProduct] = useState<ProductModel>(initValue);
 	const navigate = useNavigate();
 	const location = useLocation();
+	const myRef = useRef(null);
 	let productId;
 
 	const getProduct = (id: string) => {
@@ -57,16 +60,13 @@ const Product = () => {
 				{product.id === '' ? (
 					<h2>Przepraszamy, nie udało załadować się strony tego produktu.</h2>
 				) : (
-					<article className='flex flex-col items-center'>
-						<ProductHead
-							discount={product.discount}
-							authors={product.authors}
-							title={product.title}
-							img={product.img}
-							price={product.price}
-						/>
+					<article className='flex flex-col items-center md:items-start'>
+						<ProductHead myRef={myRef} data={product} />
 						<ProductDesc description={product.description} />
-						<ProductDetails product={product} />
+
+						<div ref={myRef} className='w-full'>
+							<ProductDetails data={product} />
+						</div>
 					</article>
 				)}
 			</section>

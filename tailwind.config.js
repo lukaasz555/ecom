@@ -11,15 +11,11 @@ module.exports = {
 			sparkle: '#4A5859',
 			blush: '#EA638C',
 			brownSugar: '#B96D40',
+			green: '#7AC74F',
 		},
-		/* 		screens: {
-			s: '350px',
-			sm: '576px',
-			md: '960px',
-			lg: '1280px',
-		}, */
 		extend: {
 			fontFamily: {
+				sans: ['Montserrat', 'sans-serif'],
 				montserrat: ['Montserrat', 'sans-serif'],
 				lato: ['Lato', 'sans-serif'],
 			},
