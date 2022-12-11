@@ -361,4 +361,21 @@ export const books: ProductModel[] = [
 		format: 'Książka (miękka okładka)',
 		type: 'books',
 	},
+
+	{
+		id: '177',
+		title: 'Gady',
+		authors: ['Mirosław Sokołowski'],
+		releaseYear: '2007',
+		publisher: 'PIW Państwowy Instytut Wydawniczy',
+		pages: 448,
+		language: 'polski',
+		price: 0,
+		discount: 0,
+		category: 'literatura piękna polska',
+		description: '',
+		img: 'https://ecsmedia.pl/c/gady-w-iext98183582.jpg',
+		format: 'Książka (miękka okładka)',
+		type: 'books',
+	},
 ];

@@ -330,4 +330,19 @@ export const albums: ProductModel[] = [
 		format: 'Płyta CD',
 		type: 'albums',
 	},
+
+	{
+		id: '544',
+		title: 'Good Kid, m.A.A.d City (Deluxe Edition)',
+		authors: ['Kendrick Lamar'],
+		releaseYear: '2012',
+		description: '',
+		img: 'https://ecsmedia.pl/c/good-kid-m-a-a-d-city-deluxe-edition-w-iext116464449.jpg',
+		price: 0,
+		discount: 0,
+		category: 'rap',
+		label: 'Interscope Records',
+		format: 'Płyta CD',
+		type: 'albums',
+	},
 ];

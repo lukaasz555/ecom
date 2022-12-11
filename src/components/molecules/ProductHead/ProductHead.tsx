@@ -36,9 +36,11 @@ const ProductHead: FC<PHeadProps> = ({ data, myRef }) => {
 
 				<div className='flex flex-col items-center md:hidden'>
 					<Price discount={discount} price={price} atProductPage={true} />
-					<div className='mt-5'>
-						<CTA body='dodaj do koszyka' />
-					</div>
+					{price > 0 ? (
+						<div className='mt-5'>
+							<CTA body='dodaj do koszyka' />
+						</div>
+					) : null}
 				</div>
 			</div>
 

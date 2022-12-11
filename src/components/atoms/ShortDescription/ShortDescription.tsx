@@ -10,7 +10,7 @@ interface ShortDescProps extends ProductModel2 {
 }
 
 const ShortDescription: FC<ShortDescProps> = ({ data, myRef }) => {
-	const { label, releaseYear, pages, authors, publisher } = data;
+	const { label, releaseYear, pages, authors, publisher, price } = data;
 
 	const handleClick = (ref: React.MutableRefObject<null>): void => {
 		scrollToRef(ref.current);
@@ -54,7 +54,13 @@ const ShortDescription: FC<ShortDescProps> = ({ data, myRef }) => {
 				</button>
 			</div>
 			<div className='hidden md:block lg:hidden mt-10'>
-				<CTA body='do koszyka' />
+				{price > 0 ? (
+					<CTA body='do koszyka' />
+				) : (
+					<span className='text-pencil text-[16px] font-lato'>
+						Produkt niedostępny
+					</span>
+				)}
 			</div>
 		</div>
 	);

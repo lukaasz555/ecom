@@ -29,7 +29,7 @@ const ProductAside: FC<PAsideProps> = ({ discount, price, type }) => {
 				<div className='mb-2'>
 					<Price discount={discount} price={price} atProductPage={true} />
 				</div>
-				<CTA body='do koszyka' />
+				{price > 0 ? <CTA body='do koszyka' /> : null}
 			</div>
 			<div className='flex flex-col items-center'>
 				<h5 className='mb-4 text-center text-[14px]'>
