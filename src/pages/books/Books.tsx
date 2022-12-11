@@ -4,18 +4,17 @@ import { books } from '../../data/books';
 import ItemCard from '../../components/molecules/ItemCard/ItemCard';
 import { ProductModel } from '../../models/Product';
 import { handleFilter } from '../../helpers/handleFilter';
+import { getCategories } from '../../helpers/getCategories';
 
 const Books = () => {
 	const [items, setItems] = useState<ProductModel[] | []>([]);
 	const [filtered, setFiltered] = useState<ProductModel[] | undefined>([]);
 
-	const getCategories = () => {
-		const cats = new Set(items.map((i) => i.category));
-		const arr = Array.from(cats);
-		return [...arr, 'sale'];
-	};
-
 	const handleClick = (e: React.MouseEvent) => {
+		/* 		const target = e.target as HTMLButtonElement;
+		if (target.parentElement != null) {
+			console.log(target.parentElement.id);
+		} */
 		const filtrd = handleFilter(e, items);
 		setFiltered(filtrd);
 	};
@@ -28,10 +27,11 @@ const Books = () => {
 	return (
 		<Layout>
 			<nav className='my-10 flex items-start flex-col xl:flex-row  xl:justify-center'>
-				{getCategories().map((cat) => (
+				{getCategories(items).map((cat) => (
 					<button
 						onClick={(e) => handleClick(e)}
 						key={cat}
+						id={cat}
 						className='xl:border-r-[1px] border-sparkle px-5 last:border-none '>
 						<p className='text-[16px] font-extralight text-sparkle hover:text-black'>
 							{cat.toUpperCase()}

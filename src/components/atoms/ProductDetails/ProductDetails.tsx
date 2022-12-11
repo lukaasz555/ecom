@@ -15,16 +15,21 @@ const ProductDetails = ({ data }: ProductModel2) => {
 				</li>
 				<li className='flex justify-start items-center  py-1 odd:bg-white even:bg-gray'>
 					<span className='text-sparkle basis-1/3'>Autor:</span>
-					<p className='basis-1/3'>{data.authors}</p>
+					<p className='basis-1/3'>{[data.authors].join(`, `)}</p>
 				</li>
-				{data.publisher !== '' ? (
+				{data.publisher ? (
 					<li className='flex justify-start items-center  py-1 odd:bg-white even:bg-gray'>
 						<span className='text-sparkle basis-1/3'>Wydawnictwo:</span>
 						<p className='basis-1/3'>{data.publisher}</p>
 					</li>
-				) : null}
+				) : (
+					<li className='flex justify-start items-center  py-1 odd:bg-white even:bg-gray'>
+						<span className='text-sparkle basis-1/3'>Wytwórnia:</span>
+						<p className='basis-1/3'>{data.label}</p>
+					</li>
+				)}
 
-				{data.language !== '' ? (
+				{data.language ? (
 					<li className='flex justify-start items-center  py-1 odd:bg-white even:bg-gray'>
 						<span className='text-sparkle basis-1/3'>Język wydania:</span>
 						<p className='basis-1/3'>{data.language}</p>
