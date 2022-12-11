@@ -15,4 +15,5 @@ export const handleFilter = (e: React.MouseEvent, arr: ProductModel[]) => {
 		);
 		return curr;
 	}
+	return;
 };

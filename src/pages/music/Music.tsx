@@ -4,6 +4,7 @@ import { music } from '../../data/music';
 import ItemCard from '../../components/molecules/ItemCard/ItemCard';
 import { ProductModel } from '../../models/Product';
 import { handleFilter } from '../../helpers/handleFilter';
+import CategoryButton from '../../components/atoms/CategoryButton/CategoryButton';
 
 const Music = () => {
 	const [items, setItems] = useState<ProductModel[] | []>([]);
@@ -31,14 +32,7 @@ const Music = () => {
 		<Layout>
 			<nav className='my-10 flex items-start flex-col xl:flex-row  xl:justify-center'>
 				{getCategories().map((cat) => (
-					<button
-						onClick={(e) => handleClick(e)}
-						key={cat}
-						className='xl:border-r-[1px] border-sparkle px-5 last:border-none '>
-						<p className='text-[16px] font-extralight text-sparkle hover:text-black'>
-							{cat.toUpperCase()}
-						</p>
-					</button>
+					<CategoryButton cat={cat} onClick={handleClick} />
 				))}
 			</nav>
 			<main className='flex flex-wrap justify-center'>
