@@ -10,7 +10,7 @@ interface IItemCard {
 	img: string;
 	discount: number;
 	authors: string[];
-	type: 'book' | 'music';
+	type: 'books' | 'albums';
 }
 
 const ItemCard: FC<IItemCard> = ({
@@ -37,7 +37,7 @@ const ItemCard: FC<IItemCard> = ({
 						src={img}
 						alt={title}
 						className={`${
-							type === 'book' ? 'h-[360px]' : 'h-auto'
+							type === 'books' ? 'h-[360px]' : 'h-auto'
 						} w-full px-5 py-5 z-10`}
 					/>
 				</div>
@@ -45,7 +45,7 @@ const ItemCard: FC<IItemCard> = ({
 					<h3 className='text-xl w-[100%] font-lato font-[400] text-[20px]'>
 						<Link to={`/shop/product/${type}/${id}`}>{title}</Link>
 					</h3>
-					{type === 'book' ? null : (
+					{type === 'books' ? null : (
 						<h4 className='text-pencil text-[16px] font-lato'>{authors}</h4>
 					)}
 					<div className='flex justify-between mt-1'>

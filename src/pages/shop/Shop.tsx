@@ -2,7 +2,7 @@ import React from 'react';
 import Layout from '../../components/templates/Layout/Layout';
 import { Route, Routes } from 'react-router-dom';
 import Books from '../books/Books';
-import Music from '../music/Music';
+import Music from '../albums/Albums';
 import { books } from '../../data/books';
 
 const Shop = () => {

@@ -10,17 +10,17 @@ interface PHeadProps extends ProductModel2 {
 }
 
 const ProductHead: FC<PHeadProps> = ({ data, myRef }) => {
-	const { id, img, title, authors, discount, price, type } = data;
+	const { img, title, authors, discount, price, type } = data;
 
 	return (
 		<div className='md:flex justify-between w-full'>
 			<div
 				className={`md:flex md:gap-x-5 ${
-					type === 'book' ? 'md:gap-x-5' : 'md:gap-x-0'
+					type === 'books' ? 'md:gap-x-5' : 'md:gap-x-0'
 				}`}>
 				<div
 					className={`flex justify-center md:justify-start ${
-						type === 'book'
+						type === 'books'
 							? 'md:h-[500px] md:min-w[300px]'
 							: 'md:h-[360px] md:w-[400px]'
 					}`}>
@@ -42,7 +42,7 @@ const ProductHead: FC<PHeadProps> = ({ data, myRef }) => {
 				</div>
 			</div>
 
-			<ProductAside discount={discount} price={price} />
+			<ProductAside discount={discount} price={price} type={type} />
 		</div>
 	);
 };

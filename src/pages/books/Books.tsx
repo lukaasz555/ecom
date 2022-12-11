@@ -7,19 +7,27 @@ import { handleFilter } from '../../helpers/handleFilter';
 import { getCategories } from '../../helpers/getCategories';
 import CategoryButton from '../../components/atoms/CategoryButton/CategoryButton';
 
-const Books = () => {
+type BooksProps = {
+	showSale?: boolean;
+};
+
+const Books = ({ showSale }: BooksProps) => {
 	const [items, setItems] = useState<ProductModel[] | []>([]);
 	const [filtered, setFiltered] = useState<ProductModel[] | undefined>([]);
 
 	const handleClick = (e: React.MouseEvent) => {
-		const filtrd = handleFilter(e, items);
+		const filtrd = handleFilter('', e, items);
 		setFiltered(filtrd);
 	};
 
 	useEffect(() => {
 		setItems(books);
 		setFiltered(books);
-	}, []);
+		if (showSale) {
+			const fltrd = handleFilter('sale', null, books);
+			setFiltered(fltrd);
+		}
+	}, [showSale]);
 
 	return (
 		<Layout>
@@ -39,7 +47,7 @@ const Books = () => {
 								img={img}
 								discount={discount}
 								authors={authors}
-								type='book'
+								type='books'
 							/>
 					  ))
 					: null}

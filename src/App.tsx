@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Shop from './pages/shop/Shop';
 import Books from './pages/books/Books';
-import Music from './pages/music/Music';
+import Albums from './pages/albums/Albums';
 import Contact from './pages/contact/Contact';
 import Product from './pages/product/Product';
 
@@ -13,10 +13,15 @@ function App() {
 				<Route path='/' element={<Shop />} />
 				<Route path='/shop' element={<Shop />} />
 				<Route path='/shop/books' element={<Books />} />
-				<Route path='/shop/music' element={<Music />} />
+				<Route path='/shop/albums' element={<Albums />} />
 				<Route path='/contact' element={<Contact />} />
-				<Route path={`/shop/product/book/:id`} element={<Product />} />
-				<Route path={`/shop/product/music/:id`} element={<Product />} />
+				<Route path={`/shop/product/books/:id`} element={<Product />} />
+				<Route path={`/shop/product/albums/:id`} element={<Product />} />
+				<Route path={`/shop/books/sale`} element={<Books showSale={true} />} />
+				<Route
+					path={`/shop/albums/sale`}
+					element={<Albums showSale={true} />}
+				/>
 			</Routes>
 		</div>
 	);

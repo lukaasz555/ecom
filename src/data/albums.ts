@@ -1,6 +1,6 @@
 import { ProductModel } from '../models/Product';
 
-export const music: ProductModel[] = [
+export const albums: ProductModel[] = [
 	{
 		id: '497',
 		title: 'Collapsed in Sunbeams',
@@ -13,7 +13,7 @@ export const music: ProductModel[] = [
 		category: 'alt',
 		label: 'Transgressive',
 		format: 'Płyta CD',
-		type: 'music',
+		type: 'albums',
 	},
 
 	{
@@ -28,7 +28,7 @@ export const music: ProductModel[] = [
 		category: 'alt',
 		label: '4AD',
 		format: 'Płyta CD',
-		type: 'music',
+		type: 'albums',
 	},
 
 	{
@@ -43,7 +43,7 @@ export const music: ProductModel[] = [
 		category: 'alt',
 		label: 'XL Recordings',
 		format: 'Płyta CD',
-		type: 'music',
+		type: 'albums',
 	},
 
 	{
@@ -58,7 +58,7 @@ export const music: ProductModel[] = [
 		category: 'alt',
 		label: 'Sub Pop Records',
 		format: 'Płyta CD',
-		type: 'music',
+		type: 'albums',
 	},
 
 	{
@@ -73,7 +73,7 @@ export const music: ProductModel[] = [
 		category: 'alt',
 		label: 'XL Recordings',
 		format: 'Płyta CD',
-		type: 'music',
+		type: 'albums',
 	},
 
 	{
@@ -88,7 +88,7 @@ export const music: ProductModel[] = [
 		category: 'alt',
 		label: 'Grand Production',
 		format: 'Płyta CD',
-		type: 'music',
+		type: 'albums',
 	},
 
 	{
@@ -103,7 +103,7 @@ export const music: ProductModel[] = [
 		category: 'alt',
 		label: 'Warner Music Group',
 		format: 'Płyta CD',
-		type: 'music',
+		type: 'albums',
 	},
 
 	{
@@ -118,7 +118,7 @@ export const music: ProductModel[] = [
 		category: 'rap',
 		label: 'Dreamville Records',
 		format: 'Płyta CD',
-		type: 'music',
+		type: 'albums',
 	},
 
 	{
@@ -133,7 +133,7 @@ export const music: ProductModel[] = [
 		category: 'rock',
 		label: 'Warner Music Group',
 		format: 'Płyta CD',
-		type: 'music',
+		type: 'albums',
 	},
 
 	{
@@ -148,7 +148,7 @@ export const music: ProductModel[] = [
 		category: 'alt',
 		label: 'Domino Records',
 		format: 'Płyta CD',
-		type: 'music',
+		type: 'albums',
 	},
 
 	{
@@ -163,7 +163,7 @@ export const music: ProductModel[] = [
 		category: 'alt',
 		label: 'XL Recordings',
 		format: 'Płyta CD',
-		type: 'music',
+		type: 'albums',
 	},
 
 	{
@@ -178,7 +178,7 @@ export const music: ProductModel[] = [
 		category: 'alt',
 		label: 'Other Pop',
 		format: 'Płyta CD',
-		type: 'music',
+		type: 'albums',
 	},
 
 	{
@@ -193,7 +193,7 @@ export const music: ProductModel[] = [
 		category: 'pop',
 		label: 'Other Pop',
 		format: 'Polydor Records',
-		type: 'music',
+		type: 'albums',
 	},
 
 	{
@@ -208,7 +208,7 @@ export const music: ProductModel[] = [
 		category: 'pop',
 		label: 'Universal Music Groups',
 		format: 'Płyta CD',
-		type: 'music',
+		type: 'albums',
 	},
 
 	{
@@ -223,7 +223,7 @@ export const music: ProductModel[] = [
 		category: 'pop',
 		label: 'Sony Music Entertainment',
 		format: 'Płyta CD',
-		type: 'music',
+		type: 'albums',
 	},
 
 	{
@@ -238,7 +238,7 @@ export const music: ProductModel[] = [
 		category: 'rock',
 		label: 'Geffen Records',
 		format: 'Płyta CD',
-		type: 'music',
+		type: 'albums',
 	},
 
 	{
@@ -253,7 +253,7 @@ export const music: ProductModel[] = [
 		category: 'rock',
 		label: 'EMI Music',
 		format: 'Płyta CD',
-		type: 'music',
+		type: 'albums',
 	},
 
 	{
@@ -268,7 +268,7 @@ export const music: ProductModel[] = [
 		category: 'rap',
 		label: 'Alkopoligamia',
 		format: 'Płyta CD',
-		type: 'music',
+		type: 'albums',
 	},
 
 	{
@@ -283,7 +283,7 @@ export const music: ProductModel[] = [
 		category: 'rock',
 		label: 'Warner Music Group',
 		format: 'Płyta CD',
-		type: 'music',
+		type: 'albums',
 	},
 
 	{
@@ -298,7 +298,7 @@ export const music: ProductModel[] = [
 		category: 'rap',
 		label: 'Step',
 		format: 'Płyta CD',
-		type: 'music',
+		type: 'albums',
 	},
 
 	{
@@ -313,7 +313,7 @@ export const music: ProductModel[] = [
 		category: 'rap',
 		label: 'Universal Music Group',
 		format: 'Płyta CD',
-		type: 'music',
+		type: 'albums',
 	},
 
 	{
@@ -328,6 +328,6 @@ export const music: ProductModel[] = [
 		category: 'rap',
 		label: 'Asfalt Records',
 		format: 'Płyta CD',
-		type: 'music',
+		type: 'albums',
 	},
 ];

@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../../components/templates/Layout/Layout';
-import { music } from '../../data/music';
+import { albums } from '../../data/albums';
 import ItemCard from '../../components/molecules/ItemCard/ItemCard';
 import { ProductModel } from '../../models/Product';
 import { handleFilter } from '../../helpers/handleFilter';
 import CategoryButton from '../../components/atoms/CategoryButton/CategoryButton';
 
-const Music = () => {
+type AlbumsProps = {
+	showSale?: boolean;
+};
+
+const Albums = ({ showSale }: AlbumsProps) => {
 	const [items, setItems] = useState<ProductModel[] | []>([]);
 	const [filtered, setFiltered] = useState<ProductModel[] | undefined>(
 		undefined
@@ -19,14 +23,18 @@ const Music = () => {
 	};
 
 	const handleClick = (e: React.MouseEvent) => {
-		const filtrd = handleFilter(e, items);
+		const filtrd = handleFilter('', e, items);
 		setFiltered(filtrd);
 	};
 
 	useEffect(() => {
-		setItems(music);
-		setFiltered(music);
-	}, []);
+		setItems(albums);
+		setFiltered(albums);
+		if (showSale) {
+			const fltrd = handleFilter('sale', null, albums);
+			setFiltered(fltrd);
+		}
+	}, [showSale]);
 
 	return (
 		<Layout>
@@ -57,4 +65,4 @@ const Music = () => {
 	);
 };
 
-export default Music;
+export default Albums;

@@ -5,7 +5,7 @@ const DesktopMenu = () => {
 	return (
 		<nav className='hidden md:block'>
 			<DesktopMenuLink body='Książki' to={`/shop/books`} />
-			<DesktopMenuLink body='Płyty' to={`/shop/music`} />
+			<DesktopMenuLink body='Płyty' to={`/shop/albums`} />
 			<DesktopMenuLink body='Kontakt' to={`/contact`} />
 		</nav>
 	);

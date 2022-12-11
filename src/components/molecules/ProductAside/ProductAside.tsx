@@ -7,18 +7,17 @@ import { Link } from 'react-router-dom';
 type PAsideProps = {
 	discount: number;
 	price: number;
+	type: string;
 };
 
-const ProductAside: FC<PAsideProps> = ({ discount, price }) => {
+const ProductAside: FC<PAsideProps> = ({ discount, price, type }) => {
 	return (
 		<aside className='hidden lg:flex flex-col items-center justify-between max-w-[280px] bg-gray px-8 py-5 ml-3'>
 			<div className='mb-10 text-center font-lato'>
-				<h5
-					className='text-brownSugar text-[18px]'
-					onClick={() => console.log()}>
-					Trwa wyprzedaż!
-				</h5>
-				<Link to='/#' className='hover:underline text-[16px] font-lato'>
+				<h5 className='text-brownSugar text-[18px]'>Trwa wyprzedaż!</h5>
+				<Link
+					to={`/shop/${type}/sale`}
+					className='hover:underline text-[16px] font-lato'>
 					Zobacz przecenione produkty
 				</Link>
 			</div>

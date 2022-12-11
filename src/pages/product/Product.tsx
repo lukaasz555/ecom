@@ -7,7 +7,7 @@ import { ProductModel } from '../../models/Product';
 import ProductHead from '../../components/molecules/ProductHead/ProductHead';
 import ProductDesc from '../../components/atoms/ProductDesc/ProductDesc';
 import ProductDetails from '../../components/atoms/ProductDetails/ProductDetails';
-import { music } from '../../data/music';
+import { albums } from '../../data/albums';
 import { getCurrentProduct } from '../../helpers/getCurrentProduct';
 
 const initValue: ProductModel = {
@@ -21,7 +21,7 @@ const initValue: ProductModel = {
 	discount: 0,
 	category: '',
 	format: '',
-	type: 'music',
+	type: 'albums',
 };
 
 const Product = () => {
@@ -32,14 +32,14 @@ const Product = () => {
 	const category = location.pathname.replace('/shop/product/', '');
 
 	useEffect(() => {
-		if (category.includes('book')) {
-			const id = category.replace('book/', '');
+		if (category.includes('books')) {
+			const id = category.replace('books/', '');
 			setProduct(getCurrentProduct(id, books));
-		} else if (category.includes('music')) {
-			const id = category.replace('music/', '');
-			setProduct(getCurrentProduct(id, music));
+		} else if (category.includes('albums')) {
+			const id = category.replace('albums/', '');
+			setProduct(getCurrentProduct(id, albums));
 		}
-	}, []);
+	}, [category]);
 
 	return (
 		<Layout>

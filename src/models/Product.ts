@@ -9,7 +9,7 @@ export interface ProductModel {
 	discount: number;
 	category: string;
 	format: string;
-	type: 'book' | 'music';
+	type: 'books' | 'albums';
 	//
 	pages?: number;
 	language?: string;
@@ -29,7 +29,7 @@ export interface ProductModel2 {
 		discount: number;
 		category: string;
 		format: string;
-		type: 'book' | 'music';
+		type: 'books' | 'albums';
 		//
 		pages?: number;
 		language?: string;
