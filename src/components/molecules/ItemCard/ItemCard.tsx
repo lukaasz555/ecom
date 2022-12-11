@@ -41,11 +41,13 @@ const ItemCard: FC<IItemCard> = ({
 						} w-full px-5 py-5 z-10`}
 					/>
 				</div>
-				<div className='flex flex-col px-2 mt-2'>
-					<h3 className='text-xl text-clip w-[100%]'>
+				<div className='flex flex-col mt-2'>
+					<h3 className='text-xl w-[100%] font-lato font-[400] text-[20px]'>
 						<Link to={`/shop/product/${type}/${id}`}>{title}</Link>
 					</h3>
-					{type === 'book' ? null : <h4 className='text-pencil'>{authors}</h4>}
+					{type === 'book' ? null : (
+						<h4 className='text-pencil text-[16px] font-lato'>{authors}</h4>
+					)}
 					<div className='flex justify-between mt-1'>
 						<div>
 							<Price atProductPage={false} discount={discount} price={price} />

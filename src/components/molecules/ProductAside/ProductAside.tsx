@@ -11,22 +11,22 @@ type PAsideProps = {
 
 const ProductAside: FC<PAsideProps> = ({ discount, price }) => {
 	return (
-		<aside className='hidden lg:flex flex-col items-center max-w-[300px] bg-gray px-8 py-5 ml-3'>
-			<div className='mb-10 text-center'>
-				<h5 className='text-brownSugar font-medium text-[18px]'>
+		<aside className='hidden lg:flex flex-col items-center justify-between max-w-[280px] bg-gray px-8 py-5 ml-3'>
+			<div className='mb-10 text-center font-lato'>
+				<h5
+					className='text-brownSugar text-[18px]'
+					onClick={() => console.log()}>
 					Trwa wyprzedaż!
 				</h5>
-				<Link to='/#' className='hover:underline text-[16px]'>
+				<Link to='/#' className='hover:underline text-[16px] font-lato'>
 					Zobacz przecenione produkty
 				</Link>
 			</div>
-			<div className='border-b-[1px] pb-5 mb-5 text-center'>
-				<p className='font-montserrat text-[14px]'>Darmowa dostawa od 99pln</p>
-				<p className='text-green text-montserrat text-[14px]'>
-					Wysyłamy w ciągu 48h
-				</p>
+			<div className='border-b-[1px] pb-8 mb-5 text-center text-[14px]'>
+				<p>Darmowa dostawa od 99pln</p>
+				<p className='text-green'>Wysyłamy w ciągu 48h</p>
 			</div>
-			<div className='hidden md:flex flex-col items-center pb-5 mb-5 '>
+			<div className='hidden md:flex flex-col items-center mb-5'>
 				<div className='mb-2'>
 					<Price discount={discount} price={price} atProductPage={true} />
 				</div>

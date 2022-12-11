@@ -7,7 +7,9 @@ type PDescProps = {
 const ProductDesc: FC<PDescProps> = ({ description }) => {
 	return (
 		<div className='mt-10  w-full'>
-			<h3 className='uppercase text-xl border-b-[1px] mb-3'>OPIS</h3>
+			<h3 className='uppercase text-xl border-b-[1px] mb-3 pb-2 font-lato font-light'>
+				OPIS
+			</h3>
 			{description === '' ? (
 				<p>
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus maiores

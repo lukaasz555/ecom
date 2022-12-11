@@ -14,7 +14,10 @@ const ProductHead: FC<PHeadProps> = ({ data, myRef }) => {
 
 	return (
 		<div className='md:flex justify-between w-full'>
-			<div className='md:flex md:gap-x-5'>
+			<div
+				className={`md:flex md:gap-x-5 ${
+					type === 'book' ? 'md:gap-x-5' : 'md:gap-x-0'
+				}`}>
 				<div
 					className={`flex justify-center md:justify-start ${
 						type === 'book'
