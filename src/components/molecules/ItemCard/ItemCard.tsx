@@ -24,7 +24,7 @@ const ItemCard: FC<IItemCard> = ({
 }) => {
 	return (
 		<div className='flex flex-col mb-20 w-[340px] px-10'>
-			<section className=''>
+			<section>
 				<div
 					className={`group w-[100%] flex justify-center border-[1px] border-solid border-grey relative
                 after:content-[''] after:absolute after:left-0 after:top-0 after:h-[100%] after:w-full after:shadow-xl
