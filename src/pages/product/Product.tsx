@@ -9,6 +9,7 @@ import ProductDesc from '../../components/atoms/ProductDesc/ProductDesc';
 import ProductDetails from '../../components/atoms/ProductDetails/ProductDetails';
 import { albums } from '../../data/albums';
 import { getCurrentProduct } from '../../helpers/getCurrentProduct';
+import Modal from 'react-modal';
 
 const initValue: ProductModel = {
 	id: '',
@@ -30,6 +31,10 @@ const Product = () => {
 	const location = useLocation();
 	const myRef = useRef(null);
 	const category = location.pathname.replace('/shop/product/', '');
+	const [showModal, setShowModal] = useState(false);
+
+	const openModal = () => setShowModal(true);
+	const closeModal = () => setShowModal(false);
 
 	useEffect(() => {
 		if (category.includes('books')) {
@@ -65,7 +70,7 @@ const Product = () => {
 						<h2>Przepraszamy, nie udało załadować się strony tego produktu.</h2>
 					) : (
 						<article className='flex flex-col items-center md:items-start'>
-							<ProductHead myRef={myRef} data={product} />
+							<ProductHead myRef={myRef} data={product} openModal={openModal} />
 							<div ref={myRef} className='w-full'>
 								<ProductDesc description={product.description} />
 								<ProductDetails data={product} />
@@ -74,6 +79,29 @@ const Product = () => {
 					)}
 				</section>
 			</ProductLayout>
+			<Modal
+				isOpen={showModal}
+				shouldCloseOnOverlayClick={true}
+				shouldCloseOnEsc={true}
+				onRequestClose={closeModal}
+				style={{
+					content: {
+						backgroundColor: 'rgba(255,255,255,0.8)',
+						border: 'none',
+					},
+				}}
+				contentLabel={`${product.title} cover`}>
+				<div className='h-[100%]'>
+					<div className='flex flex-col items-center justify-center w-full h-[100%] relative'>
+						<img src={product.img} alt={product.title} />
+						<button
+							className='uppercase hover:underline mt-5'
+							onClick={closeModal}>
+							zamknij
+						</button>
+					</div>
+				</div>
+			</Modal>
 		</Layout>
 	);
 };

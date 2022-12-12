@@ -6,9 +6,10 @@ import ShortDescription from '../../atoms/ShortDescription/ShortDescription';
 
 interface PHeadProps extends ProductModel2 {
 	myRef: React.MutableRefObject<any>;
+	openModal: () => void;
 }
 
-const ProductHead: FC<PHeadProps> = ({ data, myRef }) => {
+const ProductHead: FC<PHeadProps> = ({ data, myRef, openModal }) => {
 	const { img, title, authors, discount, price, type } = data;
 
 	return (
@@ -23,7 +24,12 @@ const ProductHead: FC<PHeadProps> = ({ data, myRef }) => {
 							? 'md:h-[500px] md:min-w[300px]'
 							: 'md:h-[360px] md:w-[400px]'
 					}`}>
-					<img src={img} alt={title} className='object-cover' />
+					<img
+						src={img}
+						alt={title}
+						className='object-cover cursor-pointer'
+						onClick={openModal}
+					/>
 				</div>
 				<div className='text-center md:text-left font-lato md:min-w-[340px] md:max-w-[400px]'>
 					<h2 className='text-2xl mt-5 md:mt-0'>{title}</h2>
