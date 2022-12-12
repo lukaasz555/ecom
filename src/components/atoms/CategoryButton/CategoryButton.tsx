@@ -13,7 +13,7 @@ const CategoryButton: FC<ICategoryButton> = ({ cat, onClick }) => {
 			id={cat}
 			className='xl:border-r-[1px] border-sparkle px-0 last:border-none '>
 			{cat.toLowerCase() === 'sale' ? (
-				<p className='text-[16px] font-medium text-brownSugar px-4'>
+				<p className='text-[16px] font-medium text-brownSugar px-4 '>
 					{cat.toUpperCase()}
 				</p>
 			) : (

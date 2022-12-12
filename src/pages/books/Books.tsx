@@ -31,7 +31,7 @@ const Books = ({ showSale }: BooksProps) => {
 
 	return (
 		<Layout>
-			<nav className='my-10 flex items-start flex-col xl:flex-row  xl:justify-center'>
+			<nav className='my-10 flex items-start flex-col xl:flex-row  xl:justify-center xl:flex-wrap xl:gap-3'>
 				{getCategories(items).map((cat) => (
 					<CategoryButton cat={cat} onClick={handleClick} />
 				))}
