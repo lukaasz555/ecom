@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import CTA from '../../atoms/CTA/CTA';
 import Price from '../../atoms/Price/Price';
 import ProductAside from '../ProductAside/ProductAside';
 import { ProductModel2 } from '../../../models/Product';
@@ -36,11 +35,6 @@ const ProductHead: FC<PHeadProps> = ({ data, myRef }) => {
 
 				<div className='flex flex-col items-center md:hidden'>
 					<Price discount={discount} price={price} atProductPage={true} />
-					{price > 0 ? (
-						<div className='mt-5'>
-							<CTA body='dodaj do koszyka' />
-						</div>
-					) : null}
 				</div>
 			</div>
 

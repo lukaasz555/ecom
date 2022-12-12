@@ -4,6 +4,7 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { ProductModel2 } from '../../../models/Product';
 import { scrollToRef } from '../../../helpers/scrollToRef';
 import CTA from '../CTA/CTA';
+import NotAvailable from '../NotAvailable/NotAvailable';
 
 interface ShortDescProps extends ProductModel2 {
 	myRef: React.MutableRefObject<any>;
@@ -57,9 +58,7 @@ const ShortDescription: FC<ShortDescProps> = ({ data, myRef }) => {
 				{price > 0 ? (
 					<CTA body='do koszyka' />
 				) : (
-					<span className='text-pencil text-[16px] font-lato'>
-						Produkt niedostępny
-					</span>
+					<NotAvailable atProductPage={true} />
 				)}
 			</div>
 		</div>

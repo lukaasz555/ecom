@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import NotAvailable from '../NotAvailable/NotAvailable';
 
 type PriceProps = {
 	price: number;
@@ -30,9 +31,7 @@ const Price: FC<PriceProps> = ({ atProductPage, price, discount }) => {
 					) : null}
 				</h4>
 			) : (
-				<span className='text-pencil text-[16px] font-lato'>
-					Produkt niedostępny
-				</span>
+				<NotAvailable atProductPage={atProductPage} />
 			)}
 		</div>
 	);

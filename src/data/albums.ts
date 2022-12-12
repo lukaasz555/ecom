@@ -390,4 +390,19 @@ export const albums: ProductModel[] = [
 		format: 'Płyta CD',
 		type: 'albums',
 	},
+
+	{
+		id: '374',
+		title: 'Jar of Flies',
+		authors: ['Alice In Chains'],
+		releaseYear: '1994',
+		description: '',
+		img: 'https://ecsmedia.pl/c/jar-of-flies-w-iext109774576.jpg',
+		price: 52.0,
+		discount: 0,
+		category: 'rock',
+		label: 'Sony Music Entertainment',
+		format: 'Płyta CD',
+		type: 'albums',
+	},
 ];
