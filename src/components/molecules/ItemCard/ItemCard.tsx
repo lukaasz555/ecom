@@ -23,7 +23,7 @@ const ItemCard: FC<IItemCard> = ({
 	authors,
 }) => {
 	return (
-		<div className='flex flex-col mb-20 w-[340px] px-10'>
+		<div className='flex flex-col mb-20 w-[260px] px-10'>
 			<section>
 				<div
 					className={`group w-[100%] flex justify-center border-[1px] border-solid border-grey relative
@@ -37,7 +37,7 @@ const ItemCard: FC<IItemCard> = ({
 						src={img}
 						alt={title}
 						className={`${
-							type === 'books' ? 'h-[360px]' : 'h-auto'
+							type === 'books' ? 'h-[250px]' : 'h-auto'
 						} w-full px-5 py-5 z-10`}
 					/>
 				</div>
