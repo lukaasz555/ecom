@@ -5,6 +5,11 @@ import ItemCard from '../../components/molecules/ItemCard/ItemCard';
 import { ProductModel } from '../../models/Product';
 import { handleFilter } from '../../helpers/handleFilter';
 import CategoryButton from '../../components/atoms/CategoryButton/CategoryButton';
+import { filterByPrice } from '../../helpers/filterByPrice';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { useElementSize } from 'usehooks-ts';
+import { getCategories } from '../../helpers/getCategories';
 
 type AlbumsProps = {
 	showSale?: boolean;
@@ -12,19 +17,17 @@ type AlbumsProps = {
 
 const Albums = ({ showSale }: AlbumsProps) => {
 	const [items, setItems] = useState<ProductModel[] | []>([]);
-	const [filtered, setFiltered] = useState<ProductModel[] | undefined>(
-		undefined
-	);
-
-	const getCategories = () => {
-		const cats = new Set(items.map((i) => i.category));
-		const arr = Array.from(cats);
-		return [...arr, 'sale'];
-	};
+	const [filtered, setFiltered] = useState<ProductModel[] | undefined>([]);
+	const [divRef, { width }] = useElementSize();
+	const [open, setOpen] = useState(false);
 
 	const handleClick = (e: React.MouseEvent) => {
 		const filtrd = handleFilter('', e, items);
 		setFiltered(filtrd);
+	};
+
+	const handleFilterByPrice = (id: string) => {
+		setFiltered(filterByPrice(id, filtered));
 	};
 
 	useEffect(() => {
@@ -39,11 +42,59 @@ const Albums = ({ showSale }: AlbumsProps) => {
 	return (
 		<Layout>
 			<nav className='my-10 flex items-start flex-col xl:flex-row  xl:justify-center xl:flex-wrap xl:gap-3'>
-				{getCategories().map((cat) => (
+				{getCategories(items).map((cat) => (
 					<CategoryButton cat={cat} onClick={handleClick} />
 				))}
 			</nav>
-			<main className='flex flex-wrap justify-center'>
+
+			<div
+				className={`w-${width} mx-10 border-b-[1px] mb-10  flex justify-end`}>
+				<div className={`${open ? 'bg-sparkle' : 'bg-white'} relative`}>
+					<button
+						className={`flex items-center bg-white justify-end uppercase py-2 px-5 text-[14px]
+						w-[300px]
+					`}
+						onClick={() => setOpen(!open)}>
+						sortuj
+						<FontAwesomeIcon icon={faChevronDown} className='text-xs ml-1' />
+					</button>
+					<ul
+						className={`absolute top-[102%] right-0 bg-lightGray z-30 pl-5 duration-150 ${
+							open ? 'scale-y-100' : 'scale-y-0'
+						} origin-top flex flex-col items-end w-[300px]`}>
+						<li>
+							<button
+								id='declining'
+								className='uppercase text-[18px] font-light px-5 py-3 font-[200] border-b-[1px] w-[300px] text-right'
+								onClick={(e) => {
+									const targ = e.target as Element;
+									if (targ != null) {
+										handleFilterByPrice(targ.id);
+									}
+									setOpen(!open);
+								}}>
+								Od najdroŻszych
+							</button>
+						</li>
+						<li>
+							<button
+								id='growing'
+								className='uppercase text-[18px] font-light px-5 py-3 font-[200] border-b-[1px] w-[300px] text-right'
+								onClick={(e) => {
+									const targ = e.target as Element;
+									if (targ != null) {
+										handleFilterByPrice(targ.id);
+									}
+									setOpen(!open);
+								}}>
+								od najtańszych
+							</button>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<div ref={divRef} className='flex flex-wrap justify-center'>
 				{filtered !== undefined
 					? filtered.map(
 							({ id, title, price, img, discount, authors, type }) => (
@@ -60,7 +111,7 @@ const Albums = ({ showSale }: AlbumsProps) => {
 							)
 					  )
 					: null}
-			</main>
+			</div>
 		</Layout>
 	);
 };

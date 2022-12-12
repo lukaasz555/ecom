@@ -1,10 +1,4 @@
-import React, {
-	MutableRefObject,
-	useEffect,
-	useLayoutEffect,
-	useRef,
-	useState,
-} from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '../../components/templates/Layout/Layout';
 import { books } from '../../data/books';
 import ItemCard from '../../components/molecules/ItemCard/ItemCard';
@@ -15,6 +9,7 @@ import CategoryButton from '../../components/atoms/CategoryButton/CategoryButton
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useElementSize } from 'usehooks-ts';
+import { filterByPrice } from '../../helpers/filterByPrice';
 
 type BooksProps = {
 	showSale?: boolean;
@@ -27,8 +22,13 @@ const Books = ({ showSale }: BooksProps) => {
 	const [open, setOpen] = useState(false);
 
 	const handleClick = (e: React.MouseEvent) => {
-		const filtrd = handleFilter('', e, items);
-		setFiltered(filtrd);
+		const fltrd = handleFilter('', e, items);
+		setFiltered(fltrd);
+		setOpen(false);
+	};
+
+	const handleFilterByPrice = (id: string) => {
+		setFiltered(filterByPrice(id, filtered));
 	};
 
 	useEffect(() => {
@@ -64,12 +64,30 @@ const Books = ({ showSale }: BooksProps) => {
 							open ? 'scale-y-100' : 'scale-y-0'
 						} origin-top flex flex-col items-end w-[300px]`}>
 						<li>
-							<button className='uppercase text-[18px] font-light px-5 py-3 font-[200] border-b-[1px] w-[300px] text-right'>
+							<button
+								id='declining'
+								className='uppercase text-[18px] font-light px-5 py-3 font-[200] border-b-[1px] w-[300px] text-right'
+								onClick={(e) => {
+									const targ = e.target as Element;
+									if (targ != null) {
+										handleFilterByPrice(targ.id);
+									}
+									setOpen(!open);
+								}}>
 								Od najdroŻszych
 							</button>
 						</li>
 						<li>
-							<button className='uppercase text-[18px] font-light px-5 py-3 font-[200] border-b-[1px] w-[300px] text-right'>
+							<button
+								id='growing'
+								className='uppercase text-[18px] font-light px-5 py-3 font-[200] border-b-[1px] w-[300px] text-right'
+								onClick={(e) => {
+									const targ = e.target as Element;
+									if (targ != null) {
+										handleFilterByPrice(targ.id);
+									}
+									setOpen(!open);
+								}}>
 								od najtańszych
 							</button>
 						</li>
@@ -100,12 +118,3 @@ const Books = ({ showSale }: BooksProps) => {
 };
 
 export default Books;
-
-{
-	/* <div className='flex justify-start mx-auto mb-5 bg-sparkle w-full '>
-<button className='flex items-center uppercase border-[1px] px-5 py-2 text-[14px]'>
-	sortuj
-	<FontAwesomeIcon icon={faChevronDown} className='text-xs ml-1' />
-</button>
-</div> */
-}
