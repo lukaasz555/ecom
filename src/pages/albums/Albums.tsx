@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useElementSize } from 'usehooks-ts';
 import { getCategories } from '../../helpers/getCategories';
+import { useLocation } from 'react-router-dom';
 
 type AlbumsProps = {
 	showSale?: boolean;
@@ -21,10 +22,8 @@ const Albums = ({ showSale }: AlbumsProps) => {
 	const [divRef, { width }] = useElementSize();
 	const [open, setOpen] = useState(false);
 
-	const handleClick = (e: React.MouseEvent) => {
-		const filtrd = handleFilter('', e, items);
-		setFiltered(filtrd);
-	};
+	const location = useLocation();
+	const category = location.pathname.replace('/shop/albums/', '');
 
 	const handleFilterByPrice = (id: string) => {
 		setFiltered(filterByPrice(id, filtered));
@@ -32,18 +31,25 @@ const Albums = ({ showSale }: AlbumsProps) => {
 
 	useEffect(() => {
 		setItems(albums);
-		setFiltered(albums);
-		if (showSale) {
-			const fltrd = handleFilter('sale', null, albums);
+		if (category.length === 2) {
+			const fltrd = handleFilter(Number(category), null, items);
 			setFiltered(fltrd);
 		}
-	}, [showSale]);
+		if (category.length > 2) {
+			setFiltered(albums);
+		}
+		setOpen(false);
+	}, [category]);
 
 	return (
 		<Layout>
 			<nav className='my-10 flex items-start flex-col xl:flex-row  xl:justify-center xl:flex-wrap xl:gap-3'>
 				{getCategories(items).map((cat) => (
-					<CategoryButton cat={cat} onClick={handleClick} />
+					<CategoryButton
+						key={cat}
+						cat={Number(cat)}
+						to={`/shop/albums/${cat}`}
+					/>
 				))}
 			</nav>
 

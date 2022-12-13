@@ -17,11 +17,8 @@ function App() {
 				<Route path='/contact' element={<Contact />} />
 				<Route path={`/shop/product/books/:id`} element={<Product />} />
 				<Route path={`/shop/product/albums/:id`} element={<Product />} />
-				<Route path={`/shop/books/sale`} element={<Books showSale={true} />} />
-				<Route
-					path={`/shop/albums/sale`}
-					element={<Albums showSale={true} />}
-				/>
+				<Route path={`/shop/books/:catID`} element={<Books />} />
+				<Route path={`/shop/albums/:catID`} element={<Albums />} />
 			</Routes>
 		</div>
 	);

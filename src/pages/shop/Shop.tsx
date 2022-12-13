@@ -3,18 +3,8 @@ import Layout from '../../components/templates/Layout/Layout';
 import { Route, Routes } from 'react-router-dom';
 import Books from '../books/Books';
 import Music from '../albums/Albums';
-import { books } from '../../data/books';
 
 const Shop = () => {
-	const items = books;
-
-	const getCategories = () => {
-		const cats = new Set(items.map((i) => i.category));
-		return Array.from(cats);
-	};
-
-	getCategories();
-
 	return (
 		<Layout>
 			<Routes>

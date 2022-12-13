@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import Layout from '../../components/templates/Layout/Layout';
 import { books } from '../../data/books';
 import ItemCard from '../../components/molecules/ItemCard/ItemCard';
@@ -20,31 +21,37 @@ const Books = ({ showSale }: BooksProps) => {
 	const [filtered, setFiltered] = useState<ProductModel[] | undefined>([]);
 	const [divRef, { width }] = useElementSize();
 	const [open, setOpen] = useState(false);
-
-	const handleClick = (e: React.MouseEvent) => {
-		const fltrd = handleFilter('', e, items);
-		setFiltered(fltrd);
-		setOpen(false);
-	};
+	const location = useLocation();
+	const category = location.pathname.replace('/shop/books/', '');
 
 	const handleFilterByPrice = (id: string) => {
 		setFiltered(filterByPrice(id, filtered));
 	};
 
 	useEffect(() => {
-		setItems(books);
-		setFiltered(books);
-		if (showSale) {
-			const fltrd = handleFilter('sale', null, books);
+		console.log('zmieniłem link, a kategoria to: ', category);
+		console.log(category.length);
+
+		if (category.length === 2) {
+			const fltrd = handleFilter(Number(category), null, items);
 			setFiltered(fltrd);
 		}
-	}, [showSale]);
+		if (category.includes('/')) {
+			setFiltered(books);
+		}
+		setItems(books);
+		setOpen(false);
+	}, [category]);
 
 	return (
 		<Layout>
 			<nav className='my-10 flex items-start flex-col xl:flex-row  xl:justify-center xl:flex-wrap xl:gap-3'>
 				{getCategories(items).map((cat) => (
-					<CategoryButton cat={cat} key={cat} onClick={handleClick} />
+					<CategoryButton
+						key={cat}
+						cat={Number(cat)}
+						to={`/shop/books/${cat}`}
+					/>
 				))}
 			</nav>
 
