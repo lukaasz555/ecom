@@ -1,4 +1,5 @@
 import { ProductModel } from '../models/Product';
+import { handleCategoryNames } from './handleCategoryNames';
 
 export const handleFilter = (
 	str = '',
@@ -12,9 +13,11 @@ export const handleFilter = (
 	} else {
 		if (e !== null) {
 			const target = e.target as Element;
-			const cat = target.innerHTML.toLowerCase();
+			const cat = handleCategoryNames(target.innerHTML);
+			console.log('target: ', target.innerHTML);
+			console.log('cat: ', handleCategoryNames(target.innerHTML));
 			//handleFilter by clicking SALE in category's menu:
-			if (arr.length > 0 && cat === 'sale') {
+			if (arr.length > 0 && target.innerHTML === '99') {
 				const curr: ProductModel[] = arr.filter((item) => item.discount > 0);
 				return curr;
 			}
@@ -22,11 +25,10 @@ export const handleFilter = (
 			//handleFilter by clicking Categry in category's menu:
 			if (arr.length > 0) {
 				const curr: ProductModel[] = arr.filter(
-					(item) => item.category.toLowerCase() === cat
+					(item) => item.categoryID === cat
 				);
 				return curr;
 			}
 		}
 	}
-	return;
 };

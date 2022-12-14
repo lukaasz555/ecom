@@ -20,7 +20,7 @@ const initValue: ProductModel = {
 	img: '',
 	price: 0,
 	discount: 0,
-	category: '',
+	categoryID: '',
 	format: '',
 	type: 'albums',
 };

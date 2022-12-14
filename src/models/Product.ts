@@ -7,7 +7,7 @@ export interface ProductModel {
 	img: string;
 	price: number;
 	discount: number;
-	category: string;
+	categoryID: string;
 	format: string;
 	type: 'books' | 'albums';
 	//
@@ -27,7 +27,7 @@ export interface ProductModel2 {
 		img: string;
 		price: number;
 		discount: number;
-		category: string;
+		categoryID: string;
 		format: string;
 		type: 'books' | 'albums';
 		//

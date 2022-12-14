@@ -22,8 +22,9 @@ const Albums = ({ showSale }: AlbumsProps) => {
 	const [open, setOpen] = useState(false);
 
 	const handleClick = (e: React.MouseEvent) => {
-		const filtrd = handleFilter('', e, items);
-		setFiltered(filtrd);
+		const fltrd = handleFilter('', e, items);
+		console.log(fltrd);
+		setFiltered(fltrd);
 	};
 
 	const handleFilterByPrice = (id: string) => {
@@ -34,7 +35,7 @@ const Albums = ({ showSale }: AlbumsProps) => {
 		setItems(albums);
 		setFiltered(albums);
 		if (showSale) {
-			const fltrd = handleFilter('sale', null, albums);
+			const fltrd = handleFilter('99', null, albums);
 			setFiltered(fltrd);
 		}
 	}, [showSale]);

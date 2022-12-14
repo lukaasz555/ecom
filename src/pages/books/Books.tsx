@@ -35,7 +35,7 @@ const Books = ({ showSale }: BooksProps) => {
 		setItems(books);
 		setFiltered(books);
 		if (showSale) {
-			const fltrd = handleFilter('sale', null, books);
+			const fltrd = handleFilter('', null, books);
 			setFiltered(fltrd);
 		}
 	}, [showSale]);
