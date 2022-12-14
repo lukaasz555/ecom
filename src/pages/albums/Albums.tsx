@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Layout from '../../components/templates/Layout/Layout';
 import { albums } from '../../data/albums';
 import ItemCard from '../../components/molecules/ItemCard/ItemCard';
@@ -13,33 +13,41 @@ import { getCategories } from '../../helpers/getCategories';
 import { useLocation } from 'react-router-dom';
 
 type AlbumsProps = {
-	showSale?: boolean;
+	filterCategory?: boolean;
 };
 
-const Albums = ({ showSale }: AlbumsProps) => {
+const Albums = ({ filterCategory }: AlbumsProps) => {
 	const [items, setItems] = useState<ProductModel[] | []>([]);
 	const [filtered, setFiltered] = useState<ProductModel[] | undefined>([]);
 	const [divRef, { width }] = useElementSize();
 	const [open, setOpen] = useState(false);
-
+	const [updated, setUpdated] = useState(false);
 	const location = useLocation();
-	const category = location.pathname.replace('/shop/albums/', '');
+	const catID = +location.pathname.replace('/shop/category/albums/', '');
 
 	const handleFilterByPrice = (id: string) => {
 		setFiltered(filterByPrice(id, filtered));
 	};
 
+	const renderAlbums = useCallback(() => {
+		setUpdated(false);
+		if (filterCategory) {
+			const fltrd = handleFilter(catID, null, items);
+			setFiltered(fltrd);
+			setUpdated(true);
+		} else {
+			setFiltered(items);
+			setUpdated(true);
+		}
+	}, [catID, filtered, filterCategory]);
+
 	useEffect(() => {
 		setItems(albums);
-		if (category.length === 2) {
-			const fltrd = handleFilter(Number(category), null, items);
-			setFiltered(fltrd);
-		}
-		if (category.length > 2) {
-			setFiltered(albums);
-		}
+		setFiltered(albums);
+		renderAlbums();
 		setOpen(false);
-	}, [category]);
+		console.log(catID);
+	}, [updated, location]);
 
 	return (
 		<Layout>
@@ -48,7 +56,7 @@ const Albums = ({ showSale }: AlbumsProps) => {
 					<CategoryButton
 						key={cat}
 						cat={Number(cat)}
-						to={`/shop/albums/${cat}`}
+						to={`/shop/category/albums/${cat}`}
 					/>
 				))}
 			</nav>

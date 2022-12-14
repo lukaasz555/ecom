@@ -10,7 +10,6 @@ import ProductDetails from '../../components/atoms/ProductDetails/ProductDetails
 import { albums } from '../../data/albums';
 import { getCurrentProduct } from '../../helpers/getCurrentProduct';
 import Modal from 'react-modal';
-import { Link } from 'react-router-dom';
 
 const initValue: ProductModel = {
 	id: '',
@@ -38,7 +37,6 @@ const Product = () => {
 	const closeModal = () => setShowModal(false);
 
 	useEffect(() => {
-		console.log(category);
 		if (category.includes('books')) {
 			const id = category.replace('books/', '');
 			setProduct(getCurrentProduct(id, books));
