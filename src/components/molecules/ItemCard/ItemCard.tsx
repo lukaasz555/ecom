@@ -42,19 +42,21 @@ const ItemCard: FC<IItemCard> = ({
 					/>
 				</div>
 				<div className='flex flex-col mt-2'>
-					<h3 className='text-xl w-[100%] font-lato font-[400] text-[20px]'>
+					<h3 className='text-center md:text-left text-xl w-[100%] font-lato font-[400] text-[20px]'>
 						<Link to={`/shop/product/${type}/${id}`}>{title}</Link>
 					</h3>
-					<h4 className='text-pencil text-[16px] font-lato'>
+					<h4 className='text-center md:text-left text-pencil text-[16px] font-lato'>
 						{[...authors].join(', ')}
 					</h4>
-					<div className='flex justify-between mt-1'>
+					<div className='flex justify-center  md:justify-between items-center mt-1'>
 						<div>
 							<Price atProductPage={false} discount={discount} price={price} />
 						</div>
 						<div>
 							{discount > 0 ? (
-								<h5 className='inline font-medium text-brownSugar'>SALE</h5>
+								<h5 className='ml-1 md:ml-0 inline font-medium text-brownSugar'>
+									SALE
+								</h5>
 							) : null}
 						</div>
 					</div>
