@@ -1,4 +1,5 @@
 import { ProductModel2 } from '../../../models/Product';
+import { handleCategoryNames } from '../../../helpers/handleCategoryNames';
 
 const ProductDetails = ({ data }: ProductModel2) => {
 	return (
@@ -52,7 +53,8 @@ const ProductDetails = ({ data }: ProductModel2) => {
 
 				<li className='flex justify-start items-center  py-1 odd:bg-white even:bg-gray'>
 					<span className='text-sparkle basis-1/3'>Kategoria:</span>
-					<p className='basis-2/3'>{data.categoryID}</p>
+					<p className='basis-2/3'>{handleCategoryNames(data.categoryID)}</p>
+
 				</li>
 				<li className='flex justify-start items-center  py-1 odd:bg-white even:bg-gray'>
 					<span className='text-sparkle basis-1/3'>Format:</span>

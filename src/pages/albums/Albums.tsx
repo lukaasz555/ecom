@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Layout from '../../components/templates/Layout/Layout';
 import { albums } from '../../data/albums';
 import ItemCard from '../../components/molecules/ItemCard/ItemCard';
@@ -10,41 +10,55 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useElementSize } from 'usehooks-ts';
 import { getCategories } from '../../helpers/getCategories';
+import { useLocation } from 'react-router-dom';
 
 type AlbumsProps = {
-	showSale?: boolean;
+	filterCategory?: boolean;
 };
 
-const Albums = ({ showSale }: AlbumsProps) => {
+const Albums = ({ filterCategory }: AlbumsProps) => {
 	const [items, setItems] = useState<ProductModel[] | []>([]);
 	const [filtered, setFiltered] = useState<ProductModel[] | undefined>([]);
 	const [divRef, { width }] = useElementSize();
 	const [open, setOpen] = useState(false);
+	const [updated, setUpdated] = useState(false);
+	const location = useLocation();
+	const catID = +location.pathname.replace('/shop/category/albums/', '');
 
-	const handleClick = (e: React.MouseEvent) => {
-		const fltrd = handleFilter('', e, items);
-		console.log(fltrd);
-		setFiltered(fltrd);
-	};
 
 	const handleFilterByPrice = (id: string) => {
 		setFiltered(filterByPrice(id, filtered));
 	};
 
+	const renderAlbums = useCallback(() => {
+		setUpdated(false);
+		if (filterCategory) {
+			const fltrd = handleFilter(catID, null, items);
+			setFiltered(fltrd);
+		} else {
+			setFiltered(items);
+		}
+		setUpdated(true);
+	}, [catID, filtered, filterCategory]);
+
 	useEffect(() => {
 		setItems(albums);
 		setFiltered(albums);
-		if (showSale) {
-			const fltrd = handleFilter('99', null, albums);
-			setFiltered(fltrd);
-		}
-	}, [showSale]);
+		renderAlbums();
+		setOpen(false);
+		console.log(catID);
+	}, [updated, location]);
+
 
 	return (
 		<Layout>
 			<nav className='my-10 flex items-start flex-col xl:flex-row  xl:justify-center xl:flex-wrap xl:gap-3'>
 				{getCategories(items).map((cat) => (
-					<CategoryButton cat={cat} onClick={handleClick} />
+					<CategoryButton
+						key={cat}
+						cat={Number(cat)}
+						to={`/shop/category/albums/${cat}`}
+					/>
 				))}
 			</nav>
 

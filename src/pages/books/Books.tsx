@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
+import { useLocation } from 'react-router-dom';
 import Layout from '../../components/templates/Layout/Layout';
 import { books } from '../../data/books';
 import ItemCard from '../../components/molecules/ItemCard/ItemCard';
@@ -12,39 +13,51 @@ import { useElementSize } from 'usehooks-ts';
 import { filterByPrice } from '../../helpers/filterByPrice';
 
 type BooksProps = {
-	showSale?: boolean;
+	filterCategory?: boolean;
 };
 
-const Books = ({ showSale }: BooksProps) => {
+const Books = ({ filterCategory }: BooksProps) => {
 	const [items, setItems] = useState<ProductModel[] | []>([]);
 	const [filtered, setFiltered] = useState<ProductModel[] | undefined>([]);
 	const [divRef, { width }] = useElementSize();
 	const [open, setOpen] = useState(false);
-
-	const handleClick = (e: React.MouseEvent) => {
-		const fltrd = handleFilter('', e, items);
-		setFiltered(fltrd);
-		setOpen(false);
-	};
+	const [updated, setUpdated] = useState(false);
+	const location = useLocation();
+	const catID = +location.pathname.replace('/shop/category/books/', '');
 
 	const handleFilterByPrice = (id: string) => {
 		setFiltered(filterByPrice(id, filtered));
 	};
 
+	const renderBooks = useCallback(() => {
+		setUpdated(false);
+		if (filterCategory) {
+			const fltrd = handleFilter(catID, null, items);
+			setFiltered(fltrd);
+		} else {
+			setFiltered(items);
+		}
+		setUpdated(true);
+	}, [catID, filtered, filterCategory]);
+
 	useEffect(() => {
 		setItems(books);
 		setFiltered(books);
-		if (showSale) {
-			const fltrd = handleFilter('', null, books);
-			setFiltered(fltrd);
-		}
-	}, [showSale]);
+		renderBooks();
+		setOpen(false);
+		console.log(catID);
+	}, [updated, location]);
+
 
 	return (
 		<Layout>
 			<nav className='my-10 flex items-start flex-col xl:flex-row  xl:justify-center xl:flex-wrap xl:gap-3'>
 				{getCategories(items).map((cat) => (
-					<CategoryButton cat={cat} key={cat} onClick={handleClick} />
+					<CategoryButton
+						key={cat}
+						cat={Number(cat)}
+						to={`/shop/category/books/${cat}`}
+					/>
 				))}
 			</nav>
 

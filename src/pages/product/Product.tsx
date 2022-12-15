@@ -20,7 +20,8 @@ const initValue: ProductModel = {
 	img: '',
 	price: 0,
 	discount: 0,
-	categoryID: '',
+	categoryID: 0,
+
 	format: '',
 	type: 'albums',
 };
@@ -28,8 +29,8 @@ const initValue: ProductModel = {
 const Product = () => {
 	const [product, setProduct] = useState<ProductModel>(initValue);
 	const navigate = useNavigate();
-	const location = useLocation();
 	const myRef = useRef(null);
+	const location = useLocation();
 	const category = location.pathname.replace('/shop/product/', '');
 	const [showModal, setShowModal] = useState(false);
 

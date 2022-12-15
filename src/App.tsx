@@ -17,10 +17,14 @@ function App() {
 				<Route path='/contact' element={<Contact />} />
 				<Route path={`/shop/product/books/:id`} element={<Product />} />
 				<Route path={`/shop/product/albums/:id`} element={<Product />} />
-				<Route path={`/shop/books/sale`} element={<Books showSale={true} />} />
+				<Route path={`/shop/books/:catID`} element={<Books />} />
 				<Route
-					path={`/shop/albums/sale`}
-					element={<Albums showSale={true} />}
+					path={`/shop/category/albums/:catID`}
+					element={<Albums filterCategory={true} />}
+				/>
+				<Route
+					path={`/shop/category/books/:catID`}
+					element={<Books filterCategory={true} />}
 				/>
 			</Routes>
 		</div>
