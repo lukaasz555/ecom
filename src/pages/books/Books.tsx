@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import Layout from '../../components/templates/Layout/Layout';
 import { books } from '../../data/books';
@@ -13,35 +13,40 @@ import { useElementSize } from 'usehooks-ts';
 import { filterByPrice } from '../../helpers/filterByPrice';
 
 type BooksProps = {
-	showSale?: boolean;
+	filterCategory?: boolean;
 };
 
-const Books = ({ showSale }: BooksProps) => {
+const Books = ({ filterCategory }: BooksProps) => {
 	const [items, setItems] = useState<ProductModel[] | []>([]);
 	const [filtered, setFiltered] = useState<ProductModel[] | undefined>([]);
 	const [divRef, { width }] = useElementSize();
 	const [open, setOpen] = useState(false);
+	const [updated, setUpdated] = useState(false);
 	const location = useLocation();
-	const category = location.pathname.replace('/shop/books/', '');
+	const catID = +location.pathname.replace('/shop/category/books/', '');
 
 	const handleFilterByPrice = (id: string) => {
 		setFiltered(filterByPrice(id, filtered));
 	};
 
-	useEffect(() => {
-		console.log('zmieniłem link, a kategoria to: ', category);
-		console.log(category.length);
-
-		if (category.length === 2) {
-			const fltrd = handleFilter(Number(category), null, items);
+	const renderBooks = useCallback(() => {
+		setUpdated(false);
+		if (filterCategory) {
+			const fltrd = handleFilter(catID, null, items);
 			setFiltered(fltrd);
+		} else {
+			setFiltered(items);
 		}
-		if (category.includes('/')) {
-			setFiltered(books);
-		}
+		setUpdated(true);
+	}, [catID, filtered, filterCategory]);
+
+	useEffect(() => {
 		setItems(books);
+		setFiltered(books);
+		renderBooks();
 		setOpen(false);
-	}, [category]);
+		console.log(catID);
+	}, [updated, location]);
 
 	return (
 		<Layout>
@@ -50,7 +55,7 @@ const Books = ({ showSale }: BooksProps) => {
 					<CategoryButton
 						key={cat}
 						cat={Number(cat)}
-						to={`/shop/books/${cat}`}
+						to={`/shop/category/books/${cat}`}
 					/>
 				))}
 			</nav>

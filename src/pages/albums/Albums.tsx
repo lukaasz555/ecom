@@ -34,11 +34,10 @@ const Albums = ({ filterCategory }: AlbumsProps) => {
 		if (filterCategory) {
 			const fltrd = handleFilter(catID, null, items);
 			setFiltered(fltrd);
-			setUpdated(true);
 		} else {
 			setFiltered(items);
-			setUpdated(true);
 		}
+		setUpdated(true);
 	}, [catID, filtered, filterCategory]);
 
 	useEffect(() => {

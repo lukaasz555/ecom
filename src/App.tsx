@@ -22,6 +22,10 @@ function App() {
 					path={`/shop/category/albums/:catID`}
 					element={<Albums filterCategory={true} />}
 				/>
+				<Route
+					path={`/shop/category/books/:catID`}
+					element={<Books filterCategory={true} />}
+				/>
 			</Routes>
 		</div>
 	);
