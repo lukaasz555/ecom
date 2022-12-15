@@ -19,6 +19,12 @@ module.exports = {
 				sans: ['Montserrat', 'sans-serif'],
 				lato: ['Lato', 'sans-serif'],
 			},
+			keyframes: {
+				fromBottom: {
+					'0%': { transform: 'translateY(100%)' },
+					'100%': { transform: 'translateY(0)' },
+				},
+			},
 		},
 	},
 	plugins: [],
