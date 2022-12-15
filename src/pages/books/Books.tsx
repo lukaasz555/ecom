@@ -48,6 +48,7 @@ const Books = ({ filterCategory }: BooksProps) => {
 		console.log(catID);
 	}, [updated, location]);
 
+
 	return (
 		<Layout>
 			<nav className='my-10 flex items-start flex-col xl:flex-row  xl:justify-center xl:flex-wrap xl:gap-3'>

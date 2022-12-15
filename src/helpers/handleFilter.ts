@@ -1,4 +1,5 @@
 import { ProductModel } from '../models/Product';
+import { handleCategoryNames } from './handleCategoryNames';
 
 export const handleFilter = (
 	cat: number,

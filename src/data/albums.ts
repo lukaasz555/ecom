@@ -326,6 +326,7 @@ export const albums: ProductModel[] = [
 		price: 42.0,
 		discount: 0,
 		categoryID: 41,
+
 		label: 'Step',
 		format: 'Płyta CD',
 		type: 'albums',
@@ -341,6 +342,7 @@ export const albums: ProductModel[] = [
 		price: 39.99,
 		discount: 0,
 		categoryID: 41,
+
 		label: 'Universal Music Group',
 		format: 'Płyta CD',
 		type: 'albums',
@@ -356,6 +358,7 @@ export const albums: ProductModel[] = [
 		price: 37.99,
 		discount: 15,
 		categoryID: 41,
+
 		label: 'Asfalt Records',
 		format: 'Płyta CD',
 		type: 'albums',
@@ -371,6 +374,7 @@ export const albums: ProductModel[] = [
 		price: 0,
 		discount: 0,
 		categoryID: 41,
+
 		label: 'Interscope Records',
 		format: 'Płyta CD',
 		type: 'albums',
@@ -386,6 +390,7 @@ export const albums: ProductModel[] = [
 		price: 49.99,
 		discount: 16,
 		categoryID: 44,
+
 		label: 'Sony Music Entertainment',
 		format: 'Płyta CD',
 		type: 'albums',
@@ -401,6 +406,7 @@ export const albums: ProductModel[] = [
 		price: 52.0,
 		discount: 0,
 		categoryID: 45,
+
 		label: 'Sony Music Entertainment',
 		format: 'Płyta CD',
 		type: 'albums',

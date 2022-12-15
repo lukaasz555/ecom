@@ -30,6 +30,7 @@ export const books: ProductModel[] = [
 		price: 34.99,
 		discount: 5,
 		categoryID: 13,
+
 		description: '',
 		img: 'https://ecsmedia.pl/c/goniac-czarne-jednorozce-jak-polski-wilk-z-wall-street-zostal-afrykanskim-terrorysta-w-iext54161540.jpg',
 		format: 'Książka (twarda okładka)',
@@ -64,6 +65,7 @@ export const books: ProductModel[] = [
 		price: 37.99,
 		discount: 0,
 		categoryID: 13,
+
 		description: '',
 		img: 'https://ecsmedia.pl/c/elon-musk-biografia-tworcy-paypala-tesli-spacex-w-iext74413953.jpg',
 		format: 'Książka (miękka okładka)',
@@ -81,6 +83,7 @@ export const books: ProductModel[] = [
 		price: 27.99,
 		discount: 0,
 		categoryID: 13,
+
 		description: '',
 		img: 'https://s.lubimyczytac.pl/upload/books/7000/7534/352x500.jpg',
 		format: 'Książka (miękka okładka)',

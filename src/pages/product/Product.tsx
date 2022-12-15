@@ -21,6 +21,7 @@ const initValue: ProductModel = {
 	price: 0,
 	discount: 0,
 	categoryID: 0,
+
 	format: '',
 	type: 'albums',
 };

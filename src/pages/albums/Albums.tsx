@@ -25,6 +25,7 @@ const Albums = ({ filterCategory }: AlbumsProps) => {
 	const location = useLocation();
 	const catID = +location.pathname.replace('/shop/category/albums/', '');
 
+
 	const handleFilterByPrice = (id: string) => {
 		setFiltered(filterByPrice(id, filtered));
 	};
@@ -47,6 +48,7 @@ const Albums = ({ filterCategory }: AlbumsProps) => {
 		setOpen(false);
 		console.log(catID);
 	}, [updated, location]);
+
 
 	return (
 		<Layout>
