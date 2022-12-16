@@ -13,7 +13,6 @@ const Layout: FC<ILayout> = ({ children }) => {
 		const h = window.innerHeight;
 
 		window.addEventListener('scroll', () => {
-			console.log(h);
 			if (window.scrollY > h) {
 				setShowArrow(true);
 			} else {
