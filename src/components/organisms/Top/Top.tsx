@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import DesktopMenu from '../../molecules/DesktopMenu/DesktopMenu';
 import MobileMenu from '../../molecules/MobileMenu/MobileMenu';
 import Socials from '../../atoms/Socials/Socials';
-import Cart from '../../atoms/Cart/Cart';
+import CartIcon from '../../atoms/CartIcon/CartIcon';
 
 const Top = () => {
 	return (
@@ -19,7 +19,7 @@ const Top = () => {
 				<div className='hidden md:block mr-3'>
 					<Socials />
 				</div>
-				<Cart />
+				<CartIcon />
 			</div>
 		</div>
 	);
