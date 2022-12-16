@@ -70,7 +70,7 @@ const Product = () => {
 					{product.id === '' ? (
 						<h2>Przepraszamy, nie udało załadować się strony tego produktu.</h2>
 					) : (
-						<article className='flex flex-col items-center md:items-start'>
+						<article className='flex flex-col items-center md:items-start mb-20'>
 							<ProductHead myRef={myRef} data={product} openModal={openModal} />
 							<div ref={myRef} className='w-full'>
 								<ProductDesc description={product.description} />

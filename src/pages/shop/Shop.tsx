@@ -11,7 +11,7 @@ const Shop = () => {
 				<Route path='/shop/books' element={<Books />} />
 				<Route path='/shop/music' element={<Music />} />
 			</Routes>
-			<main className='flex flex-wrap justify-center lg:justify-start'>
+			<main className='min-h-screen flex flex-wrap justify-center lg:justify-start'>
 				homepage
 			</main>
 		</Layout>

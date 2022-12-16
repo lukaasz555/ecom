@@ -17,7 +17,7 @@ const MobileMenu = () => {
 				<MobileMenuLink to='/shop/books' body='Książki' />
 				<MobileMenuLink to='/shop/albums' body='Płyty' />
 				<MobileMenuLink to='/contact' body='Kontakt' />
-				<div className='border-t-[1px] mt-5'>
+				<div className='border-t-[1px] mt-5 pt-5'>
 					<Socials />
 				</div>
 			</nav>

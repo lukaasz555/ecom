@@ -7,7 +7,7 @@ import CartIcon from '../../atoms/CartIcon/CartIcon';
 
 const Top = () => {
 	return (
-		<div className='mb-10 mt-2 md:mt-5 lg:mt-10 flex justify-between items-center min-h-[120px] min-w-s px-5 relative relative'>
+		<div className='mb-10 mt-2 md:mt-5 lg:mt-10 flex justify-between items-center min-h-[120px] min-w-s px-5 relative'>
 			<DesktopMenu />
 			<MobileMenu />
 			<div className='flex justify-center '>

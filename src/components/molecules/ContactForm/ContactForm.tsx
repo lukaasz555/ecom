@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Input from '../../atoms/Input/Input';
 import Textarea from '../../atoms/Textarea/Textarea';
 import CTA from '../../atoms/CTA/CTA';
-import ALT from '../../atoms/ALT/ALT';
 
 interface IContactForm {
 	email: string;
