@@ -72,7 +72,7 @@ const ContactForm = () => {
 				</div>
 			) : null}
 
-			<div className='self-center lg:self-start mb-5'>
+			<div className='mt-10 lg:mt-3 self-center lg:self-start'>
 				{isSent ? (
 					<p className='mt-3 text-[18px] text-darkGreen font-[500] font-lato'>
 						Dziękujemy za przesłanie wiadomości!
