@@ -3,6 +3,7 @@ import Price from '../../molecules/Price/Price';
 import ProductAside from '../../molecules/ProductAside/ProductAside';
 import { ProductModel2 } from '../../../models/Product';
 import ShortDescription from '../../atoms/ShortDescription/ShortDescription';
+import CTA from '../../atoms/CTA/CTA';
 
 interface PHeadProps extends ProductModel2 {
 	myRef: React.MutableRefObject<any>;
@@ -16,13 +17,11 @@ const ProductHead: FC<PHeadProps> = ({ data, myRef, openModal }) => {
 		<div className='md:flex justify-between w-full'>
 			<div
 				className={`md:flex md:gap-x-5 ${
-					type === 'books' ? 'md:gap-x-5' : 'md:gap-x-0'
+					type === 'books' ? 'md:gap-x-8' : 'md:gap-x-0'
 				}`}>
 				<div
 					className={`flex justify-center md:justify-start ${
-						type === 'books'
-							? 'md:h-[500px] md:min-w[300px]'
-							: 'md:h-[360px] md:w-[400px]'
+						type === 'books' ? 'h-[360px]' : 'md:h-[340px] md:w-[390px]'
 					}`}>
 					<img
 						src={img}
@@ -39,8 +38,9 @@ const ProductHead: FC<PHeadProps> = ({ data, myRef, openModal }) => {
 					<ShortDescription myRef={myRef} data={data} />
 				</div>
 
-				<div className='flex flex-col items-center md:hidden'>
+				<div className='flex flex-col items-center md:hidden gap-y-3'>
 					<Price discount={discount} price={price} atProductPage={true} />
+					{price > 0 ? <CTA body='do koszyka' /> : null}
 				</div>
 			</div>
 

@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import NotAvailable from '../../atoms/NotAvailable/NotAvailable';
+import CTA from '../../atoms/CTA/CTA';
 
 type PriceProps = {
 	price: number;
