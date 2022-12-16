@@ -40,7 +40,7 @@ export const books: ProductModel[] = [
 	{
 		id: '103',
 		title: 'Steve Jobs',
-		authors: ['Isaacson Walter'],
+		authors: ['Walter Isaacson'],
 		releaseYear: '2011',
 		publisher: 'Wydawnictwo Insignis',
 		pages: 736,

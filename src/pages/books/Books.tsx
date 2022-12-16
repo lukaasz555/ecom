@@ -7,8 +7,6 @@ import { ProductModel } from '../../models/Product';
 import { handleFilter } from '../../helpers/handleFilter';
 import { getCategories } from '../../helpers/getCategories';
 import CategoryButton from '../../components/atoms/CategoryButton/CategoryButton';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useElementSize } from 'usehooks-ts';
 import { filterByPrice } from '../../helpers/filterByPrice';
 import FilterTool from '../../components/atoms/FilterTool/FilterTool';

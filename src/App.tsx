@@ -5,6 +5,7 @@ import Books from './pages/books/Books';
 import Albums from './pages/albums/Albums';
 import Contact from './pages/contact/Contact';
 import Product from './pages/product/Product';
+import Cart from './pages/cart/Cart';
 
 function App() {
 	return (
@@ -15,6 +16,7 @@ function App() {
 				<Route path='/shop/books' element={<Books />} />
 				<Route path='/shop/albums' element={<Albums />} />
 				<Route path='/contact' element={<Contact />} />
+				<Route path='/cart' element={<Cart />} />
 				<Route path={`/shop/product/books/:id`} element={<Product />} />
 				<Route path={`/shop/product/albums/:id`} element={<Product />} />
 				<Route
