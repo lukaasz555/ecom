@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import Price from '../../atoms/Price/Price';
+import Price from '../Price/Price';
 import CTA from '../../atoms/CTA/CTA';
 import ALT from '../../atoms/ALT/ALT';
 import { Link } from 'react-router-dom';

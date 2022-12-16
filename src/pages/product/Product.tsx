@@ -86,6 +86,10 @@ const Product = () => {
 				shouldCloseOnEsc={true}
 				onRequestClose={closeModal}
 				style={{
+					overlay: {
+						backgroundColor: 'rgba(255,255,255,0.8)',
+						height: '100%',
+					},
 					content: {
 						backgroundColor: 'rgba(255,255,255,0.8)',
 						border: 'none',
@@ -93,7 +97,7 @@ const Product = () => {
 				}}
 				contentLabel={`${product.title} cover`}>
 				<div className='h-[100%]'>
-					<div className='flex flex-col items-center justify-center w-full h-[100%] relative'>
+					<div className='flex flex-col items-center justify-center w-full h-[100%]'>
 						<img src={product.img} alt={product.title} />
 						<button
 							className='uppercase hover:underline mt-5'

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Layout from '../../components/templates/Layout/Layout';
 import { albums } from '../../data/albums';
-import ItemCard from '../../components/molecules/ItemCard/ItemCard';
+import ItemCard from '../../components/organisms/ItemCard/ItemCard';
 import { ProductModel } from '../../models/Product';
 import { handleFilter } from '../../helpers/handleFilter';
 import CategoryButton from '../../components/atoms/CategoryButton/CategoryButton';

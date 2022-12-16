@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import CTA from '../../atoms/CTA/CTA';
-import Price from '../../atoms/Price/Price';
+import Price from '../../molecules/Price/Price';
 
 interface IItemCard {
 	id: string;

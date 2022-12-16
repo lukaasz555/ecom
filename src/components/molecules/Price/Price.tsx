@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import NotAvailable from '../NotAvailable/NotAvailable';
+import NotAvailable from '../../atoms/NotAvailable/NotAvailable';
 
 type PriceProps = {
 	price: number;

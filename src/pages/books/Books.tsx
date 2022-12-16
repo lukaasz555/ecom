@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import Layout from '../../components/templates/Layout/Layout';
 import { books } from '../../data/books';
-import ItemCard from '../../components/molecules/ItemCard/ItemCard';
+import ItemCard from '../../components/organisms/ItemCard/ItemCard';
 import { ProductModel } from '../../models/Product';
 import { handleFilter } from '../../helpers/handleFilter';
 import { getCategories } from '../../helpers/getCategories';
