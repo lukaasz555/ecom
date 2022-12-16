@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Input from '../../atoms/Input/Input';
 import Textarea from '../../atoms/Textarea/Textarea';
 import CTA from '../../atoms/CTA/CTA';
+import ALT from '../../atoms/ALT/ALT';
 
 interface IContactForm {
 	email: string;
@@ -18,6 +19,7 @@ const initValue: IContactForm = {
 const ContactForm = () => {
 	const [formValue, setFormValue] = useState<IContactForm>(initValue);
 	const [error, setError] = useState(false);
+	const [isSent, setSent] = useState(false);
 
 	const handleInputChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -30,12 +32,12 @@ const ContactForm = () => {
 			formValue.email.includes('@') &&
 			formValue.email.includes('.') &&
 			formValue.subject !== '' &&
-			formValue.message.length > 50
+			formValue.message.length >= 50
 		) {
-			console.log(formValue);
 			setError(false);
+			setSent(true);
+			setFormValue(initValue);
 		} else {
-			console.log('coś nie tak');
 			setError(true);
 		}
 	};
@@ -47,18 +49,21 @@ const ContactForm = () => {
 				label='Twój e-mail:'
 				name='email'
 				onChange={handleInputChange}
+				value={formValue.email}
 			/>
 			<Input
 				type='text'
 				label='Temat:'
 				name='subject'
 				onChange={handleInputChange}
+				value={formValue.subject}
 			/>
 
 			<Textarea
 				name='message'
 				label='Wiadomość:'
 				onChange={handleInputChange}
+				value={formValue.message}
 			/>
 			{error ? (
 				<div className='mt-3 mb-6 text-[12px] lg:text-[14px] text-brownSugar'>
@@ -69,7 +74,13 @@ const ContactForm = () => {
 			) : null}
 
 			<div className='self-center lg:self-start mb-5'>
-				<CTA body='wyślij' onClick={handleClick} />
+				{isSent ? (
+					<p className='mt-3 text-[18px] text-darkGreen font-[500] font-lato'>
+						Dziękujemy za przesłanie wiadomości!
+					</p>
+				) : (
+					<CTA body='wyślij' onClick={handleClick} />
+				)}
 			</div>
 		</form>
 	);
