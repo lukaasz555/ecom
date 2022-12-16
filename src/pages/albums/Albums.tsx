@@ -6,11 +6,10 @@ import { ProductModel } from '../../models/Product';
 import { handleFilter } from '../../helpers/handleFilter';
 import CategoryButton from '../../components/atoms/CategoryButton/CategoryButton';
 import { filterByPrice } from '../../helpers/filterByPrice';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useElementSize } from 'usehooks-ts';
 import { getCategories } from '../../helpers/getCategories';
 import { useLocation } from 'react-router-dom';
+import FilterTool from '../../components/atoms/FilterTool/FilterTool';
 
 type AlbumsProps = {
 	filterCategory?: boolean;
@@ -24,7 +23,6 @@ const Albums = ({ filterCategory }: AlbumsProps) => {
 	const [updated, setUpdated] = useState(false);
 	const location = useLocation();
 	const catID = +location.pathname.replace('/shop/category/albums/', '');
-
 
 	const handleFilterByPrice = (id: string) => {
 		setFiltered(filterByPrice(id, filtered));
@@ -49,7 +47,6 @@ const Albums = ({ filterCategory }: AlbumsProps) => {
 		console.log(catID);
 	}, [updated, location]);
 
-
 	return (
 		<Layout>
 			<nav className='my-10 flex items-start flex-col xl:flex-row  xl:justify-center xl:flex-wrap xl:gap-3'>
@@ -62,52 +59,7 @@ const Albums = ({ filterCategory }: AlbumsProps) => {
 				))}
 			</nav>
 
-			<div
-				className={`w-${width} mx-10 border-b-[1px] mb-10  flex justify-end`}>
-				<div className={`${open ? 'bg-sparkle' : 'bg-white'} relative`}>
-					<button
-						className={`flex items-center bg-white justify-end uppercase py-2 px-5 text-[14px]
-						w-[300px]
-					`}
-						onClick={() => setOpen(!open)}>
-						sortuj
-						<FontAwesomeIcon icon={faChevronDown} className='text-xs ml-1' />
-					</button>
-					<ul
-						className={`absolute top-[102%] right-0 bg-lightGray z-30 pl-5 duration-150 ${
-							open ? 'scale-y-100' : 'scale-y-0'
-						} origin-top flex flex-col items-end w-[300px]`}>
-						<li>
-							<button
-								id='declining'
-								className='uppercase text-[18px] font-light px-5 py-3 font-[200] border-b-[1px] w-[300px] text-right'
-								onClick={(e) => {
-									const targ = e.target as Element;
-									if (targ != null) {
-										handleFilterByPrice(targ.id);
-									}
-									setOpen(!open);
-								}}>
-								Od najdroŻszych
-							</button>
-						</li>
-						<li>
-							<button
-								id='growing'
-								className='uppercase text-[18px] font-light px-5 py-3 font-[200] border-b-[1px] w-[300px] text-right'
-								onClick={(e) => {
-									const targ = e.target as Element;
-									if (targ != null) {
-										handleFilterByPrice(targ.id);
-									}
-									setOpen(!open);
-								}}>
-								od najtańszych
-							</button>
-						</li>
-					</ul>
-				</div>
-			</div>
+			<FilterTool onClick={handleFilterByPrice} open={open} setOpen={setOpen} />
 
 			<div ref={divRef} className='flex flex-wrap justify-center'>
 				{filtered !== undefined

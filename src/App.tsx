@@ -17,7 +17,6 @@ function App() {
 				<Route path='/contact' element={<Contact />} />
 				<Route path={`/shop/product/books/:id`} element={<Product />} />
 				<Route path={`/shop/product/albums/:id`} element={<Product />} />
-				<Route path={`/shop/books/:catID`} element={<Books />} />
 				<Route
 					path={`/shop/category/albums/:catID`}
 					element={<Albums filterCategory={true} />}

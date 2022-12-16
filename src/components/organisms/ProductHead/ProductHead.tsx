@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import Price from '../../atoms/Price/Price';
-import ProductAside from '../ProductAside/ProductAside';
+import ProductAside from '../../molecules/ProductAside/ProductAside';
 import { ProductModel2 } from '../../../models/Product';
 import ShortDescription from '../../atoms/ShortDescription/ShortDescription';
 

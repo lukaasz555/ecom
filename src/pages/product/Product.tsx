@@ -4,7 +4,7 @@ import ProductLayout from '../../components/templates/ProductLayout/ProductLayou
 import Layout from '../../components/templates/Layout/Layout';
 import { books } from '../../data/books';
 import { ProductModel } from '../../models/Product';
-import ProductHead from '../../components/molecules/ProductHead/ProductHead';
+import ProductHead from '../../components/organisms/ProductHead/ProductHead';
 import ProductDesc from '../../components/atoms/ProductDesc/ProductDesc';
 import ProductDetails from '../../components/atoms/ProductDetails/ProductDetails';
 import { albums } from '../../data/albums';

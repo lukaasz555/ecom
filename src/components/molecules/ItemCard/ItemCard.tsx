@@ -38,7 +38,7 @@ const ItemCard: FC<IItemCard> = ({
 						alt={title}
 						className={`${
 							type === 'books' ? 'h-[250px]' : 'h-auto'
-						} w-full px-5 py-5 z-10`}
+						} w-full px-5 py-5`}
 					/>
 				</div>
 				<div className='flex flex-col mt-2'>
