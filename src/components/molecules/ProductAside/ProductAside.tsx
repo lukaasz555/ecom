@@ -3,6 +3,7 @@ import Price from '../Price/Price';
 import CTA from '../../atoms/CTA/CTA';
 import ALT from '../../atoms/ALT/ALT';
 import { Link } from 'react-router-dom';
+import AddToCartBtn from '../../atoms/AddToCartBtn/AddToCartBtn';
 
 type PAsideProps = {
 	discount: number;
@@ -29,7 +30,8 @@ const ProductAside: FC<PAsideProps> = ({ discount, price, type }) => {
 				<div className='mb-2'>
 					<Price discount={discount} price={price} atProductPage={true} />
 				</div>
-				{price > 0 ? <CTA body='do koszyka' /> : null}
+				{/* 	musze wczesniej przekazać data w propach  */}
+				{/* {price > 0 ? <AddToCartBtn body='do koszyka' data={data} /> : null}  */}
 			</div>
 			<div className='flex flex-col items-center'>
 				<h5 className='mb-4 text-center text-[14px]'>

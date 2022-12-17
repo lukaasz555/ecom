@@ -31,7 +31,8 @@ const ItemCard: FC<IItemCard> = ({
                 after:opacity-0 hover:after:opacity-100
                 `}>
 					<div className='absolute h-[100%] w-full bg-whiteBg z-20 flex justify-center items-center opacity-0 hover:opacity-100 duration-300'>
-						<CTA body='do koszyka' />
+						{/* musze przekzac data w propach */}
+						{/* <AddToCartBtn body='do koszyka' /> */}
 					</div>
 					<img
 						src={img}

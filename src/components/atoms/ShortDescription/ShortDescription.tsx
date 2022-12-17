@@ -5,6 +5,7 @@ import { ProductModel2 } from '../../../models/Product';
 import { scrollToRef } from '../../../helpers/scrollToRef';
 import CTA from '../CTA/CTA';
 import NotAvailable from '../NotAvailable/NotAvailable';
+import AddToCartBtn from '../AddToCartBtn/AddToCartBtn';
 
 interface ShortDescProps extends ProductModel2 {
 	myRef: React.MutableRefObject<any>;
@@ -56,7 +57,7 @@ const ShortDescription: FC<ShortDescProps> = ({ data, myRef }) => {
 			</div>
 			<div className='hidden md:block lg:hidden mt-10'>
 				{price > 0 ? (
-					<CTA body='do koszyka' />
+					<AddToCartBtn body='do koszyka' data={data} />
 				) : (
 					<NotAvailable atProductPage={true} />
 				)}

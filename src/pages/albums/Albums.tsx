@@ -44,7 +44,6 @@ const Albums = ({ filterCategory }: AlbumsProps) => {
 		setFiltered(albums);
 		renderAlbums();
 		setOpen(false);
-		console.log(catID);
 	}, [updated, location]);
 
 	return (

@@ -2,6 +2,8 @@ import React from 'react';
 import { ProductModel } from '../../../models/Product';
 import CloseIcon from '../../atoms/CloseIcon/CloseIcon';
 import { Link } from 'react-router-dom';
+import { useAppDispatch } from '../../../hooks/hooks';
+import { removeItem } from '../../../features/cart/cartSlice';
 
 interface ICartItem {
 	data: ProductModel;
@@ -9,6 +11,29 @@ interface ICartItem {
 
 const CartItem = ({ data }: ICartItem) => {
 	const { img, title, authors, price, discount, id, type } = data;
+	const dispatch = useAppDispatch();
+
+	const removeFromCard = () => {
+		dispatch(
+			removeItem({
+				categoryID: data.categoryID,
+				description: data.description,
+				discount: data.discount,
+				format: data.format,
+				id: data.id,
+				img: data.img,
+				price: data.price,
+				releaseYear: data.releaseYear,
+				title: data.title,
+				type: data.type,
+				label: data.label,
+				language: data.language,
+				pages: data.pages,
+				publisher: data.publisher,
+				authors: data.authors,
+			})
+		);
+	};
 
 	return (
 		<div className='flex justify-between border-b-[1px] border-lightBlack pb-1 mb-7 w-full relative pr-10'>
@@ -34,7 +59,9 @@ const CartItem = ({ data }: ICartItem) => {
 			<div>{(price - discount).toFixed(2)}zł</div>
 
 			<div className='ml-4 absolute right-0 top-0'>
-				<CloseIcon />
+				<button onClick={removeFromCard}>
+					<CloseIcon />
+				</button>
 			</div>
 		</div>
 	);

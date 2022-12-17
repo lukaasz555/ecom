@@ -123,7 +123,7 @@ export const albums: ProductModel[] = [
 
 	{
 		id: '393',
-		title: 'Bloog Sugar Sex Magik',
+		title: 'Blood Sugar Sex Magik',
 		authors: ['Red Hot Chili Peppers'],
 		releaseYear: '1991',
 		description: '',

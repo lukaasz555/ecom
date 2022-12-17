@@ -7,14 +7,20 @@ import { ProductModel } from '../../models/Product';
 import EmptyCart from '../../components/atoms/EmptyCart/EmptyCart';
 import CTA from '../../components/atoms/CTA/CTA';
 import { handleNumbFormat } from '../../helpers/handleNumbFormat';
+import { useAppSelector } from '../../hooks/hooks';
 
 const Cart = () => {
 	const [items, setItems] = useState<ProductModel[] | []>([]);
+	const cartItems = useAppSelector((state) => state.cart.items);
+	const uniqueItems = useAppSelector((state) => state.cart.uniqueItems);
 
 	useEffect(() => {
-		const mock = [books[1], albums[16], albums[15]];
-		setItems(mock);
-	}, []);
+		/* 		const mock = [books[1], albums[16], albums[15]];
+		setItems(mock); */
+		if (cartItems.length > 0) {
+			setItems(uniqueItems);
+		}
+	}, [cartItems, uniqueItems]);
 
 	const productsValue = (arr: ProductModel[]) => {
 		if (arr.length > 0) {
@@ -33,6 +39,14 @@ const Cart = () => {
 	const itemsCost: number = productsValue(items);
 	const deliveryCost: number = itemsCost >= 99 ? 0 : 9.9;
 	const total: number = itemsCost + deliveryCost;
+
+	const handleClick = (e: React.MouseEvent) =>
+		console.log(
+			'wartość produktów to ',
+			itemsCost,
+			', a całe zamówienie to ',
+			total
+		);
 
 	return (
 		<Layout>
@@ -62,7 +76,7 @@ const Cart = () => {
 							) : null}
 						</div>
 						<div>
-							<CTA body='dalej' />
+							<CTA body='dalej' onClick={handleClick} />
 						</div>
 					</div>
 				) : (

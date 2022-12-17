@@ -3,7 +3,7 @@ import Price from '../../molecules/Price/Price';
 import ProductAside from '../../molecules/ProductAside/ProductAside';
 import { ProductModel2 } from '../../../models/Product';
 import ShortDescription from '../../atoms/ShortDescription/ShortDescription';
-import CTA from '../../atoms/CTA/CTA';
+import AddToCartBtn from '../../atoms/AddToCartBtn/AddToCartBtn';
 
 interface PHeadProps extends ProductModel2 {
 	myRef: React.MutableRefObject<any>;
@@ -40,7 +40,9 @@ const ProductHead: FC<PHeadProps> = ({ data, myRef, openModal }) => {
 
 				<div className='flex flex-col items-center md:hidden gap-y-3'>
 					<Price discount={discount} price={price} atProductPage={true} />
-					{price > 0 ? <CTA body='do koszyka' /> : null}
+					{price > 0 ? (
+						<AddToCartBtn body='do koszyka 123' data={data} />
+					) : null}
 				</div>
 			</div>
 

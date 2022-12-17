@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 
-type CTAProps = {
+interface CTAProps {
 	body: string;
 	onClick?: (e: React.MouseEvent) => void;
-};
+}
 
 const CTA: FC<CTAProps> = ({ body, onClick }) => {
 	return (
