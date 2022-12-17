@@ -12,7 +12,7 @@ const Cart = () => {
 	const [items, setItems] = useState<ProductModel[] | []>([]);
 
 	useEffect(() => {
-		const mock = [books[1], albums[16]];
+		const mock = [books[1], albums[16], albums[15]];
 		setItems(mock);
 	}, []);
 
@@ -31,7 +31,7 @@ const Cart = () => {
 	};
 
 	const itemsCost: number = productsValue(items);
-	const deliveryCost: number = 9.9;
+	const deliveryCost: number = itemsCost >= 99 ? 0 : 9.9;
 	const total: number = itemsCost + deliveryCost;
 
 	return (

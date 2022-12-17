@@ -16,7 +16,7 @@ const Top = () => {
 				</h1>
 			</div>
 			<div className='flex items-center'>
-				<div className='hidden md:block mr-3'>
+				<div className='hidden md:block mr-7'>
 					<Socials />
 				</div>
 				<CartIcon />
