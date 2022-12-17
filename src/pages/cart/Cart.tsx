@@ -5,6 +5,8 @@ import { books } from '../../data/books';
 import { albums } from '../../data/albums';
 import { ProductModel } from '../../models/Product';
 import EmptyCart from '../../components/atoms/EmptyCart/EmptyCart';
+import CTA from '../../components/atoms/CTA/CTA';
+import { handleNumbFormat } from '../../helpers/handleNumbFormat';
 
 const Cart = () => {
 	const [items, setItems] = useState<ProductModel[] | []>([]);
@@ -14,53 +16,53 @@ const Cart = () => {
 		setItems(mock);
 	}, []);
 
-	// napisać funkcję opartą na re
-
-	/* 	const productsValue = items.reduce((acc: number, item: ProductModel) => {
-		return acc + (item.price - item.discount);
-	}, 0); */
-
-	type ProductsValueReturnType = {
-		value: number;
+	const productsValue = (arr: ProductModel[]) => {
+		if (arr.length > 0) {
+			const val = arr.reduce(
+				(acc: number, item: { price: number; discount: number }) => {
+					return acc + (item.price - item.discount);
+				},
+				0
+			);
+			return val;
+		} else {
+			return 0;
+		}
 	};
 
-	type ReturnType = {
-		value: number;
-	};
-
-	/* 	const productsValue = items.reduce<ReturnType>(
-		(acc: number, item: { price: number; discount: number }) => {
-			const value = acc + (item.price - item.discount);
-			return value;
-		},
-		0
-	); */
-
-	const getPrice = (): number => {
-		const productsValue = items.reduce(
-			(acc: number, item: { price: number; discount: number }) => {
-				const value = acc + (item.price - item.discount);
-				return value;
-			},
-			0
-		);
-		return productsValue;
-	};
+	const itemsCost: number = productsValue(items);
+	const deliveryCost: number = 9.9;
+	const total: number = itemsCost + deliveryCost;
 
 	return (
 		<Layout>
-			<div className='lg:px-10 py-10 flex justify-center min-h-screen'>
+			<div className='lg:px-10 py-10 flex justify-center'>
 				{items.length > 0 ? (
-					<div className='w-full max-w-[900px] flex flex-col items-end'>
+					<div
+						className='w-full max-w-[900px] flex flex-col  
+					 items-center lg:items-end '>
 						<div className='flex flex-col w-full'>
 							{items.map((item) => (
 								<CartItem data={item} key={item.id} />
 							))}
 						</div>
-						<div className='text-right'>
-							<p>Wartość produktów: {getPrice().toFixed(2)}zł</p>
-							<p>Koszt wysyłki: 9,90zł</p>
-							<p>Całkowita wartość zamówienia: TOTAL</p>
+						<div className='text-center lg:text-right font-lato font-light'>
+							{items instanceof Array ? (
+								<p>
+									Wartość produktów: {handleNumbFormat(productsValue(items))}zł
+								</p>
+							) : null}
+
+							<p>Koszt wysyłki: {handleNumbFormat(deliveryCost)}zł</p>
+
+							{items instanceof Array ? (
+								<p className='my-3 font-[500] text-[18px]'>
+									Całkowita wartość zamówienia: {handleNumbFormat(total)}zł
+								</p>
+							) : null}
+						</div>
+						<div>
+							<CTA body='dalej' />
 						</div>
 					</div>
 				) : (
