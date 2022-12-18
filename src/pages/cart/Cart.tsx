@@ -57,7 +57,7 @@ const Cart = () => {
 					 items-center lg:items-end '>
 						<div className='flex flex-col w-full'>
 							{items.map((item) => (
-								<CartItem data={item} key={item.id} />
+								<CartItem data={item} key={item.id} cartItems={cartItems} />
 							))}
 						</div>
 						<div className='text-center lg:text-right font-lato font-light'>

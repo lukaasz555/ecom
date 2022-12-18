@@ -4,13 +4,11 @@ import type { RootState } from '../../store/store';
 import { ProductModel } from '../../models/Product';
 
 interface CartState {
-	//quantity: number;
 	items: ProductModel[];
 	uniqueItems: ProductModel[];
 }
 
 const initialState: CartState = {
-	//quantity: 0,
 	items: [],
 	uniqueItems: [],
 };
@@ -30,10 +28,8 @@ export const cartSlice = createSlice({
 			);
 
 			if (uniqueIDs.has(action.payload.id)) {
-				console.log('ten produkt juz byl');
 				state.items.push(action.payload);
 			} else {
-				console.log('dodaje nowy produkt');
 				state.items.push(action.payload);
 				state.uniqueItems.push(action.payload);
 			}

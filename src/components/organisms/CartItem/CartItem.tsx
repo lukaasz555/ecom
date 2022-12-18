@@ -8,9 +8,10 @@ import { handleNumbFormat } from '../../../helpers/handleNumbFormat';
 
 interface ICartItem {
 	data: ProductModel;
+	cartItems: ProductModel[] | [];
 }
 
-const CartItem = ({ data }: ICartItem) => {
+const CartItem = ({ data, cartItems }: ICartItem) => {
 	const { img, title, authors, price, discount, id, type } = data;
 	const dispatch = useAppDispatch();
 
@@ -36,15 +37,23 @@ const CartItem = ({ data }: ICartItem) => {
 		);
 	};
 
+	const getItemQty = (id: string) => {
+		const currentID = id.toLowerCase();
+		return cartItems.filter((item) => item.id.toLowerCase() === currentID)
+			.length;
+	};
+
 	return (
-		<div className='flex justify-between border-b-[1px] border-lightBlack pb-1 mb-7 w-full relative pr-10'>
+		<div className='flex justify-between border-b-[1px] border-lightBlack pb-2 mb-7 w-full relative pr-10'>
 			<section className='flex'>
-				<div className='h-[80px] min-w-[80px] mr-3'>
-					<img
-						src={img}
-						alt={`${title} - ${authors}`}
-						className='object-contain h-[100%]'
-					/>
+				<div className=' mr-3 flex justify-end'>
+					<Link to={`/shop/product/${type}/${id}`}>
+						<img
+							src={img}
+							alt={`${title} - ${authors}`}
+							className='object-contain h-[70px] w-[70px]'
+						/>
+					</Link>
 				</div>
 
 				<div className='mr-5'>
@@ -57,7 +66,16 @@ const CartItem = ({ data }: ICartItem) => {
 				</div>
 			</section>
 
-			<div>{handleNumbFormat(price - discount)}zł</div>
+			<div className=' text-center'>
+				{/* <p>{handleNumbFormat(price - discount)}zł</p> */}
+				<p>{handleNumbFormat(getItemQty(data.id) * (price - discount))}zł</p>
+
+				{getItemQty(data.id) > 1 ? (
+					<p className='text-[14px] mt-2 text-brownSugar'>
+						{getItemQty(data.id)}x
+					</p>
+				) : null}
+			</div>
 
 			<div className='ml-4 absolute right-0 top-0'>
 				<button onClick={removeFromCard}>
