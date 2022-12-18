@@ -20,7 +20,7 @@ const Cart = () => {
 		if (cartItems.length > 0) {
 			setItems(uniqueItems);
 		}
-	}, [cartItems, uniqueItems]);
+	}, [cartItems]);
 
 	const productsValue = (arr: ProductModel[]) => {
 		if (arr.length > 0) {

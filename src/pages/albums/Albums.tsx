@@ -62,20 +62,7 @@ const Albums = ({ filterCategory }: AlbumsProps) => {
 
 			<div ref={divRef} className='flex flex-wrap justify-center'>
 				{filtered !== undefined
-					? filtered.map(
-							({ id, title, price, img, discount, authors, type }) => (
-								<ItemCard
-									key={id}
-									id={id}
-									title={title}
-									price={price}
-									img={img}
-									discount={discount}
-									authors={authors}
-									type={type}
-								/>
-							)
-					  )
+					? filtered.map((data) => <ItemCard data={data} key={data.id} />)
 					: null}
 			</div>
 		</Layout>

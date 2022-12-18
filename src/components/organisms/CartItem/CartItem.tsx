@@ -4,6 +4,7 @@ import CloseIcon from '../../atoms/CloseIcon/CloseIcon';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { removeItem } from '../../../features/cart/cartSlice';
+import { handleNumbFormat } from '../../../helpers/handleNumbFormat';
 
 interface ICartItem {
 	data: ProductModel;
@@ -56,7 +57,7 @@ const CartItem = ({ data }: ICartItem) => {
 				</div>
 			</section>
 
-			<div>{(price - discount).toFixed(2)}zł</div>
+			<div>{handleNumbFormat(price - discount)}zł</div>
 
 			<div className='ml-4 absolute right-0 top-0'>
 				<button onClick={removeFromCard}>

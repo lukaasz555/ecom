@@ -4,13 +4,13 @@ import type { RootState } from '../../store/store';
 import { ProductModel } from '../../models/Product';
 
 interface CartState {
-	quantity: number;
+	//quantity: number;
 	items: ProductModel[];
 	uniqueItems: ProductModel[];
 }
 
 const initialState: CartState = {
-	quantity: 0,
+	//quantity: 0,
 	items: [],
 	uniqueItems: [],
 };
@@ -19,17 +19,6 @@ interface CartAction {
 	type: string;
 	payload: ProductModel;
 }
-
-const checkArr = (arr: ProductModel[], id: string) => {
-	const check = arr.map((item) => item.id === id);
-	if (check.length === 0) {
-		console.log('tego produktu nie było w koszyku');
-		return true;
-	} else {
-		console.log('kolejna sztuka tego produktu');
-		return false;
-	}
-};
 
 export const cartSlice = createSlice({
 	name: 'cart',
@@ -51,11 +40,21 @@ export const cartSlice = createSlice({
 		},
 
 		removeItem: (state, action: PayloadAction<ProductModel>) => {
-			state.items = state.items.filter(
-				(item) => item.id.toLowerCase() !== action.payload.id.toLowerCase()
+			const ID = action.payload.id.toLowerCase();
+			const itemsInArray = state.items.filter(
+				(item) => item.id.toLowerCase() === ID
 			);
-			if (state.items.length < 1) {
-				return initialState;
+
+			if (itemsInArray.length > 1) {
+				const itemIndex = state.items.findIndex(
+					(item) => item.id.toLowerCase() === ID
+				);
+				state.items.splice(itemIndex, 1);
+			} else {
+				state.uniqueItems.filter((item) => item.id.toLowerCase() !== ID);
+				state.items = state.items.filter(
+					(item) => item.id.toLowerCase() !== ID
+				);
 			}
 		},
 	},
@@ -64,6 +63,5 @@ export const cartSlice = createSlice({
 export const { addItem, removeItem } = cartSlice.actions;
 export const selectCartItems = (state: RootState) => state.cart.items;
 export const selectCartUniqItems = (state: RootState) => state.cart.uniqueItems;
-export const selectCartTotalQty = (state: RootState) => state.cart.quantity;
 
 export default cartSlice.reducer;

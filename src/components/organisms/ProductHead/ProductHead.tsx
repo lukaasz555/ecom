@@ -46,7 +46,7 @@ const ProductHead: FC<PHeadProps> = ({ data, myRef, openModal }) => {
 				</div>
 			</div>
 
-			<ProductAside discount={discount} price={price} type={type} />
+			<ProductAside data={data} />
 		</div>
 	);
 };
