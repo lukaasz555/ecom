@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../../components/templates/Layout/Layout';
 import CartItem from '../../components/organisms/CartItem/CartItem';
-import { books } from '../../data/books';
-import { albums } from '../../data/albums';
 import { ProductModel } from '../../models/Product';
 import EmptyCart from '../../components/atoms/EmptyCart/EmptyCart';
 import CTA from '../../components/atoms/CTA/CTA';
 import { handleNumbFormat } from '../../helpers/handleNumbFormat';
 import { useAppSelector } from '../../hooks/hooks';
+import ALT from '../../components/atoms/ALT/ALT';
 
 const Cart = () => {
 	const [items, setItems] = useState<ProductModel[] | []>([]);
@@ -15,8 +14,6 @@ const Cart = () => {
 	const uniqueItems = useAppSelector((state) => state.cart.uniqueItems);
 
 	useEffect(() => {
-		/* 		const mock = [books[1], albums[16], albums[15]];
-		setItems(mock); */
 		if (cartItems.length > 0) {
 			setItems(uniqueItems);
 		}
@@ -54,7 +51,12 @@ const Cart = () => {
 				{items.length > 0 ? (
 					<div
 						className='w-full max-w-[900px] flex flex-col  
-					 items-center lg:items-end '>
+					 items-center lg:items-end'>
+						<div className='mb-10'>
+							<button className='hover:underline text-pencil'>
+								Wyczyść koszyk
+							</button>
+						</div>
 						<div className='flex flex-col w-full'>
 							{items.map((item) => (
 								<CartItem data={item} key={item.id} cartItems={cartItems} />

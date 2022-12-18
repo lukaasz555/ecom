@@ -3,7 +3,7 @@ import { ProductModel } from '../../../models/Product';
 import CloseIcon from '../../atoms/CloseIcon/CloseIcon';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../../hooks/hooks';
-import { removeItem } from '../../../features/cart/cartSlice';
+import { removeItem, addItem } from '../../../features/cart/cartSlice';
 import { handleNumbFormat } from '../../../helpers/handleNumbFormat';
 
 interface ICartItem {
@@ -14,6 +14,28 @@ interface ICartItem {
 const CartItem = ({ data, cartItems }: ICartItem) => {
 	const { img, title, authors, price, discount, id, type } = data;
 	const dispatch = useAppDispatch();
+
+	const addToCart = () => {
+		dispatch(
+			addItem({
+				categoryID: data.categoryID,
+				description: data.description,
+				discount: data.discount,
+				format: data.format,
+				id: data.id,
+				img: data.img,
+				price: data.price,
+				releaseYear: data.releaseYear,
+				title: data.title,
+				type: data.type,
+				label: data.label,
+				language: data.language,
+				pages: data.pages,
+				publisher: data.publisher,
+				authors: data.authors,
+			})
+		);
+	};
 
 	const removeFromCard = () => {
 		dispatch(
@@ -66,15 +88,20 @@ const CartItem = ({ data, cartItems }: ICartItem) => {
 				</div>
 			</section>
 
-			<div className=' text-center'>
-				{/* <p>{handleNumbFormat(price - discount)}zł</p> */}
+			<div className='text-center'>
 				<p>{handleNumbFormat(getItemQty(data.id) * (price - discount))}zł</p>
+				<div className='flex justify-around items-center mt-1 text-[20px]'>
+					<button onClick={removeFromCard}>-</button>
+					{getItemQty(data.id) > 1 ? (
+						<p className='text-[14px] text-brownSugar'>
+							{getItemQty(data.id)}x
+						</p>
+					) : (
+						<p className='text-[14px]'>{getItemQty(data.id)}x</p>
+					)}
 
-				{getItemQty(data.id) > 1 ? (
-					<p className='text-[14px] mt-2 text-brownSugar'>
-						{getItemQty(data.id)}x
-					</p>
-				) : null}
+					<button onClick={addToCart}>+</button>
+				</div>
 			</div>
 
 			<div className='ml-4 absolute right-0 top-0'>
