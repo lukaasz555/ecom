@@ -5,19 +5,21 @@ import { ProductModel } from '../../models/Product';
 import EmptyCart from '../../components/atoms/EmptyCart/EmptyCart';
 import CTA from '../../components/atoms/CTA/CTA';
 import { handleNumbFormat } from '../../helpers/handleNumbFormat';
-import { useAppSelector } from '../../hooks/hooks';
-import ALT from '../../components/atoms/ALT/ALT';
+import { useAppSelector, useAppDispatch } from '../../hooks/hooks';
+import { clearCart } from '../../features/cart/cartSlice';
 
 const Cart = () => {
 	const [items, setItems] = useState<ProductModel[] | []>([]);
 	const cartItems = useAppSelector((state) => state.cart.items);
 	const uniqueItems = useAppSelector((state) => state.cart.uniqueItems);
 
+	const dispatch = useAppDispatch();
+
 	useEffect(() => {
 		if (cartItems.length > 0) {
 			setItems(uniqueItems);
 		}
-	}, [cartItems]);
+	}, [cartItems, uniqueItems]);
 
 	const productsValue = (arr: ProductModel[]) => {
 		if (arr.length > 0) {
@@ -33,7 +35,7 @@ const Cart = () => {
 		}
 	};
 
-	const itemsCost: number = productsValue(items);
+	const itemsCost: number = productsValue(cartItems);
 	const deliveryCost: number = itemsCost >= 99 ? 0 : 9.9;
 	const total: number = itemsCost + deliveryCost;
 
@@ -45,15 +47,21 @@ const Cart = () => {
 			total
 		);
 
+	const handleClear = () => {
+		dispatch(clearCart());
+	};
+
 	return (
 		<Layout>
 			<div className='lg:px-10 py-10 flex justify-center'>
-				{items.length > 0 ? (
+				{cartItems.length > 0 ? (
 					<div
 						className='w-full max-w-[900px] flex flex-col  
 					 items-center lg:items-end'>
 						<div className='mb-10'>
-							<button className='hover:underline text-pencil'>
+							<button
+								className='hover:underline text-pencil'
+								onClick={handleClear}>
 								Wyczyść koszyk
 							</button>
 						</div>
@@ -65,7 +73,8 @@ const Cart = () => {
 						<div className='text-center lg:text-right font-lato font-light'>
 							{items instanceof Array ? (
 								<p>
-									Wartość produktów: {handleNumbFormat(productsValue(items))}zł
+									Wartość produktów:{' '}
+									{handleNumbFormat(productsValue(cartItems))}zł
 								</p>
 							) : null}
 

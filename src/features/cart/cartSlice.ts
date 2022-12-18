@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../store/store';
 import { ProductModel } from '../../models/Product';
+import { getQty } from '../../helpers/getQty';
 
 interface CartState {
 	items: ProductModel[];
@@ -37,26 +38,36 @@ export const cartSlice = createSlice({
 
 		removeItem: (state, action: PayloadAction<ProductModel>) => {
 			const ID = action.payload.id.toLowerCase();
-			const itemsInArray = state.items.filter(
-				(item) => item.id.toLowerCase() === ID
-			);
 
-			if (itemsInArray.length > 1) {
+			if (getQty(ID, state.items) > 1) {
 				const itemIndex = state.items.findIndex(
 					(item) => item.id.toLowerCase() === ID
 				);
 				state.items.splice(itemIndex, 1);
 			} else {
-				state.uniqueItems.filter((item) => item.id.toLowerCase() !== ID);
+				state.uniqueItems = state.uniqueItems.filter(
+					(item) => item.id.toLowerCase() !== ID
+				);
 				state.items = state.items.filter(
 					(item) => item.id.toLowerCase() !== ID
 				);
 			}
 		},
+
+		removeID: (state, action: PayloadAction<ProductModel>) => {
+			const ID = action.payload.id;
+			console.log('removeID');
+			state.items = state.items.filter((item) => item.id.toLowerCase() !== ID);
+			state.uniqueItems = state.uniqueItems.filter(
+				(item) => item.id.toLowerCase() !== ID
+			);
+		},
+
+		clearCart: (state) => initialState,
 	},
 });
 
-export const { addItem, removeItem } = cartSlice.actions;
+export const { addItem, removeItem, clearCart, removeID } = cartSlice.actions;
 export const selectCartItems = (state: RootState) => state.cart.items;
 export const selectCartUniqItems = (state: RootState) => state.cart.uniqueItems;
 
