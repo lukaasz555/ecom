@@ -16,7 +16,7 @@ const Input = ({ type, label, name, onChange, value }: InputProps) => {
 			<label className='mb-1 font-light'>{label}</label>
 			<input
 				type={`${type}`}
-				className='border-[1px] p-3 font-[400] border-pencil bg-lightGray outline-black text-[16px]'
+				className='border-[1px] p-3 font-[300] border-pencil bg-lightGray outline-black text-m'
 				name={`${name}`}
 				onChange={onChange}
 				value={value}

@@ -11,13 +11,13 @@ const CategoryButton: FC<ICategoryButton> = ({ to, cat }) => {
 	return (
 		<div className='xl:border-r-[1px] border-sparkle px-0 last:border-none'>
 			{cat === 99 ? (
-				<Link to={to} className='text-[16px] font-medium text-brownSugar px-4'>
+				<Link to={to} className='text-m font-medium text-brownSugar px-4'>
 					{handleCategoryNames(cat)?.toUpperCase()}
 				</Link>
 			) : (
 				<Link
 					to={to}
-					className='text-[16px] font-light text-sparkle hover:text-black px-4 inline-block'>
+					className='text-m font-light text-sparkle hover:text-black px-4 inline-block'>
 					{handleCategoryNames(cat)?.toUpperCase()}
 				</Link>
 			)}

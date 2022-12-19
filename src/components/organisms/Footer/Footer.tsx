@@ -12,7 +12,7 @@ const Footer = () => {
 					</Link>
 				</h1>
 				<Socials />
-				<p className='text-[12px] mt-3 font-lato'>2022</p>
+				<p className='text-xs mt-3 font-lato'>2022</p>
 			</div>
 		</div>
 	);

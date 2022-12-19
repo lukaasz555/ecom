@@ -8,7 +8,7 @@ const Shop = () => {
 			<div className='flex flex-col lg:flex-row lg:justify-around lg:px-10 gap-x-5 py-10'>
 				<article className='mb-10 lg: basis-[40%]'>
 					<h3 className='text-2xl font-lato mb-7'>Witaj w someStore</h3>
-					<p className='text-[16px] font-lato font-light'>
+					<p className='text-l font-lato font-light'>
 						<strong className='font-lato'>someStore</strong> to mała, rodzinna
 						firma, która powstała z naszej pasji do muzyki oraz literatury.
 						<br />
@@ -26,11 +26,10 @@ const Shop = () => {
 						wymagających klientów.
 						<br />
 						<br />
-						Zajmujemy się również sprowadzaniem książek oraz płyty, więc jeśli
+						Zajmujemy się również sprowadzaniem książek oraz płyt, więc jeśli
 						szukanego produktu nie ma na naszej stronie, zachęcamy do
 						skorzystania z{' '}
 						<Link to={`/contact`} className='text-brownSugar'>
-							{' '}
 							formularza kontaktowego.
 						</Link>
 					</p>

@@ -17,6 +17,16 @@ module.exports = {
 			darkGreen: '#0C8346',
 			pencil: '#707070',
 		},
+
+		fontSize: {
+			'2xl': '24px',
+			xl: '20px',
+			l: '18px',
+			m: '16px',
+			s: '14px',
+			xs: '12px',
+		},
+
 		extend: {
 			fontFamily: {
 				sans: ['Montserrat', 'sans-serif'],

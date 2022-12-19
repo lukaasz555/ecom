@@ -65,7 +65,7 @@ const ContactForm = () => {
 				value={formValue.message}
 			/>
 			{error ? (
-				<div className='mt-3 mb-6 text-[12px] lg:text-[14px] text-brownSugar'>
+				<div className='mt-3 mb-6 text-xs lg:text-s text-brownSugar'>
 					<p>- musisz wypełnić każde pole;</p>
 					<p>- email musi zawierać znaki '@' oraz '.' ;</p>
 					<p>- wiadomość musi składać się z conajmniej 50 znaków;</p>
@@ -74,7 +74,7 @@ const ContactForm = () => {
 
 			<div className='mt-10 lg:mt-3 self-center lg:self-start'>
 				{isSent ? (
-					<p className='mt-3 text-[18px] text-darkGreen font-[500] font-lato'>
+					<p className='mt-3 text-l text-darkGreen font-[500] font-lato'>
 						Dziękujemy za przesłanie wiadomości!
 					</p>
 				) : (

@@ -8,55 +8,54 @@ const ProductDetails = ({ data }: ProductModel2) => {
 				szczegóły
 			</h3>
 			<ul>
-				<li className='flex justify-start items-center py-1 odd:bg-white even:bg-gray'>
+				<li className='flex justify-start items-center py-1 odd:bg-white even:bg-gray font-lato px-2'>
 					<span className='text-sparkle basis-1/3'>Kod produktu:</span>
 					<p className='basis-2/3'>{data.id}</p>
 				</li>
-				<li className='flex justify-start items-center py-1 odd:bg-white even:bg-gray'>
+				<li className='flex justify-start items-center py-1 odd:bg-white even:bg-gray font-lato px-2'>
 					<span className='text-sparkle basis-1/3'>Tytuł:</span>
 					<p className='basis-2/3'>{data.title}</p>
 				</li>
-				<li className='flex justify-start items-center  py-1 odd:bg-white even:bg-gray'>
+				<li className='flex justify-start items-center  py-1 odd:bg-white even:bg-gray font-lato px-2'>
 					<span className='text-sparkle basis-1/3'>Autor:</span>
-					<p className='basis-2/3'>{[data.authors].join(`, `)}</p>
+					<p className='basis-2/3'>{data.authors.join(`, `)}</p>
 				</li>
 				{data.publisher ? (
-					<li className='flex justify-start items-center  py-1 odd:bg-white even:bg-gray'>
+					<li className='flex justify-start items-center  py-1 odd:bg-white even:bg-gray font-lato px-2'>
 						<span className='text-sparkle basis-1/3'>Wydawnictwo:</span>
 						<p className='basis-2/3'>{data.publisher}</p>
 					</li>
 				) : (
-					<li className='flex justify-start items-center  py-1 odd:bg-white even:bg-gray'>
+					<li className='flex justify-start items-center  py-1 odd:bg-white even:bg-gray font-lato px-2'>
 						<span className='text-sparkle basis-1/3'>Wytwórnia:</span>
 						<p className='basis-2/3'>{data.label}</p>
 					</li>
 				)}
 
 				{data.language ? (
-					<li className='flex justify-start items-center  py-1 odd:bg-white even:bg-gray'>
+					<li className='flex justify-start items-center  py-1 odd:bg-white even:bg-gray font-lato px-2'>
 						<span className='text-sparkle basis-1/3'>Język wydania:</span>
 						<p className='basis-2/3'>{data.language}</p>
 					</li>
 				) : null}
 
 				{data.pages ? (
-					<li className='flex justify-start items-center  py-1 odd:bg-white even:bg-gray'>
+					<li className='flex justify-start items-center  py-1 odd:bg-white even:bg-gray font-lato px-2'>
 						<span className='text-sparkle basis-1/3'>Liczba stron:</span>
 						<p className='basis-2/3'>{data.pages}</p>
 					</li>
 				) : null}
 
-				<li className='flex justify-start items-center  py-1 odd:bg-white even:bg-gray'>
+				<li className='flex justify-start items-center  py-1 odd:bg-white even:bg-gray font-lato px-2'>
 					<span className='text-sparkle basis-1/3'>Rok wydania:</span>
 					<p className='basis-2/3'>{data.releaseYear}</p>
 				</li>
 
-				<li className='flex justify-start items-center  py-1 odd:bg-white even:bg-gray'>
+				<li className='flex justify-start items-center py-1 odd:bg-white even:bg-gray font-lato px-2'>
 					<span className='text-sparkle basis-1/3'>Kategoria:</span>
 					<p className='basis-2/3'>{handleCategoryNames(data.categoryID)}</p>
-
 				</li>
-				<li className='flex justify-start items-center  py-1 odd:bg-white even:bg-gray'>
+				<li className='flex justify-start items-center px-2 py-1 odd:bg-white even:bg-gray text-m font-lato'>
 					<span className='text-sparkle basis-1/3'>Format:</span>
 					<p className='basis-2/3'>{data.format}</p>
 				</li>

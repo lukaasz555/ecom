@@ -103,12 +103,10 @@ const CartItem = ({ data, cartItems }: ICartItem) => {
 
 						<div className='mr-5'>
 							<div className='font-lato'>
-								<h4 className='text-[16px] hover:underline'>
+								<h4 className='text-m hover:underline'>
 									<Link to={`/shop/product/${type}/${id}`}>{title}</Link>
 								</h4>
-								<h5 className='text-sparkle text-[14px]'>
-									{authors.join(', ')}
-								</h5>
+								<h5 className='text-sparkle text-s'>{authors.join(', ')}</h5>
 							</div>
 						</div>
 					</section>
@@ -117,14 +115,14 @@ const CartItem = ({ data, cartItems }: ICartItem) => {
 						<p>
 							{handleNumbFormat(getQty(id, cartItems) * (price - discount))}zł
 						</p>
-						<div className='flex justify-around items-center mt-1 text-[20px]'>
+						<div className='flex justify-around items-center mt-1 text-l'>
 							<button onClick={removeItemFromCard}>-</button>
 							{getQty(id, cartItems) > 1 ? (
-								<p className='text-[14px] text-brownSugar'>
+								<p className='text-s text-brownSugar'>
 									{getQty(id, cartItems)}x
 								</p>
 							) : (
-								<p className='text-[14px] mx-2'>{getQty(id, cartItems)}x</p>
+								<p className='text-s mx-2'>{getQty(id, cartItems)}x</p>
 							)}
 
 							<button onClick={addToCart}>

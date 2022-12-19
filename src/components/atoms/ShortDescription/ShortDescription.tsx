@@ -52,7 +52,7 @@ const ShortDescription: FC<ShortDescProps> = ({ data, myRef }) => {
 					onClick={() => handleClick(myRef)}
 					className='font-light flex items-center'>
 					Zobacz szczegóły
-					<FontAwesomeIcon icon={faChevronDown} className='text-xs ml-[1px]' />
+					<FontAwesomeIcon icon={faChevronDown} className='text-xs ml-1' />
 				</button>
 			</div>
 			<div className='hidden md:block lg:hidden mt-10'>

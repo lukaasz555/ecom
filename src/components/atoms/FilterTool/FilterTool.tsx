@@ -15,7 +15,7 @@ const FilterTool = ({ open, setOpen, onClick }: FilterToolProps) => {
 		<div className={`w-${width} mx-10 border-b-[1px] mb-10  flex justify-end`}>
 			<div className={`${open ? 'bg-sparkle' : 'bg-white'} relative`}>
 				<button
-					className={`flex items-center bg-white justify-end uppercase py-2 px-5 text-[14px]
+					className={`flex items-center bg-white justify-end uppercase py-2 px-5 text-s
 						w-[300px]
 					`}
 					onClick={() => setOpen(!open)}>
@@ -29,7 +29,7 @@ const FilterTool = ({ open, setOpen, onClick }: FilterToolProps) => {
 					<li>
 						<button
 							id='declining'
-							className='uppercase text-[18px] font-light px-5 py-3 font-[200] border-b-[1px] w-[300px] text-right'
+							className='uppercase text-l font-light px-5 py-3 font-[200] border-b-[1px] w-[300px] text-right'
 							onClick={(e) => {
 								const targ = e.target as Element;
 								if (targ != null) {
@@ -43,7 +43,7 @@ const FilterTool = ({ open, setOpen, onClick }: FilterToolProps) => {
 					<li>
 						<button
 							id='growing'
-							className='uppercase text-[18px] font-light px-5 py-3 font-[200] border-b-[1px] w-[300px] text-right'
+							className='uppercase text-l font-light px-5 py-3 font-[200] border-b-[1px] w-[300px] text-right'
 							onClick={(e) => {
 								const targ = e.target as Element;
 								if (targ != null) {

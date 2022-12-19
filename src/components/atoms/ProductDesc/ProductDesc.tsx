@@ -11,7 +11,7 @@ const ProductDesc: FC<PDescProps> = ({ description }) => {
 				OPIS
 			</h3>
 			{description === '' ? (
-				<p>
+				<p className='font-[300]'>
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus maiores
 					iusto voluptatem fuga adipisci repellendus eveniet doloremque tenetur,
 					omnis, voluptatibus sed tempore recusandae vero veritatis amet vitae
@@ -30,7 +30,7 @@ const ProductDesc: FC<PDescProps> = ({ description }) => {
 					maxime dolores!
 				</p>
 			) : (
-				<p>{description}</p>
+				<p className='font-[300]'>{description}</p>
 			)}
 		</div>
 	);

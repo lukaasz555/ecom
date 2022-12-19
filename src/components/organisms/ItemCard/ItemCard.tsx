@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { ProductModel2 } from '../../../models/Product';
 import Price from '../../molecules/Price/Price';
@@ -31,10 +31,10 @@ const ItemCard = ({ data }: ProductModel2) => {
 					/>
 				</div>
 				<div className='flex flex-col mt-2'>
-					<h3 className='text-center md:text-left text-xl w-[100%] font-lato font-[400] text-[20px]'>
+					<h3 className='text-center md:text-left text-l w-[100%] font-lato font-[400]'>
 						<Link to={`/shop/product/${type}/${id}`}>{title}</Link>
 					</h3>
-					<h4 className='text-center md:text-left text-pencil text-[16px] font-lato'>
+					<h4 className='text-center md:text-left text-pencil text-m font-lato'>
 						{authors.join(', ')}
 					</h4>
 					<div className='flex justify-center  md:justify-between items-center mt-1'>
