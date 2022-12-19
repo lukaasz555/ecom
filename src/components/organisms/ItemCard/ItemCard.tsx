@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ProductModel2 } from '../../../models/Product';
 import Price from '../../molecules/Price/Price';
 import AddToCartBtn from '../../atoms/AddToCartBtn/AddToCartBtn';
+import NotAvailable from '../../atoms/NotAvailable/NotAvailable';
 
 const ItemCard = ({ data }: ProductModel2) => {
 	const { img, title, type, id, authors, discount, price } = data;
@@ -15,7 +16,11 @@ const ItemCard = ({ data }: ProductModel2) => {
                 after:opacity-0 hover:after:opacity-100
                 `}>
 					<div className='absolute h-[100%] w-full bg-whiteBg z-20 flex justify-center items-center opacity-0 hover:opacity-100 duration-300'>
-						<AddToCartBtn body='do koszyka' data={data} />
+						{price > 0 ? (
+							<AddToCartBtn body='do koszyka' data={data} />
+						) : (
+							<NotAvailable />
+						)}
 					</div>
 					<img
 						src={img}
@@ -30,7 +35,7 @@ const ItemCard = ({ data }: ProductModel2) => {
 						<Link to={`/shop/product/${type}/${id}`}>{title}</Link>
 					</h3>
 					<h4 className='text-center md:text-left text-pencil text-[16px] font-lato'>
-						{[...authors].join(', ')}
+						{authors.join(', ')}
 					</h4>
 					<div className='flex justify-center  md:justify-between items-center mt-1'>
 						<div>
