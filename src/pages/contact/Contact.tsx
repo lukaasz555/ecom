@@ -8,7 +8,7 @@ const Contact = () => {
 			<div className='flex flex-col lg:flex-row lg:justify-between lg:px-10 gap-x-5 py-10'>
 				<article className='mb-10 lg: basis-[40%]'>
 					<h3 className='text-2xl font-lato mb-7'>Skontaktuj się z nami</h3>
-					<p>
+					<p className='text-[16px] font-lato font-light'>
 						Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nesciunt
 						atque veniam tempore distinctio neque sit iste error, velit
 						repudiandae facilis ducimus numquam voluptates mollitia deserunt
