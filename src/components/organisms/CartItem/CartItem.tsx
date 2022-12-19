@@ -124,10 +124,12 @@ const CartItem = ({ data, cartItems }: ICartItem) => {
 									{getQty(id, cartItems)}x
 								</p>
 							) : (
-								<p className='text-[14px]'>{getQty(id, cartItems)}x</p>
+								<p className='text-[14px] mx-2'>{getQty(id, cartItems)}x</p>
 							)}
 
-							<button onClick={addToCart}>+</button>
+							<button onClick={addToCart}>
+								{getQty(id, cartItems) < 5 ? '+' : null}
+							</button>
 						</div>
 					</div>
 

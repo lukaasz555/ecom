@@ -45,7 +45,7 @@ const ShortDescription: FC<ShortDescProps> = ({ data, myRef }) => {
 			) : null}
 			<div className='flex'>
 				<span className='text-sparkle font-light mr-2'>Autor:</span>
-				<p className='font-medium'>{authors}</p>
+				<p className='font-medium'>{authors.join(', ')}</p>
 			</div>
 			<div className='flex mt-3'>
 				<button

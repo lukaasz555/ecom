@@ -56,7 +56,6 @@ export const cartSlice = createSlice({
 
 		removeID: (state, action: PayloadAction<ProductModel>) => {
 			const ID = action.payload.id;
-			console.log('removeID');
 			state.items = state.items.filter((item) => item.id.toLowerCase() !== ID);
 			state.uniqueItems = state.uniqueItems.filter(
 				(item) => item.id.toLowerCase() !== ID

@@ -33,16 +33,14 @@ const ProductHead: FC<PHeadProps> = ({ data, myRef, openModal }) => {
 				<div className='text-center md:text-left font-lato md:min-w-[340px] md:max-w-[400px]'>
 					<h2 className='text-2xl mt-5 md:mt-0'>{title}</h2>
 					<h3 className='text-xl mt-1 text-sparkle mb-5 lg:mb-14'>
-						{[...authors].join(', ')}
+						{authors.join(', ')}
 					</h3>
 					<ShortDescription myRef={myRef} data={data} />
 				</div>
 
 				<div className='flex flex-col items-center md:hidden gap-y-3'>
 					<Price discount={discount} price={price} atProductPage={true} />
-					{price > 0 ? (
-						<AddToCartBtn body='do koszyka 123' data={data} />
-					) : null}
+					{price > 0 ? <AddToCartBtn body='do koszyka' data={data} /> : null}
 				</div>
 			</div>
 
