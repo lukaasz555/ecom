@@ -1,22 +1,23 @@
 import React, { FC } from 'react';
 import Price from '../Price/Price';
-import CTA from '../../atoms/CTA/CTA';
 import ALT from '../../atoms/ALT/ALT';
 import { Link } from 'react-router-dom';
+import AddToCartBtn from '../../atoms/AddToCartBtn/AddToCartBtn';
+import { ProductModel } from '../../../models/Product';
 
 type PAsideProps = {
-	discount: number;
-	price: number;
-	type: string;
+	data: ProductModel;
 };
 
-const ProductAside: FC<PAsideProps> = ({ discount, price, type }) => {
+const ProductAside: FC<PAsideProps> = ({ data }) => {
+	const { discount, price, type } = data;
+
 	return (
 		<aside className='hidden lg:flex flex-col items-center justify-between max-w-[280px] bg-gray px-8 py-5 ml-3'>
 			<div className='mb-10 text-center font-lato'>
 				<h5 className='text-brownSugar text-[18px]'>Trwa wyprzedaż!</h5>
 				<Link
-					to={`/shop/${type}/sale`}
+					to={`/shop/category/${type}/99`}
 					className='hover:underline text-[16px] font-lato'>
 					Zobacz przecenione produkty
 				</Link>
@@ -29,7 +30,7 @@ const ProductAside: FC<PAsideProps> = ({ discount, price, type }) => {
 				<div className='mb-2'>
 					<Price discount={discount} price={price} atProductPage={true} />
 				</div>
-				{price > 0 ? <CTA body='do koszyka' /> : null}
+				{price > 0 ? <AddToCartBtn body='do koszyka' data={data} /> : null}
 			</div>
 			<div className='flex flex-col items-center'>
 				<h5 className='mb-4 text-center text-[14px]'>

@@ -1,27 +1,12 @@
 import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
-import CTA from '../../atoms/CTA/CTA';
+import { ProductModel2 } from '../../../models/Product';
 import Price from '../../molecules/Price/Price';
+import AddToCartBtn from '../../atoms/AddToCartBtn/AddToCartBtn';
+import NotAvailable from '../../atoms/NotAvailable/NotAvailable';
 
-interface IItemCard {
-	id: string;
-	title: string;
-	price: number;
-	img: string;
-	discount: number;
-	authors: string[];
-	type: 'books' | 'albums';
-}
-
-const ItemCard: FC<IItemCard> = ({
-	id,
-	title,
-	price,
-	img,
-	discount,
-	type,
-	authors,
-}) => {
+const ItemCard = ({ data }: ProductModel2) => {
+	const { img, title, type, id, authors, discount, price } = data;
 	return (
 		<div className='flex flex-col mb-20 w-[260px] px-10'>
 			<section>
@@ -31,7 +16,11 @@ const ItemCard: FC<IItemCard> = ({
                 after:opacity-0 hover:after:opacity-100
                 `}>
 					<div className='absolute h-[100%] w-full bg-whiteBg z-20 flex justify-center items-center opacity-0 hover:opacity-100 duration-300'>
-						<CTA body='do koszyka' />
+						{price > 0 ? (
+							<AddToCartBtn body='do koszyka' data={data} />
+						) : (
+							<NotAvailable />
+						)}
 					</div>
 					<img
 						src={img}
@@ -46,7 +35,7 @@ const ItemCard: FC<IItemCard> = ({
 						<Link to={`/shop/product/${type}/${id}`}>{title}</Link>
 					</h3>
 					<h4 className='text-center md:text-left text-pencil text-[16px] font-lato'>
-						{[...authors].join(', ')}
+						{authors.join(', ')}
 					</h4>
 					<div className='flex justify-center  md:justify-between items-center mt-1'>
 						<div>
