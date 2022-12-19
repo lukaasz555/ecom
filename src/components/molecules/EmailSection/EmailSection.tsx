@@ -1,30 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import WhiteInput from '../../atoms/WhiteInput/WhiteInput';
 import CTA from '../../atoms/CTA/CTA';
+import { EmailDataModel } from '../../../models/CheckoutData';
 
 interface IEmailSection {
-	emailFilled: boolean;
-	setEmailFilled: React.Dispatch<React.SetStateAction<boolean>>;
-	handleEmailFilled: () => void;
+	emailData: EmailDataModel;
+	setEmailData: React.Dispatch<React.SetStateAction<EmailDataModel>>;
+	isEmailOpen: boolean;
+	setEmailOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	handleClick: (e: React.MouseEvent) => void;
 }
 
 const EmailSection = ({
-	emailFilled,
-	setEmailFilled,
-	handleEmailFilled,
+	emailData,
+	setEmailData,
+	isEmailOpen,
+	setEmailOpen,
+	handleClick,
 }: IEmailSection) => {
 	const [email, setEmail] = useState('');
 	const [consent, setConsent] = useState(false);
 	const [errorMsg, setErrorMsg] = useState('');
 
-	const handleClick = (e: React.MouseEvent) => {
-		if (email !== '' && email.includes('@') && email.includes('.')) {
-			setErrorMsg('');
-			handleEmailFilled();
-		} else {
-			setErrorMsg('Wprowadź prawidłowy adres e-mail');
-		}
-	};
+	useEffect(() => {
+		emailData.consent = consent;
+		emailData.email = email;
+	}, [email, consent]);
 
 	const handleConsentChange = (e: React.ChangeEvent<HTMLInputElement>) =>
 		setConsent(!consent);
@@ -32,32 +33,46 @@ const EmailSection = ({
 	const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setEmail(e.target.value);
 	};
+
+	const handleContinue = (e: React.MouseEvent) => {
+		if (email !== '' && email.includes('@') && email.includes('.')) {
+			setErrorMsg('');
+			handleClick(e);
+		} else {
+			setErrorMsg('Wprowadź prawidłowy adres e-mail');
+		}
+	};
+
 	return (
 		<div className='bg-white px-4 py-5 border-[#C7C7C7] border-[1px] flex flex-col gap-y-5'>
 			<div className='flex justify-between'>
 				<h2 className='text-xl font-[400] font-lato'>1. Podaj adres e-mail</h2>
-				{emailFilled ? (
+				{isEmailOpen ? null : (
 					<button
-						onClick={() => setEmailFilled(false)}
-						className='hover:underline text-pencil'>
+						onClick={() => setEmailOpen(true)}
+						className='hover:underline text-pencil'
+						data-func-id='emailButton'>
 						Edytuj
 					</button>
-				) : null}
+				)}
 			</div>
 
-			{emailFilled ? (
-				<p className='text-m'>{email}</p>
-			) : (
+			{isEmailOpen ? (
 				<div className='w-full'>
-					<WhiteInput type='email' value={email} onChange={handleEmailChange} />
+					<WhiteInput
+						type='email'
+						value={email}
+						onChange={handleEmailChange}
+						name='email'
+					/>
 					<p className='text-xs'>
 						Na ten mail otrzymasz fakturę oraz powiadomienia dot. zamówienia.
 					</p>
 					<p className='text-xs text-brownSugar'>{errorMsg}</p>
 				</div>
-			)}
+			) : null}
 
-			{emailFilled ? null : (
+			{isEmailOpen ? (
 				<div className='flex items-center'>
 					<input
 						type='checkbox'
@@ -66,9 +81,11 @@ const EmailSection = ({
 					/>
 					<p className='text-s'>Chcę zapisać się do newslettera</p>
 				</div>
-			)}
+			) : null}
 
-			{emailFilled ? null : <CTA body='Kontynuuj' onClick={handleClick} />}
+			{isEmailOpen ? (
+				<CTA body='Kontynuuj' id='emailButton' onClick={handleContinue} />
+			) : null}
 		</div>
 	);
 };

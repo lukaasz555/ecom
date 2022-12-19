@@ -1,53 +1,51 @@
 import React, { useState } from 'react';
 import CTA from '../../atoms/CTA/CTA';
 import WhiteInput from '../../atoms/WhiteInput/WhiteInput';
+import { InvoiceDataModel } from '../../../models/CheckoutData';
 
-interface IShippingSection {
-	shippingFilled: boolean;
-	setShippingFilled: React.Dispatch<React.SetStateAction<boolean>>;
-	handleEmailFilled: () => void;
+interface IInvoiceSection {
+	invoiceData: InvoiceDataModel;
+	setInvoiceData: React.Dispatch<React.SetStateAction<InvoiceDataModel>>;
+	isInvoiceOpen: boolean;
+	setInvoiceOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	handleClick: (e: React.MouseEvent) => void;
 }
 
 const InvoiceSection = ({
-	shippingFilled,
-	setShippingFilled,
-	handleEmailFilled,
-}: IShippingSection) => {
-	const handleClick = (e: React.MouseEvent) => {
-		setShippingFilled(true);
-	};
+	invoiceData,
+	setInvoiceData,
+	isInvoiceOpen,
+	setInvoiceOpen,
+	handleClick,
+}: IInvoiceSection) => {
 	const [invoice, setInvoice] = useState(false);
-	const [invoiceForm, setInvoiceForm] = useState({
-		name: '',
-		lastname: '',
-		companyName: '',
-		companyNip: '',
-		address1: '',
-		address2: '',
-		city: '',
-		postalCode: '',
-		country: 'Polska',
-	});
 
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-		setInvoiceForm((prevState) => ({
+	const handleInputChange = (
+		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+	) =>
+		setInvoiceData((prevState) => ({
 			...prevState,
 			[e.target.name]: e.target.value,
 		}));
+
+	const handleContinue = (e: React.MouseEvent) => {
+		// valid inputs...
+		handleClick(e);
+	};
 
 	return (
 		<div className='bg-white px-4 py-5 border-[#C7C7C7] border-[1px] flex flex-col gap-y-5'>
 			<div className='flex justify-between'>
 				<h2 className='text-xl font-[400] font-lato'>2. Dane do faktury</h2>
-				{shippingFilled ? (
+				{invoiceData.name !== '' && !isInvoiceOpen ? (
 					<button
-						onClick={() => setShippingFilled(false)}
+						onClick={() => setInvoiceOpen(true)}
 						className='hover:underline text-pencil'>
 						Edytuj
 					</button>
 				) : null}
 			</div>
-			{shippingFilled ? null : (
+			{isInvoiceOpen ? (
 				<>
 					<div className='text-s'>
 						<p className='mb-1'>Kupuję jako:</p>
@@ -80,14 +78,14 @@ const InvoiceSection = ({
 					<div className='flex gap-x-3'>
 						<WhiteInput
 							type='text'
-							value={invoiceForm.name}
+							value={invoiceData.name}
 							placeholder='Imię'
 							name='name'
 							onChange={handleInputChange}
 						/>
 						<WhiteInput
 							type='text'
-							value={invoiceForm.lastname}
+							value={invoiceData.lastname}
 							placeholder='Nazwisko'
 							name='lastname'
 							onChange={handleInputChange}
@@ -97,14 +95,14 @@ const InvoiceSection = ({
 						<div className='flex flex-col gap-y-3'>
 							<WhiteInput
 								type='text'
-								value={invoiceForm.companyName}
+								value={invoiceData.companyName}
 								placeholder='Nazwa firmy'
 								name='companyName'
 								onChange={handleInputChange}
 							/>
 							<WhiteInput
 								type='text'
-								value={invoiceForm.companyNip}
+								value={invoiceData.companyNip}
 								placeholder='NIP firmy'
 								name='companyNip'
 								onChange={handleInputChange}
@@ -115,14 +113,14 @@ const InvoiceSection = ({
 					<div className='flex flex-col gap-y-3'>
 						<WhiteInput
 							type='text'
-							value={invoiceForm.address1}
+							value={invoiceData.address1}
 							placeholder='Adres (ulica, nr budynku / nr lokalu)'
 							name='address1'
 							onChange={handleInputChange}
 						/>
 						<WhiteInput
 							type='text'
-							value={invoiceForm.address2}
+							value={invoiceData.address2}
 							placeholder='Adres cz.2 (opcjonalnie)'
 							name='address2'
 							onChange={handleInputChange}
@@ -132,7 +130,7 @@ const InvoiceSection = ({
 					<div>
 						<WhiteInput
 							type='text'
-							value={invoiceForm.city}
+							value={invoiceData.city}
 							placeholder='Miasto'
 							name='city'
 							onChange={handleInputChange}
@@ -142,22 +140,28 @@ const InvoiceSection = ({
 					<div className='flex gap-x-3'>
 						<WhiteInput
 							type='text'
-							value={invoiceForm.postalCode}
+							value={invoiceData.postalCode}
 							placeholder='Kod pocztowy (xx-xxx)'
 							name='postalCode'
 							onChange={handleInputChange}
 						/>
 
-						<select className='border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full'>
-							<option value='Poland' defaultChecked>
+						<select
+							className='border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full'
+							value='Polska'
+							name='country'
+							onChange={handleInputChange}>
+							<option value='Polska' selected defaultChecked>
 								Polska
 							</option>
 						</select>
 					</div>
 				</>
-			)}
+			) : null}
 
-			{shippingFilled ? null : <CTA body='Kontynuuj' onClick={handleClick} />}
+			{isInvoiceOpen ? (
+				<CTA body='Kontynuuj' id='invoiceButton' onClick={handleContinue} />
+			) : null}
 		</div>
 	);
 };
