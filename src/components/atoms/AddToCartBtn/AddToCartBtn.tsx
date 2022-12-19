@@ -55,7 +55,7 @@ const AddToCartBtn = ({ data, body }: ButtonProps) => {
 	return (
 		<>
 			{error ? (
-				<CartBtnError body='Przekroczono dozwoloną liczbę sztuk' />
+				<CartBtnError body='Możesz kupić maksymalnie 5 szt.' />
 			) : (
 				<button
 					className='px-5 py-3 bg-black font-light text-white text-m uppercase hover:bg-sparkle duration-150 min-w-[200px]'
