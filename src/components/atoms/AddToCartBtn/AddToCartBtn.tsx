@@ -4,6 +4,8 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import { ProductModel2 } from '../../../models/Product';
 import { getQty } from '../../../helpers/getQty';
 import CartBtnError from '../CartBtnError/CartBtnError';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 interface ButtonProps extends ProductModel2 {
 	body: string;
@@ -58,7 +60,13 @@ const AddToCartBtn = ({ data, body }: ButtonProps) => {
 				<button
 					className='px-5 py-3 bg-black font-light text-white text-l uppercase hover:bg-sparkle duration-150 min-w-[200px]'
 					onClick={addToCart}>
-					{isAdded ? 'dodano' : body}
+					{isAdded ? (
+						<span>
+							<FontAwesomeIcon icon={faCheck} /> dodano
+						</span>
+					) : (
+						body
+					)}
 				</button>
 			)}
 		</>
