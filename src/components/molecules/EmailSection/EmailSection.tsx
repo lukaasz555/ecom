@@ -2,8 +2,17 @@ import React, { useState } from 'react';
 import WhiteInput from '../../atoms/WhiteInput/WhiteInput';
 import CTA from '../../atoms/CTA/CTA';
 
-const EmailSection = () => {
-	const [emailFilled, setEmailFilled] = useState(false);
+interface IEmailSection {
+	emailFilled: boolean;
+	setEmailFilled: React.Dispatch<React.SetStateAction<boolean>>;
+	handleEmailFilled: () => void;
+}
+
+const EmailSection = ({
+	emailFilled,
+	setEmailFilled,
+	handleEmailFilled,
+}: IEmailSection) => {
 	const [email, setEmail] = useState('');
 	const [consent, setConsent] = useState(false);
 	const [errorMsg, setErrorMsg] = useState('');
@@ -11,7 +20,7 @@ const EmailSection = () => {
 	const handleClick = (e: React.MouseEvent) => {
 		if (email !== '' && email.includes('@') && email.includes('.')) {
 			setErrorMsg('');
-			setEmailFilled(true);
+			handleEmailFilled();
 		} else {
 			setErrorMsg('Wprowadź prawidłowy adres e-mail');
 		}

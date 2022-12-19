@@ -5,9 +5,16 @@ interface IWhiteInput {
 	type: string;
 	placeholder?: string;
 	onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	name?: string;
 }
 
-const WhiteInput = ({ type, placeholder, onChange, value }: IWhiteInput) => {
+const WhiteInput = ({
+	type,
+	placeholder,
+	onChange,
+	value,
+	name,
+}: IWhiteInput) => {
 	return (
 		<input
 			type={type}
@@ -15,6 +22,7 @@ const WhiteInput = ({ type, placeholder, onChange, value }: IWhiteInput) => {
 			placeholder={placeholder}
 			onChange={onChange}
 			value={value}
+			name={name}
 		/>
 	);
 };
