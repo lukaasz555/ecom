@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Input from '../../atoms/Input/Input';
+import Input from '../../atoms/GrayInput/GrayInput';
 import Textarea from '../../atoms/Textarea/Textarea';
 import CTA from '../../atoms/CTA/CTA';
 

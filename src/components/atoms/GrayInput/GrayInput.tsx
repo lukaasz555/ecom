@@ -13,7 +13,7 @@ interface InputProps {
 const Input = ({ type, label, name, onChange, value }: InputProps) => {
 	return (
 		<div className='flex flex-col mb-5'>
-			<label className='mb-1 font-light'>{label}</label>
+			{label ? <label className='mb-1 font-light'>{label}</label> : null}
 			<input
 				type={`${type}`}
 				className='border-[1px] p-3 font-[300] border-pencil bg-lightGray outline-black text-m'
