@@ -17,7 +17,7 @@ const ProductAside: FC<PAsideProps> = ({ data }) => {
 			<div className='mb-10 text-center font-lato'>
 				<h5 className='text-brownSugar text-[18px]'>Trwa wyprzedaż!</h5>
 				<Link
-					to={`/shop/${type}/sale`}
+					to={`/shop/category/${type}/99`}
 					className='hover:underline text-[16px] font-lato'>
 					Zobacz przecenione produkty
 				</Link>
