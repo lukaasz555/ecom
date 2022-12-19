@@ -46,16 +46,16 @@ const Shop = () => {
 							<div className='flex flex-col justify-between xl:flex-row xl:items-center xl:w-[100%] xl:justify-center xl:gap-x-10'>
 								<Link
 									to={`/shop/books`}
-									className='group block uppercase  text-white relative text-2xl my-5'>
+									className='group block uppercase  text-white relative text-2xl my-5 font-[300]'>
 									zobacz książki
-									<span className='absolute left-0 bottom-0 w-[100%] h-[2px] bg-white origin-left scale-x-0 group-hover:scale-x-100 duration-300'></span>
+									<span className='absolute left-0 bottom-0 w-[100%] h-[1px] bg-white origin-left scale-x-0 group-hover:scale-x-100 duration-300'></span>
 								</Link>
 
 								<Link
 									to={`/shop/albums`}
-									className='group block uppercase text-white relative text-2xl my-5 text-center'>
+									className='group block uppercase text-white relative text-2xl my-5  font-[300]'>
 									zobacz płyty
-									<span className='absolute right-0 bottom-0 w-[100%] h-[2px] bg-white origin-right scale-x-0 group-hover:scale-x-100 duration-300'></span>
+									<span className='absolute right-0 bottom-0 w-[100%] h-[1px] bg-white origin-right scale-x-0 group-hover:scale-x-100 duration-300'></span>
 								</Link>
 							</div>
 						</div>
