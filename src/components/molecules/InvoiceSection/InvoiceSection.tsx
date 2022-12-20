@@ -29,6 +29,7 @@ const InvoiceSection = ({
 		}));
 
 	const handleContinue = (e: React.MouseEvent) => {
+		console.log(invoiceData);
 		// valid inputs...
 		handleClick(e);
 	};
@@ -148,12 +149,13 @@ const InvoiceSection = ({
 
 						<select
 							className='border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full'
-							value='Polska'
+							value={invoiceData.country}
 							name='country'
 							onChange={handleInputChange}>
-							<option value='Polska' selected defaultChecked>
+							<option selected value='Polska'>
 								Polska
 							</option>
+							<option value='DE'>Niemcy</option>
 						</select>
 					</div>
 				</>

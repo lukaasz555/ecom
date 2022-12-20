@@ -23,7 +23,7 @@ const Checkout = () => {
 		address2: '',
 		city: '',
 		postalCode: '',
-		country: '',
+		country: 'Polska',
 	});
 	const [shipData, setShipData] = useState<ShipDataModel>({
 		phoneNumber: '',
