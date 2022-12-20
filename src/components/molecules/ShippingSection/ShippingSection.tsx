@@ -31,7 +31,8 @@ const ShippingSection = ({
 	};
 
 	const handleContinue = (e: React.MouseEvent) => {
-		setCheckoutForm({});
+		setCheckoutForm((prev) => ({ ...prev, shipping: shipData }));
+		console.log(checkoutForm);
 	};
 
 	return (

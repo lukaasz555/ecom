@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import CTA from '../../atoms/CTA/CTA';
 import { InvoiceDataModel } from '../../../models/CheckoutData';
 import { useForm } from 'react-hook-form';
+import { ICheckoutForm } from '../../../models/CheckoutData';
 
 interface IInvoiceSection {
 	invoiceData: InvoiceDataModel;
@@ -9,6 +10,7 @@ interface IInvoiceSection {
 	isInvoiceOpen: boolean;
 	setInvoiceOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	setShippingOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	setCheckoutForm: React.Dispatch<React.SetStateAction<{} | ICheckoutForm>>;
 }
 
 const InvoiceSection = ({
@@ -17,6 +19,7 @@ const InvoiceSection = ({
 	isInvoiceOpen,
 	setInvoiceOpen,
 	setShippingOpen,
+	setCheckoutForm,
 }: IInvoiceSection) => {
 	const [invoice, setInvoice] = useState(false);
 
@@ -28,6 +31,7 @@ const InvoiceSection = ({
 
 	const onSubmit = (data: InvoiceDataModel) => {
 		setInvoiceData(data);
+		setCheckoutForm((prev) => ({ ...prev, invoice: invoiceData }));
 		setInvoiceOpen(false);
 		setShippingOpen(true);
 	};

@@ -36,7 +36,11 @@ const Checkout = () => {
 	const [isInvoiceOpen, setInvoiceOpen] = useState(false);
 	const [isShippingOpen, setShippingOpen] = useState(false);
 
-	const [checkoutForm, setCheckoutForm] = useState<ICheckoutForm | {}>({});
+	const [checkoutForm, setCheckoutForm] = useState<ICheckoutForm | {}>({
+		email: emailData,
+		invoice: invoiceData,
+		shipping: shipData,
+	});
 
 	return (
 		<div className='flex flex-col items-center bg-gray min-h-screen'>
@@ -55,6 +59,8 @@ const Checkout = () => {
 						isEmailOpen={isEmailOpen}
 						setEmailOpen={setEmailOpen}
 						setInvoiceOpen={setInvoiceOpen}
+						checkoutForm={checkoutForm}
+						setCheckoutForm={setCheckoutForm}
 					/>
 					<InvoiceSection
 						invoiceData={invoiceData}
@@ -62,6 +68,7 @@ const Checkout = () => {
 						isInvoiceOpen={isInvoiceOpen}
 						setInvoiceOpen={setInvoiceOpen}
 						setShippingOpen={setShippingOpen}
+						setCheckoutForm={setCheckoutForm}
 					/>
 					<ShippingSection
 						isShippingOpen={isShippingOpen}

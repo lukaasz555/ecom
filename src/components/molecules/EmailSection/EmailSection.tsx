@@ -3,6 +3,7 @@ import WhiteInput from '../../atoms/WhiteInput/WhiteInput';
 import CTA from '../../atoms/CTA/CTA';
 import { EmailDataModel } from '../../../models/CheckoutData';
 import { emailValidation } from '../../../helpers/validations';
+import { ICheckoutForm } from '../../../models/CheckoutData';
 
 interface IEmailSection {
 	emailData: EmailDataModel;
@@ -10,6 +11,8 @@ interface IEmailSection {
 	isEmailOpen: boolean;
 	setEmailOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	setInvoiceOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	setCheckoutForm: React.Dispatch<React.SetStateAction<{} | ICheckoutForm>>;
+	checkoutForm: {} | ICheckoutForm;
 }
 
 const EmailSection = ({
@@ -18,6 +21,8 @@ const EmailSection = ({
 	isEmailOpen,
 	setEmailOpen,
 	setInvoiceOpen,
+	checkoutForm,
+	setCheckoutForm,
 }: IEmailSection) => {
 	const [email, setEmail] = useState('');
 	const [consent, setConsent] = useState(false);
@@ -40,6 +45,7 @@ const EmailSection = ({
 			setErrorMsg('');
 			setEmailOpen(false);
 			setInvoiceOpen(true);
+			//setCheckoutForm((prev) => ({ ...prev, email: emailData }));
 		} else {
 			setErrorMsg('Wprowadź prawidłowy adres e-mail');
 		}
