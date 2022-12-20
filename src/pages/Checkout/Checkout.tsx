@@ -8,6 +8,7 @@ import {
 	EmailDataModel,
 	ShipDataModel,
 } from '../../models/CheckoutData';
+import { ICheckoutForm } from '../../models/CheckoutData';
 
 const Checkout = () => {
 	const [emailData, setEmailData] = useState<EmailDataModel>({
@@ -18,7 +19,7 @@ const Checkout = () => {
 		name: '',
 		lastname: '',
 		companyName: '',
-		companyNip: '',
+		nip: '',
 		address1: '',
 		address2: '',
 		city: '',
@@ -26,6 +27,7 @@ const Checkout = () => {
 		country: 'Polska',
 	});
 	const [shipData, setShipData] = useState<ShipDataModel>({
+		countryCode: 'PL',
 		phoneNumber: '',
 		inpost: '',
 	});
@@ -34,24 +36,7 @@ const Checkout = () => {
 	const [isInvoiceOpen, setInvoiceOpen] = useState(false);
 	const [isShippingOpen, setShippingOpen] = useState(false);
 
-	const handleClick = (e: React.MouseEvent) => {
-		const target = e.target as Element;
-		if (target.id === 'emailButton') {
-			setEmailOpen(false);
-			setInvoiceOpen(true);
-		}
-		if (target.id === 'invoiceButton') {
-			setEmailOpen(false);
-			setInvoiceOpen(false);
-			setShippingOpen(true);
-		}
-		if (target.id === 'shipButton') {
-			console.log(shipData);
-			setEmailOpen(false);
-			setInvoiceOpen(false);
-			setShippingOpen(true);
-		}
-	};
+	const [checkoutForm, setCheckoutForm] = useState<ICheckoutForm | {}>({});
 
 	return (
 		<div className='flex flex-col items-center bg-gray min-h-screen'>
@@ -69,21 +54,22 @@ const Checkout = () => {
 						setEmailData={setEmailData}
 						isEmailOpen={isEmailOpen}
 						setEmailOpen={setEmailOpen}
-						handleClick={handleClick}
+						setInvoiceOpen={setInvoiceOpen}
 					/>
 					<InvoiceSection
 						invoiceData={invoiceData}
 						setInvoiceData={setInvoiceData}
 						isInvoiceOpen={isInvoiceOpen}
 						setInvoiceOpen={setInvoiceOpen}
-						handleClick={handleClick}
+						setShippingOpen={setShippingOpen}
 					/>
 					<ShippingSection
 						isShippingOpen={isShippingOpen}
 						setShippingOpen={setShippingOpen}
 						shipData={shipData}
 						setShipData={setShipData}
-						handleClick={handleClick}
+						checkoutForm={checkoutForm}
+						setCheckoutForm={setCheckoutForm}
 					/>
 				</div>
 				<div className='bg-white px-4 py-5 border-[#C7C7C7] border-[1px] lg:basis-[48%] '>

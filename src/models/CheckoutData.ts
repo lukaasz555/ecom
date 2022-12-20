@@ -7,7 +7,7 @@ export interface InvoiceDataModel {
 	name: string;
 	lastname: string;
 	companyName: string;
-	companyNip: string;
+	nip: string;
 	address1: string;
 	address2: string;
 	city: string;
@@ -16,6 +16,13 @@ export interface InvoiceDataModel {
 }
 
 export interface ShipDataModel {
+	countryCode: string;
 	phoneNumber: string;
 	inpost: string;
+}
+
+export interface ICheckoutForm {
+	email: EmailDataModel;
+	invoice: InvoiceDataModel;
+	shipping: ShipDataModel;
 }

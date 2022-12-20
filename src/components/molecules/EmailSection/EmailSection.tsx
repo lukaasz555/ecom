@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import WhiteInput from '../../atoms/WhiteInput/WhiteInput';
 import CTA from '../../atoms/CTA/CTA';
 import { EmailDataModel } from '../../../models/CheckoutData';
+import { emailValidation } from '../../../helpers/validations';
 
 interface IEmailSection {
 	emailData: EmailDataModel;
 	setEmailData: React.Dispatch<React.SetStateAction<EmailDataModel>>;
 	isEmailOpen: boolean;
 	setEmailOpen: React.Dispatch<React.SetStateAction<boolean>>;
-	handleClick: (e: React.MouseEvent) => void;
+	setInvoiceOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EmailSection = ({
@@ -16,7 +17,7 @@ const EmailSection = ({
 	setEmailData,
 	isEmailOpen,
 	setEmailOpen,
-	handleClick,
+	setInvoiceOpen,
 }: IEmailSection) => {
 	const [email, setEmail] = useState('');
 	const [consent, setConsent] = useState(false);
@@ -35,9 +36,10 @@ const EmailSection = ({
 	};
 
 	const handleContinue = (e: React.MouseEvent) => {
-		if (email !== '' && email.includes('@') && email.includes('.')) {
+		if (emailValidation(email)) {
 			setErrorMsg('');
-			handleClick(e);
+			setEmailOpen(false);
+			setInvoiceOpen(true);
 		} else {
 			setErrorMsg('Wprowadź prawidłowy adres e-mail');
 		}

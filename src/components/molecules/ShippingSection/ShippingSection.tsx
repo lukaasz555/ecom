@@ -2,21 +2,26 @@ import React from 'react';
 import WhiteInput from '../../atoms/WhiteInput/WhiteInput';
 import { ShipDataModel } from '../../../models/CheckoutData';
 import CTA from '../../atoms/CTA/CTA';
+import PhoneInput from 'react-phone-number-input';
+import 'react-phone-number-input/style.css';
+import { ICheckoutForm } from '../../../models/CheckoutData';
 
 interface IShippingSection {
 	isShippingOpen: boolean;
 	setShippingOpen: React.Dispatch<React.SetStateAction<boolean>>;
-	handleClick: (e: React.MouseEvent) => void;
 	shipData: ShipDataModel;
 	setShipData: React.Dispatch<React.SetStateAction<ShipDataModel>>;
+	checkoutForm: ICheckoutForm | {};
+	setCheckoutForm: React.Dispatch<React.SetStateAction<{} | ICheckoutForm>>;
 }
 
 const ShippingSection = ({
 	isShippingOpen,
 	setShippingOpen,
-	handleClick,
 	shipData,
 	setShipData,
+	checkoutForm,
+	setCheckoutForm,
 }: IShippingSection) => {
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setShipData((prevState) => ({
@@ -26,21 +31,20 @@ const ShippingSection = ({
 	};
 
 	const handleContinue = (e: React.MouseEvent) => {
-		// valid inputs...
-		handleClick(e);
+		setCheckoutForm({});
 	};
 
 	return (
 		<div className='bg-white px-4 py-5 border-[#C7C7C7] border-[1px] flex flex-col gap-y-5'>
 			<div className='flex justify-between'>
 				<h2 className='text-xl font-[400] font-lato'>3. Dostawa</h2>
-				{/* 				{shippingFilled ? (
+				{isShippingOpen ? (
 					<button
-						onClick={() => setShippingFilled(false)}
+						onClick={() => setShippingOpen(false)}
 						className='hover:underline text-pencil'>
 						Edytuj
 					</button>
-				) : null} */}
+				) : null}
 			</div>
 			{isShippingOpen ? (
 				<>
@@ -55,14 +59,35 @@ const ShippingSection = ({
 					</div>
 					<div className='flex gap-x-5'>
 						<div className='basis-1/2'>
-							<WhiteInput
-								type='text'
-								value={shipData.phoneNumber}
-								name='phoneNumber'
-								placeholder='Nr telefonu'
-								onChange={handleInputChange}
-								maxLength={9}
-							/>
+							<div className='border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full'>
+								{/* 								<select className='text-s px-2 w-[70px] border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full border-r-0'>
+									<option value='PL'>+48</option>
+								</select>
+								<WhiteInput
+									type='number'
+									value={shipData.phoneNumber}
+									name='phoneNumber'
+									placeholder='Nr telefonu'
+									onChange={handleInputChange}
+									max={999}
+									
+								/> */}
+								<PhoneInput
+									name='phoneNumber'
+									countries={['PL']}
+									style={{ outline: 'black' }}
+									addInternationalOption={false}
+									placeholder='Numer telefonu'
+									value={shipData.phoneNumber}
+									onChange={(value: string) =>
+										setShipData((prev) => ({
+											...prev,
+											[shipData.phoneNumber]: value,
+										}))
+									}
+								/>
+							</div>
+
 							<p className='text-s font-lato mt-1'>
 								- tylko cyfry, <br />- bez numeru kierunkowego,
 							</p>

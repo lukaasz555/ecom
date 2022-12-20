@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import CTA from '../../atoms/CTA/CTA';
-import WhiteInput from '../../atoms/WhiteInput/WhiteInput';
 import { InvoiceDataModel } from '../../../models/CheckoutData';
+import { useForm } from 'react-hook-form';
 
 interface IInvoiceSection {
 	invoiceData: InvoiceDataModel;
 	setInvoiceData: React.Dispatch<React.SetStateAction<InvoiceDataModel>>;
 	isInvoiceOpen: boolean;
 	setInvoiceOpen: React.Dispatch<React.SetStateAction<boolean>>;
-	handleClick: (e: React.MouseEvent) => void;
+	setShippingOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const InvoiceSection = ({
@@ -16,26 +16,26 @@ const InvoiceSection = ({
 	setInvoiceData,
 	isInvoiceOpen,
 	setInvoiceOpen,
-	handleClick,
+	setShippingOpen,
 }: IInvoiceSection) => {
 	const [invoice, setInvoice] = useState(false);
 
-	const handleInputChange = (
-		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-	) =>
-		setInvoiceData((prevState) => ({
-			...prevState,
-			[e.target.name]: e.target.value,
-		}));
+	const {
+		handleSubmit,
+		register,
+		formState: { errors },
+	} = useForm<InvoiceDataModel>();
 
-	const handleContinue = (e: React.MouseEvent) => {
-		console.log(invoiceData);
-		// valid inputs...
-		handleClick(e);
+	const onSubmit = (data: InvoiceDataModel) => {
+		setInvoiceData(data);
+		setInvoiceOpen(false);
+		setShippingOpen(true);
 	};
 
 	return (
-		<div className='bg-white px-4 py-5 border-[#C7C7C7] border-[1px] flex flex-col gap-y-5'>
+		<form
+			onSubmit={handleSubmit(onSubmit)}
+			className='bg-white px-4 py-5 border-[#C7C7C7] border-[1px] flex flex-col gap-y-3'>
 			<div className='flex justify-between'>
 				<h2 className='text-xl font-[400] font-lato'>2. Dane do faktury</h2>
 				{invoiceData.name !== '' && !isInvoiceOpen ? (
@@ -50,7 +50,7 @@ const InvoiceSection = ({
 				<>
 					<div className='text-s'>
 						<p className='mb-1'>Kupuję jako:</p>
-						<form className='flex gap-x-5'>
+						<div className='flex gap-x-5'>
 							<p>
 								<input
 									type='radio'
@@ -73,98 +73,142 @@ const InvoiceSection = ({
 								/>
 								Firma
 							</p>
-						</form>
+						</div>
 					</div>
 
 					<div className='flex gap-x-3'>
-						<WhiteInput
-							type='text'
-							value={invoiceData.name}
-							placeholder='Imię'
-							name='name'
-							onChange={handleInputChange}
-						/>
-						<WhiteInput
-							type='text'
-							value={invoiceData.lastname}
-							placeholder='Nazwisko'
-							name='lastname'
-							onChange={handleInputChange}
-						/>
+						<div className='basis-1/2'>
+							<input
+								type='text'
+								placeholder='Imię'
+								{...register('name', { required: true })}
+								className='border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full'
+							/>
+							<p className='text-xs text-brownSugar'>
+								{errors.name ? 'Imię jest wymagane' : null}
+							</p>
+						</div>
+
+						<div className='basis-1/2'>
+							<input
+								type='text'
+								placeholder='Nazwisko'
+								{...register('lastname', { required: true })}
+								className='border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full'
+							/>
+							<p className='text-xs text-brownSugar'>
+								{errors.lastname ? 'Nazwisko jest wymagane' : null}
+							</p>
+						</div>
 					</div>
 					{invoice ? (
 						<div className='flex flex-col gap-y-3'>
-							<WhiteInput
-								type='text'
-								value={invoiceData.companyName}
-								placeholder='Nazwa firmy'
-								name='companyName'
-								onChange={handleInputChange}
-							/>
-							<WhiteInput
-								type='text'
-								value={invoiceData.companyNip}
-								placeholder='NIP firmy'
-								name='companyNip'
-								onChange={handleInputChange}
-							/>
+							<div>
+								<input
+									type='text'
+									placeholder='Nazwa firmy'
+									{...register('companyName', {
+										required: invoice ? true : false,
+									})}
+									className='border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full'
+								/>
+								<p className='text-xs text-brownSugar'>
+									{errors.companyName && invoice
+										? 'Wprowadź nazwę firmy'
+										: null}
+								</p>
+							</div>
+
+							<div>
+								<input
+									type='text'
+									placeholder='NIP firmy'
+									{...register('nip', {
+										required: invoice ? true : false,
+										minLength: 10,
+										maxLength: 10,
+									})}
+									className='border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full'
+								/>
+								<p className='text-xs text-brownSugar'>
+									{errors.nip && invoice
+										? 'Podaj prawidłowy NIP (10 znaków)'
+										: null}
+								</p>
+							</div>
 						</div>
 					) : null}
 
-					<div className='flex flex-col gap-y-3'>
-						<WhiteInput
+					<div className='flex flex-col'>
+						<div className='mb-3'>
+							<input
+								type='text'
+								placeholder='Adres (ulica, nr budynku / nr lokalu)'
+								{...register('address1', { required: true })}
+								className='border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full'
+							/>
+							<p className='text-xs text-brownSugar'>
+								{errors.address1 ? 'Wprowadź adres' : null}
+							</p>
+						</div>
+
+						<input
 							type='text'
-							value={invoiceData.address1}
-							placeholder='Adres (ulica, nr budynku / nr lokalu)'
-							name='address1'
-							onChange={handleInputChange}
-						/>
-						<WhiteInput
-							type='text'
-							value={invoiceData.address2}
 							placeholder='Adres cz.2 (opcjonalnie)'
-							name='address2'
-							onChange={handleInputChange}
+							{...register('address2', { required: false })}
+							className='border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full'
 						/>
+						<p className='text-xs text-brownSugar'>
+							{errors.address2 ? 'Wprowadź adres' : null}
+						</p>
 					</div>
 
 					<div>
-						<WhiteInput
+						<input
 							type='text'
-							value={invoiceData.city}
 							placeholder='Miasto'
-							name='city'
-							onChange={handleInputChange}
+							{...register('city', { required: true })}
+							className='border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full'
 						/>
+						<p className='text-xs text-brownSugar'>
+							{errors.city ? 'Podaj miasto' : null}
+						</p>
 					</div>
 
 					<div className='flex gap-x-3'>
-						<WhiteInput
-							type='text'
-							value={invoiceData.postalCode}
-							placeholder='Kod pocztowy (xx-xxx)'
-							name='postalCode'
-							onChange={handleInputChange}
-						/>
+						<div className='basis-1/2'>
+							<input
+								type='text'
+								placeholder='Kod pocztowy (xx-xxx)'
+								className='border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full'
+								{...register('postalCode', {
+									required: true,
+									maxLength: 6,
+									minLength: 6,
+								})}
+							/>
+							<p className='text-xs text-brownSugar'>
+								{errors.postalCode ? 'Prawidłowy format to XX-XXX' : null}
+							</p>
+						</div>
 
-						<select
-							className='border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full'
-							value={invoiceData.country}
-							name='country'
-							onChange={handleInputChange}>
-							<option selected value='Polska'>
-								Polska
-							</option>
-							<option value='DE'>Niemcy</option>
-						</select>
+						<div className='basis-1/2'>
+							<select
+								className='border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full'
+								{...register('country', { required: true })}>
+								<option selected value='Polska'>
+									Polska
+								</option>
+							</select>
+						</div>
 					</div>
 				</>
 			) : null}
 
 			{isInvoiceOpen ? (
-				<CTA body='Kontynuuj' id='invoiceButton' onClick={handleContinue} />
+				<CTA body='Kontynuuj' id='invoiceButton' type='submit' />
 			) : null}
-		</div>
+		</form>
 	);
 };
 
