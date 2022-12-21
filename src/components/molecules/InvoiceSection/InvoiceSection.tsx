@@ -5,21 +5,19 @@ import { useForm } from 'react-hook-form';
 import { ICheckoutForm } from '../../../models/CheckoutData';
 
 interface IInvoiceSection {
-	invoiceData: InvoiceDataModel;
-	setInvoiceData: React.Dispatch<React.SetStateAction<InvoiceDataModel>>;
 	isInvoiceOpen: boolean;
 	setInvoiceOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	setShippingOpen: React.Dispatch<React.SetStateAction<boolean>>;
-	setCheckoutForm: React.Dispatch<React.SetStateAction<{} | ICheckoutForm>>;
+	setCheckoutForm: React.Dispatch<React.SetStateAction<ICheckoutForm>>;
+	checkoutForm: ICheckoutForm;
 }
 
 const InvoiceSection = ({
-	invoiceData,
-	setInvoiceData,
 	isInvoiceOpen,
 	setInvoiceOpen,
 	setShippingOpen,
 	setCheckoutForm,
+	checkoutForm,
 }: IInvoiceSection) => {
 	const [invoice, setInvoice] = useState(false);
 
@@ -30,8 +28,7 @@ const InvoiceSection = ({
 	} = useForm<InvoiceDataModel>();
 
 	const onSubmit = (data: InvoiceDataModel) => {
-		setInvoiceData(data);
-		setCheckoutForm((prev) => ({ ...prev, invoice: invoiceData }));
+		setCheckoutForm((prev) => ({ ...prev, invoice: data }));
 		setInvoiceOpen(false);
 		setShippingOpen(true);
 	};
@@ -42,7 +39,7 @@ const InvoiceSection = ({
 			className='bg-white px-4 py-5 border-[#C7C7C7] border-[1px] flex flex-col gap-y-3'>
 			<div className='flex justify-between'>
 				<h2 className='text-xl font-[400] font-lato'>2. Dane do faktury</h2>
-				{invoiceData.name !== '' && !isInvoiceOpen ? (
+				{checkoutForm.invoice.name !== '' && !isInvoiceOpen ? (
 					<button
 						onClick={() => setInvoiceOpen(true)}
 						className='hover:underline text-pencil'>

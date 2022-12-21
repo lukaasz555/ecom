@@ -3,44 +3,15 @@ import { Link } from 'react-router-dom';
 import EmailSection from '../../components/molecules/EmailSection/EmailSection';
 import InvoiceSection from '../../components/molecules/InvoiceSection/InvoiceSection';
 import ShippingSection from '../../components/molecules/ShippingSection/ShippingSection';
-import {
-	InvoiceDataModel,
-	EmailDataModel,
-	ShipDataModel,
-} from '../../models/CheckoutData';
 import { ICheckoutForm } from '../../models/CheckoutData';
+import { initialCheckoutForm } from '../../helpers/initialStates';
 
 const Checkout = () => {
-	const [emailData, setEmailData] = useState<EmailDataModel>({
-		email: '',
-		consent: false,
-	});
-	const [invoiceData, setInvoiceData] = useState<InvoiceDataModel>({
-		name: '',
-		lastname: '',
-		companyName: '',
-		nip: '',
-		address1: '',
-		address2: '',
-		city: '',
-		postalCode: '',
-		country: 'Polska',
-	});
-	const [shipData, setShipData] = useState<ShipDataModel>({
-		countryCode: 'PL',
-		phoneNumber: '',
-		inpost: '',
-	});
-
 	const [isEmailOpen, setEmailOpen] = useState(true);
 	const [isInvoiceOpen, setInvoiceOpen] = useState(false);
 	const [isShippingOpen, setShippingOpen] = useState(false);
-
-	const [checkoutForm, setCheckoutForm] = useState<ICheckoutForm | {}>({
-		email: emailData,
-		invoice: invoiceData,
-		shipping: shipData,
-	});
+	const [checkoutForm, setCheckoutForm] =
+		useState<ICheckoutForm>(initialCheckoutForm);
 
 	return (
 		<div className='flex flex-col items-center bg-gray min-h-screen'>
@@ -54,27 +25,21 @@ const Checkout = () => {
 			<main className='flex flex-col lg:flex-row lg:justify-between w-full max-w-[900px] my-10'>
 				<div className='lg:basis-[48%] flex flex-col gap-y-5'>
 					<EmailSection
-						emailData={emailData}
-						setEmailData={setEmailData}
 						isEmailOpen={isEmailOpen}
 						setEmailOpen={setEmailOpen}
 						setInvoiceOpen={setInvoiceOpen}
-						checkoutForm={checkoutForm}
 						setCheckoutForm={setCheckoutForm}
 					/>
 					<InvoiceSection
-						invoiceData={invoiceData}
-						setInvoiceData={setInvoiceData}
 						isInvoiceOpen={isInvoiceOpen}
 						setInvoiceOpen={setInvoiceOpen}
 						setShippingOpen={setShippingOpen}
+						checkoutForm={checkoutForm}
 						setCheckoutForm={setCheckoutForm}
 					/>
 					<ShippingSection
 						isShippingOpen={isShippingOpen}
 						setShippingOpen={setShippingOpen}
-						shipData={shipData}
-						setShipData={setShipData}
 						checkoutForm={checkoutForm}
 						setCheckoutForm={setCheckoutForm}
 					/>

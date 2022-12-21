@@ -1,27 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import WhiteInput from '../../atoms/WhiteInput/WhiteInput';
 import CTA from '../../atoms/CTA/CTA';
-import { EmailDataModel } from '../../../models/CheckoutData';
 import { emailValidation } from '../../../helpers/validations';
 import { ICheckoutForm } from '../../../models/CheckoutData';
 
 interface IEmailSection {
-	emailData: EmailDataModel;
-	setEmailData: React.Dispatch<React.SetStateAction<EmailDataModel>>;
 	isEmailOpen: boolean;
 	setEmailOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	setInvoiceOpen: React.Dispatch<React.SetStateAction<boolean>>;
-	setCheckoutForm: React.Dispatch<React.SetStateAction<{} | ICheckoutForm>>;
-	checkoutForm: {} | ICheckoutForm;
+	setCheckoutForm: React.Dispatch<React.SetStateAction<ICheckoutForm>>;
 }
 
 const EmailSection = ({
-	emailData,
-	setEmailData,
 	isEmailOpen,
 	setEmailOpen,
 	setInvoiceOpen,
-	checkoutForm,
 	setCheckoutForm,
 }: IEmailSection) => {
 	const [email, setEmail] = useState('');
@@ -29,8 +22,13 @@ const EmailSection = ({
 	const [errorMsg, setErrorMsg] = useState('');
 
 	useEffect(() => {
-		emailData.consent = consent;
-		emailData.email = email;
+		setCheckoutForm((prev) => ({
+			...prev,
+			email: {
+				emailAddress: email,
+				consent,
+			},
+		}));
 	}, [email, consent]);
 
 	const handleConsentChange = (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -45,7 +43,6 @@ const EmailSection = ({
 			setErrorMsg('');
 			setEmailOpen(false);
 			setInvoiceOpen(true);
-			//setCheckoutForm((prev) => ({ ...prev, email: emailData }));
 		} else {
 			setErrorMsg('Wprowadź prawidłowy adres e-mail');
 		}

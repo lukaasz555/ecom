@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
 import WhiteInput from '../../atoms/WhiteInput/WhiteInput';
-import { ShipDataModel } from '../../../models/CheckoutData';
 import CTA from '../../atoms/CTA/CTA';
 import PhoneInput from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
@@ -9,30 +8,25 @@ import { ICheckoutForm } from '../../../models/CheckoutData';
 interface IShippingSection {
 	isShippingOpen: boolean;
 	setShippingOpen: React.Dispatch<React.SetStateAction<boolean>>;
-	shipData: ShipDataModel;
-	setShipData: React.Dispatch<React.SetStateAction<ShipDataModel>>;
-	checkoutForm: ICheckoutForm | {};
-	setCheckoutForm: React.Dispatch<React.SetStateAction<{} | ICheckoutForm>>;
+	setCheckoutForm: React.Dispatch<React.SetStateAction<ICheckoutForm>>;
+	checkoutForm: ICheckoutForm;
 }
 
 const ShippingSection = ({
 	isShippingOpen,
 	setShippingOpen,
-	shipData,
-	setShipData,
 	checkoutForm,
 	setCheckoutForm,
 }: IShippingSection) => {
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setShipData((prevState) => ({
-			...prevState,
-			[e.target.name]: e.target.value,
-		}));
-	};
+	const [errorMessage, setErrorMessage] = useState(false);
 
 	const handleContinue = (e: React.MouseEvent) => {
-		setCheckoutForm((prev) => ({ ...prev, shipping: shipData }));
-		console.log(checkoutForm);
+		if (checkoutForm.ship.phoneNumber.length !== 12) {
+			setErrorMessage(true);
+		} else {
+			setErrorMessage(false);
+			console.log(checkoutForm);
+		}
 	};
 
 	return (
@@ -61,44 +55,44 @@ const ShippingSection = ({
 					<div className='flex gap-x-5'>
 						<div className='basis-1/2'>
 							<div className='border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full'>
-								{/* 								<select className='text-s px-2 w-[70px] border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full border-r-0'>
-									<option value='PL'>+48</option>
-								</select>
-								<WhiteInput
-									type='number'
-									value={shipData.phoneNumber}
-									name='phoneNumber'
-									placeholder='Nr telefonu'
-									onChange={handleInputChange}
-									max={999}
-									
-								/> */}
 								<PhoneInput
 									name='phoneNumber'
 									countries={['PL']}
 									style={{ outline: 'black' }}
 									addInternationalOption={false}
 									placeholder='Numer telefonu'
-									value={shipData.phoneNumber}
+									limitMaxLength={true}
 									onChange={(value: string) =>
-										setShipData((prev) => ({
+										setCheckoutForm((prev) => ({
 											...prev,
-											[shipData.phoneNumber]: value,
+											ship: {
+												...prev.ship,
+												phoneNumber: value,
+											},
 										}))
 									}
 								/>
 							</div>
 
-							<p className='text-s font-lato mt-1'>
-								- tylko cyfry, <br />- bez numeru kierunkowego,
+							<p className='text-s font-lato mt-1 text-brownSugar'>
+								{errorMessage ? 'Wprowadź poprawny numer telefonu' : null}
 							</p>
 						</div>
 						<div className='basis-1/2'>
 							<WhiteInput
 								type='text'
-								value={shipData.inpost}
+								value={checkoutForm.ship.inpost}
 								placeholder='Numer paczkomatu'
-								onChange={handleInputChange}
+								onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+									const value = e.target.value;
+									setCheckoutForm((prev) => ({
+										...prev,
+										ship: {
+											...prev.ship,
+											inpost: value,
+										},
+									}));
+								}}
 								name='inpost'
 								maxLength={9}
 							/>
