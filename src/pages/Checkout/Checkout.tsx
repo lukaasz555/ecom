@@ -5,7 +5,8 @@ import InvoiceSection from '../../components/molecules/InvoiceSection/InvoiceSec
 import ShippingSection from '../../components/molecules/ShippingSection/ShippingSection';
 import { ICheckoutForm } from '../../models/CheckoutData';
 import { initialCheckoutForm } from '../../helpers/initialStates';
-import OrderSummary from '../../components/organisms/OrderSummary/OrderSummary';
+import OrderSummary from '../../components/molecules/OrderSummary/OrderSummary';
+import CartSummary from '../../components/molecules/CartSummary/CartSummary';
 
 const Checkout = () => {
 	const [isEmailOpen, setEmailOpen] = useState(true);
@@ -24,7 +25,7 @@ const Checkout = () => {
 					</h1>
 				</header>
 			</div>
-			<main className='flex flex-col lg:flex-row lg:justify-between w-full max-w-[900px] my-10 px-2 lg:px-0'>
+			<main className='flex flex-col lg:flex-row lg:justify-between lg:items-start w-full max-w-[900px] my-10 px-2 lg:px-0'>
 				{isFormFilled ? (
 					<OrderSummary
 						checkoutForm={checkoutForm}
@@ -55,9 +56,7 @@ const Checkout = () => {
 								setFormFilled={setFormFilled}
 							/>
 						</div>
-						<div className='bg-white px-4 py-5 border-[#C7C7C7] border-[1px] lg:basis-[48%] '>
-							<h2 className='text-xl font-[400] font-lato'>Twoje zamówienie</h2>
-						</div>{' '}
+						<CartSummary />
 					</>
 				)}
 			</main>
