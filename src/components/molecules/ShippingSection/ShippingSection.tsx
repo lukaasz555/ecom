@@ -10,6 +10,7 @@ interface IShippingSection {
 	setShippingOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	setCheckoutForm: React.Dispatch<React.SetStateAction<ICheckoutForm>>;
 	checkoutForm: ICheckoutForm;
+	setFormFilled: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ShippingSection = ({
@@ -17,6 +18,7 @@ const ShippingSection = ({
 	setShippingOpen,
 	checkoutForm,
 	setCheckoutForm,
+	setFormFilled,
 }: IShippingSection) => {
 	const [errorMessage, setErrorMessage] = useState(false);
 
@@ -25,7 +27,7 @@ const ShippingSection = ({
 			setErrorMessage(true);
 		} else {
 			setErrorMessage(false);
-			console.log(checkoutForm);
+			setFormFilled(true);
 		}
 	};
 
@@ -52,8 +54,8 @@ const ShippingSection = ({
 							</li>
 						</ul>
 					</div>
-					<div className='flex gap-x-5'>
-						<div className='basis-1/2'>
+					<div className='flex flex-col gap-y-3'>
+						<div>
 							<div className='border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full'>
 								<PhoneInput
 									name='phoneNumber'
@@ -78,11 +80,11 @@ const ShippingSection = ({
 								{errorMessage ? 'Wprowadź poprawny numer telefonu' : null}
 							</p>
 						</div>
-						<div className='basis-1/2'>
+						<div>
 							<WhiteInput
 								type='text'
 								value={checkoutForm.ship.inpost}
-								placeholder='Numer paczkomatu'
+								placeholder='Numer paczkomatu (np. GDA147M)'
 								onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
 									const value = e.target.value;
 									setCheckoutForm((prev) => ({
@@ -96,16 +98,15 @@ const ShippingSection = ({
 								name='inpost'
 								maxLength={9}
 							/>
-							<p className='text-s font-lato mt-1'>
-								- przykładowe formaty: KRA05APP, GDA147M;
-							</p>
-							<a
-								href='https://inpost.pl/znajdz-paczkomat'
-								target='_blank'
-								rel='noreferrer'
-								className='text-s text-brownSugar font-lato mt-1 hover:underline'>
-								Znajdź paczkomat
-							</a>
+							<div className='flex justify-between items-start'>
+								<a
+									href='https://inpost.pl/znajdz-paczkomat'
+									target='_blank'
+									rel='noreferrer'
+									className='text-s text-brownSugar font-lato mt-1 hover:underline'>
+									Znajdź swój paczkomat
+								</a>
+							</div>
 						</div>
 					</div>
 					<div>

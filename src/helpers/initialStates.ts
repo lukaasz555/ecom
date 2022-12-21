@@ -1,7 +1,7 @@
 export const initialCheckoutForm = {
 	email: {
 		emailAddress: '',
-		consent: false,
+		isConsent: false,
 	},
 
 	invoice: {
@@ -14,6 +14,7 @@ export const initialCheckoutForm = {
 		city: '',
 		postalCode: '',
 		country: '',
+		isInvoice: false,
 	},
 
 	ship: {

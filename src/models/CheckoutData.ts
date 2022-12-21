@@ -1,6 +1,6 @@
 export interface EmailDataModel {
 	emailAddress: string;
-	consent: boolean;
+	isConsent: boolean;
 }
 
 export interface InvoiceDataModel {
@@ -13,6 +13,7 @@ export interface InvoiceDataModel {
 	city: string;
 	postalCode: string;
 	country: string;
+	isInvoice: boolean;
 }
 
 export interface ShipDataModel {

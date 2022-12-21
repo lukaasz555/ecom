@@ -8,6 +8,7 @@ interface IEmailSection {
 	isEmailOpen: boolean;
 	setEmailOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	setInvoiceOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	checkoutForm: ICheckoutForm;
 	setCheckoutForm: React.Dispatch<React.SetStateAction<ICheckoutForm>>;
 }
 
@@ -15,6 +16,7 @@ const EmailSection = ({
 	isEmailOpen,
 	setEmailOpen,
 	setInvoiceOpen,
+	checkoutForm,
 	setCheckoutForm,
 }: IEmailSection) => {
 	const [email, setEmail] = useState('');
@@ -26,7 +28,7 @@ const EmailSection = ({
 			...prev,
 			email: {
 				emailAddress: email,
-				consent,
+				isConsent: consent,
 			},
 		}));
 	}, [email, consent]);
@@ -66,7 +68,7 @@ const EmailSection = ({
 				<div className='w-full'>
 					<WhiteInput
 						type='email'
-						value={email}
+						value={checkoutForm.email.emailAddress}
 						onChange={handleEmailChange}
 						name='email'
 					/>

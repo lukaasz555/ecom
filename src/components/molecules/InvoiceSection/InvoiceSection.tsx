@@ -20,7 +20,6 @@ const InvoiceSection = ({
 	checkoutForm,
 }: IInvoiceSection) => {
 	const [invoice, setInvoice] = useState(false);
-
 	const {
 		handleSubmit,
 		register,
@@ -55,11 +54,18 @@ const InvoiceSection = ({
 							<p>
 								<input
 									type='radio'
-									name='invoiceInput'
-									value='noInvoice'
+									name='isInvoice'
 									className='mr-1 hover:cursor-pointer'
 									defaultChecked
-									onChange={() => setInvoice(false)}
+									onChange={() =>
+										setCheckoutForm((prev) => ({
+											...prev,
+											invoice: {
+												...prev.invoice,
+												isInvoice: false,
+											},
+										}))
+									}
 								/>
 								Osoba fizyczna
 							</p>
@@ -67,10 +73,17 @@ const InvoiceSection = ({
 							<p>
 								<input
 									type='radio'
-									name='invoiceInput'
-									value='invoice'
+									name='isInvoice'
 									className='mr-1 hover:cursor-pointer'
-									onChange={() => setInvoice(true)}
+									onChange={() =>
+										setCheckoutForm((prev) => ({
+											...prev,
+											invoice: {
+												...prev.invoice,
+												isInvoice: true,
+											},
+										}))
+									}
 								/>
 								Firma
 							</p>
@@ -102,7 +115,7 @@ const InvoiceSection = ({
 							</p>
 						</div>
 					</div>
-					{invoice ? (
+					{checkoutForm.invoice.isInvoice ? (
 						<div className='flex flex-col gap-y-3'>
 							<div>
 								<input
