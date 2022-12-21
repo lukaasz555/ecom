@@ -1,6 +1,10 @@
 import React from 'react';
 import { ICheckoutForm } from '../../../models/CheckoutData';
 import CTA from '../../atoms/CTA/CTA';
+import { useAppSelector } from '../../../hooks/hooks';
+import { handleNumbFormat } from '../../../helpers/handleNumbFormat';
+import { getQty } from '../../../helpers/getQty';
+import { productsValue } from '../../../helpers/productsValue';
 
 interface OrderSummaryProps {
 	checkoutForm: ICheckoutForm;
@@ -23,6 +27,12 @@ const OrderSummary = ({ checkoutForm, setFormFilled }: OrderSummaryProps) => {
 	const { phoneNumber, inpost } = checkoutForm.ship;
 
 	const handleClick = () => console.log(checkoutForm);
+	const items = useAppSelector((state) => state.cart.items);
+	const uniqItems = useAppSelector((state) => state.cart.uniqueItems);
+
+	const itemsCost: number = productsValue(items);
+	const deliveryCost: number = 9.9;
+	const total: number = itemsCost + deliveryCost;
 
 	return (
 		<div className='OrderSummary bg-white px-4 py-5 border-[#C7C7C7] border-[1px] w-full flex flex-col gap-y-5 '>
@@ -74,6 +84,57 @@ const OrderSummary = ({ checkoutForm, setFormFilled }: OrderSummaryProps) => {
 						</p>
 					</li>
 				</ul>
+			</div>
+
+			<div className='flex flex-col'>
+				<h3 className='mb-1 font-lato font-[400]'>Produkty:</h3>
+				<div className='flex flex-col items-between font-lato text-s font-[300] '>
+					<div className='flex border-b-[1px] mb-1 pb-1 px-3'>
+						<div className='basis-[60%]'>
+							<p>nazwa</p>
+						</div>
+						<div className='basis-[20%] text-right'>
+							<p>ilość</p>
+						</div>
+						<div className='basis-[20%] text-right'>
+							<p>cena</p>
+						</div>
+					</div>
+
+					{uniqItems.map(({ title, price, discount, id }) => (
+						<div className='flex font-[400] px-3'>
+							<div className='basis-[60%]'>
+								<p>{title}</p>
+							</div>
+							<div className='basis-[20%] text-right'>
+								<p>{getQty(id, items)}</p>
+							</div>
+							<div className='basis-[20%] text-right'>
+								<p>
+									{handleNumbFormat(getQty(id, items) * (price - discount))} zł
+								</p>
+							</div>
+						</div>
+					))}
+
+					{itemsCost <= 99 ? (
+						<div className='flex font-[400] px-3'>
+							<div className='basis-[60%] '>
+								<p>Wysyłka - Paczkomaty InPost</p>
+							</div>
+
+							<div className='basis-[40%] text-right'>
+								<p>{handleNumbFormat(deliveryCost)} zł</p>
+							</div>
+						</div>
+					) : null}
+
+					<div className='flex font-[400] px-3 mt-3 justify-end'>
+						<div>
+							<p className='text-m'>Łącznie: {handleNumbFormat(total)} zł</p>
+						</div>
+					</div>
+				</div>
 			</div>
 
 			<div className='flex justify-center'>

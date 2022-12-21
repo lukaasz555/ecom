@@ -8,6 +8,7 @@ import CTA from '../../components/atoms/CTA/CTA';
 import { handleNumbFormat } from '../../helpers/handleNumbFormat';
 import { useAppSelector, useAppDispatch } from '../../hooks/hooks';
 import { clearCart } from '../../features/cart/cartSlice';
+import { productsValue } from '../../helpers/productsValue';
 
 const Cart = () => {
 	const [items, setItems] = useState<ProductModel[] | []>([]);
@@ -21,20 +22,6 @@ const Cart = () => {
 			setItems(uniqueItems);
 		}
 	}, [cartItems, uniqueItems]);
-
-	const productsValue = (arr: ProductModel[]) => {
-		if (arr.length > 0) {
-			const val = arr.reduce(
-				(acc: number, item: { price: number; discount: number }) => {
-					return acc + (item.price - item.discount);
-				},
-				0
-			);
-			return val;
-		} else {
-			return 0;
-		}
-	};
 
 	const itemsCost: number = productsValue(cartItems);
 	const deliveryCost: number = itemsCost >= 99 ? 0 : 9.9;

@@ -3,24 +3,11 @@ import { useAppSelector } from '../../../hooks/hooks';
 import { getQty } from '../../../helpers/getQty';
 import { handleNumbFormat } from '../../../helpers/handleNumbFormat';
 import { ProductModel } from '../../../models/Product';
+import { productsValue } from '../../../helpers/productsValue';
 
 const CartSummary = () => {
 	const items = useAppSelector((state) => state.cart.items);
 	const uniqItems = useAppSelector((state) => state.cart.uniqueItems);
-
-	const productsValue = (arr: ProductModel[]) => {
-		if (arr.length > 0) {
-			const val = arr.reduce(
-				(acc: number, item: { price: number; discount: number }) => {
-					return acc + (item.price - item.discount);
-				},
-				0
-			);
-			return val;
-		} else {
-			return 0;
-		}
-	};
 
 	const getDiscounts = (arr: ProductModel[]) => {
 		if (arr.length > 0) {
