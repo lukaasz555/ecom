@@ -6,6 +6,7 @@ import Albums from './pages/albums/Albums';
 import Contact from './pages/contact/Contact';
 import Product from './pages/product/Product';
 import Cart from './pages/cart/Cart';
+import Checkout from './pages/Checkout/Checkout';
 
 function App() {
 	return (
@@ -27,6 +28,7 @@ function App() {
 					path={`/shop/category/books/:catID`}
 					element={<Books filterCategory={true} />}
 				/>
+				<Route path='/checkout' element={<Checkout />} />
 			</Routes>
 		</div>
 	);

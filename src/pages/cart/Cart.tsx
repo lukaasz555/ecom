@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Layout from '../../components/templates/Layout/Layout';
 import CartItem from '../../components/organisms/CartItem/CartItem';
 import { ProductModel } from '../../models/Product';
@@ -7,12 +8,13 @@ import CTA from '../../components/atoms/CTA/CTA';
 import { handleNumbFormat } from '../../helpers/handleNumbFormat';
 import { useAppSelector, useAppDispatch } from '../../hooks/hooks';
 import { clearCart } from '../../features/cart/cartSlice';
+import { productsValue } from '../../helpers/productsValue';
 
 const Cart = () => {
 	const [items, setItems] = useState<ProductModel[] | []>([]);
 	const cartItems = useAppSelector((state) => state.cart.items);
 	const uniqueItems = useAppSelector((state) => state.cart.uniqueItems);
-
+	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
@@ -21,31 +23,14 @@ const Cart = () => {
 		}
 	}, [cartItems, uniqueItems]);
 
-	const productsValue = (arr: ProductModel[]) => {
-		if (arr.length > 0) {
-			const val = arr.reduce(
-				(acc: number, item: { price: number; discount: number }) => {
-					return acc + (item.price - item.discount);
-				},
-				0
-			);
-			return val;
-		} else {
-			return 0;
-		}
-	};
-
 	const itemsCost: number = productsValue(cartItems);
 	const deliveryCost: number = itemsCost >= 99 ? 0 : 9.9;
 	const total: number = itemsCost + deliveryCost;
 
-	const handleClick = (e: React.MouseEvent) =>
-		console.log(
-			'wartość produktów to ',
-			itemsCost,
-			', a całe zamówienie to ',
-			total
-		);
+	const handleClick = () => {
+		const target = '/checkout';
+		navigate(target);
+	};
 
 	const handleClear = () => {
 		dispatch(clearCart());
