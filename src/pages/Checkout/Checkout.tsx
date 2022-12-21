@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import EmailSection from '../../components/molecules/EmailSection/EmailSection';
 import InvoiceSection from '../../components/molecules/InvoiceSection/InvoiceSection';
 import ShippingSection from '../../components/molecules/ShippingSection/ShippingSection';
@@ -7,6 +7,7 @@ import { ICheckoutForm } from '../../models/CheckoutData';
 import { initialCheckoutForm } from '../../helpers/initialStates';
 import OrderSummary from '../../components/molecules/OrderSummary/OrderSummary';
 import CartSummary from '../../components/molecules/CartSummary/CartSummary';
+import { useAppSelector } from '../../hooks/hooks';
 
 const Checkout = () => {
 	const [isEmailOpen, setEmailOpen] = useState(true);
@@ -15,6 +16,15 @@ const Checkout = () => {
 	const [checkoutForm, setCheckoutForm] =
 		useState<ICheckoutForm>(initialCheckoutForm);
 	const [isFormFilled, setFormFilled] = useState(false);
+
+	const items = useAppSelector((state) => state.cart.items);
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (items.length < 1) {
+			navigate('/cart');
+		}
+	}, [items]);
 
 	return (
 		<div className='flex flex-col items-center bg-gray min-h-screen'>
