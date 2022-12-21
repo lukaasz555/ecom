@@ -6,15 +6,22 @@ import { handleNumbFormat } from '../../../helpers/handleNumbFormat';
 import { getQty } from '../../../helpers/getQty';
 import { productsValue } from '../../../helpers/productsValue';
 import OrderComplete from '../OrderComplete/OrderComplete';
+import { clearCart } from '../../../features/cart/cartSlice';
+import { useAppDispatch } from '../../../hooks/hooks';
 
 interface OrderSummaryProps {
 	checkoutForm: ICheckoutForm;
 	setFormFilled: React.Dispatch<React.SetStateAction<boolean>>;
+	orderDone: boolean;
+	setOrderDone: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const OrderSummary = ({ checkoutForm, setFormFilled }: OrderSummaryProps) => {
-	const [orderDone, setOrderDone] = useState(false);
-
+const OrderSummary = ({
+	checkoutForm,
+	setFormFilled,
+	orderDone,
+	setOrderDone,
+}: OrderSummaryProps) => {
 	const {
 		name,
 		lastname,
@@ -36,8 +43,11 @@ const OrderSummary = ({ checkoutForm, setFormFilled }: OrderSummaryProps) => {
 	const deliveryCost: number = 9.9;
 	const total: number = itemsCost + deliveryCost;
 
+	const dispatch = useAppDispatch();
+
 	const handleClick = () => {
 		console.log(checkoutForm);
+		dispatch(clearCart());
 		setOrderDone(true);
 	};
 
@@ -73,11 +83,14 @@ const OrderSummary = ({ checkoutForm, setFormFilled }: OrderSummaryProps) => {
 					<div>
 						<h3 className='font-lato font-[400]'>Dane do faktury:</h3>
 						<ul className='font-lato font-[300]'>
-							<li>
-								<p>
-									{name} {lastname}
-								</p>
-							</li>
+							{!isInvoice ? (
+								<li>
+									<p>
+										{name} {lastname}
+									</p>
+								</li>
+							) : null}
+
 							{isInvoice ? (
 								<li>
 									<p>{companyName}</p>
