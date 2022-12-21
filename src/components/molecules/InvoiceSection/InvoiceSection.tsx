@@ -19,7 +19,7 @@ const InvoiceSection = ({
 	setCheckoutForm,
 	checkoutForm,
 }: IInvoiceSection) => {
-	const [invoice, setInvoice] = useState(false);
+	const [isInvoiceNeeded, setInvoiceNeeded] = useState(false);
 	const {
 		handleSubmit,
 		register,
@@ -28,6 +28,13 @@ const InvoiceSection = ({
 
 	const onSubmit = (data: InvoiceDataModel) => {
 		setCheckoutForm((prev) => ({ ...prev, invoice: data }));
+		setCheckoutForm((prev) => ({
+			...prev,
+			invoice: {
+				...prev.invoice,
+				isInvoice: isInvoiceNeeded,
+			},
+		}));
 		setInvoiceOpen(false);
 		setShippingOpen(true);
 	};
@@ -57,7 +64,8 @@ const InvoiceSection = ({
 									name='isInvoice'
 									className='mr-1 hover:cursor-pointer'
 									defaultChecked
-									onChange={() =>
+									onChange={() => setInvoiceNeeded(false)}
+									/* 									onChange={() =>
 										setCheckoutForm((prev) => ({
 											...prev,
 											invoice: {
@@ -65,7 +73,7 @@ const InvoiceSection = ({
 												isInvoice: false,
 											},
 										}))
-									}
+									} */
 								/>
 								Osoba fizyczna
 							</p>
@@ -75,7 +83,8 @@ const InvoiceSection = ({
 									type='radio'
 									name='isInvoice'
 									className='mr-1 hover:cursor-pointer'
-									onChange={() =>
+									onChange={() => setInvoiceNeeded(true)}
+									/* onChange={() =>
 										setCheckoutForm((prev) => ({
 											...prev,
 											invoice: {
@@ -83,7 +92,7 @@ const InvoiceSection = ({
 												isInvoice: true,
 											},
 										}))
-									}
+									} */
 								/>
 								Firma
 							</p>
@@ -115,19 +124,19 @@ const InvoiceSection = ({
 							</p>
 						</div>
 					</div>
-					{checkoutForm.invoice.isInvoice ? (
+					{isInvoiceNeeded ? (
 						<div className='flex flex-col gap-y-3'>
 							<div>
 								<input
 									type='text'
 									placeholder='Nazwa firmy'
 									{...register('companyName', {
-										required: invoice ? true : false,
+										required: isInvoiceNeeded ? true : false,
 									})}
 									className='border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full'
 								/>
 								<p className='text-xs text-brownSugar'>
-									{errors.companyName && invoice
+									{errors.companyName && isInvoiceNeeded
 										? 'Wprowadź nazwę firmy'
 										: null}
 								</p>
@@ -138,14 +147,14 @@ const InvoiceSection = ({
 									type='text'
 									placeholder='NIP firmy'
 									{...register('nip', {
-										required: invoice ? true : false,
+										required: isInvoiceNeeded ? true : false,
 										minLength: 10,
 										maxLength: 10,
 									})}
 									className='border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full'
 								/>
 								<p className='text-xs text-brownSugar'>
-									{errors.nip && invoice
+									{errors.nip && isInvoiceNeeded
 										? 'Podaj prawidłowy NIP (10 znaków)'
 										: null}
 								</p>

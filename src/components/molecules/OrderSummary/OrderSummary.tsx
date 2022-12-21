@@ -26,7 +26,6 @@ const OrderSummary = ({ checkoutForm, setFormFilled }: OrderSummaryProps) => {
 	const { emailAddress } = checkoutForm.email;
 	const { phoneNumber, inpost } = checkoutForm.ship;
 
-	const handleClick = () => console.log(checkoutForm);
 	const items = useAppSelector((state) => state.cart.items);
 	const uniqItems = useAppSelector((state) => state.cart.uniqueItems);
 
@@ -34,21 +33,23 @@ const OrderSummary = ({ checkoutForm, setFormFilled }: OrderSummaryProps) => {
 	const deliveryCost: number = 9.9;
 	const total: number = itemsCost + deliveryCost;
 
+	const handleClick = () => console.log(checkoutForm);
+
 	return (
-		<div className='OrderSummary bg-white px-4 py-5 border-[#C7C7C7] border-[1px] w-full flex flex-col gap-y-5 '>
+		<div className='OrderSummary bg-white px-4 py-5 border-[#C7C7C7] border-[1px] w-full flex flex-col gap-y-8 '>
 			<div className='flex justify-between items-start'>
-				<h1 className='text-xl font-[400] font-lato mb-5'>
+				<h1 className='text-xl font-[400] font-lato mb-2'>
 					Podsumowanie zamówienia
 				</h1>
 				<button
 					onClick={() => setFormFilled(false)}
 					className='hover:underline text-pencil text-s'>
-					Edytuj zamówienie
+					Zmień dane
 				</button>
 			</div>
 
 			<div>
-				<h3 className='mb-1 font-lato font-[400]'>Dane kontaktowe:</h3>
+				<h3 className='font-lato font-[400]'>Dane kontaktowe:</h3>
 				<ul className='font-lato font-[300]'>
 					<li>
 						<p>{emailAddress}</p>
@@ -61,7 +62,7 @@ const OrderSummary = ({ checkoutForm, setFormFilled }: OrderSummaryProps) => {
 			</div>
 
 			<div>
-				<h3 className='mb-1 font-lato font-[400]'>Dane do faktury:</h3>
+				<h3 className='font-lato font-[400]'>Dane do faktury:</h3>
 				<ul className='font-lato font-[300]'>
 					<li>
 						<p>
@@ -87,29 +88,29 @@ const OrderSummary = ({ checkoutForm, setFormFilled }: OrderSummaryProps) => {
 			</div>
 
 			<div className='flex flex-col'>
-				<h3 className='mb-1 font-lato font-[400]'>Produkty:</h3>
+				<h3 className='font-lato font-[400] mb-2'>Produkty:</h3>
 				<div className='flex flex-col items-between font-lato text-s font-[300] '>
-					<div className='flex border-b-[1px] mb-1 pb-1 px-3'>
+					<div className='flex border-b-[1px] mb-1 pb-1 px-3 justify-between '>
 						<div className='basis-[60%]'>
 							<p>nazwa</p>
 						</div>
-						<div className='basis-[20%] text-right'>
+						<div className='basis-[15%] text-center'>
 							<p>ilość</p>
 						</div>
-						<div className='basis-[20%] text-right'>
+						<div className='basis-[15%] text-right'>
 							<p>cena</p>
 						</div>
 					</div>
 
 					{uniqItems.map(({ title, price, discount, id }) => (
-						<div className='flex font-[400] px-3'>
+						<div className='flex font-[400] px-3 justify-between mb-1'>
 							<div className='basis-[60%]'>
 								<p>{title}</p>
 							</div>
-							<div className='basis-[20%] text-right'>
+							<div className='basis-[15%] text-center'>
 								<p>{getQty(id, items)}</p>
 							</div>
-							<div className='basis-[20%] text-right'>
+							<div className='basis-[15%] text-right'>
 								<p>
 									{handleNumbFormat(getQty(id, items) * (price - discount))} zł
 								</p>

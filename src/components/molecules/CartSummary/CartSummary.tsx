@@ -29,18 +29,18 @@ const CartSummary = () => {
 		<div className='bg-white px-4 py-5 border-[#C7C7C7] border-[1px] lg:basis-[48%] '>
 			<h2 className='text-xl font-[400] font-lato mb-3'>Twoje zamówienie</h2>
 			<div>
-				{uniqItems.map((item) => (
-					<div className='flex justify-between items-center mb-3'>
+				{uniqItems.map(({ id, title, price, discount, authors }) => (
+					<div key={id} className='flex justify-between items-center mb-3'>
 						<div className='basis-[60%]'>
-							<h4 className='text-m font-lato'>{item.title}</h4>
+							<h4 className='text-m font-lato'>{title}</h4>
 							<h5 className='text-s text-sparkle font-lato'>
-								{item.authors.join(', ')}
+								{authors.join(', ')}
 							</h5>
 						</div>
 						<div className='text-m font-lato font-[300] flex flex-col items-center'>
-							<p>{handleNumbFormat(item.price - item.discount)}zł</p>
-							{getQty(item.id, items) > 1 ? (
-								<p className='text-brownSugar'>{getQty(item.id, items)}x</p>
+							<p>{handleNumbFormat(price - discount)}zł</p>
+							{getQty(id, items) > 1 ? (
+								<p className='text-brownSugar'>{getQty(id, items)}x</p>
 							) : null}
 						</div>
 					</div>
