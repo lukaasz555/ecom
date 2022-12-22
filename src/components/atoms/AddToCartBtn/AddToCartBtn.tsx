@@ -13,7 +13,7 @@ interface ButtonProps extends ProductModel2 {
 
 const AddToCartBtn = ({ data, body }: ButtonProps) => {
 	const dispatch = useAppDispatch();
-	const cartItems = useAppSelector((state) => state.cart.items);
+	const cartItems = useAppSelector((state) => state.items);
 	const [isAdded, setAdded] = useState(false);
 	const [error, setError] = useState(false);
 

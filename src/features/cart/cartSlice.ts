@@ -67,7 +67,7 @@ export const cartSlice = createSlice({
 });
 
 export const { addItem, removeItem, clearCart, removeID } = cartSlice.actions;
-export const selectCartItems = (state: RootState) => state.cart.items;
-export const selectCartUniqItems = (state: RootState) => state.cart.uniqueItems;
+export const selectCartItems = (state: RootState) => state.items;
+export const selectCartUniqItems = (state: RootState) => state.uniqueItems;
 
 export default cartSlice.reducer;

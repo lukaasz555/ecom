@@ -12,8 +12,8 @@ import { productsValue } from '../../helpers/productsValue';
 
 const Cart = () => {
 	const [items, setItems] = useState<ProductModel[] | []>([]);
-	const cartItems = useAppSelector((state) => state.cart.items);
-	const uniqueItems = useAppSelector((state) => state.cart.uniqueItems);
+	const cartItems = useAppSelector((state) => state.items);
+	const uniqueItems = useAppSelector((state) => state.uniqueItems);
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 
