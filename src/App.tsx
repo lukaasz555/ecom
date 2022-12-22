@@ -7,6 +7,8 @@ import Contact from './pages/contact/Contact';
 import Product from './pages/product/Product';
 import Cart from './pages/cart/Cart';
 import Checkout from './pages/Checkout/Checkout';
+import Admin from './pages/admin/Admin';
+import AdminOrders from './components/organisms/AdminOrders/AdminOrders';
 
 function App() {
 	return (
@@ -29,6 +31,8 @@ function App() {
 					element={<Books filterCategory={true} />}
 				/>
 				<Route path='/checkout' element={<Checkout />} />
+				<Route path='/admin' element={<Admin />} />
+				<Route path='/admin/orders' element={<AdminOrders />} />
 			</Routes>
 		</div>
 	);
