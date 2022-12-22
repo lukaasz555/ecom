@@ -30,7 +30,7 @@ const ItemsDetails = (): JSX.Element => {
 					</div>
 
 					{uniqItems.map(({ title, price, discount, id }) => (
-						<div className='flex font-[400] px-3 justify-between mb-1'>
+						<div key={id} className='flex font-[400] px-3 justify-between mb-1'>
 							<div className='basis-[60%]'>
 								<p>{title}</p>
 							</div>

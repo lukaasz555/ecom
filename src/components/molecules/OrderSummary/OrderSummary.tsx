@@ -2,12 +2,14 @@ import React from 'react';
 import { ICheckoutForm } from '../../../models/CheckoutData';
 import OrderComplete from '../OrderComplete/OrderComplete';
 import { clearCart } from '../../../features/cart/cartSlice';
-import { useAppDispatch } from '../../../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import InvoiceDetails from '../../atoms/OrderSummaryComponents/InvoiceDetails';
 import ContactDetails from '../../atoms/OrderSummaryComponents/ContactDetails';
 import ItemsDetails from '../../atoms/OrderSummaryComponents/ItemsDetails';
 import OrderSummaryTop from '../../atoms/OrderSummaryComponents/OrderSummaryTop';
 import OrderSummaryBottom from '../../atoms/OrderSummaryComponents/OrderSummaryBottom';
+import { productsValue } from '../../../helpers/productsValue';
+import axios from 'axios';
 
 interface OrderSummaryProps {
 	checkoutForm: ICheckoutForm;
@@ -24,11 +26,51 @@ const OrderSummary = ({
 }: OrderSummaryProps) => {
 	const { emailAddress } = checkoutForm.email;
 	const { phoneNumber, inpost } = checkoutForm.ship;
+	const items = useAppSelector((state) => state.items);
+	const itemsValue = productsValue(items);
+	const deliveryCost = itemsValue >= 99 ? 0 : 9.9;
+	const total = itemsValue + deliveryCost;
 
 	const dispatch = useAppDispatch();
 
+	const newOrder = {
+		customer: {
+			customerData: {
+				name: checkoutForm.invoice.name,
+				lastname: checkoutForm.invoice.lastname,
+				nip: checkoutForm.invoice.nip,
+				companyName: checkoutForm.invoice.companyName,
+			},
+
+			contact: {
+				email: checkoutForm.email.emailAddress,
+				phoneNumber: checkoutForm.ship.phoneNumber,
+			},
+
+			address: {
+				address1: checkoutForm.invoice.address1,
+				address2: checkoutForm.invoice.address2,
+				postalCode: checkoutForm.invoice.postalCode,
+				country: checkoutForm.invoice.country,
+			},
+		},
+
+		order: {
+			cart: {
+				items: items,
+				qty: items.length,
+				value: total,
+			},
+
+			ship: {
+				inpost: checkoutForm.ship.inpost,
+			},
+		},
+	};
+
 	const handleClick = () => {
-		console.log(checkoutForm);
+		axios.post('http://localhost:1337/orders/new', newOrder);
+		console.log(newOrder);
 		dispatch(clearCart());
 		setOrderDone(true);
 	};

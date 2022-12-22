@@ -39,10 +39,6 @@ const InvoiceSection = ({
 		setShippingOpen(true);
 	};
 
-	useEffect(() => {
-		console.log(errors.nip?.type.length);
-	}, [checkoutForm]);
-
 	return (
 		<form
 			onSubmit={handleSubmit(onSubmit)}

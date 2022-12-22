@@ -15,9 +15,7 @@ const persistor = persistStore(store);
 root.render(
 	<React.StrictMode>
 		<Provider store={store}>
-			<PersistGate
-				persistor={persistor}
-				loading={<div>L o a d i n g . . .</div>}>
+			<PersistGate persistor={persistor} loading={null}>
 				<Router>
 					<App />
 				</Router>
