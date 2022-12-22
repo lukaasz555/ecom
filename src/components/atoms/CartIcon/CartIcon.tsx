@@ -11,7 +11,7 @@ const CartIcon = () => {
 			<Link to={`/cart`} className='flex'>
 				<img src={CartIconSVG} alt='Koszyk' />
 				<p className='ml-1 text-xl font-light font-montserrat'>
-					{items.length}
+					{items.length > 0 ? items.length : null}
 				</p>
 			</Link>
 		</div>
