@@ -13,17 +13,12 @@ const Shop = () => {
 						firma, która powstała z naszej pasji do muzyki oraz literatury.
 						<br />
 						<br />
-						Zaczynaliśmy od sprzedaży książek, najpierw stacjonarnie, prowadząc
-						małą księgarnię, jednak ze względu na pandemię COVID-19
-						zdecydowaliśmy przenieść naszą działalność w stu procentach do
-						internetu.
-						<br />
-						<br />
-						Od niedawna w naszym sklepie mogą Państwo kupić również albumy
-						muzyczne. W tym momencie największą część oferty stanowią albumy z
-						muzyką alternatywną oraz rockową, zapewniamy jednak, że będziemy
-						cały czas poszerzać ofertę, aby sprostać oczekiwaniom najbardziej
-						wymagających klientów.
+						Zaczynaliśmy od sprzedaży książek, jednak cały czas chcemy się
+						rozwijać, więc od nie dawna w naszej ofercie dostępne są również
+						albumy muzyczne. W tym momencie największą część oferty stanowią
+						albumy z muzyką alternatywną oraz rockową, zapewniamy jednak, że
+						będziemy cały czas poszerzać ofertę, aby sprostać oczekiwaniom
+						najbardziej wymagających klientów.
 						<br />
 						<br />
 						Zajmujemy się również sprowadzaniem książek oraz płyt, więc jeśli
