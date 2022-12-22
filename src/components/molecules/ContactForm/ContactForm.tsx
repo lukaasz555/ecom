@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Input from '../../atoms/GrayInput/GrayInput';
 import Textarea from '../../atoms/Textarea/Textarea';
 import CTA from '../../atoms/CTA/CTA';
+import { emailValidation } from '../../../helpers/validations';
 
 interface IContactForm {
 	email: string;
@@ -26,13 +27,7 @@ const ContactForm = () => {
 
 	const handleClick = (e: React.MouseEvent) => {
 		e.preventDefault();
-		if (
-			formValue.email !== '' &&
-			formValue.email.includes('@') &&
-			formValue.email.includes('.') &&
-			formValue.subject !== '' &&
-			formValue.message.length >= 50
-		) {
+		if (emailValidation(formValue.email)) {
 			setError(false);
 			setSent(true);
 			setFormValue(initValue);
@@ -67,7 +62,6 @@ const ContactForm = () => {
 			{error ? (
 				<div className='mt-3 mb-6 text-xs lg:text-s text-brownSugar'>
 					<p>- musisz wypełnić każde pole;</p>
-					<p>- email musi zawierać znaki '@' oraz '.' ;</p>
 					<p>- wiadomość musi składać się z conajmniej 50 znaków;</p>
 				</div>
 			) : null}

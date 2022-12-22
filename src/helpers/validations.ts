@@ -1,6 +1,6 @@
 export const emailValidation = (email: string) => {
 	const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/;
-	if (regex.test(email)) {
+	if (regex.test(email) && email.length >= 3) {
 		return true;
 	} else {
 		return false;
