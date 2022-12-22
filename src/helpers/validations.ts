@@ -6,3 +6,12 @@ export const emailValidation = (email: string) => {
 		return false;
 	}
 };
+
+export const inpostValidation = (inpost: string) => {
+	const regex = /[A-Z]+[0-9]+[A-Z]/;
+	if (regex.test(inpost) && inpost.length >= 5 && inpost.length <= 10) {
+		return true;
+	} else {
+		return false;
+	}
+};

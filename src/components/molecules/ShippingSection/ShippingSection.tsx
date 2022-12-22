@@ -4,6 +4,7 @@ import CTA from '../../atoms/CTA/CTA';
 import PhoneInput from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
 import { ICheckoutForm } from '../../../models/CheckoutData';
+import { inpostValidation } from '../../../helpers/validations';
 
 interface IShippingSection {
 	isShippingOpen: boolean;
@@ -20,13 +21,36 @@ const ShippingSection = ({
 	setCheckoutForm,
 	setFormFilled,
 }: IShippingSection) => {
-	const [errorMessage, setErrorMessage] = useState(false);
+	const [phoneNoError, setPhoneNoError] = useState(false);
+	const [inpostError, setInpostError] = useState(false);
+
+	const validation = (phone: string, inpost: string) => {
+		if (phone.length === 12 && inpost.length >= 5 && inpost.length <= 10) {
+			return true;
+		} else {
+			return false;
+		}
+	};
 
 	const handleContinue = (e: React.MouseEvent) => {
-		if (checkoutForm.ship.phoneNumber.length !== 12) {
-			setErrorMessage(true);
+		let isPhoneValid = false;
+		let isInpostValid = false;
+		const { phoneNumber, inpost } = checkoutForm.ship;
+		if (phoneNumber.length !== 12) {
+			setPhoneNoError(true);
 		} else {
-			setErrorMessage(false);
+			setPhoneNoError(false);
+			isPhoneValid = true;
+		}
+
+		if (inpostValidation(inpost)) {
+			setInpostError(false);
+			isInpostValid = true;
+		} else {
+			setInpostError(true);
+		}
+
+		if (isPhoneValid && isInpostValid) {
 			setFormFilled(true);
 		}
 	};
@@ -77,7 +101,7 @@ const ShippingSection = ({
 							</div>
 
 							<p className='text-s font-lato mt-1 text-brownSugar'>
-								{errorMessage ? 'Wprowadź poprawny numer telefonu' : null}
+								{phoneNoError ? 'Wprowadź poprawny numer telefonu' : null}
 							</p>
 						</div>
 						<div>
@@ -91,13 +115,17 @@ const ShippingSection = ({
 										...prev,
 										ship: {
 											...prev.ship,
-											inpost: value,
+											inpost: value.toUpperCase(),
 										},
 									}));
 								}}
 								name='inpost'
 								maxLength={9}
+								minLength={5}
 							/>
+							<p className='text-s font-lato mt-1 mb-2 text-brownSugar'>
+								{inpostError ? 'Kod paczkomatu jest nieprawidłowy' : null}
+							</p>
 							<div className='flex justify-between items-start'>
 								<a
 									href='https://inpost.pl/znajdz-paczkomat'

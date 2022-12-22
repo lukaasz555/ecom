@@ -7,7 +7,7 @@ interface IWhiteInput {
 	onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	name?: string;
 	maxLength?: number;
-	max?: number;
+	minLength?: number;
 }
 
 const WhiteInput = ({
@@ -17,7 +17,7 @@ const WhiteInput = ({
 	value,
 	name,
 	maxLength,
-	max,
+	minLength,
 }: IWhiteInput) => {
 	return (
 		<input
@@ -28,7 +28,7 @@ const WhiteInput = ({
 			value={value}
 			name={name}
 			maxLength={maxLength}
-			max={max}
+			minLength={minLength}
 		/>
 	);
 };
