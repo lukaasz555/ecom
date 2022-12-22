@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CTA from '../../atoms/CTA/CTA';
 import { InvoiceDataModel } from '../../../models/CheckoutData';
 import { useForm } from 'react-hook-form';
@@ -39,6 +39,10 @@ const InvoiceSection = ({
 		setShippingOpen(true);
 	};
 
+	useEffect(() => {
+		console.log(errors.nip?.type.length);
+	}, [checkoutForm]);
+
 	return (
 		<form
 			onSubmit={handleSubmit(onSubmit)}
@@ -65,15 +69,6 @@ const InvoiceSection = ({
 									className='mr-1 hover:cursor-pointer'
 									defaultChecked
 									onChange={() => setInvoiceNeeded(false)}
-									/* 									onChange={() =>
-										setCheckoutForm((prev) => ({
-											...prev,
-											invoice: {
-												...prev.invoice,
-												isInvoice: false,
-											},
-										}))
-									} */
 								/>
 								Osoba fizyczna
 							</p>
@@ -84,15 +79,6 @@ const InvoiceSection = ({
 									name='isInvoice'
 									className='mr-1 hover:cursor-pointer'
 									onChange={() => setInvoiceNeeded(true)}
-									/* onChange={() =>
-										setCheckoutForm((prev) => ({
-											...prev,
-											invoice: {
-												...prev.invoice,
-												isInvoice: true,
-											},
-										}))
-									} */
 								/>
 								Firma
 							</p>
@@ -132,6 +118,7 @@ const InvoiceSection = ({
 									placeholder='Nazwa firmy'
 									{...register('companyName', {
 										required: isInvoiceNeeded ? true : false,
+										minLength: 5,
 									})}
 									className='border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full'
 								/>
@@ -147,17 +134,27 @@ const InvoiceSection = ({
 									type='text'
 									placeholder='NIP firmy'
 									{...register('nip', {
-										required: isInvoiceNeeded ? true : false,
-										minLength: 10,
-										maxLength: 10,
+										required: {
+											value: isInvoiceNeeded ? true : false,
+											message: 'Wprowadź NIP firmy',
+										},
+										minLength: {
+											value: 10,
+											message: 'Wprowadzony NIP jest za krótki',
+										},
+										maxLength: {
+											value: 10,
+											message: 'Wprowadzono zbyt wiele znaków',
+										},
 									})}
 									className='border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full'
 								/>
-								<p className='text-xs text-brownSugar'>
-									{errors.nip && isInvoiceNeeded
-										? 'Podaj prawidłowy NIP (10 znaków)'
-										: null}
-								</p>
+
+								{errors.nip && (
+									<p className='text-xs text-brownSugar'>
+										{errors.nip.message}
+									</p>
+								)}
 							</div>
 						</div>
 					) : null}
@@ -205,14 +202,26 @@ const InvoiceSection = ({
 								placeholder='Kod pocztowy (xx-xxx)'
 								className='border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full'
 								{...register('postalCode', {
-									required: true,
-									maxLength: 6,
-									minLength: 6,
+									required: {
+										value: true,
+										message: 'Prawidłowy format to XX-XXX',
+									},
+									maxLength: {
+										value: 6,
+										message: 'Wprowadzono zbyt wiele znaków',
+									},
+									minLength: {
+										value: 6,
+										message: 'Wprowadzony kod jest za krótki',
+									},
 								})}
 							/>
-							<p className='text-xs text-brownSugar'>
-								{errors.postalCode ? 'Prawidłowy format to XX-XXX' : null}
-							</p>
+
+							{errors.postalCode && (
+								<p className='text-xs text-brownSugar text-center'>
+									{errors.postalCode.message}
+								</p>
+							)}
 						</div>
 
 						<div className='basis-1/2'>
