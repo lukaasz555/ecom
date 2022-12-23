@@ -56,11 +56,9 @@ const OrderSummary = ({
 		},
 
 		order: {
-			cart: {
-				items: items,
-				qty: items.length,
-				value: total,
-			},
+			items: items,
+			qty: items.length,
+			value: total.toFixed(2),
 
 			ship: {
 				inpost: checkoutForm.ship.inpost,

@@ -15,16 +15,14 @@ export interface OrderModel {
 		};
 		address: {
 			address1: string;
-			address2: string;
+			address2?: string;
 			postalCode: string;
 			country: string;
 		};
 	};
 
 	order: {
-		cart: {
-			items: ProductModel[];
-		};
+		items: ProductModel[];
 		qty: number;
 		value: number;
 		ship: {
