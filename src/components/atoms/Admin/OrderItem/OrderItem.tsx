@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { OrderModel } from '../../../../models/Order';
 import { handleNumbFormat } from '../../../../helpers/handleNumbFormat';
 
@@ -7,6 +7,7 @@ interface IOrderItem {
 }
 
 const OrderItem = ({ order }: IOrderItem) => {
+	const [open, setOpen] = useState(false);
 	const { orderId } = order;
 	const { name, lastname, nip, companyName } = order.customer.customerData;
 	const { address1, address2, postalCode, country, city } =
@@ -14,25 +15,35 @@ const OrderItem = ({ order }: IOrderItem) => {
 	const { phoneNumber, email } = order.customer.contact;
 	const { inpost } = order.order.ship;
 	return (
-		<div>
-			<div key={orderId} className='flex w-full'>
-				<div className='basis-[15%] border-r-[1px] text-center pb-1'>
-					{orderId}
+		<div className='odd:bg-white even:bg-gray'>
+			<div key={orderId} className='flex justify-start items-center w-full'>
+				<div className='basis-[15%] border-r-[1px] text-center py-1'>
+					<button onClick={() => setOpen(!open)} className='cursor-pointer'>
+						{orderId}
+					</button>
 				</div>
-				<div className='basis-[45%] border-r-[1px] text-center pb-1'>
+				<div className='basis-[15%] border-r-[1px] text-center py-1 w-full'>
+					<p>status</p>
+				</div>
+				<div className='basis-[35%] border-r-[1px] text-center py-1'>
 					<p>
 						{order.customer.customerData.name}{' '}
 						{order.customer.customerData.lastname}
 					</p>
 				</div>
-				<div className='basis-[15%] border-r-[1px] text-center pb-1'>
-					{handleNumbFormat(order.order.value)} zł
+				<div className='basis-[15%] border-r-[1px] text-center py-1'>
+					<p>{handleNumbFormat(order.order.value)} zł</p>
 				</div>
-				<div className='basis-[25%] text-center pb-1'>data</div>
+				<div className='basis-[10%] text-center py-1'>
+					<p>data</p>
+				</div>
 			</div>
-			<div className='mb-5 py-2 px-3 bg-gray'>
+			<div
+				className={`mb-5 py-2 px-3 bg-gray duration-150 origin-top ${
+					open ? 'block' : 'hidden'
+				} border-[1px] rounded-[8px] mt-2 bg-white`}>
 				<div className='flex justify-between'>
-					<div>
+					<div className='text-s'>
 						<p>
 							{name} {lastname}{' '}
 						</p>
@@ -45,7 +56,7 @@ const OrderItem = ({ order }: IOrderItem) => {
 						</p>
 						<p>{country}</p>
 					</div>
-					<div className='flex flex-col items-end'>
+					<div className='flex flex-col items-end text-s'>
 						<p>mail: {email}</p>
 						<p>tel: {phoneNumber}</p>
 						<p>Paczkomat: {inpost}</p>

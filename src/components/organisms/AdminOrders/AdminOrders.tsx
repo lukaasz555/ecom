@@ -44,17 +44,20 @@ const AdminOrders = () => {
 			</div>
 			{orders.length > 0 ? (
 				<div>
-					<div className='flex w-full border-b-[1px]'>
-						<div className='basis-[15%] border-r-[1px] text-center pb-1'>
-							numer
+					<div className='flex w-full justify-start border-b-[1px] text-center'>
+						<div className='basis-[15%] border-r-[1px] py-1'>NUMER</div>
+						<div className='basis-[15%] border-r-[1px] py-1'>
+							<p>STATUS</p>
 						</div>
-						<div className='basis-[45%] border-r-[1px] text-center pb-1'>
-							dane klienta
+						<div className='basis-[35%] border-r-[1px] py-1'>
+							<p>DANE KLIENTA</p>
 						</div>
-						<div className='basis-[15%] border-r-[1px] text-center pb-1'>
-							<button onClick={sortByPrice}>kwota</button>
+						<div className='basis-[15%] border-r-[1px] py-1'>
+							<button onClick={sortByPrice} className='px-2'>
+								<p>KWOTA</p>
+							</button>
 						</div>
-						<div className='basis-[25%] text-center pb-1'>data</div>
+						<div className='basis-[10%] text-center py-1'>DATA</div>
 					</div>
 					{orders.map((order) => (
 						<OrderItem order={order} />
