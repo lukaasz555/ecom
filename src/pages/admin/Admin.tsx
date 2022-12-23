@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import AdminNav from '../../components/atoms/AdminNav/AdminNav';
+import AdminNav from '../../components/atoms/Admin/AdminNav/AdminNav';
 import AdminLayout from '../../components/templates/AdminLayout/AdminLayout';
 
 const Admin = () => {

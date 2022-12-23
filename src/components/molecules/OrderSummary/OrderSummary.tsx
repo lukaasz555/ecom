@@ -10,6 +10,7 @@ import OrderSummaryTop from '../../atoms/OrderSummaryComponents/OrderSummaryTop'
 import OrderSummaryBottom from '../../atoms/OrderSummaryComponents/OrderSummaryBottom';
 import { productsValue } from '../../../helpers/productsValue';
 import axios from 'axios';
+import { OrderModel } from '../../../models/Order';
 
 interface OrderSummaryProps {
 	checkoutForm: ICheckoutForm;
@@ -51,6 +52,7 @@ const OrderSummary = ({
 				address1: checkoutForm.invoice.address1,
 				address2: checkoutForm.invoice.address2,
 				postalCode: checkoutForm.invoice.postalCode,
+				city: checkoutForm.invoice.city,
 				country: checkoutForm.invoice.country,
 			},
 		},
@@ -58,7 +60,7 @@ const OrderSummary = ({
 		order: {
 			items: items,
 			qty: items.length,
-			value: total.toFixed(2),
+			value: +total.toFixed(2),
 
 			ship: {
 				inpost: checkoutForm.ship.inpost,

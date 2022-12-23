@@ -17,6 +17,7 @@ export interface OrderModel {
 			address1: string;
 			address2?: string;
 			postalCode: string;
+			city: string;
 			country: string;
 		};
 	};

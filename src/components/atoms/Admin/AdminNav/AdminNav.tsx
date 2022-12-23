@@ -7,9 +7,10 @@ const AdminNav = () => {
 			<ul className='flex flex-col gap-y-2'>
 				<li>
 					<NavLink
+						end
 						to={`/admin`}
 						className={({ isActive }) =>
-							isActive ? 'underline font-semibold' : 'hover:underline'
+							isActive ? 'translate-x-2 block font-semibold' : 'hover:underline'
 						}>
 						Start
 					</NavLink>
@@ -25,8 +26,7 @@ const AdminNav = () => {
 				</li>
 				<li>
 					<NavLink
-						to={`/admin`}
-						/* to={`/admin/customers`} */
+						to={`/admin/customers`}
 						className={({ isActive }) =>
 							isActive ? 'translate-x-2 block font-semibold' : 'hover:underline'
 						}>
@@ -35,8 +35,7 @@ const AdminNav = () => {
 				</li>
 				<li>
 					<NavLink
-						to={`/admin`}
-						/* to={`/admin/products`} */
+						to={`/admin/products`}
 						className={({ isActive }) =>
 							isActive ? 'translate-x-2 block font-semibold' : 'hover:underline'
 						}>

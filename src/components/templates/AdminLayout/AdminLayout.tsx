@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import AdminNav from '../../atoms/AdminNav/AdminNav';
+import AdminNav from '../../atoms/Admin/AdminNav/AdminNav';
 
 interface IAdminLayout {
 	children?: React.ReactNode;
