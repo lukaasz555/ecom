@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { OrderModel } from '../../../models/Order';
 import AdminLayout from '../../templates/AdminLayout/AdminLayout';
-import { handleNumbFormat } from '../../../helpers/handleNumbFormat';
 import OrderItem from '../../atoms/Admin/OrderItem/OrderItem';
 
 const AdminOrders = () => {

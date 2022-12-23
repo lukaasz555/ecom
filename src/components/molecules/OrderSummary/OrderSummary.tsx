@@ -10,7 +10,6 @@ import OrderSummaryTop from '../../atoms/OrderSummaryComponents/OrderSummaryTop'
 import OrderSummaryBottom from '../../atoms/OrderSummaryComponents/OrderSummaryBottom';
 import { productsValue } from '../../../helpers/productsValue';
 import axios from 'axios';
-import { OrderModel } from '../../../models/Order';
 
 interface OrderSummaryProps {
 	checkoutForm: ICheckoutForm;
@@ -30,7 +29,7 @@ const OrderSummary = ({
 	const items = useAppSelector((state) => state.items);
 	const itemsValue = productsValue(items);
 	const deliveryCost = itemsValue >= 99 ? 0 : 9.9;
-	const total = itemsValue + deliveryCost;
+	//const total = itemsValue + deliveryCost;
 
 	const dispatch = useAppDispatch();
 
@@ -46,6 +45,7 @@ const OrderSummary = ({
 			contact: {
 				email: checkoutForm.email.emailAddress,
 				phoneNumber: checkoutForm.ship.phoneNumber,
+				newsletter: checkoutForm.email.isConsent,
 			},
 
 			address: {
@@ -60,10 +60,11 @@ const OrderSummary = ({
 		order: {
 			items: items,
 			qty: items.length,
-			value: +total.toFixed(2),
+			value: itemsValue,
 
 			ship: {
 				inpost: checkoutForm.ship.inpost,
+				cost: deliveryCost,
 			},
 		},
 	};

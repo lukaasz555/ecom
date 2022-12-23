@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { OrderModel } from '../../../../models/Order';
 import { handleNumbFormat } from '../../../../helpers/handleNumbFormat';
+import { getQty } from '../../../../helpers/getQty';
 
 interface IOrderItem {
 	order: OrderModel;
@@ -8,12 +9,13 @@ interface IOrderItem {
 
 const OrderItem = ({ order }: IOrderItem) => {
 	const [open, setOpen] = useState(false);
-	const { orderId } = order;
+	const { orderId, status } = order;
 	const { name, lastname, nip, companyName } = order.customer.customerData;
 	const { address1, address2, postalCode, country, city } =
 		order.customer.address;
 	const { phoneNumber, email } = order.customer.contact;
-	const { inpost } = order.order.ship;
+	const { cost, inpost } = order.order.ship;
+
 	return (
 		<div className='odd:bg-white even:bg-gray'>
 			<div key={orderId} className='flex justify-start items-center w-full'>
@@ -23,7 +25,7 @@ const OrderItem = ({ order }: IOrderItem) => {
 					</button>
 				</div>
 				<div className='basis-[15%] border-r-[1px] text-center py-1 w-full'>
-					<p>status</p>
+					<p>{status}</p>
 				</div>
 				<div className='basis-[35%] border-r-[1px] text-center py-1'>
 					<p>
@@ -41,25 +43,59 @@ const OrderItem = ({ order }: IOrderItem) => {
 			<div
 				className={`mb-5 py-2 px-3 bg-gray duration-150 origin-top ${
 					open ? 'block' : 'hidden'
-				} border-[1px] rounded-[8px] mt-2 bg-white`}>
-				<div className='flex justify-between'>
-					<div className='text-s'>
-						<p>
-							{name} {lastname}{' '}
-						</p>
-						{nip ? <p>NIP: {nip}</p> : null}
-						{companyName ? <p>{companyName}</p> : null}
-						<p>{address1}</p>
-						<p>{address2 ? address2 : null}</p>
-						<p>
-							{postalCode} {city}
-						</p>
-						<p>{country}</p>
+				} border-[1px] mt-2 `}>
+				<div className='flex flex-col'>
+					<div className='flex justify-between'>
+						<div className='text-s'>
+							<p>
+								{name} {lastname}{' '}
+							</p>
+							{nip ? <p>NIP: {nip}</p> : null}
+							{companyName ? <p>{companyName}</p> : null}
+							<p>{address1}</p>
+							<p>{address2 ? address2 : null}</p>
+							<p>
+								{postalCode} {city}
+							</p>
+							<p>{country}</p>
+						</div>
+						<div className='flex flex-col items-end text-s'>
+							<p>mail: {email}</p>
+							<p>tel: {phoneNumber}</p>
+							<p>Paczkomat: {inpost}</p>
+						</div>
 					</div>
-					<div className='flex flex-col items-end text-s'>
-						<p>mail: {email}</p>
-						<p>tel: {phoneNumber}</p>
-						<p>Paczkomat: {inpost}</p>
+					<div className='my-3'>
+						<h4 className='text-s underline'>Produkty:</h4>
+						<div>
+							{order.order.items.map(({ title, id, price, discount }) => (
+								<div className='flex justify-start text-s'>
+									<div>
+										<p>
+											<span className='mr-1'>{title}</span>
+											<span className='mr-1'>
+												{getQty(id, order.order.items) > 0
+													? `(${getQty(id, order.order.items)}x)`
+													: null}
+											</span>
+										</p>
+									</div>
+									<div>
+										<p>- {handleNumbFormat(price - discount)} zł</p>
+									</div>
+								</div>
+							))}
+							<div className='flex justify-start text-s'>
+								<div>
+									<p>Wysyłka: {handleNumbFormat(cost)} zł</p>
+								</div>
+							</div>
+							<div>
+								<p className='text-s font-[500]'>
+									Kwota brutto: {handleNumbFormat(order.order.value + cost)} zł
+								</p>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

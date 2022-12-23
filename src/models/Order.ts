@@ -2,6 +2,7 @@ import { ProductModel } from './Product';
 
 export interface OrderModel {
 	orderId: string;
+	status: string;
 	customer: {
 		customerData: {
 			name: string;
@@ -28,6 +29,7 @@ export interface OrderModel {
 		value: number;
 		ship: {
 			inpost: string;
+			cost: number;
 		};
 	};
 }
