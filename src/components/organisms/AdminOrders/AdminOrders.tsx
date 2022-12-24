@@ -42,16 +42,18 @@ const AdminOrders = () => {
 				<h2 className='text-2xl'>Zamówienia</h2>
 			</div>
 			{orders.length > 0 ? (
-				<div>
+				<div className='w-full'>
 					<div className='flex w-full justify-start border-b-[1px] text-center'>
-						<div className='basis-[15%] border-r-[1px] py-1'>NUMER</div>
-						<div className='basis-[15%] border-r-[1px] py-1'>
+						<div className='basis-[15%] min-w-[80px] border-r-[1px] py-1'>
+							NUMER
+						</div>
+						<div className='basis-[15%] min-w-[80px] border-r-[1px] py-1'>
 							<p>STATUS</p>
 						</div>
-						<div className='basis-[35%] border-r-[1px] py-1'>
+						<div className='hidden lg:block basis-[35%] border-r-[1px] py-1'>
 							<p>DANE KLIENTA</p>
 						</div>
-						<div className='basis-[15%] border-r-[1px] py-1'>
+						<div className='basis-[15%] min-w-[80px] border-r-[1px] py-1'>
 							<button onClick={sortByPrice} className='px-2'>
 								<p>KWOTA</p>
 							</button>

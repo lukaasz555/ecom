@@ -19,21 +19,21 @@ const OrderItem = ({ order }: IOrderItem) => {
 	return (
 		<div className='odd:bg-white even:bg-gray'>
 			<div key={orderId} className='flex justify-start items-center w-full'>
-				<div className='basis-[15%] border-r-[1px] text-center py-1'>
+				<div className='basis-[15%] min-w-[80px] border-r-[1px] text-center py-1'>
 					<button onClick={() => setOpen(!open)} className='cursor-pointer'>
 						{orderId}
 					</button>
 				</div>
-				<div className='basis-[15%] border-r-[1px] text-center py-1 w-full'>
+				<div className='basis-[15%] min-w-[80px] border-r-[1px] text-center py-1 w-full'>
 					<p>{status}</p>
 				</div>
-				<div className='basis-[35%] border-r-[1px] text-center py-1'>
+				<div className='hidden lg:block basis-[35%] border-r-[1px] text-center py-1'>
 					<p>
 						{order.customer.customerData.name}{' '}
 						{order.customer.customerData.lastname}
 					</p>
 				</div>
-				<div className='basis-[15%] border-r-[1px] text-center py-1'>
+				<div className='basis-[15%] min-w-[80px] border-r-[1px] text-center py-1'>
 					<p>{handleNumbFormat(order.order.value)} zł</p>
 				</div>
 				<div className='basis-[10%] text-center py-1'>
@@ -45,7 +45,7 @@ const OrderItem = ({ order }: IOrderItem) => {
 					open ? 'block' : 'hidden'
 				} border-[1px] mt-2 `}>
 				<div className='flex flex-col'>
-					<div className='flex justify-between'>
+					<div className='flex flex-col lg:flex-row lg:justify-between'>
 						<div className='text-s'>
 							<p>
 								{name} {lastname}{' '}
@@ -59,7 +59,7 @@ const OrderItem = ({ order }: IOrderItem) => {
 							</p>
 							<p>{country}</p>
 						</div>
-						<div className='flex flex-col items-end text-s'>
+						<div className='flex flex-col mt-5 lg:mt-0 lg:items-end text-s'>
 							<p>mail: {email}</p>
 							<p>tel: {phoneNumber}</p>
 							<p>Paczkomat: {inpost}</p>

@@ -9,6 +9,8 @@ import Cart from './pages/cart/Cart';
 import Checkout from './pages/Checkout/Checkout';
 import Admin from './pages/admin/Admin';
 import AdminOrders from './components/organisms/AdminOrders/AdminOrders';
+import AdminCustomers from './components/organisms/AdminCustomers/AdminCustomers';
+import AdminProducts from './components/organisms/AdminProducts/AdminProducts';
 
 function App() {
 	return (
@@ -33,6 +35,8 @@ function App() {
 				<Route path='/checkout' element={<Checkout />} />
 				<Route path='/admin' element={<Admin />} />
 				<Route path='/admin/orders' element={<AdminOrders />} />
+				<Route path='/admin/customers' element={<AdminCustomers />} />
+				<Route path='/admin/products' element={<AdminProducts />} />
 			</Routes>
 		</div>
 	);
