@@ -38,7 +38,7 @@ const AdminOrders = () => {
 
 	return (
 		<AdminLayout>
-			<div>
+			<div className='min-w-[550px]'>
 				<h2 className='text-2xl'>Zamówienia</h2>
 			</div>
 			{orders.length > 0 ? (

@@ -4,13 +4,13 @@ import { NavLink } from 'react-router-dom';
 const AdminNav = () => {
 	return (
 		<nav className='text-m'>
-			<ul className='flex flex-col gap-y-2'>
+			<ul className='flex lg:flex-col gap-y-2 gap-x-5'>
 				<li>
 					<NavLink
 						end
 						to={`/admin`}
 						className={({ isActive }) =>
-							isActive ? 'translate-x-2 block font-semibold' : 'hover:underline'
+							isActive ? 'font-semibold' : 'hover:underline'
 						}>
 						Start
 					</NavLink>
@@ -19,7 +19,7 @@ const AdminNav = () => {
 					<NavLink
 						to={`/admin/orders`}
 						className={({ isActive }) =>
-							isActive ? 'translate-x-2 block font-semibold' : 'hover:underline'
+							isActive ? 'font-semibold' : 'hover:underline'
 						}>
 						Zamówienia
 					</NavLink>
@@ -28,7 +28,7 @@ const AdminNav = () => {
 					<NavLink
 						to={`/admin/customers`}
 						className={({ isActive }) =>
-							isActive ? 'translate-x-2 block font-semibold' : 'hover:underline'
+							isActive ? 'font-semibold' : 'hover:underline'
 						}>
 						Klienci
 					</NavLink>
@@ -37,7 +37,7 @@ const AdminNav = () => {
 					<NavLink
 						to={`/admin/products`}
 						className={({ isActive }) =>
-							isActive ? 'translate-x-2 block font-semibold' : 'hover:underline'
+							isActive ? 'font-semibold' : 'hover:underline'
 						}>
 						Produkty
 					</NavLink>

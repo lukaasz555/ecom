@@ -72,9 +72,9 @@ const OrderItem = ({ order }: IOrderItem) => {
 								<div className='flex justify-start text-s'>
 									<div>
 										<p>
-											<span className='mr-1'>{title}</span>
-											<span className='mr-1'>
-												{getQty(id, order.order.items) > 0
+											<span>{title}</span>
+											<span className='mx-1'>
+												{getQty(id, order.order.items) > 1
 													? `(${getQty(id, order.order.items)}x)`
 													: null}
 											</span>
@@ -90,9 +90,13 @@ const OrderItem = ({ order }: IOrderItem) => {
 									<p>Wysyłka: {handleNumbFormat(cost)} zł</p>
 								</div>
 							</div>
-							<div>
+							<div className='mt-2'>
 								<p className='text-s font-[500]'>
 									Kwota brutto: {handleNumbFormat(order.order.value + cost)} zł
+								</p>
+								<p className='text-s font-[500]'>
+									Kwota netto:{' '}
+									{handleNumbFormat((order.order.value + cost) / 1.23)} zł
 								</p>
 							</div>
 						</div>
