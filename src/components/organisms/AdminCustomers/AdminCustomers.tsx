@@ -5,12 +5,10 @@ import { CustomerModel } from '../../../models/Customer';
 
 const AdminCustomers = () => {
 	const [customers, setCustomers] = useState<CustomerModel[] | []>([]);
-	const [pickedCustomer, setPickedCustomer] = useState<CustomerModel | null>(
-		null
-	);
 	const [singleCustomer, setSingleCustomer] = useState<CustomerModel | null>(
 		null
 	);
+	const [open, setOpen] = useState(false);
 
 	useEffect(() => {
 		const getCustomers = async () => {
@@ -35,14 +33,14 @@ const AdminCustomers = () => {
 				setSingleCustomer(res.data);
 			})
 			.catch((err) => console.log(err));
+		setOpen(!open);
 	};
 
 	return (
 		<AdminLayout>
 			<div className='min-w-[550px]'>
-				<h2 className='text-2xl'>Zamówienia</h2>
+				<h2 className='text-2xl'>Klienci</h2>
 			</div>
-			<p>customers...</p>
 			<div>
 				{customers.length > 0
 					? customers.map((c) => (
@@ -54,14 +52,17 @@ const AdminCustomers = () => {
 					  ))
 					: 'Brak klientów do wyświetlenia'}
 			</div>
-			<div>
+			<div className={`${open ? 'block' : 'hidden'}`}>
 				{singleCustomer ? (
-					<p>
-						{singleCustomer.newsletterConsent
-							? 'zgoda na newsletter'
-							: 'brak zgody'}{' '}
-						- {singleCustomer.customerName}
-					</p>
+					<div>
+						<p>id: {singleCustomer.customerId}</p>
+						<p>Dane: {singleCustomer.customerName}</p>
+						<p>Liczba zamówień: {singleCustomer.orders.length}</p>
+						<p>E-mail: {singleCustomer.customerEmail}</p>
+						<p>
+							Newsletter: {singleCustomer.newsletterConsent ? 'Tak' : 'Nie'}
+						</p>
+					</div>
 				) : null}
 			</div>
 		</AdminLayout>
