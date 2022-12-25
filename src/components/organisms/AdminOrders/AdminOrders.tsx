@@ -14,6 +14,7 @@ const AdminOrders = () => {
 			const res = await axios
 				.get('http://localhost:1337/orders/')
 				.then((res) => {
+					console.log(res.data);
 					setOrders(res.data);
 					setAllOrders(res.data);
 				})
@@ -44,13 +45,10 @@ const AdminOrders = () => {
 			{orders.length > 0 ? (
 				<div className='w-full'>
 					<div className='flex w-full justify-start border-b-[1px] text-center'>
-						<div className='basis-[15%] min-w-[80px] border-r-[1px] py-1'>
-							NUMER
-						</div>
-						<div className='basis-[15%] min-w-[80px] border-r-[1px] py-1'>
+						<div className='basis-[20%] min-w-[80px] border-r-[1px] py-1'>
 							<p>STATUS</p>
 						</div>
-						<div className='hidden lg:block basis-[35%] border-r-[1px] py-1'>
+						<div className='basis-[50%] min-w-[120px] border-r-[1px] py-1'>
 							<p>DANE KLIENTA</p>
 						</div>
 						<div className='basis-[15%] min-w-[80px] border-r-[1px] py-1'>
@@ -58,7 +56,7 @@ const AdminOrders = () => {
 								<p>KWOTA</p>
 							</button>
 						</div>
-						<div className='basis-[10%] text-center py-1'>DATA</div>
+						<div className='basis-[15%] text-center py-1'>DATA</div>
 					</div>
 					{orders.map((order) => (
 						<OrderItem order={order} />

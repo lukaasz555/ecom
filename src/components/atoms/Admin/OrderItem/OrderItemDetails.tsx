@@ -9,6 +9,7 @@ interface IOrderItemDetails {
 }
 
 const OrderItemDetails = ({ open, order }: IOrderItemDetails) => {
+	const { _id } = order;
 	const { name, lastname, nip, companyName } = order.customer.customerData;
 	const { address1, address2, postalCode, country, city } =
 		order.customer.address;
@@ -19,7 +20,10 @@ const OrderItemDetails = ({ open, order }: IOrderItemDetails) => {
 			className={`mb-5 py-2 px-3 bg-gray duration-150 origin-top ${
 				open ? 'block' : 'hidden'
 			} border-[1px] mt-2 `}>
-			<div className='flex flex-col'>
+			<div className='flex flex-col gap-y-3'>
+				<div>
+					<p className='font-[500]'>Zamówienie nr: {_id}</p>
+				</div>
 				<div className='flex flex-col lg:flex-row lg:justify-between'>
 					<div className='text-s'>
 						<p>

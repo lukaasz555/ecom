@@ -26,15 +26,6 @@ const AdminNav = () => {
 				</li>
 				<li>
 					<NavLink
-						to={`/admin/customers`}
-						className={({ isActive }) =>
-							isActive ? 'font-semibold' : 'hover:underline'
-						}>
-						Klienci
-					</NavLink>
-				</li>
-				<li>
-					<NavLink
 						to={`/admin/products`}
 						className={({ isActive }) =>
 							isActive ? 'font-semibold' : 'hover:underline'
