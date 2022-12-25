@@ -11,6 +11,7 @@ import Admin from './pages/admin/Admin';
 import AdminOrders from './components/organisms/AdminOrders/AdminOrders';
 import AdminCustomers from './components/organisms/AdminCustomers/AdminCustomers';
 import AdminProducts from './components/organisms/AdminProducts/AdminProducts';
+import AdminCustomer from './components/organisms/AdminCustomer/AdminCustomer';
 
 function App() {
 	return (
@@ -37,6 +38,7 @@ function App() {
 				<Route path='/admin/orders' element={<AdminOrders />} />
 				<Route path='/admin/customers' element={<AdminCustomers />} />
 				<Route path='/admin/products' element={<AdminProducts />} />
+				<Route path='/admin/customers/:id' element={<AdminCustomer />} />
 			</Routes>
 		</div>
 	);

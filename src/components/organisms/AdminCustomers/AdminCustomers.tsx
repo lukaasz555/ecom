@@ -2,13 +2,10 @@ import React, { useEffect, useState } from 'react';
 import AdminLayout from '../../templates/AdminLayout/AdminLayout';
 import axios from 'axios';
 import { CustomerModel } from '../../../models/Customer';
+import { Link } from 'react-router-dom';
 
 const AdminCustomers = () => {
 	const [customers, setCustomers] = useState<CustomerModel[] | []>([]);
-	const [singleCustomer, setSingleCustomer] = useState<CustomerModel | null>(
-		null
-	);
-	const [open, setOpen] = useState(false);
 
 	useEffect(() => {
 		const getCustomers = async () => {
@@ -23,19 +20,6 @@ const AdminCustomers = () => {
 		getCustomers();
 	}, []);
 
-	const getCustomerById = async (id: string) => {
-		const params = {
-			customerId: id,
-		};
-		const res = await axios
-			.get(`http://localhost:1337/customers/id?=${id}`, { params })
-			.then((res) => {
-				setSingleCustomer(res.data);
-			})
-			.catch((err) => console.log(err));
-		setOpen(!open);
-	};
-
 	return (
 		<AdminLayout>
 			<div className='min-w-[550px]'>
@@ -43,27 +27,14 @@ const AdminCustomers = () => {
 			</div>
 			<div>
 				{customers.length > 0
-					? customers.map((c) => (
-							<div key={c.customerId}>
-								<button onClick={() => getCustomerById(c.customerId)}>
-									{c.customerName}
-								</button>
+					? customers.map(({ customerId, customerName }) => (
+							<div key={customerId}>
+								<Link to={`/admin/customers/${customerId}`}>
+									{customerName}
+								</Link>
 							</div>
 					  ))
 					: 'Brak klientów do wyświetlenia'}
-			</div>
-			<div className={`${open ? 'block' : 'hidden'}`}>
-				{singleCustomer ? (
-					<div>
-						<p>id: {singleCustomer.customerId}</p>
-						<p>Dane: {singleCustomer.customerName}</p>
-						<p>Liczba zamówień: {singleCustomer.orders.length}</p>
-						<p>E-mail: {singleCustomer.customerEmail}</p>
-						<p>
-							Newsletter: {singleCustomer.newsletterConsent ? 'Tak' : 'Nie'}
-						</p>
-					</div>
-				) : null}
 			</div>
 		</AdminLayout>
 	);
