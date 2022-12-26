@@ -35,6 +35,7 @@ const AddToCartBtn = ({ data, body }: ButtonProps) => {
 					format: data.format,
 					id: data.id,
 					img: data.img,
+					thumbnail: data.thumbnail,
 					price: data.price,
 					releaseYear: data.releaseYear,
 					title: data.title,

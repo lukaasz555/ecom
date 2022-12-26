@@ -8,6 +8,8 @@ export const albums: ProductModel[] = [
 		releaseYear: '2021',
 		description: '',
 		img: 'https://ecsmedia.pl/c/collapsed-in-sunbeams-w-iext120309470.jpg',
+		thumbnail:
+			'https://ecsmedia.pl/c/collapsed-in-sunbeams-w-iext120309470.jpg',
 		price: 39.99,
 		discount: 7.5,
 		categoryID: 44,
@@ -23,6 +25,8 @@ export const albums: ProductModel[] = [
 		releaseYear: '1988',
 		description: '',
 		img: 'https://ecsmedia.pl/c/doolittle-w-iext97885507.jpg',
+		thumbnail:
+			'https://ecsmedia.pl/c/collapsed-in-sunbeams-w-iext120309470.jpg',
 		price: 58.99,
 		discount: 0,
 		categoryID: 44,
@@ -38,6 +42,8 @@ export const albums: ProductModel[] = [
 		releaseYear: '2007',
 		description: '',
 		img: 'https://ecsmedia.pl/c/in-rainbows-w-iext120971159.jpg',
+		thumbnail:
+			'https://ecsmedia.pl/c/collapsed-in-sunbeams-w-iext120309470.jpg',
 		price: 47,
 		discount: 0,
 		categoryID: 44,
@@ -46,7 +52,7 @@ export const albums: ProductModel[] = [
 		type: 'albums',
 	},
 
-	{
+	/* 	{
 		id: '543',
 		title: 'Observatory',
 		authors: ['Aeon Station'],
@@ -454,5 +460,5 @@ export const albums: ProductModel[] = [
 		label: 'Warner Music Group',
 		format: 'Płyta CD',
 		type: 'albums',
-	},
+	}, */
 ];

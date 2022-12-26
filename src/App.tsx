@@ -7,6 +7,9 @@ import Contact from './pages/contact/Contact';
 import Product from './pages/product/Product';
 import Cart from './pages/cart/Cart';
 import Checkout from './pages/Checkout/Checkout';
+import Admin from './pages/admin/Admin';
+import AdminOrders from './components/organisms/AdminOrders/AdminOrders';
+import AdminProducts from './components/organisms/AdminProducts/AdminProducts';
 
 function App() {
 	return (
@@ -29,6 +32,9 @@ function App() {
 					element={<Books filterCategory={true} />}
 				/>
 				<Route path='/checkout' element={<Checkout />} />
+				<Route path='/admin' element={<Admin />} />
+				<Route path='/admin/orders' element={<AdminOrders />} />
+				<Route path='/admin/products' element={<AdminProducts />} />
 			</Routes>
 		</div>
 	);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import EmailSection from '../../components/molecules/EmailSection/EmailSection';
 import InvoiceSection from '../../components/molecules/InvoiceSection/InvoiceSection';
 import ShippingSection from '../../components/molecules/ShippingSection/ShippingSection';

@@ -10,6 +10,7 @@ import ProductDetails from '../../components/atoms/ProductDetails/ProductDetails
 import { albums } from '../../data/albums';
 import { getCurrentProduct } from '../../helpers/getCurrentProduct';
 import Modal from 'react-modal';
+import axios from 'axios';
 
 const initValue: ProductModel = {
 	id: '',
@@ -21,7 +22,7 @@ const initValue: ProductModel = {
 	price: 0,
 	discount: 0,
 	categoryID: 0,
-
+	thumbnail: '',
 	format: '',
 	type: 'albums',
 };
@@ -37,7 +38,7 @@ const Product = () => {
 	const openModal = () => setShowModal(true);
 	const closeModal = () => setShowModal(false);
 
-	useEffect(() => {
+	/* 	useEffect(() => {
 		if (category.includes('books')) {
 			const id = category.replace('books/', '');
 			setProduct(getCurrentProduct(id, books));
@@ -45,7 +46,31 @@ const Product = () => {
 			const id = category.replace('albums/', '');
 			setProduct(getCurrentProduct(id, albums));
 		}
-	}, [category]);
+	}, [category]); */
+
+	const getId = () => {
+		if (category.includes('books')) {
+			const id = category.replace('books/', '');
+			return id;
+		} else if (category.includes('albums')) {
+			const id = category.replace('albums/', '');
+			return id;
+		}
+	};
+
+	useEffect(() => {
+		const productId = getId();
+		axios
+			.get(`http://localhost:1337/products/${productId}`, {
+				params: {
+					id: productId,
+				},
+			})
+			.then((res) => {
+				console.log(res);
+				setProduct(res.data);
+			});
+	}, [location]);
 
 	return (
 		<Layout>
@@ -73,7 +98,10 @@ const Product = () => {
 						<article className='flex flex-col items-center md:items-start mb-20'>
 							<ProductHead myRef={myRef} data={product} openModal={openModal} />
 							<div ref={myRef} className='w-full'>
-								<ProductDesc description={product.description} />
+								{product.description.length > 20 && (
+									<ProductDesc description={product.description} />
+								)}
+
 								<ProductDetails data={product} />
 							</div>
 						</article>

@@ -29,7 +29,7 @@ const OrderSummary = ({
 	const items = useAppSelector((state) => state.items);
 	const itemsValue = productsValue(items);
 	const deliveryCost = itemsValue >= 99 ? 0 : 9.9;
-	const total = itemsValue + deliveryCost;
+	//const total = itemsValue + deliveryCost;
 
 	const dispatch = useAppDispatch();
 
@@ -45,25 +45,26 @@ const OrderSummary = ({
 			contact: {
 				email: checkoutForm.email.emailAddress,
 				phoneNumber: checkoutForm.ship.phoneNumber,
+				newsletter: checkoutForm.email.isConsent,
 			},
 
 			address: {
 				address1: checkoutForm.invoice.address1,
 				address2: checkoutForm.invoice.address2,
 				postalCode: checkoutForm.invoice.postalCode,
+				city: checkoutForm.invoice.city,
 				country: checkoutForm.invoice.country,
 			},
 		},
 
 		order: {
-			cart: {
-				items: items,
-				qty: items.length,
-				value: total,
-			},
+			items: items,
+			qty: items.length,
+			value: itemsValue,
 
 			ship: {
 				inpost: checkoutForm.ship.inpost,
+				cost: deliveryCost,
 			},
 		},
 	};

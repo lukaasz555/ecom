@@ -10,6 +10,7 @@ import { useElementSize } from 'usehooks-ts';
 import { getCategories } from '../../helpers/getCategories';
 import { useLocation } from 'react-router-dom';
 import FilterTool from '../../components/atoms/FilterTool/FilterTool';
+import axios from 'axios';
 
 type AlbumsProps = {
 	filterCategory?: boolean;
@@ -39,11 +40,19 @@ const Albums = ({ filterCategory }: AlbumsProps) => {
 		setUpdated(true);
 	}, [catID, filtered, filterCategory]);
 
-	useEffect(() => {
+	/* 	useEffect(() => {
 		setItems(albums);
 		setFiltered(albums);
 		renderAlbums();
 		setOpen(false);
+	}, [updated, location]); */
+
+	useEffect(() => {
+		axios.get('http://localhost:1337/products/albums').then((res) => {
+			setItems(res.data);
+			setFiltered(res.data);
+			renderAlbums();
+		});
 	}, [updated, location]);
 
 	return (
