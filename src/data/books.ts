@@ -13,6 +13,8 @@ export const books: ProductModel[] = [
 		discount: 0,
 		categoryID: 10,
 		img: 'https://ecsmedia.pl/c/czerwony-alert-jak-zostalem-wrogiem-numer-jeden-putina-w-iext83136297.jpg',
+		thumbnail:
+			'https://ecsmedia.pl/c/collapsed-in-sunbeams-w-iext120309470.jpg',
 		description: '',
 		format: 'Książka (twarda okładka)',
 		type: 'books',
@@ -33,11 +35,13 @@ export const books: ProductModel[] = [
 
 		description: '',
 		img: 'https://ecsmedia.pl/c/goniac-czarne-jednorozce-jak-polski-wilk-z-wall-street-zostal-afrykanskim-terrorysta-w-iext54161540.jpg',
+		thumbnail:
+			'https://ecsmedia.pl/c/collapsed-in-sunbeams-w-iext120309470.jpg',
 		format: 'Książka (twarda okładka)',
 		type: 'books',
 	},
 
-	{
+	/* {
 		id: '103',
 		title: 'Steve Jobs',
 		authors: ['Walter Isaacson'],
@@ -380,5 +384,5 @@ export const books: ProductModel[] = [
 		img: 'https://ecsmedia.pl/c/gady-w-iext98183582.jpg',
 		format: 'Książka (miękka okładka)',
 		type: 'books',
-	},
+	}, */
 ];

@@ -5,6 +5,7 @@ export interface ProductModel {
 	releaseYear: string;
 	description: string;
 	img: string;
+	thumbnail: string;
 	price: number;
 	discount: number;
 	categoryID: number;
@@ -25,6 +26,7 @@ export interface ProductModel2 {
 		releaseYear: string;
 		description: string;
 		img: string;
+		thumbnail: string;
 		price: number;
 		discount: number;
 		categoryID: number;

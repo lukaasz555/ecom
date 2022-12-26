@@ -22,7 +22,7 @@ const initValue: ProductModel = {
 	price: 0,
 	discount: 0,
 	categoryID: 0,
-
+	thumbnail: '',
 	format: '',
 	type: 'albums',
 };
@@ -98,7 +98,10 @@ const Product = () => {
 						<article className='flex flex-col items-center md:items-start mb-20'>
 							<ProductHead myRef={myRef} data={product} openModal={openModal} />
 							<div ref={myRef} className='w-full'>
-								<ProductDesc description={product.description} />
+								{product.description.length > 20 && (
+									<ProductDesc description={product.description} />
+								)}
+
 								<ProductDetails data={product} />
 							</div>
 						</article>

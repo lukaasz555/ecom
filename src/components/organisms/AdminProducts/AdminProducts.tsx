@@ -52,7 +52,9 @@ const AdminProducts = () => {
 						+ dodaj produkt
 					</button>
 				</div>
-				<div>{message}</div>
+				<div>
+					<p className='text-brownSugar mb-10 text-xl'>{message}</p>
+				</div>
 				{products.length > 0 && !open && (
 					<div>
 						<div className='flex w-full border-b-[1px]'>
@@ -63,7 +65,9 @@ const AdminProducts = () => {
 						</div>
 						{products.length > 0
 							? products.map((p) => (
-									<div key={p.id} className='flex w-full'>
+									<div
+										key={p.id}
+										className='flex w-full odd:bg-white even:bg-gray items-center'>
 										<div className='basis-[15%]'>{p.id}</div>
 										<div className='basis-[40%]'>{p.title}</div>
 										<div className='basis-[15%]'>{p.price - p.discount}</div>

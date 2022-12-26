@@ -15,6 +15,7 @@ const AddProduct = () => {
 		releaseYear: '',
 		description: '',
 		img: 'https://ecsmedia.pl/b/mp/img/defaults/w.gif',
+		thumbnail: '',
 		price: 0,
 		discount: 0,
 		categoryID: 0,
@@ -159,7 +160,6 @@ const AddProduct = () => {
 			</div>
 
 			<div>
-				{/* pages, language, publisher */}
 				{newProduct.type === 'books' ? (
 					<div className='flex flex-col gap-y-2'>
 						<WhiteInput
@@ -212,6 +212,18 @@ const AddProduct = () => {
 					required={true}
 				/>
 			</div>
+
+			<div>
+				<WhiteInput
+					type='text'
+					value={newProduct.thumbnail}
+					name='thumbnail'
+					placeholder='Link do miniaturki'
+					onChange={handleChange}
+					required={true}
+				/>
+			</div>
+
 			<div className='mt-2'>
 				<label>Opis produktu:</label>
 				<Textfield newProduct={newProduct} setNewProduct={setNewProduct} />
