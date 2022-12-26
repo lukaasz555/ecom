@@ -40,13 +40,6 @@ const Albums = ({ filterCategory }: AlbumsProps) => {
 		setUpdated(true);
 	}, [catID, filtered, filterCategory]);
 
-	/* 	useEffect(() => {
-		setItems(albums);
-		setFiltered(albums);
-		renderAlbums();
-		setOpen(false);
-	}, [updated, location]); */
-
 	useEffect(() => {
 		axios.get('http://localhost:1337/products/albums').then((res) => {
 			setItems(res.data);

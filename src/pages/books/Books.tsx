@@ -10,6 +10,7 @@ import CategoryButton from '../../components/atoms/CategoryButton/CategoryButton
 import { useElementSize } from 'usehooks-ts';
 import { filterByPrice } from '../../helpers/filterByPrice';
 import FilterTool from '../../components/atoms/FilterTool/FilterTool';
+import axios from 'axios';
 
 type BooksProps = {
 	filterCategory?: boolean;
@@ -39,11 +40,19 @@ const Books = ({ filterCategory }: BooksProps) => {
 		setUpdated(true);
 	}, [catID, filtered, filterCategory]);
 
-	useEffect(() => {
+	/* 	useEffect(() => {
 		setItems(books);
 		setFiltered(books);
 		renderBooks();
 		setOpen(false);
+	}, [updated, location]); */
+
+	useEffect(() => {
+		axios.get('http://localhost:1337/products/books').then((res) => {
+			setItems(res.data);
+			setFiltered(res.data);
+			renderBooks();
+		});
 	}, [updated, location]);
 
 	return (

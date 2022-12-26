@@ -5,7 +5,11 @@ import CTA from '../../atoms/CTA/CTA';
 import { ProductModel } from '../../../models/Product';
 import Textfield from '../../atoms/Textfield/Textfield';
 
-const AddProduct = () => {
+interface AddProductProps {
+	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const AddProduct = ({ setOpen }: AddProductProps) => {
 	const id = crypto.randomUUID().slice(0, 3);
 	const [authors, setAuthors] = useState('');
 	const [newProduct, setNewProduct] = useState<ProductModel>({
@@ -34,9 +38,14 @@ const AddProduct = () => {
 	};
 
 	const checkForm = (product: ProductModel) => {
-		if (product.title !== '' && product.title.length >= 2) {
+		if (
+			product.title !== '' &&
+			product.title.length >= 2 &&
+			product.categoryID !== 0
+		) {
 			return true;
 		}
+
 		return false;
 	};
 
@@ -49,6 +58,8 @@ const AddProduct = () => {
 		newProduct.authors = handleAuthors(authors);
 		if (checkForm(newProduct)) {
 			axios.post('http://localhost:1337/products/add', newProduct);
+			setOpen(false);
+			console.log(newProduct);
 		}
 	};
 

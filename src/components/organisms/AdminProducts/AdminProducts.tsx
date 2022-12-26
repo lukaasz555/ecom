@@ -6,6 +6,7 @@ import { ProductModel } from '../../../models/Product';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { handleNumbFormat } from '../../../helpers/handleNumbFormat';
 
 const AdminProducts = () => {
 	const [open, setOpen] = useState(false);
@@ -60,8 +61,9 @@ const AdminProducts = () => {
 						<div className='flex w-full border-b-[1px]'>
 							<div className='basis-[15%]'>ID</div>
 							<div className='basis-[40%]'>TYTUŁ</div>
-							<div className='basis-[15%]'>CENA</div>
-							<div className='basis-[30%]'>inne</div>
+							<div className='basis-[15%] text-center'>CENA</div>
+							<div className='basis-[15%] text-center'>RODZAJ</div>
+							<div className='basis-[15%] text-center '>AKCJE</div>
 						</div>
 						{products.length > 0
 							? products.map((p) => (
@@ -70,8 +72,11 @@ const AdminProducts = () => {
 										className='flex w-full odd:bg-white even:bg-gray items-center'>
 										<div className='basis-[15%]'>{p.id}</div>
 										<div className='basis-[40%]'>{p.title}</div>
-										<div className='basis-[15%]'>{p.price - p.discount}</div>
-										<div className='basis-[30%] flex gap-x-2'>
+										<div className='basis-[15%] text-center'>
+											{handleNumbFormat(p.price - p.discount)}
+										</div>
+										<div className='basis-[15%] text-center'>{p.type}</div>
+										<div className='basis-[15%] flex justify-center gap-x-2'>
 											<button>
 												<FontAwesomeIcon icon={faPenToSquare} />
 											</button>
@@ -87,7 +92,7 @@ const AdminProducts = () => {
 				)}
 			</div>
 			<div className={`${open ? 'block' : 'hidden'}`}>
-				<AddProduct />
+				<AddProduct setOpen={setOpen} />
 			</div>
 		</AdminLayout>
 	);

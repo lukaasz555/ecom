@@ -24,16 +24,6 @@ const AdminOrders = () => {
 		getOrders();
 	}, []);
 
-	/* 	const priceSort = () => {
-		const filtered = orders.sort((a, b) => a.order.value - b.order.value);
-		return filtered;
-	};
-
-	const sortByPrice = () => {
-		const sorted = priceSort();
-		setFiltered(sorted);
-	}; */
-
 	const [priceFilter, setPriceFilter] = useState(false);
 
 	const sortByPrice = (type: string) => {
