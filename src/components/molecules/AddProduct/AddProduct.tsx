@@ -59,7 +59,6 @@ const AddProduct = ({ setOpen }: AddProductProps) => {
 		if (checkForm(newProduct)) {
 			axios.post('http://localhost:1337/products/add', newProduct);
 			setOpen(false);
-			console.log(newProduct);
 		}
 	};
 

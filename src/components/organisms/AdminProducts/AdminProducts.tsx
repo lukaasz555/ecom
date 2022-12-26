@@ -7,11 +7,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { handleNumbFormat } from '../../../helpers/handleNumbFormat';
+import { Link } from 'react-router-dom';
 
 const AdminProducts = () => {
 	const [open, setOpen] = useState(false);
 	const [products, setProducts] = useState<ProductModel[] | []>([]);
 	const [message, setMessage] = useState('');
+	const [isEditing, setEditing] = useState(false);
 
 	useEffect(() => {
 		const getProducts = async () => {
@@ -27,7 +29,6 @@ const AdminProducts = () => {
 		const target = e.target as HTMLElement;
 		if (target.parentElement?.parentElement !== null) {
 			const productId = target.parentElement?.parentElement.id;
-			console.log(productId);
 			axios
 				.delete('http://localhost:1337/products/remove/' + productId, {
 					params: {
@@ -39,6 +40,16 @@ const AdminProducts = () => {
 						setMessage(`Usunięto produkt ${productId}.`);
 					}
 				});
+		}
+	};
+
+	const handleEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
+		setEditing(true);
+		const target = e.target as HTMLElement;
+		if (target.parentElement?.parentElement !== null) {
+			const productId = target.parentElement?.id;
+			console.log(productId, ' to id do edycji');
+			return <p>{productId}</p>;
 		}
 	};
 
@@ -77,9 +88,9 @@ const AdminProducts = () => {
 										</div>
 										<div className='basis-[15%] text-center'>{p.type}</div>
 										<div className='basis-[15%] flex justify-center gap-x-2'>
-											<button>
-												<FontAwesomeIcon icon={faPenToSquare} />
-											</button>
+											<Link to={`/admin/products/edit/${p.id}`}>
+												<FontAwesomeIcon icon={faPenToSquare} id={p.id} />
+											</Link>
 
 											<button id={p.id} onClick={removeProduct}>
 												<FontAwesomeIcon icon={faTrash} />
@@ -91,7 +102,7 @@ const AdminProducts = () => {
 					</div>
 				)}
 			</div>
-			<div className={`${open ? 'block' : 'hidden'}`}>
+			<div className={`${open && isEditing ? 'block' : 'hidden'}`}>
 				<AddProduct setOpen={setOpen} />
 			</div>
 		</AdminLayout>

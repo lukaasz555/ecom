@@ -10,6 +10,7 @@ import Checkout from './pages/Checkout/Checkout';
 import Admin from './pages/admin/Admin';
 import AdminOrders from './components/organisms/AdminOrders/AdminOrders';
 import AdminProducts from './components/organisms/AdminProducts/AdminProducts';
+import EditProduct from './pages/EditProduct/EditProduct';
 
 function App() {
 	return (
@@ -35,6 +36,7 @@ function App() {
 				<Route path='/admin' element={<Admin />} />
 				<Route path='/admin/orders' element={<AdminOrders />} />
 				<Route path='/admin/products' element={<AdminProducts />} />
+				<Route path='/admin/products/edit/:id' element={<EditProduct />} />
 			</Routes>
 		</div>
 	);
