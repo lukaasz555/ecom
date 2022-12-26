@@ -14,7 +14,6 @@ const AdminOrders = () => {
 			const res = await axios
 				.get('http://localhost:1337/orders/')
 				.then((res) => {
-					console.log(res.data);
 					setOrders(res.data);
 					setAllOrders(res.data);
 				})
@@ -59,7 +58,7 @@ const AdminOrders = () => {
 						<div className='basis-[15%] text-center py-1'>DATA</div>
 					</div>
 					{orders.map((order) => (
-						<OrderItem order={order} />
+						<OrderItem order={order} key={order._id} />
 					))}
 				</div>
 			) : (

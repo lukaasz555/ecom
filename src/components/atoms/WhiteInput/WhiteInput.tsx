@@ -1,13 +1,14 @@
 import React from 'react';
 
 interface IWhiteInput {
-	value: string | number;
+	value: string | number | undefined;
 	type: string;
 	placeholder?: string;
 	onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	name?: string;
 	maxLength?: number;
 	minLength?: number;
+	required?: boolean;
 }
 
 const WhiteInput = ({
@@ -18,6 +19,7 @@ const WhiteInput = ({
 	name,
 	maxLength,
 	minLength,
+	required,
 }: IWhiteInput) => {
 	return (
 		<input
@@ -29,6 +31,7 @@ const WhiteInput = ({
 			name={name}
 			maxLength={maxLength}
 			minLength={minLength}
+			required={required}
 		/>
 	);
 };

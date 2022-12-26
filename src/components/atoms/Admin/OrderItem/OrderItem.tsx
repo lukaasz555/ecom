@@ -33,7 +33,7 @@ const OrderItem = ({ order }: IOrderItem) => {
 					<p>data</p>
 				</div>
 			</div>
-			<OrderItemDetails open={open} order={order} />
+			<OrderItemDetails open={open} order={order} key={`item-${order._id}`} />
 		</div>
 	);
 };

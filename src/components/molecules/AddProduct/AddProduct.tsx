@@ -2,16 +2,19 @@ import React, { useState } from 'react';
 import WhiteInput from '../../atoms/WhiteInput/WhiteInput';
 import axios from 'axios';
 import CTA from '../../atoms/CTA/CTA';
+import { ProductModel } from '../../../models/Product';
+import Textfield from '../../atoms/Textfield/Textfield';
 
 const AddProduct = () => {
 	const id = crypto.randomUUID().slice(0, 3);
-	const [newProduct, setNewProduct] = useState({
+	const [authors, setAuthors] = useState('');
+	const [newProduct, setNewProduct] = useState<ProductModel>({
 		id,
 		title: '',
 		authors: [''],
 		releaseYear: '',
 		description: '',
-		img: '',
+		img: 'https://ecsmedia.pl/b/mp/img/defaults/w.gif',
 		price: 0,
 		discount: 0,
 		categoryID: 0,
@@ -29,8 +32,23 @@ const AddProduct = () => {
 		setNewProduct((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 	};
 
+	const checkForm = (product: ProductModel) => {
+		if (product.title !== '' && product.title.length >= 2) {
+			return true;
+		}
+		return false;
+	};
+
+	const handleAuthors = (str: string) => {
+		const arr = str.split(',');
+		return arr.map((item) => item.trim());
+	};
+
 	const handleClick = () => {
-		console.log(newProduct);
+		newProduct.authors = handleAuthors(authors);
+		if (checkForm(newProduct)) {
+			axios.post('http://localhost:1337/products/add', newProduct);
+		}
 	};
 
 	return (
@@ -53,15 +71,16 @@ const AddProduct = () => {
 					name='title'
 					placeholder='Tytuł'
 					onChange={handleChange}
+					required={true}
 				/>
 			</div>
 			<div>
 				<WhiteInput
 					type='text'
-					value={String(newProduct.authors)}
-					name='authors'
+					value={authors}
 					placeholder='Autor'
-					onChange={handleChange}
+					onChange={(e) => setAuthors(e.target.value)}
+					required={true}
 				/>
 			</div>
 			<div>
@@ -71,6 +90,7 @@ const AddProduct = () => {
 					name='releaseYear'
 					placeholder='Rok wydania'
 					onChange={handleChange}
+					required={true}
 				/>
 			</div>
 
@@ -82,6 +102,7 @@ const AddProduct = () => {
 					name='price'
 					placeholder='Cena'
 					onChange={handleChange}
+					required={true}
 				/>
 			</div>
 
@@ -133,13 +154,14 @@ const AddProduct = () => {
 					value={newProduct.format}
 					onChange={handleChange}
 					type='text'
+					required={true}
 				/>
 			</div>
 
 			<div>
 				{/* pages, language, publisher */}
 				{newProduct.type === 'books' ? (
-					<div className='flex flex-col'>
+					<div className='flex flex-col gap-y-2'>
 						<WhiteInput
 							type='text'
 							name='publisher'
@@ -155,6 +177,7 @@ const AddProduct = () => {
 							onChange={handleChange}
 							placeholder='Język wydania'
 						/>
+
 						<div>
 							<label>Liczba stron</label>
 							<WhiteInput
@@ -167,13 +190,15 @@ const AddProduct = () => {
 						</div>
 					</div>
 				) : (
-					<WhiteInput
-						name='label'
-						value={newProduct.label}
-						type='text'
-						placeholder='Wytwórnia'
-						onChange={handleChange}
-					/>
+					<div>
+						<WhiteInput
+							name='label'
+							value={newProduct.label}
+							type='text'
+							placeholder='Wytwórnia'
+							onChange={handleChange}
+						/>
+					</div>
 				)}
 			</div>
 
@@ -184,18 +209,14 @@ const AddProduct = () => {
 					name='img'
 					placeholder='Link do zdjęcia'
 					onChange={handleChange}
+					required={true}
 				/>
 			</div>
-			<div>
-				<WhiteInput
-					type='text'
-					value={newProduct.description}
-					name='description'
-					placeholder='Opis'
-					onChange={handleChange}
-				/>
+			<div className='mt-2'>
+				<label>Opis produktu:</label>
+				<Textfield newProduct={newProduct} setNewProduct={setNewProduct} />
 			</div>
-			<CTA body='poka' onClick={handleClick} />
+			<CTA body='dodaj produkt' onClick={handleClick} />
 		</div>
 	);
 };

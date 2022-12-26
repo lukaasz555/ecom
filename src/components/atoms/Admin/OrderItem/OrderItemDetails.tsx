@@ -49,7 +49,7 @@ const OrderItemDetails = ({ open, order }: IOrderItemDetails) => {
 					<div>
 						{order.order.items.map(({ title, id, price, discount }) => (
 							<div className='flex justify-start text-s'>
-								<div>
+								<div id={id}>
 									<p>
 										<span>{title}</span>
 										<span className='mx-1'>
