@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { OrderModel } from '../../../../models/Order';
 import { handleNumbFormat } from '../../../../helpers/handleNumbFormat';
 import OrderItemDetails from './OrderItemDetails';
+import moment from 'moment';
 
 interface IOrderItem {
 	order: OrderModel;
@@ -9,7 +10,7 @@ interface IOrderItem {
 
 const OrderItem = ({ order }: IOrderItem) => {
 	const [open, setOpen] = useState(false);
-	const { _id, status } = order;
+	const { _id, status, createdAt } = order;
 
 	return (
 		<div className='odd:bg-white even:bg-gray'>
@@ -30,7 +31,7 @@ const OrderItem = ({ order }: IOrderItem) => {
 					<p>{handleNumbFormat(order.order.value)} zł</p>
 				</div>
 				<div className='basis-[15%] text-center py-1'>
-					<p>data</p>
+					<p>{moment(createdAt).format('DD-MM-YYYY')}</p>
 				</div>
 			</div>
 			<OrderItemDetails open={open} order={order} key={`item-${order._id}`} />

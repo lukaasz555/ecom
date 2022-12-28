@@ -2,6 +2,7 @@ import { ProductModel } from './Product';
 
 export interface OrderModel {
 	_id: string;
+	createdAt: string;
 	status: string;
 	customer: {
 		customerData: {
