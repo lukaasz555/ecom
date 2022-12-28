@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import AdminLayout from '../../components/templates/AdminLayout/AdminLayout';
 import axios from 'axios';
 import { ProductModel } from '../../models/Product';
 import WhiteInput from '../../components/atoms/WhiteInput/WhiteInput';
 import CTA from '../../components/atoms/CTA/CTA';
 import Return from '../../components/atoms/Return/Return';
+import { handleAuthors } from '../../helpers/handleAuthors';
+import Textfield from '../../components/atoms/Textfield/Textfield';
 
 const initProduct: ProductModel = {
 	authors: [''],
@@ -30,6 +32,8 @@ const EditProduct = () => {
 	const location = useLocation();
 	const [product, setProduct] = useState<ProductModel>(initProduct);
 	const currentID = location.pathname.replace('/admin/products/edit/', '');
+	const navigate = useNavigate();
+	const [authors, setAuthors] = useState('');
 
 	useEffect(() => {
 		axios
@@ -40,6 +44,7 @@ const EditProduct = () => {
 			})
 			.then((res) => {
 				setProduct(res.data);
+				setAuthors(res.data.authors);
 			});
 	}, []);
 
@@ -48,7 +53,7 @@ const EditProduct = () => {
 	};
 
 	const handleSave = () => {
-		if (currentID !== '') {
+		if (currentID !== '' && product.price > product.discount) {
 			axios
 				.put('http://localhost:1337/products/edit/' + currentID, {
 					params: {
@@ -56,9 +61,13 @@ const EditProduct = () => {
 					},
 					price: +product.price,
 					discount: +product.discount,
+					title: product.title,
+					authors: handleAuthors(authors),
 				})
 				.then((res) => {
-					console.log(res);
+					if (res.status === 200) {
+						navigate(-1);
+					}
 				})
 				.catch((err) => {
 					console.log(err);
@@ -88,6 +97,27 @@ const EditProduct = () => {
 							</p>
 						</div>
 						<div>
+							<label>Tytuł:</label>
+							<WhiteInput
+								type='text'
+								value={product.title}
+								onChange={handleChange}
+								name='title'
+							/>
+						</div>
+
+						<div>
+							<label>Autor:</label>
+							<WhiteInput
+								type='text'
+								value={authors}
+								onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+									setAuthors(e.target.value)
+								}
+							/>
+						</div>
+
+						<div>
 							<label>Cena:</label>
 							<WhiteInput
 								type='number'
@@ -106,6 +136,12 @@ const EditProduct = () => {
 								name='discount'
 							/>
 						</div>
+
+						<div className='mt-2'>
+							<label>Opis produktu:</label>
+							<Textfield newProduct={product} setNewProduct={setProduct} />
+						</div>
+
 						<CTA body='Zapisz' onClick={handleSave} />
 					</div>
 				) : null}

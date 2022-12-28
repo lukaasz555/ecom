@@ -4,6 +4,7 @@ import axios from 'axios';
 import CTA from '../../atoms/CTA/CTA';
 import { ProductModel } from '../../../models/Product';
 import Textfield from '../../atoms/Textfield/Textfield';
+import { handleAuthors } from '../../../helpers/handleAuthors';
 
 interface AddProductProps {
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -50,11 +51,6 @@ const AddProduct = ({ setOpen, setMessage, getProducts }: AddProductProps) => {
 			return true;
 		}
 		return false;
-	};
-
-	const handleAuthors = (str: string) => {
-		const arr = str.split(',');
-		return arr.map((item) => item.trim());
 	};
 
 	const handleClick = () => {
