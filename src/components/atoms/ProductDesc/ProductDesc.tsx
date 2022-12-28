@@ -12,7 +12,7 @@ const ProductDesc: FC<PDescProps> = ({ description }) => {
 			<h3 className='uppercase text-xl border-b-[1px] mb-3 pb-2 font-lato font-light'>
 				OPIS
 			</h3>
-			<Markup content={desc} />
+			<Markup content={desc} className='font-sans' />
 		</div>
 	);
 };

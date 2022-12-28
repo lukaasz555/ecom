@@ -13,7 +13,6 @@ const AdminProducts = () => {
 	const [open, setOpen] = useState(false);
 	const [products, setProducts] = useState<ProductModel[] | []>([]);
 	const [message, setMessage] = useState('');
-	const [isEditing, setEditing] = useState(false);
 
 	useEffect(() => {
 		const getProducts = async () => {
@@ -40,16 +39,6 @@ const AdminProducts = () => {
 						setMessage(`Usunięto produkt ${productId}.`);
 					}
 				});
-		}
-	};
-
-	const handleEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
-		setEditing(true);
-		const target = e.target as HTMLElement;
-		if (target.parentElement?.parentElement !== null) {
-			const productId = target.parentElement?.id;
-			console.log(productId, ' to id do edycji');
-			return <p>{productId}</p>;
 		}
 	};
 
@@ -102,7 +91,7 @@ const AdminProducts = () => {
 					</div>
 				)}
 			</div>
-			<div className={`${open && isEditing ? 'block' : 'hidden'}`}>
+			<div className={`${open ? 'block' : 'hidden'}`}>
 				<AddProduct setOpen={setOpen} />
 			</div>
 		</AdminLayout>
