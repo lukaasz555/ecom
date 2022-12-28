@@ -13,16 +13,18 @@ const AdminProducts = () => {
 	const [open, setOpen] = useState(false);
 	const [products, setProducts] = useState<ProductModel[] | []>([]);
 	const [message, setMessage] = useState('');
+	const [isNewProductAdded, setNewProductAdded] = useState(false);
+
+	const getProducts = async () => {
+		axios
+			.get('http://localhost:1337/products')
+			.then((res) => setProducts(res.data))
+			.catch((err) => console.log(err));
+	};
 
 	useEffect(() => {
-		const getProducts = async () => {
-			axios
-				.get('http://localhost:1337/products')
-				.then((res) => setProducts(res.data))
-				.catch((err) => console.log(err));
-		};
 		getProducts();
-	}, []);
+	}, [isNewProductAdded]);
 
 	const removeProduct = (e: React.MouseEvent<HTMLButtonElement>) => {
 		const target = e.target as HTMLElement;
@@ -92,7 +94,12 @@ const AdminProducts = () => {
 				)}
 			</div>
 			<div className={`${open ? 'block' : 'hidden'}`}>
-				<AddProduct setOpen={setOpen} />
+				<AddProduct
+					setMessage={setMessage}
+					setNewProductAdded={setNewProductAdded}
+					setOpen={setOpen}
+					getProducts={getProducts}
+				/>
 			</div>
 		</AdminLayout>
 	);

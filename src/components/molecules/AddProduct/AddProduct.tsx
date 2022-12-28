@@ -7,9 +7,17 @@ import Textfield from '../../atoms/Textfield/Textfield';
 
 interface AddProductProps {
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	setNewProductAdded: React.Dispatch<React.SetStateAction<boolean>>;
+	setMessage: React.Dispatch<React.SetStateAction<string>>;
+	getProducts: () => Promise<void>;
 }
 
-const AddProduct = ({ setOpen }: AddProductProps) => {
+const AddProduct = ({
+	setOpen,
+	setNewProductAdded,
+	setMessage,
+	getProducts,
+}: AddProductProps) => {
 	const id = crypto.randomUUID().slice(0, 3);
 	const [authors, setAuthors] = useState('');
 	const [newProduct, setNewProduct] = useState<ProductModel>({
@@ -39,13 +47,14 @@ const AddProduct = ({ setOpen }: AddProductProps) => {
 
 	const checkForm = (product: ProductModel) => {
 		if (
-			product.title !== '' &&
-			product.title.length >= 2 &&
-			product.categoryID !== 0
+			newProduct.title !== '' &&
+			newProduct.title.length >= 2 &&
+			newProduct.categoryID !== 0 &&
+			newProduct.releaseYear.length === 4 &&
+			newProduct.price > newProduct.discount
 		) {
 			return true;
 		}
-
 		return false;
 	};
 
@@ -55,15 +64,20 @@ const AddProduct = ({ setOpen }: AddProductProps) => {
 	};
 
 	const handleClick = () => {
+		newProduct.price = +newProduct.price;
+		newProduct.discount = +newProduct.discount;
 		newProduct.authors = handleAuthors(authors);
 		if (checkForm(newProduct)) {
 			axios.post('http://localhost:1337/products/add', newProduct);
 			setOpen(false);
+			setNewProductAdded(true);
+			setMessage('Dodano nowy produkt');
+			getProducts();
 		}
 	};
 
 	return (
-		<div className='flex flex-col gap-y-3'>
+		<div className='flex flex-col gap-y-6'>
 			<div className='flex items-center gap-x-2'>
 				<label>Rodzaj produktu</label>
 				<select
@@ -93,6 +107,11 @@ const AddProduct = ({ setOpen }: AddProductProps) => {
 					onChange={(e) => setAuthors(e.target.value)}
 					required={true}
 				/>
+				<p className='text-s'>
+					{newProduct.authors[0].length === 0
+						? 'W przypadku kilku autorów, rozdziel ich nazwiska przecinkami'
+						: null}
+				</p>
 			</div>
 			<div>
 				<WhiteInput
@@ -103,6 +122,11 @@ const AddProduct = ({ setOpen }: AddProductProps) => {
 					onChange={handleChange}
 					required={true}
 				/>
+				<p className='text-s'>
+					{newProduct.releaseYear.length !== 4
+						? 'Podaj rok wydania (np. 1999, 2010)'
+						: null}
+				</p>
 			</div>
 
 			<div>
@@ -126,6 +150,11 @@ const AddProduct = ({ setOpen }: AddProductProps) => {
 					placeholder='Wpisz o ile chcesz obniżyć cenę (np. 5.50)'
 					onChange={handleChange}
 				/>
+				<p>
+					{newProduct.discount > newProduct.price
+						? 'Zniżka nie może być wyższa od ceny'
+						: null}
+				</p>
 			</div>
 
 			<div className='flex gap-x-2 items-center'>
@@ -137,7 +166,7 @@ const AddProduct = ({ setOpen }: AddProductProps) => {
 					className='border-[1px]  px-1 py-0.5'>
 					{newProduct.type === 'books' ? (
 						<>
-							<option disabled>--- książki ---</option>
+							<option defaultChecked>wybierz z listy</option>
 							<option value={19}>literatura piękna</option>
 							<option value={10}>literatura faktu</option>
 							<option value={13}>biografie</option>
@@ -147,7 +176,7 @@ const AddProduct = ({ setOpen }: AddProductProps) => {
 						</>
 					) : (
 						<>
-							<option disabled>--- muzyka ---</option>
+							<option defaultChecked>wybierz z listy</option>
 							<option value={44}>alternatywa</option>
 							<option value={45}>rock</option>
 							<option value={41}>rap</option>
@@ -155,6 +184,7 @@ const AddProduct = ({ setOpen }: AddProductProps) => {
 						</>
 					)}
 				</select>
+				<p>{newProduct.categoryID === 0 ? 'Wybierz kategorię' : null}</p>
 			</div>
 
 			<div>
@@ -213,22 +243,29 @@ const AddProduct = ({ setOpen }: AddProductProps) => {
 			</div>
 
 			<div>
+				<label>
+					Miniaturka{' '}
+					<span className='text-s'>
+						(jeśli nie masz, podaj 2 razy link do okładki)
+					</span>{' '}
+				</label>
 				<WhiteInput
 					type='text'
-					value={newProduct.img}
-					name='img'
-					placeholder='Link do zdjęcia'
+					value={newProduct.thumbnail}
+					name='thumbnail'
+					placeholder='Link do miniaturki'
 					onChange={handleChange}
 					required={true}
 				/>
 			</div>
 
 			<div>
+				<label>Link do zdjęcia okładki</label>
 				<WhiteInput
 					type='text'
-					value={newProduct.thumbnail}
-					name='thumbnail'
-					placeholder='Link do miniaturki'
+					value={newProduct.img}
+					name='img'
+					placeholder='Link do zdjęcia'
 					onChange={handleChange}
 					required={true}
 				/>

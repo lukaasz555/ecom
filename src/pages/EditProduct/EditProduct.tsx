@@ -5,6 +5,7 @@ import axios from 'axios';
 import { ProductModel } from '../../models/Product';
 import WhiteInput from '../../components/atoms/WhiteInput/WhiteInput';
 import CTA from '../../components/atoms/CTA/CTA';
+import Return from '../../components/atoms/Return/Return';
 
 const initProduct: ProductModel = {
 	authors: [''],
@@ -47,7 +48,6 @@ const EditProduct = () => {
 	};
 
 	const handleSave = () => {
-		console.log('ceny to: ', product.price, product.discount);
 		if (currentID !== '') {
 			axios
 				.put('http://localhost:1337/products/edit/' + currentID, {
@@ -68,9 +68,11 @@ const EditProduct = () => {
 
 	return (
 		<AdminLayout>
-			<div className='min-w-[550px]'>
-				<h2 className='text-2xl'>Edycja</h2>
+			<div className='min-w-[550px] flex justify-between'>
+				<h2 className='text-2xl mb-5'>Edycja</h2>
+				<Return />
 			</div>
+
 			<div>
 				{product.id !== '' ? (
 					<div className='flex flex-col gap-y-2'>
