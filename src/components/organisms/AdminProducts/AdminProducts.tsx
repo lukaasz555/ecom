@@ -13,7 +13,6 @@ const AdminProducts = () => {
 	const [open, setOpen] = useState(false);
 	const [products, setProducts] = useState<ProductModel[] | []>([]);
 	const [message, setMessage] = useState('');
-	const [isNewProductAdded, setNewProductAdded] = useState(false);
 
 	const getProducts = async () => {
 		axios
@@ -24,7 +23,7 @@ const AdminProducts = () => {
 
 	useEffect(() => {
 		getProducts();
-	}, [isNewProductAdded]);
+	}, []);
 
 	const removeProduct = (e: React.MouseEvent<HTMLButtonElement>) => {
 		const target = e.target as HTMLElement;
@@ -38,7 +37,8 @@ const AdminProducts = () => {
 				})
 				.then((res) => {
 					if (res.status === 200) {
-						setMessage(`Usunięto produkt ${productId}.`);
+						setMessage(`Usunięto produkt.`);
+						getProducts();
 					}
 				});
 		}
@@ -96,7 +96,6 @@ const AdminProducts = () => {
 			<div className={`${open ? 'block' : 'hidden'}`}>
 				<AddProduct
 					setMessage={setMessage}
-					setNewProductAdded={setNewProductAdded}
 					setOpen={setOpen}
 					getProducts={getProducts}
 				/>

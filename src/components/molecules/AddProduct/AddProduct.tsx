@@ -7,17 +7,11 @@ import Textfield from '../../atoms/Textfield/Textfield';
 
 interface AddProductProps {
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-	setNewProductAdded: React.Dispatch<React.SetStateAction<boolean>>;
 	setMessage: React.Dispatch<React.SetStateAction<string>>;
 	getProducts: () => Promise<void>;
 }
 
-const AddProduct = ({
-	setOpen,
-	setNewProductAdded,
-	setMessage,
-	getProducts,
-}: AddProductProps) => {
+const AddProduct = ({ setOpen, setMessage, getProducts }: AddProductProps) => {
 	const id = crypto.randomUUID().slice(0, 3);
 	const [authors, setAuthors] = useState('');
 	const [newProduct, setNewProduct] = useState<ProductModel>({
@@ -70,7 +64,6 @@ const AddProduct = ({
 		if (checkForm(newProduct)) {
 			axios.post('http://localhost:1337/products/add', newProduct);
 			setOpen(false);
-			setNewProductAdded(true);
 			setMessage('Dodano nowy produkt');
 			getProducts();
 		}
