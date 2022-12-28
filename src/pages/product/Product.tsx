@@ -11,6 +11,7 @@ import { albums } from '../../data/albums';
 import { getCurrentProduct } from '../../helpers/getCurrentProduct';
 import Modal from 'react-modal';
 import axios from 'axios';
+import Return from '../../components/atoms/Return/Return';
 
 const initValue: ProductModel = {
 	id: '',
@@ -37,16 +38,6 @@ const Product = () => {
 
 	const openModal = () => setShowModal(true);
 	const closeModal = () => setShowModal(false);
-
-	/* 	useEffect(() => {
-		if (category.includes('books')) {
-			const id = category.replace('books/', '');
-			setProduct(getCurrentProduct(id, books));
-		} else if (category.includes('albums')) {
-			const id = category.replace('albums/', '');
-			setProduct(getCurrentProduct(id, albums));
-		}
-	}, [category]); */
 
 	const getId = () => {
 		if (category.includes('books')) {
@@ -75,20 +66,7 @@ const Product = () => {
 	return (
 		<Layout>
 			<div className='mb-10 pb-5 border-b-[1px]'>
-				<button
-					className='flex justify-between items-center uppercase group'
-					onClick={() => navigate(-1)}>
-					<svg
-						className='mr-2 group-hover:-translate-x-1 duration-200'
-						width='24'
-						height='24'
-						xmlns='http://www.w3.org/2000/svg'
-						fill-rule='evenodd'
-						clip-rule='evenodd'>
-						<path d='M2.117 12l7.527 6.235-.644.765-9-7.521 9-7.479.645.764-7.529 6.236h21.884v1h-21.883z' />
-					</svg>
-					powrót
-				</button>
+				<Return />
 			</div>
 			<ProductLayout>
 				<section className='flex justify-center my-10'>
