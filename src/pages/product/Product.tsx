@@ -1,17 +1,18 @@
 import { useEffect, useState, useRef } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import ProductLayout from '../../components/templates/ProductLayout/ProductLayout';
 import Layout from '../../components/templates/Layout/Layout';
-import { books } from '../../data/books';
 import { ProductModel } from '../../models/Product';
 import ProductHead from '../../components/organisms/ProductHead/ProductHead';
 import ProductDesc from '../../components/atoms/ProductDesc/ProductDesc';
 import ProductDetails from '../../components/atoms/ProductDetails/ProductDetails';
-import { albums } from '../../data/albums';
-import { getCurrentProduct } from '../../helpers/getCurrentProduct';
+//import { books } from '../../data/books';
+//import { albums } from '../../data/albums';
+//import { getCurrentProduct } from '../../helpers/getCurrentProduct';
 import Modal from 'react-modal';
 import axios from 'axios';
 import Return from '../../components/atoms/Return/Return';
+import ProductModal from '../../components/atoms/ProductModal/ProductModal';
 
 const initValue: ProductModel = {
 	id: '',
@@ -30,11 +31,11 @@ const initValue: ProductModel = {
 
 const Product = () => {
 	const [product, setProduct] = useState<ProductModel>(initValue);
-	const navigate = useNavigate();
 	const myRef = useRef(null);
 	const location = useLocation();
 	const category = location.pathname.replace('/shop/product/', '');
 	const [showModal, setShowModal] = useState(false);
+	const [isLoading, setLoading] = useState(true);
 
 	const openModal = () => setShowModal(true);
 	const closeModal = () => setShowModal(false);
@@ -58,8 +59,11 @@ const Product = () => {
 				},
 			})
 			.then((res) => {
-				console.log(res);
 				setProduct(res.data);
+				setLoading(false);
+			})
+			.catch((err) => {
+				setLoading(false);
 			});
 	}, [location]);
 
@@ -86,33 +90,12 @@ const Product = () => {
 					)}
 				</section>
 			</ProductLayout>
-			<Modal
-				isOpen={showModal}
-				shouldCloseOnOverlayClick={true}
-				shouldCloseOnEsc={true}
-				onRequestClose={closeModal}
-				style={{
-					overlay: {
-						backgroundColor: 'rgba(255,255,255,0.8)',
-						height: '100%',
-					},
-					content: {
-						backgroundColor: 'rgba(255,255,255,0.8)',
-						border: 'none',
-					},
-				}}
-				contentLabel={`${product.title} cover`}>
-				<div className='h-[100%]'>
-					<div className='flex flex-col items-center justify-center w-full h-[100%]'>
-						<img src={product.img} alt={product.title} />
-						<button
-							className='uppercase hover:underline mt-5'
-							onClick={closeModal}>
-							zamknij
-						</button>
-					</div>
-				</div>
-			</Modal>
+			<ProductModal
+				title={product.title}
+				img={product.img}
+				closeModal={closeModal}
+				showModal={showModal}
+			/>
 		</Layout>
 	);
 };

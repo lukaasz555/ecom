@@ -10,6 +10,7 @@ import { useElementSize } from 'usehooks-ts';
 import { getCategories } from '../../helpers/getCategories';
 import { useLocation } from 'react-router-dom';
 import FilterTool from '../../components/atoms/FilterTool/FilterTool';
+import Loader from '../../components/atoms/Loader/Loader';
 import axios from 'axios';
 
 type AlbumsProps = {
@@ -50,23 +51,35 @@ const Albums = ({ filterCategory }: AlbumsProps) => {
 
 	return (
 		<Layout>
-			<nav className='my-10 flex items-start flex-col xl:flex-row  xl:justify-center xl:flex-wrap xl:gap-3'>
-				{getCategories(items).map((cat) => (
-					<CategoryButton
-						key={cat}
-						cat={Number(cat)}
-						to={`/shop/category/albums/${cat}`}
+			{items.length > 0 ? (
+				<>
+					<nav className='my-10 flex items-start flex-col xl:flex-row  xl:justify-center xl:flex-wrap xl:gap-3'>
+						{getCategories(items).map((cat) => (
+							<CategoryButton
+								key={cat}
+								cat={Number(cat)}
+								to={`/shop/category/albums/${cat}`}
+							/>
+						))}
+					</nav>
+
+					<FilterTool
+						onClick={handleFilterByPrice}
+						open={open}
+						setOpen={setOpen}
 					/>
-				))}
-			</nav>
 
-			<FilterTool onClick={handleFilterByPrice} open={open} setOpen={setOpen} />
-
-			<div ref={divRef} className='flex flex-wrap justify-center'>
-				{filtered !== undefined
-					? filtered.map((data) => <ItemCard data={data} key={data.id} />)
-					: null}
-			</div>
+					<div ref={divRef} className='flex flex-wrap justify-center'>
+						{filtered !== undefined
+							? filtered.map((data) => <ItemCard data={data} key={data.id} />)
+							: null}
+					</div>
+				</>
+			) : (
+				<div className='min-h-[400px] flex flex-col justify-center items-center'>
+					<Loader />
+				</div>
+			)}
 		</Layout>
 	);
 };
