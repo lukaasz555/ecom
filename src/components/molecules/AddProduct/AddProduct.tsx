@@ -15,6 +15,7 @@ interface AddProductProps {
 const AddProduct = ({ setOpen, setMessage, getProducts }: AddProductProps) => {
 	const id = crypto.randomUUID().slice(0, 3);
 	const [authors, setAuthors] = useState('');
+	const [error, setError] = useState('');
 	const [newProduct, setNewProduct] = useState<ProductModel>({
 		id,
 		title: '',
@@ -46,7 +47,7 @@ const AddProduct = ({ setOpen, setMessage, getProducts }: AddProductProps) => {
 			newProduct.title.length >= 2 &&
 			newProduct.categoryID !== 0 &&
 			newProduct.releaseYear.length === 4 &&
-			newProduct.price > newProduct.discount
+			newProduct.price >= newProduct.discount
 		) {
 			return true;
 		}
@@ -62,6 +63,9 @@ const AddProduct = ({ setOpen, setMessage, getProducts }: AddProductProps) => {
 			setOpen(false);
 			setMessage('Dodano nowy produkt');
 			getProducts();
+			setError('');
+		} else {
+			setError('Wypełnij poprawnie formularz.');
 		}
 	};
 
@@ -264,6 +268,7 @@ const AddProduct = ({ setOpen, setMessage, getProducts }: AddProductProps) => {
 				<label>Opis produktu:</label>
 				<Textfield newProduct={newProduct} setNewProduct={setNewProduct} />
 			</div>
+			<div>{error && <p className='text-brownSugar'>{error}</p>}</div>
 			<CTA body='dodaj produkt' onClick={handleClick} />
 		</div>
 	);

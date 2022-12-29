@@ -14,9 +14,10 @@ const AdminProducts = () => {
 	const [open, setOpen] = useState(false);
 	const [products, setProducts] = useState<ProductModel[] | []>([]);
 	const [message, setMessage] = useState('');
-	const [isLoading, setLoading] = useState(true);
+	const [isLoading, setLoading] = useState(false);
 
 	const getProducts = async () => {
+		setLoading(true);
 		axios
 			.get('http://localhost:1337/products')
 			.then((res) => {

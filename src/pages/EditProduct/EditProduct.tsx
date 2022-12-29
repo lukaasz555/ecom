@@ -53,7 +53,7 @@ const EditProduct = () => {
 	};
 
 	const handleSave = () => {
-		if (currentID !== '' && product.price > product.discount) {
+		if (currentID !== '' && product.price >= product.discount) {
 			axios
 				.put('http://localhost:1337/products/edit/' + currentID, {
 					params: {
@@ -63,6 +63,7 @@ const EditProduct = () => {
 					discount: +product.discount,
 					title: product.title,
 					authors: handleAuthors(authors),
+					description: product.description,
 				})
 				.then((res) => {
 					if (res.status === 200) {

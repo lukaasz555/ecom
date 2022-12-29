@@ -16,6 +16,7 @@ module.exports = {
 			green: '#7AC74F',
 			darkGreen: '#0C8346',
 			pencil: '#707070',
+			sapphire: '#0C6291',
 		},
 
 		fontSize: {
