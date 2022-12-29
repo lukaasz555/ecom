@@ -5,6 +5,7 @@ import AdminLayout from '../../templates/AdminLayout/AdminLayout';
 import OrderItem from '../../atoms/Admin/OrderItem/OrderItem';
 import PriceFilter from '../../atoms/Admin/PriceFilter/PriceFilter';
 import DateFilter from '../../atoms/Admin/DateFilter/DateFilter';
+import Loader from '../../atoms/Loader/Loader';
 
 const AdminOrders = () => {
 	const [allOrders, setAllOrders] = useState<OrderModel[] | []>([]);
@@ -12,16 +13,18 @@ const AdminOrders = () => {
 	const [filtered, setFiltered] = useState<OrderModel[] | []>([]);
 	const [priceFilter, setPriceFilter] = useState(false);
 	const [dateFilter, setDateFilter] = useState(false);
+	const [isLoading, setLoading] = useState(true);
 
 	useEffect(() => {
 		const getOrders = async () => {
 			const res = await axios
-				.get('http://localhost:1337/orders/')
+				.get('http://localhost:1337/orders')
 				.then((res) => {
 					setOrders(res.data);
 					setAllOrders(res.data);
+					setLoading(false);
 				})
-				.catch((err) => console.log(err));
+				.catch((err) => setLoading(false));
 		};
 		getOrders();
 	}, []);
@@ -73,7 +76,11 @@ const AdminOrders = () => {
 			<div className='min-w-[550px]'>
 				<h2 className='text-2xl'>Zamówienia</h2>
 			</div>
-			{orders.length > 0 ? (
+			{isLoading ? (
+				<div className='min-h-[200px] flex justify-center items-center'>
+					<Loader />
+				</div>
+			) : orders.length > 0 ? (
 				<div className='w-full'>
 					<div className='flex w-full justify-start border-b-[1px] text-center'>
 						<div className='basis-[20%] min-w-[80px] border-r-[1px] py-1'>
@@ -104,7 +111,7 @@ const AdminOrders = () => {
 					))}
 				</div>
 			) : (
-				<p>Brak zamówień.</p>
+				<p className='mt-10'>Brak zamówień.</p>
 			)}
 		</AdminLayout>
 	);

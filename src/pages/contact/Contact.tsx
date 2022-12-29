@@ -15,24 +15,23 @@ const Contact = () => {
 						jak np. numer zamówienia, szczegółowe dane produktu, którego szukasz
 						(tytuł, wydawnictwo, rok, itd.) To zdecydowanie skróci czas
 						oczekiwania na odpowiedź.
-						<br />
-						<br />
-						<div>
-							<p className='text-l font-lato font-[300] mb-5'>
-								Oprócz formularza kontaktowego można się z nami skontaktować za
-								pomocą:
-							</p>
-							<a
-								href={`mailto:example@example.com`}
-								className='text-brownSugar font-[300] mb-1'>
-								example@example.com
-							</a>
-							<br />
-							<a href={`tel:123456789`} className='text-brownSugar font-[300]'>
-								+48123456789
-							</a>
-						</div>
 					</p>
+					<br />
+					<div>
+						<p className='text-l font-lato font-[300] mb-5'>
+							Oprócz formularza kontaktowego można się z nami skontaktować za
+							pomocą:
+						</p>
+						<a
+							href={`mailto:example@example.com`}
+							className='text-brownSugar font-[300] mb-1'>
+							example@example.com
+						</a>
+						<br />
+						<a href={`tel:123456789`} className='text-brownSugar font-[300]'>
+							+48 123456789
+						</a>
+					</div>
 				</article>
 				<ContactForm />
 			</div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ICheckoutForm } from '../../../models/CheckoutData';
 import OrderComplete from '../OrderComplete/OrderComplete';
 import { clearCart } from '../../../features/cart/cartSlice';
@@ -29,9 +29,8 @@ const OrderSummary = ({
 	const items = useAppSelector((state) => state.items);
 	const itemsValue = productsValue(items);
 	const deliveryCost = itemsValue >= 99 ? 0 : 9.9;
-	//const total = itemsValue + deliveryCost;
-
 	const dispatch = useAppDispatch();
+	const [newOrderId, setNewOrderId] = useState('');
 
 	const newOrder = {
 		customer: {
@@ -70,10 +69,17 @@ const OrderSummary = ({
 	};
 
 	const handleClick = () => {
-		axios.post('http://localhost:1337/orders/new', newOrder);
-		console.log(newOrder);
-		dispatch(clearCart());
-		setOrderDone(true);
+		axios
+			.post('http://localhost:1337/orders/new', newOrder)
+			.then((res) => {
+				console.log(res);
+				setOrderDone(true);
+				setNewOrderId(res.data._id);
+				dispatch(clearCart());
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	};
 
 	return (
@@ -91,7 +97,7 @@ const OrderSummary = ({
 					<OrderSummaryBottom handleClick={handleClick} />
 				</>
 			) : (
-				<OrderComplete />
+				<OrderComplete orderId={newOrderId} />
 			)}
 		</div>
 	);
