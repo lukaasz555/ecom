@@ -9,6 +9,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { handleNumbFormat } from '../../../helpers/handleNumbFormat';
 import { Link } from 'react-router-dom';
 import Loader from '../../atoms/Loader/Loader';
+import ReactPaginate from 'react-paginate';
 
 const AdminProducts = () => {
 	const [open, setOpen] = useState(false);
@@ -49,6 +50,16 @@ const AdminProducts = () => {
 				});
 		}
 	};
+	const [productOffset, setProductOffset] = useState(0);
+	const productsPerPage = 15;
+	const endOffset = productOffset + productsPerPage;
+	const currentProducts = products.slice(productOffset, endOffset);
+	const pageCount = Math.ceil(products.length / productsPerPage);
+
+	const handlePageClick = (e: any) => {
+		const newOffset = (e.selected * productsPerPage) % products.length;
+		setProductOffset(newOffset);
+	};
 
 	return (
 		<AdminLayout>
@@ -80,7 +91,7 @@ const AdminProducts = () => {
 									<div className='basis-[15%] text-center '>AKCJE</div>
 								</div>
 								{products.length > 0
-									? products.map((p) => (
+									? currentProducts.map((p) => (
 											<div
 												key={p.id}
 												className='flex w-full odd:bg-white even:bg-gray items-center'>
@@ -102,6 +113,16 @@ const AdminProducts = () => {
 											</div>
 									  ))
 									: null}
+								<div className='flex justify-center mt-3'>
+									<ReactPaginate
+										className='flex gap-x-5'
+										pageCount={pageCount}
+										onPageChange={handlePageClick}
+										nextLabel='kolejna>>'
+										previousLabel='<<poprzednia'
+										activeLinkClassName='font-bold'
+									/>
+								</div>
 							</div>
 						)}
 					</div>
