@@ -3,21 +3,20 @@ import AdminLayout from '../../templates/AdminLayout/AdminLayout';
 import AddProduct from '../../molecules/AddProduct/AddProduct';
 import axios from 'axios';
 import { ProductModel } from '../../../models/Product';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { handleNumbFormat } from '../../../helpers/handleNumbFormat';
-import { Link } from 'react-router-dom';
 import Loader from '../../atoms/Loader/Loader';
 import ReactPaginate from 'react-paginate';
 import AdminProductItem from '../../molecules/AdminProductItem/AdminProductItem';
 import AdminProductTemplate from '../../molecules/AdminProductTemplate/AdminProductTemplate';
+import PasswordModal from '../../molecules/PasswordModal/PasswordModal';
 
 const AdminProducts = () => {
 	const [open, setOpen] = useState(false);
 	const [products, setProducts] = useState<ProductModel[] | []>([]);
 	const [message, setMessage] = useState('');
 	const [isLoading, setLoading] = useState(false);
+	const [password, setPassword] = useState('');
+	const [isModalOpen, setModalOpen] = useState(false);
+	const [idToRemove, setIdToRemove] = useState<undefined | string>('');
 
 	const getProducts = async () => {
 		setLoading(true);
@@ -38,18 +37,8 @@ const AdminProducts = () => {
 		const target = e.target as HTMLElement;
 		if (target.parentElement?.parentElement !== null) {
 			const productId = target.parentElement?.parentElement.id;
-			axios
-				.delete('http://localhost:1337/products/remove/' + productId, {
-					params: {
-						id: productId,
-					},
-				})
-				.then((res) => {
-					if (res.status === 200) {
-						setMessage(`Usunięto produkt.`);
-						getProducts();
-					}
-				});
+			setIdToRemove(productId);
+			setModalOpen(true);
 		}
 	};
 	const [productOffset, setProductOffset] = useState(0);
@@ -75,7 +64,7 @@ const AdminProducts = () => {
 			) : products.length > 0 ? (
 				<>
 					<div className='flex flex-col'>
-						<div className='flex justify-end'>
+						<div className='flex justify-end my-3'>
 							<button onClick={() => setOpen(true)} className='hover:underline'>
 								+ dodaj produkt
 							</button>
@@ -89,7 +78,11 @@ const AdminProducts = () => {
 									<AdminProductTemplate />
 									{products.length > 0
 										? currentProducts.map((p) => (
-												<AdminProductItem p={p} removeProduct={removeProduct} />
+												<AdminProductItem
+													p={p}
+													key={p.id}
+													removeProduct={removeProduct}
+												/>
 										  ))
 										: null}
 								</div>
@@ -115,6 +108,15 @@ const AdminProducts = () => {
 							getProducts={getProducts}
 						/>
 					</div>
+					<PasswordModal
+						isOpen={isModalOpen}
+						password={password}
+						setPassword={setPassword}
+						idToRemove={idToRemove}
+						getProducts={getProducts}
+						setMessage={setMessage}
+						setModalOpen={setModalOpen}
+					/>
 				</>
 			) : (
 				<p className='mt-10'>Brak produktów.</p>
