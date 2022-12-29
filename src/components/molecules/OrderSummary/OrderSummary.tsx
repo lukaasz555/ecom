@@ -31,6 +31,7 @@ const OrderSummary = ({
 	const deliveryCost = itemsValue >= 99 ? 0 : 9.9;
 	const dispatch = useAppDispatch();
 	const [newOrderId, setNewOrderId] = useState('');
+	const [error, setError] = useState(false);
 
 	const newOrder = {
 		customer: {
@@ -73,13 +74,14 @@ const OrderSummary = ({
 			.post('http://localhost:1337/orders/new', newOrder)
 			.then((res) => {
 				console.log(res);
-				setOrderDone(true);
 				setNewOrderId(res.data._id);
 				dispatch(clearCart());
+				setError(false);
 			})
 			.catch((err) => {
-				console.log(err);
+				setError(true);
 			});
+		setOrderDone(true);
 	};
 
 	return (
@@ -96,8 +98,15 @@ const OrderSummary = ({
 					<ItemsDetails />
 					<OrderSummaryBottom handleClick={handleClick} />
 				</>
-			) : (
+			) : !error ? (
 				<OrderComplete orderId={newOrderId} />
+			) : (
+				<div className='py-10'>
+					<h1 className='text-center'>
+						Niestety, coś poszło nie tak. <br />
+						Spróbuj złożyć zamówienie ponownie.
+					</h1>
+				</div>
 			)}
 		</div>
 	);
