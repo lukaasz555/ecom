@@ -9,6 +9,9 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { handleNumbFormat } from '../../../helpers/handleNumbFormat';
 import { Link } from 'react-router-dom';
 import Loader from '../../atoms/Loader/Loader';
+import ReactPaginate from 'react-paginate';
+import AdminProductItem from '../../molecules/AdminProductItem/AdminProductItem';
+import AdminProductTemplate from '../../molecules/AdminProductTemplate/AdminProductTemplate';
 
 const AdminProducts = () => {
 	const [open, setOpen] = useState(false);
@@ -49,6 +52,16 @@ const AdminProducts = () => {
 				});
 		}
 	};
+	const [productOffset, setProductOffset] = useState(0);
+	const productsPerPage = 10;
+	const endOffset = productOffset + productsPerPage;
+	const currentProducts = products.slice(productOffset, endOffset);
+	const pageCount = Math.ceil(products.length / productsPerPage);
+
+	const handlePageClick = (e: any) => {
+		const newOffset = (e.selected * productsPerPage) % products.length;
+		setProductOffset(newOffset);
+	};
 
 	return (
 		<AdminLayout>
@@ -71,38 +84,28 @@ const AdminProducts = () => {
 							<p className='text-brownSugar mb-10 text-xl'>{message}</p>
 						</div>
 						{products.length > 0 && !open && (
-							<div>
-								<div className='flex w-full border-b-[1px]'>
-									<div className='basis-[15%]'>ID</div>
-									<div className='basis-[40%]'>TYTUŁ</div>
-									<div className='basis-[15%] text-center'>CENA</div>
-									<div className='basis-[15%] text-center'>RODZAJ</div>
-									<div className='basis-[15%] text-center '>AKCJE</div>
+							<>
+								<div className='min-h-[420px]'>
+									<AdminProductTemplate />
+									{products.length > 0
+										? currentProducts.map((p) => (
+												<AdminProductItem p={p} removeProduct={removeProduct} />
+										  ))
+										: null}
 								</div>
-								{products.length > 0
-									? products.map((p) => (
-											<div
-												key={p.id}
-												className='flex w-full odd:bg-white even:bg-gray items-center'>
-												<div className='basis-[15%]'>{p.id}</div>
-												<div className='basis-[40%]'>{p.title}</div>
-												<div className='basis-[15%] text-center'>
-													{handleNumbFormat(p.price - p.discount)}
-												</div>
-												<div className='basis-[15%] text-center'>{p.type}</div>
-												<div className='basis-[15%] flex justify-center gap-x-2'>
-													<Link to={`/admin/products/edit/${p.id}`}>
-														<FontAwesomeIcon icon={faPenToSquare} id={p.id} />
-													</Link>
-
-													<button id={p.id} onClick={removeProduct}>
-														<FontAwesomeIcon icon={faTrash} />
-													</button>
-												</div>
-											</div>
-									  ))
-									: null}
-							</div>
+								<div className='flex justify-center mt-3'>
+									<ReactPaginate
+										className='flex gap-x-5'
+										pageCount={pageCount}
+										onPageChange={handlePageClick}
+										nextLabel='kolejna>>'
+										previousLabel='<<poprzednia'
+										activeLinkClassName='text-white bg-black px-1.5 text-center py-0.5 rounded-[4px]'
+										disabledClassName='opacity-0'
+										disabledLinkClassName='cursor-default'
+									/>
+								</div>
+							</>
 						)}
 					</div>
 					<div className={`${open ? 'block' : 'hidden'}`}>
