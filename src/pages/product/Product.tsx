@@ -9,10 +9,10 @@ import ProductDetails from '../../components/atoms/ProductDetails/ProductDetails
 //import { books } from '../../data/books';
 //import { albums } from '../../data/albums';
 //import { getCurrentProduct } from '../../helpers/getCurrentProduct';
-import Modal from 'react-modal';
 import axios from 'axios';
 import Return from '../../components/atoms/Return/Return';
 import ProductModal from '../../components/atoms/ProductModal/ProductModal';
+import Loader from '../../components/atoms/Loader/Loader';
 
 const initValue: ProductModel = {
 	id: '',
@@ -69,33 +69,47 @@ const Product = () => {
 
 	return (
 		<Layout>
-			<div className='mb-10 pb-5 border-b-[1px]'>
-				<Return />
-			</div>
-			<ProductLayout>
-				<section className='flex justify-center my-10'>
-					{product.id === '' ? (
-						<h2>Przepraszamy, nie udało załadować się strony tego produktu.</h2>
-					) : (
-						<article className='flex flex-col items-center md:items-start mb-20'>
-							<ProductHead myRef={myRef} data={product} openModal={openModal} />
-							<div ref={myRef} className='w-full'>
-								{product.description.length > 20 && (
-									<ProductDesc description={product.description} />
-								)}
+			{isLoading ? (
+				<div className='min-h-[400px] flex justify-center items-center'>
+					<Loader />
+				</div>
+			) : product.id === undefined ? (
+				<div className='min-h-[400px] flex justify-center items-center'>
+					<h1 className='text-center'>
+						Nie udało się załadować tej strony. <br /> Spróbuj ponownie.
+					</h1>
+				</div>
+			) : (
+				<>
+					<div className='mb-10 pb-5 border-b-[1px]'>
+						<Return />
+					</div>
+					<ProductLayout>
+						<section className='flex justify-center my-10'>
+							<article className='flex flex-col items-center md:items-start mb-20'>
+								<ProductHead
+									myRef={myRef}
+									data={product}
+									openModal={openModal}
+								/>
+								<div ref={myRef} className='w-full'>
+									{product.description.length > 20 && (
+										<ProductDesc description={product.description} />
+									)}
 
-								<ProductDetails data={product} />
-							</div>
-						</article>
-					)}
-				</section>
-			</ProductLayout>
-			<ProductModal
-				title={product.title}
-				img={product.img}
-				closeModal={closeModal}
-				showModal={showModal}
-			/>
+									<ProductDetails data={product} />
+								</div>
+							</article>
+						</section>
+					</ProductLayout>
+					<ProductModal
+						title={product.title}
+						img={product.img}
+						closeModal={closeModal}
+						showModal={showModal}
+					/>
+				</>
+			)}
 		</Layout>
 	);
 };

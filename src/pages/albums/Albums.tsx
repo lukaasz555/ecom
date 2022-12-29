@@ -25,6 +25,7 @@ const Albums = ({ filterCategory }: AlbumsProps) => {
 	const [updated, setUpdated] = useState(false);
 	const location = useLocation();
 	const catID = +location.pathname.replace('/shop/category/albums/', '');
+	const [isLoading, setLoading] = useState(true);
 
 	const handleFilterByPrice = (id: string) => {
 		setFiltered(filterByPrice(id, filtered));
@@ -42,16 +43,26 @@ const Albums = ({ filterCategory }: AlbumsProps) => {
 	}, [catID, filtered, filterCategory]);
 
 	useEffect(() => {
-		axios.get('http://localhost:1337/products/albums').then((res) => {
-			setItems(res.data);
-			setFiltered(res.data);
-			renderAlbums();
-		});
+		axios
+			.get('http://localhost:1337/products/albums')
+			.then((res) => {
+				setItems(res.data);
+				setFiltered(res.data);
+				renderAlbums();
+				setLoading(false);
+			})
+			.catch((err) => {
+				setLoading(false);
+			});
 	}, [updated, location]);
 
 	return (
 		<Layout>
-			{items.length > 0 ? (
+			{isLoading ? (
+				<div className='min-h-[400px] flex justify-center items-center'>
+					<Loader />
+				</div>
+			) : items.length > 0 ? (
 				<>
 					<nav className='my-10 flex items-start flex-col xl:flex-row  xl:justify-center xl:flex-wrap xl:gap-3'>
 						{getCategories(items).map((cat) => (
@@ -76,8 +87,8 @@ const Albums = ({ filterCategory }: AlbumsProps) => {
 					</div>
 				</>
 			) : (
-				<div className='min-h-[400px] flex flex-col justify-center items-center'>
-					<Loader />
+				<div className='min-h-[400px] flex justify-center items-center'>
+					<h1 className='text-center'>Nie udało się pobrać artykułów.</h1>
 				</div>
 			)}
 		</Layout>
