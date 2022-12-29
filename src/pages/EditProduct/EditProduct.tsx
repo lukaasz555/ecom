@@ -44,7 +44,7 @@ const EditProduct = () => {
 			})
 			.then((res) => {
 				setProduct(res.data);
-				setAuthors(res.data.authors);
+				setAuthors(res.data.authors.join(', '));
 			});
 	}, []);
 
@@ -138,7 +138,12 @@ const EditProduct = () => {
 						</div>
 
 						<div className='mt-2'>
-							<label>Opis produktu:</label>
+							<label>
+								Opis produktu:{' '}
+								<p className='text-s'>
+									wprowadź opis lub pozostaw puste, jeśli nie chcesz go zmieniać
+								</p>{' '}
+							</label>
 							<Textfield newProduct={product} setNewProduct={setProduct} />
 						</div>
 

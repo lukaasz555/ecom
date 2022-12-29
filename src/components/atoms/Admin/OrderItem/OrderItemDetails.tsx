@@ -48,7 +48,7 @@ const OrderItemDetails = ({ open, order }: IOrderItemDetails) => {
 					<h4 className='text-s underline'>Produkty:</h4>
 					<div>
 						{order.order.items.map(({ title, id, price, discount }) => (
-							<div className='flex justify-start text-s'>
+							<div className='flex justify-start text-s' key={id}>
 								<div id={id}>
 									<p>
 										<span>{title}</span>
