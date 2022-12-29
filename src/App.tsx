@@ -11,7 +11,6 @@ import Admin from './pages/admin/Admin';
 import AdminOrders from './components/organisms/AdminOrders/AdminOrders';
 import AdminProducts from './components/organisms/AdminProducts/AdminProducts';
 import EditProduct from './pages/EditProduct/EditProduct';
-import Search from './pages/search/Search';
 
 function App() {
 	return (
@@ -23,7 +22,6 @@ function App() {
 				<Route path='/shop/albums' element={<Albums />} />
 				<Route path='/contact' element={<Contact />} />
 				<Route path='/cart' element={<Cart />} />
-				<Route path={`/search`} element={<Search />} />
 				<Route path={`/shop/product/books/:id`} element={<Product />} />
 				<Route path={`/shop/product/albums/:id`} element={<Product />} />
 				<Route
