@@ -44,7 +44,7 @@ const Albums = ({ filterCategory }: AlbumsProps) => {
 
 	useEffect(() => {
 		axios
-			.get('http://localhost:1337/products/albums')
+			.get('http://localhost:80/products/albums')
 			.then((res) => {
 				setItems(res.data);
 				setFiltered(res.data);

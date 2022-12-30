@@ -53,7 +53,7 @@ const Product = () => {
 	useEffect(() => {
 		const productId = getId();
 		axios
-			.get(`http://localhost:1337/products/${productId}`, {
+			.get(`http://localhost:80/products/${productId}`, {
 				params: {
 					id: productId,
 				},

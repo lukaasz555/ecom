@@ -21,7 +21,7 @@ const AdminProducts = () => {
 	const getProducts = async () => {
 		setLoading(true);
 		axios
-			.get('http://localhost:1337/products')
+			.get('http://localhost:80/products')
 			.then((res) => {
 				setProducts(res.data);
 				setLoading(false);

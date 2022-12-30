@@ -59,7 +59,7 @@ const AddProduct = ({ setOpen, setMessage, getProducts }: AddProductProps) => {
 		newProduct.discount = +newProduct.discount;
 		newProduct.authors = handleAuthors(authors);
 		if (checkForm(newProduct)) {
-			axios.post('http://localhost:1337/products/add', newProduct);
+			axios.post('http://localhost:80/products/add', newProduct);
 			setOpen(false);
 			setMessage('Dodano nowy produkt');
 			getProducts();

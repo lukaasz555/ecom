@@ -44,7 +44,7 @@ const Books = ({ filterCategory }: BooksProps) => {
 
 	useEffect(() => {
 		axios
-			.get('http://localhost:1337/products/books')
+			.get('http://localhost:80/products/books')
 			.then((res) => {
 				setItems(res.data);
 				setFiltered(res.data);

@@ -71,9 +71,8 @@ const OrderSummary = ({
 
 	const handleClick = () => {
 		axios
-			.post('http://localhost:1337/orders/new', newOrder)
+			.post('http://localhost:80/orders/new', newOrder)
 			.then((res) => {
-				console.log(res);
 				setNewOrderId(res.data._id);
 				dispatch(clearCart());
 				setError(false);

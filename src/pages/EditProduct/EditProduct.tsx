@@ -55,7 +55,7 @@ const EditProduct = () => {
 	const handleSave = () => {
 		if (currentID !== '' && product.price >= product.discount) {
 			axios
-				.put('http://localhost:1337/products/edit/' + currentID, {
+				.put('http://localhost:80/products/edit/' + currentID, {
 					params: {
 						id: currentID,
 					},

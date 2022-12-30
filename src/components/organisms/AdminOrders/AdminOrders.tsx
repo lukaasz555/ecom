@@ -18,7 +18,7 @@ const AdminOrders = () => {
 	useEffect(() => {
 		const getOrders = async () => {
 			const res = await axios
-				.get('http://localhost:1337/orders')
+				.get('http://localhost:80/orders')
 				.then((res) => {
 					setOrders(res.data);
 					setAllOrders(res.data);

@@ -29,7 +29,7 @@ const PasswordModal = ({
 
 	const sendReq = (id: string | unknown, password: string) => {
 		axios
-			.delete('http://localhost:1337/products/remove/' + id, {
+			.delete('http://localhost:80/products/remove/' + id, {
 				params: {
 					id: idToRemove,
 				},

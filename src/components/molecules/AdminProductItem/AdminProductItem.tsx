@@ -6,8 +6,6 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { ProductModel } from '../../../models/Product';
 import { Link } from 'react-router-dom';
 
-// removeProduct: (e: React.MouseEvent<HTMLButtonElement>) => void
-
 type AdminProductProps = {
 	p: ProductModel;
 	removeProduct: (e: React.MouseEvent<HTMLButtonElement>) => void;
