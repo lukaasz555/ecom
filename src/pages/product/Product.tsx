@@ -50,10 +50,12 @@ const Product = () => {
 		}
 	};
 
+	const axiosInstance = axios.create({ baseURL: process.env.API_URL });
+
 	useEffect(() => {
 		const productId = getId();
-		axios
-			.get(`http://localhost:80/products/${productId}`, {
+		axiosInstance
+			.get(`/products/${productId}`, {
 				params: {
 					id: productId,
 				},

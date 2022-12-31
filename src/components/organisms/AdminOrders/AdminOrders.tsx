@@ -14,11 +14,12 @@ const AdminOrders = () => {
 	const [priceFilter, setPriceFilter] = useState(false);
 	const [dateFilter, setDateFilter] = useState(false);
 	const [isLoading, setLoading] = useState(true);
+	const axiosInstance = axios.create({ baseURL: process.env.API_URL });
 
 	useEffect(() => {
 		const getOrders = async () => {
-			const res = await axios
-				.get('http://localhost:80/orders')
+			const res = await axiosInstance
+				.get('/orders')
 				.then((res) => {
 					setOrders(res.data);
 					setAllOrders(res.data);

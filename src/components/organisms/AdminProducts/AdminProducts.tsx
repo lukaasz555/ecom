@@ -17,11 +17,12 @@ const AdminProducts = () => {
 	const [password, setPassword] = useState('');
 	const [isModalOpen, setModalOpen] = useState(false);
 	const [idToRemove, setIdToRemove] = useState<undefined | string>('');
+	const axiosInstance = axios.create({ baseURL: process.env.API_URL });
 
 	const getProducts = async () => {
 		setLoading(true);
-		axios
-			.get('http://localhost:80/products')
+		axiosInstance
+			.get('/products')
 			.then((res) => {
 				setProducts(res.data);
 				setLoading(false);
