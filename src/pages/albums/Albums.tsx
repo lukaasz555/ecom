@@ -26,7 +26,6 @@ const Albums = ({ filterCategory }: AlbumsProps) => {
 	const location = useLocation();
 	const catID = +location.pathname.replace('/shop/category/albums/', '');
 	const [isLoading, setLoading] = useState(true);
-	const axiosInstance = axios.create({ baseURL: process.env.API_URL });
 
 	const handleFilterByPrice = (id: string) => {
 		setFiltered(filterByPrice(id, filtered));
@@ -44,8 +43,8 @@ const Albums = ({ filterCategory }: AlbumsProps) => {
 	}, [catID, filtered, filterCategory]);
 
 	useEffect(() => {
-		axiosInstance
-			.get('/products/albums')
+		axios
+			.get('http://localhost:4000/products/albums')
 			.then((res) => {
 				setItems(res.data);
 				setFiltered(res.data);
