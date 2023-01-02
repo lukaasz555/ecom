@@ -1,11 +1,12 @@
 import React from 'react';
-import Insta from '../../../assets/logos/instagram-seeklogo.com.svg';
+//import Insta from '../../../assets/logos/instagram-seeklogo.com.svg';
+import Logo from '../../../assets/logos/5335781.svg';
 
 const Socials = () => {
 	return (
 		<div className='flex items-center  gap-x-1 md:mt-0'>
 			<a href='https://instagram.com' className='mr-2'>
-				<img src={Insta} alt='Our instagram account' width={'17px'} />
+				<img src={Logo} alt='Our instagram account' width={'20px'} />
 			</a>
 
 			<a href='https://facebook.com/'>
