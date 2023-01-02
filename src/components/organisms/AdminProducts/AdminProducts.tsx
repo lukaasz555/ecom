@@ -17,11 +17,12 @@ const AdminProducts = () => {
 	const [password, setPassword] = useState('');
 	const [isModalOpen, setModalOpen] = useState(false);
 	const [idToRemove, setIdToRemove] = useState<undefined | string>('');
+	const URL = process.env.REACT_APP_SERVER_URL;
 
 	const getProducts = async () => {
 		setLoading(true);
 		axios
-			.get('http://localhost:4000/products')
+			.get(`${URL}/products`)
 			.then((res) => {
 				setProducts(res.data);
 				setLoading(false);

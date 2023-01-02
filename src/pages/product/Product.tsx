@@ -36,6 +36,7 @@ const Product = () => {
 	const category = location.pathname.replace('/shop/product/', '');
 	const [showModal, setShowModal] = useState(false);
 	const [isLoading, setLoading] = useState(true);
+	const URL = process.env.REACT_APP_SERVER_URL;
 
 	const openModal = () => setShowModal(true);
 	const closeModal = () => setShowModal(false);
@@ -53,7 +54,7 @@ const Product = () => {
 	useEffect(() => {
 		const productId = getId();
 		axios
-			.get(`http://localhost:4000/products/${productId}`, {
+			.get(`${URL}/products/${productId}`, {
 				params: {
 					id: productId,
 				},

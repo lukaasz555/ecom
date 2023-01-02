@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Layout from '../../components/templates/Layout/Layout';
-import { albums } from '../../data/albums';
 import ItemCard from '../../components/organisms/ItemCard/ItemCard';
 import { ProductModel } from '../../models/Product';
 import { handleFilter } from '../../helpers/handleFilter';
@@ -26,6 +25,7 @@ const Albums = ({ filterCategory }: AlbumsProps) => {
 	const location = useLocation();
 	const catID = +location.pathname.replace('/shop/category/albums/', '');
 	const [isLoading, setLoading] = useState(true);
+	const URL = process.env.REACT_APP_SERVER_URL;
 
 	const handleFilterByPrice = (id: string) => {
 		setFiltered(filterByPrice(id, filtered));
@@ -44,7 +44,7 @@ const Albums = ({ filterCategory }: AlbumsProps) => {
 
 	useEffect(() => {
 		axios
-			.get('http://localhost:4000/products/albums')
+			.get(`${URL}/products/albums`)
 			.then((res) => {
 				setItems(res.data);
 				setFiltered(res.data);
