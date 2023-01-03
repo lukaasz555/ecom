@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { handleNumbFormat } from '../../../../helpers/handleNumbFormat';
 import { OrderModel } from '../../../../models/Order';
 import { getQty } from '../../../../helpers/getQty';
+import { ProductModel } from '../../../../models/Product';
 
 interface IOrderItemDetails {
 	open: boolean;
@@ -15,6 +16,11 @@ const OrderItemDetails = ({ open, order }: IOrderItemDetails) => {
 		order.customer.address;
 	const { phoneNumber, email } = order.customer.contact;
 	const { cost, inpost } = order.order.ship;
+
+	const uniqueItems = Array.from(
+		new Set(order.order.items.map((item) => item.id))
+	).map((id) => order.order.items.find((item) => item.id === id));
+
 	return (
 		<div
 			className={`mb-5 py-2 px-3 bg-gray duration-150 origin-top ${
@@ -47,37 +53,48 @@ const OrderItemDetails = ({ open, order }: IOrderItemDetails) => {
 				<div className='my-3'>
 					<h4 className='text-s underline'>Produkty:</h4>
 					<div>
-						{order.order.items.map(({ title, id, price, discount }) => (
-							<div className='flex justify-start text-s' key={id}>
-								<div id={id}>
-									<p>
-										<span>{title}</span>
-										<span className='mx-1'>
-											{getQty(id, order.order.items) > 1
-												? `(${getQty(id, order.order.items)}x)`
-												: null}
-										</span>
-									</p>
-								</div>
+						<>
+							{uniqueItems.map((item) => {
+								return (
+									<>
+										{item === undefined ? null : (
+											<div className='flex justify-start text-s' key={item.id}>
+												<div id={item.id}>
+													<p>
+														<span>{item.title}</span>
+														<span className='mx-1'>
+															{getQty(item.id, order.order.items) > 1
+																? `(${getQty(item.id, order.order.items)}x)`
+																: null}
+														</span>{' '}
+													</p>
+												</div>
+												<div>
+													<p>
+														- {handleNumbFormat(item.price - item.discount)} zł
+													</p>
+												</div>
+											</div>
+										)}
+									</>
+								);
+							})}
+
+							<div className='flex justify-start text-s'>
 								<div>
-									<p>- {handleNumbFormat(price - discount)} zł</p>
+									<p>Wysyłka: {handleNumbFormat(cost)} zł</p>
 								</div>
 							</div>
-						))}
-						<div className='flex justify-start text-s'>
-							<div>
-								<p>Wysyłka: {handleNumbFormat(cost)} zł</p>
+							<div className='mt-2'>
+								<p className='text-s font-[500]'>
+									Kwota brutto: {handleNumbFormat(order.order.value + cost)} zł
+								</p>
+								<p className='text-s font-[500]'>
+									Kwota netto:{' '}
+									{handleNumbFormat((order.order.value + cost) / 1.23)} zł
+								</p>
 							</div>
-						</div>
-						<div className='mt-2'>
-							<p className='text-s font-[500]'>
-								Kwota brutto: {handleNumbFormat(order.order.value + cost)} zł
-							</p>
-							<p className='text-s font-[500]'>
-								Kwota netto:{' '}
-								{handleNumbFormat((order.order.value + cost) / 1.23)} zł
-							</p>
-						</div>
+						</>
 					</div>
 				</div>
 			</div>
