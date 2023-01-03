@@ -92,7 +92,7 @@ const EditProduct = () => {
 								Edytujesz:{' '}
 								<a
 									className='font-[500] hover:underline'
-									href={`http://localhost:3000/shop/product/${product.type}/${product.id}`}>
+									href={`https://lukaasz555-ecom.onrender.com/#/shop/product/${product.type}/${product.id}`}>
 									{' '}
 									{product.title} - {product.id}
 								</a>
