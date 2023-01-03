@@ -9,15 +9,22 @@ type PriceFilterProps = {
 
 const PriceFilter = ({ priceFilter, handleSort }: PriceFilterProps) => {
 	return (
-		<ul className={`${priceFilter ? 'flex flex-col' : 'hidden'} px-2`}>
-			<li className='text-xs text-left mt-1'>
-				<button onClick={() => handleSort('grow')}>
+		<ul
+			className={`${
+				priceFilter ? 'flex flex-col' : 'hidden'
+			} px-2 text-xs text-left mb-1`}>
+			<li className='mt-1'>
+				<button
+					onClick={() => handleSort('grow')}
+					className='flex gap-x-1 items-center'>
 					<FontAwesomeIcon icon={faChevronUp} /> rosnąco
 				</button>
 			</li>
 
-			<li className='text-xs text-left mt-1'>
-				<button onClick={() => handleSort('decrease')}>
+			<li className='mt-1'>
+				<button
+					onClick={() => handleSort('decrease')}
+					className='flex gap-x-1 items-center '>
 					<FontAwesomeIcon icon={faChevronDown} /> malejąco
 				</button>
 			</li>

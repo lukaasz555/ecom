@@ -87,10 +87,10 @@ const AdminOrders = () => {
 						<div className='basis-[20%] min-w-[80px] border-r-[1px] py-1'>
 							<p>STATUS</p>
 						</div>
-						<div className='basis-[50%] min-w-[120px] border-r-[1px] py-1'>
+						<div className='basis-[55%] md:basis-[50%] min-w-[120px] border-r-[1px] py-1'>
 							<p>DANE KLIENTA</p>
 						</div>
-						<div className='basis-[15%] min-w-[80px] border-r-[1px] py-1'>
+						<div className='basis-[25%] md:basis-[15%] min-w-[80px] border-r-[1px] py-1 flex flex-col items-center'>
 							<button
 								onClick={() => setPriceFilter(!priceFilter)}
 								className='px-2'>
@@ -98,7 +98,7 @@ const AdminOrders = () => {
 							</button>
 							<PriceFilter priceFilter={priceFilter} handleSort={handleSort} />
 						</div>
-						<div className='basis-[15%] text-center py-1'>
+						<div className='hidden md:block md:basis-[15%] min-w-[60px] text-center py-1 flex flex-col items-center'>
 							<button
 								className='px-2'
 								onClick={() => setDateFilter(!dateFilter)}>
