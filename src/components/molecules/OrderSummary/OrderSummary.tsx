@@ -32,6 +32,7 @@ const OrderSummary = ({
 	const dispatch = useAppDispatch();
 	const [newOrderId, setNewOrderId] = useState('');
 	const [error, setError] = useState(false);
+	const URL = process.env.REACT_APP_SERVER_URL;
 
 	const newOrder = {
 		customer: {
@@ -71,7 +72,7 @@ const OrderSummary = ({
 
 	const handleClick = () => {
 		axios
-			.post('http://localhost:80/orders/new', newOrder)
+			.post(`${URL}/orders/new`, newOrder)
 			.then((res) => {
 				setNewOrderId(res.data._id);
 				dispatch(clearCart());

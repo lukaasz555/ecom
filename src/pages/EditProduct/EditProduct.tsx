@@ -34,10 +34,11 @@ const EditProduct = () => {
 	const currentID = location.pathname.replace('/admin/products/edit/', '');
 	const navigate = useNavigate();
 	const [authors, setAuthors] = useState('');
+	const URL = process.env.REACT_APP_SERVER_URL;
 
 	useEffect(() => {
 		axios
-			.get(`http://localhost:1337/products/${currentID}`, {
+			.get(`${URL}/products/${currentID}`, {
 				params: {
 					id: currentID,
 				},
@@ -55,7 +56,7 @@ const EditProduct = () => {
 	const handleSave = () => {
 		if (currentID !== '' && product.price >= product.discount) {
 			axios
-				.put('http://localhost:80/products/edit/' + currentID, {
+				.put(`${URL}/products/edit/` + currentID, {
 					params: {
 						id: currentID,
 					},

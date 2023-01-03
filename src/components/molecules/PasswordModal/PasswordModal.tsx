@@ -26,10 +26,11 @@ const PasswordModal = ({
 	setModalOpen,
 }: PWModalProps) => {
 	const [passwordMessage, setPasswordMessage] = useState('');
+	const URL = process.env.REACT_APP_SERVER_URL;
 
 	const sendReq = (id: string | unknown, password: string) => {
 		axios
-			.delete('http://localhost:80/products/remove/' + id, {
+			.delete(`${URL}/products/remove/` + id, {
 				params: {
 					id: idToRemove,
 				},

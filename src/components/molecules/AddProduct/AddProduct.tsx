@@ -34,6 +34,7 @@ const AddProduct = ({ setOpen, setMessage, getProducts }: AddProductProps) => {
 		language: '',
 		pages: 0,
 	});
+	const URL = process.env.REACT_APP_SERVER_URL;
 
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -59,7 +60,7 @@ const AddProduct = ({ setOpen, setMessage, getProducts }: AddProductProps) => {
 		newProduct.discount = +newProduct.discount;
 		newProduct.authors = handleAuthors(authors);
 		if (checkForm(newProduct)) {
-			axios.post('http://localhost:80/products/add', newProduct);
+			axios.post(`${URL}/products/add`, newProduct);
 			setOpen(false);
 			setMessage('Dodano nowy produkt');
 			getProducts();

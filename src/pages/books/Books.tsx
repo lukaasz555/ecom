@@ -26,6 +26,7 @@ const Books = ({ filterCategory }: BooksProps) => {
 	const location = useLocation();
 	const catID = +location.pathname.replace('/shop/category/books/', '');
 	const [isLoading, setLoading] = useState(true);
+	const URL = process.env.REACT_APP_SERVER_URL;
 
 	const handleFilterByPrice = (id: string) => {
 		setFiltered(filterByPrice(id, filtered));
@@ -44,7 +45,7 @@ const Books = ({ filterCategory }: BooksProps) => {
 
 	useEffect(() => {
 		axios
-			.get('http://localhost:80/products/books')
+			.get(`${URL}/products/books`)
 			.then((res) => {
 				setItems(res.data);
 				setFiltered(res.data);
