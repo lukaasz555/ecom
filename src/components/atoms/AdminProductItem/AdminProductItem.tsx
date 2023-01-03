@@ -15,7 +15,7 @@ const AdminProductItem = ({ p, removeProduct }: AdminProductProps) => {
 	return (
 		<div
 			key={p.id}
-			className='flex w-full odd:bg-white even:bg-gray items-center'>
+			className='flex w-full odd:bg-white even:bg-gray items-center text-s'>
 			<div className='basis-[15%]'>{p.id}</div>
 			<div className='basis-[40%]'>{p.title}</div>
 			<div className='basis-[15%] text-center'>

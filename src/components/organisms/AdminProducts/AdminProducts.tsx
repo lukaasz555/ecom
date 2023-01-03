@@ -5,8 +5,8 @@ import axios from 'axios';
 import { ProductModel } from '../../../models/Product';
 import Loader from '../../atoms/Loader/Loader';
 import ReactPaginate from 'react-paginate';
-import AdminProductItem from '../../molecules/AdminProductItem/AdminProductItem';
-import AdminProductTemplate from '../../molecules/AdminProductTemplate/AdminProductTemplate';
+import AdminProductItem from '../../atoms/AdminProductItem/AdminProductItem';
+import AdminProductTemplate from '../../atoms/AdminProductTemplate/AdminProductTemplate';
 import PasswordModal from '../../molecules/PasswordModal/PasswordModal';
 
 const AdminProducts = () => {
@@ -75,7 +75,7 @@ const AdminProducts = () => {
 						</div>
 						{products.length > 0 && !open && (
 							<>
-								<div className='min-h-[420px]'>
+								<div className='min-h-[340px]'>
 									<AdminProductTemplate />
 									{products.length > 0
 										? currentProducts.map((p) => (
