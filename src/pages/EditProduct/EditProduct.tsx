@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import AdminLayout from '../../components/templates/AdminLayout/AdminLayout';
 import axios from 'axios';
 import { ProductModel } from '../../models/Product';
 import WhiteInput from '../../components/atoms/WhiteInput/WhiteInput';
 import CTA from '../../components/atoms/CTA/CTA';
 import Return from '../../components/atoms/Return/Return';
-import { handleAuthors } from '../../helpers/handleAuthors';
 import Textfield from '../../components/atoms/Textfield/Textfield';
+import PasswordModal from '../../components/molecules/PasswordModal/PasswordModal';
 
 const initProduct: ProductModel = {
 	authors: [''],
@@ -32,8 +32,10 @@ const EditProduct = () => {
 	const location = useLocation();
 	const [product, setProduct] = useState<ProductModel>(initProduct);
 	const currentID = location.pathname.replace('/admin/products/edit/', '');
-	const navigate = useNavigate();
+	const [isModalOpen, setModalOpen] = useState(false);
 	const [authors, setAuthors] = useState('');
+	const [password, setPassword] = useState('');
+
 	const URL = process.env.REACT_APP_SERVER_URL;
 
 	useEffect(() => {
@@ -55,25 +57,7 @@ const EditProduct = () => {
 
 	const handleSave = () => {
 		if (currentID !== '' && product.price >= product.discount) {
-			axios
-				.put(`${URL}/products/edit/` + currentID, {
-					params: {
-						id: currentID,
-					},
-					price: +product.price,
-					discount: +product.discount,
-					title: product.title,
-					authors: handleAuthors(authors),
-					description: product.description,
-				})
-				.then((res) => {
-					if (res.status === 200) {
-						navigate(-1);
-					}
-				})
-				.catch((err) => {
-					console.log(err);
-				});
+			setModalOpen(true);
 		}
 	};
 
@@ -150,6 +134,16 @@ const EditProduct = () => {
 						</div>
 
 						<CTA body='Zapisz' onClick={handleSave} />
+						<PasswordModal
+							isOpen={isModalOpen}
+							setModalOpen={setModalOpen}
+							password={password}
+							setPassword={setPassword}
+							idToReq={currentID}
+							type='edit'
+							authors={authors}
+							product={product}
+						/>
 					</div>
 				) : null}
 			</div>

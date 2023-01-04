@@ -16,7 +16,7 @@ const AdminProducts = () => {
 	const [isLoading, setLoading] = useState(false);
 	const [password, setPassword] = useState('');
 	const [isModalOpen, setModalOpen] = useState(false);
-	const [idToRemove, setIdToRemove] = useState<undefined | string>('');
+	const [idToReq, setIdToReq] = useState<undefined | string>('');
 	const URL = process.env.REACT_APP_SERVER_URL;
 
 	const getProducts = async () => {
@@ -38,7 +38,7 @@ const AdminProducts = () => {
 		const target = e.target as HTMLElement;
 		if (target.parentElement?.parentElement !== null) {
 			const productId = target.parentElement?.parentElement.id;
-			setIdToRemove(productId);
+			setIdToReq(productId);
 			setModalOpen(true);
 		}
 	};
@@ -113,10 +113,11 @@ const AdminProducts = () => {
 						isOpen={isModalOpen}
 						password={password}
 						setPassword={setPassword}
-						idToRemove={idToRemove}
+						idToReq={idToReq}
 						getProducts={getProducts}
 						setMessage={setMessage}
 						setModalOpen={setModalOpen}
+						type='remove'
 					/>
 				</>
 			) : (
