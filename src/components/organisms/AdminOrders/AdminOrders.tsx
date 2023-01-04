@@ -3,9 +3,9 @@ import axios from 'axios';
 import { OrderModel } from '../../../models/Order';
 import AdminLayout from '../../templates/AdminLayout/AdminLayout';
 import OrderItem from '../../atoms/Admin/OrderItem/OrderItem';
-import PriceFilter from '../../atoms/Admin/PriceFilter/PriceFilter';
-import DateFilter from '../../atoms/Admin/DateFilter/DateFilter';
 import Loader from '../../atoms/Loader/Loader';
+import ReactPaginate from 'react-paginate';
+import AdminOrderTemplate from '../../atoms/AdminOrderTemplate/AdminOrderTemplate';
 
 const AdminOrders = () => {
 	const [allOrders, setAllOrders] = useState<OrderModel[] | []>([]);
@@ -15,6 +15,22 @@ const AdminOrders = () => {
 	const [dateFilter, setDateFilter] = useState(false);
 	const [isLoading, setLoading] = useState(true);
 	const URL = process.env.REACT_APP_SERVER_URL;
+
+	// pagination
+	const [ordersOffset, setOrdersOffset] = useState(0);
+	const ordersPerPage = 10;
+	const endOffset = ordersOffset + ordersPerPage;
+	const currentOrders = orders.slice(ordersOffset, endOffset);
+	const pageCount = Math.ceil(orders.length / ordersPerPage);
+
+	const handlePageClick = (e: any) => {
+		const newOffset = (e.selected * ordersPerPage) % orders.length;
+		setOrdersOffset(newOffset);
+	};
+
+	useEffect(() => {
+		setOrders(filtered);
+	}, [filtered]);
 
 	useEffect(() => {
 		const getOrders = async () => {
@@ -30,48 +46,6 @@ const AdminOrders = () => {
 		getOrders();
 	}, []);
 
-	const handleSort = (type: string) => {
-		if (type === 'grow') {
-			setFiltered(orders.sort((a, b) => a.order.value - b.order.value));
-			setDateFilter(false);
-			setPriceFilter(false);
-		}
-
-		if (type === 'decrease') {
-			setFiltered(orders.sort((a, b) => b.order.value - a.order.value));
-			setDateFilter(false);
-			setPriceFilter(false);
-		}
-
-		if (type === 'latest') {
-			setFiltered(
-				orders.sort((a, b) => {
-					const date1 = new Date(a.createdAt).getTime();
-					const date2 = new Date(b.createdAt).getTime();
-					return date1 - date2;
-				})
-			);
-			setDateFilter(false);
-			setPriceFilter(false);
-		}
-
-		if (type === 'older') {
-			setFiltered(
-				orders.sort((a, b) => {
-					const date1 = new Date(a.createdAt).getTime();
-					const date2 = new Date(b.createdAt).getTime();
-					return date2 - date1;
-				})
-			);
-			setDateFilter(false);
-			setPriceFilter(false);
-		}
-	};
-
-	useEffect(() => {
-		setOrders(filtered);
-	}, [filtered]);
-
 	return (
 		<AdminLayout>
 			<div className='min-w-[550px]'>
@@ -83,33 +57,32 @@ const AdminOrders = () => {
 				</div>
 			) : orders.length > 0 ? (
 				<div className='w-full'>
-					<div className='flex w-full justify-start border-b-[1px] text-center'>
-						<div className='basis-[20%] min-w-[80px] border-r-[1px] py-1'>
-							<p>STATUS</p>
-						</div>
-						<div className='basis-[55%] md:basis-[50%] min-w-[120px] border-r-[1px] py-1'>
-							<p>DANE KLIENTA</p>
-						</div>
-						<div className='basis-[25%] md:basis-[15%] min-w-[80px] border-r-[1px] py-1 flex flex-col items-center'>
-							<button
-								onClick={() => setPriceFilter(!priceFilter)}
-								className='px-2'>
-								<p>KWOTA</p>
-							</button>
-							<PriceFilter priceFilter={priceFilter} handleSort={handleSort} />
-						</div>
-						<div className='hidden md:block md:basis-[15%] min-w-[60px] text-center py-1 flex flex-col items-center'>
-							<button
-								className='px-2'
-								onClick={() => setDateFilter(!dateFilter)}>
-								DATA
-							</button>
-							<DateFilter handleSort={handleSort} dateFilter={dateFilter} />
-						</div>
+					<div className='min-h-[340px]'>
+						<AdminOrderTemplate
+							setPriceFilter={setPriceFilter}
+							priceFilter={priceFilter}
+							dateFilter={dateFilter}
+							setDateFilter={setDateFilter}
+							orders={orders}
+							setFiltered={setFiltered}
+						/>
+						{currentOrders.map((order) => (
+							<OrderItem order={order} key={order._id} />
+						))}
 					</div>
-					{orders.map((order) => (
-						<OrderItem order={order} key={order._id} />
-					))}
+
+					<div className='flex justify-center mt-3'>
+						<ReactPaginate
+							className='flex gap-x-5'
+							pageCount={pageCount}
+							onPageChange={handlePageClick}
+							nextLabel='kolejna>>'
+							previousLabel='<<poprzednia'
+							activeLinkClassName='text-white bg-black px-1.5 text-center py-0.5 rounded-[4px]'
+							disabledClassName='opacity-0'
+							disabledLinkClassName='cursor-default'
+						/>
+					</div>
 				</div>
 			) : (
 				<p className='mt-10'>Brak zamówień.</p>
