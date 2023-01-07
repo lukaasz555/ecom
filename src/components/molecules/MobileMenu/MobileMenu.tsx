@@ -14,8 +14,8 @@ const MobileMenu = () => {
 				className={`${
 					isOpen ? '-translate-x-[50%]' : '-translate-x-[150%]'
 				} absolute -bottom-[250%] left-[50%] flex flex-col z-20 w-full items-center bg-white justify-center py-8 duration-300 origin-left`}>
-				<MobileMenuLink to='/shop/books' body='Książki' />
-				<MobileMenuLink to='/shop/albums' body='Płyty' />
+				<MobileMenuLink to='/shop/category/books/99' body='Książki' />
+				<MobileMenuLink to='/shop/category/albums/99' body='Płyty' />
 				<MobileMenuLink to='/contact' body='Kontakt' />
 				<div className='border-t-[1px] mt-5 pt-5'>
 					<Socials />
