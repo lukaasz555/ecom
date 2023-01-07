@@ -8,10 +8,12 @@ import ReactPaginate from 'react-paginate';
 import AdminProductItem from '../../atoms/AdminProductItem/AdminProductItem';
 import AdminProductTemplate from '../../atoms/AdminProductTemplate/AdminProductTemplate';
 import PasswordModal from '../../molecules/PasswordModal/PasswordModal';
+import GrayInput from '../../atoms/GrayInput/GrayInput';
 
 const AdminProducts = () => {
 	const [open, setOpen] = useState(false);
 	const [products, setProducts] = useState<ProductModel[] | []>([]);
+	const [filtered, setFiltered] = useState<ProductModel[] | []>([]);
 	const [message, setMessage] = useState('');
 	const [isLoading, setLoading] = useState(false);
 	const [password, setPassword] = useState('');
@@ -19,6 +21,7 @@ const AdminProducts = () => {
 	const [idToReq, setIdToReq] = useState<undefined | string>('');
 	const URL = process.env.REACT_APP_SERVER_URL;
 	const [error, setError] = useState(false);
+	const [searchingPhrase, setSearchingPhrase] = useState('');
 
 	const getProducts = async () => {
 		setError(false);
@@ -27,6 +30,7 @@ const AdminProducts = () => {
 			.get(`${URL}/products`)
 			.then((res) => {
 				setProducts(res.data);
+				setFiltered(res.data);
 				setLoading(false);
 			})
 			.catch((err) => {
@@ -34,6 +38,14 @@ const AdminProducts = () => {
 				setError(true);
 			});
 	};
+
+	useEffect(() => {
+		setFiltered(
+			products.filter((prod) =>
+				prod.title.toLowerCase().includes(searchingPhrase.toLowerCase())
+			)
+		);
+	}, [searchingPhrase]);
 
 	useEffect(() => {
 		getProducts();
@@ -76,13 +88,24 @@ const AdminProducts = () => {
 							</button>
 						</div>
 						<div>
+							<GrayInput
+								name='searchProduct'
+								onChange={(
+									e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+								) => setSearchingPhrase(e.target.value)}
+								type='text'
+								value={searchingPhrase}
+								placeholder='Wpisz tytuł, aby wyszukać produkt'
+							/>
+						</div>
+						<div>
 							<p className='text-brownSugar mb-10 text-xl'>{message}</p>
 						</div>
 						{products.length > 0 && !open && (
 							<>
 								<div className='min-h-[340px]'>
 									<AdminProductTemplate />
-									{products.length > 0
+									{products.length > 0 && searchingPhrase === ''
 										? currentProducts.map((p) => (
 												<AdminProductItem
 													p={p}
@@ -90,19 +113,27 @@ const AdminProducts = () => {
 													removeProduct={removeProduct}
 												/>
 										  ))
-										: null}
+										: filtered.map((p) => (
+												<AdminProductItem
+													p={p}
+													key={p.id}
+													removeProduct={removeProduct}
+												/>
+										  ))}
 								</div>
 								<div className='flex justify-center mt-3'>
-									<ReactPaginate
-										className='flex gap-x-5'
-										pageCount={pageCount}
-										onPageChange={handlePageClick}
-										nextLabel='kolejna>>'
-										previousLabel='<<poprzednia'
-										activeLinkClassName='text-white bg-black px-1.5 text-center py-0.5 rounded-[4px]'
-										disabledClassName='opacity-0'
-										disabledLinkClassName='cursor-default'
-									/>
+									{searchingPhrase !== '' ? null : (
+										<ReactPaginate
+											className='flex gap-x-5'
+											pageCount={pageCount}
+											onPageChange={handlePageClick}
+											nextLabel='kolejna>>'
+											previousLabel='<<poprzednia'
+											activeLinkClassName='text-white bg-black px-1.5 text-center py-0.5 rounded-[4px]'
+											disabledClassName='opacity-0'
+											disabledLinkClassName='cursor-default'
+										/>
+									)}
 								</div>
 							</>
 						)}
