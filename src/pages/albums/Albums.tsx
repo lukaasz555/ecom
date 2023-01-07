@@ -26,6 +26,7 @@ const Albums = ({ filterCategory }: AlbumsProps) => {
 	const catID = +location.pathname.replace('/shop/category/albums/', '');
 	const [isLoading, setLoading] = useState(true);
 	const URL = process.env.REACT_APP_SERVER_URL;
+	const [error, setError] = useState(false);
 
 	const handleFilterByPrice = (id: string) => {
 		setFiltered(filterByPrice(id, filtered));
@@ -44,15 +45,17 @@ const Albums = ({ filterCategory }: AlbumsProps) => {
 
 	useEffect(() => {
 		axios
-			.get(`${URL}/products/albums`)
+			.get(`${URL}/products/albums/`)
 			.then((res) => {
 				setItems(res.data);
 				setFiltered(res.data);
 				renderAlbums();
 				setLoading(false);
+				setError(false);
 			})
 			.catch((err) => {
 				setLoading(false);
+				setError(true);
 			});
 	}, [updated, location]);
 
@@ -86,9 +89,13 @@ const Albums = ({ filterCategory }: AlbumsProps) => {
 							: null}
 					</div>
 				</>
+			) : !error ? (
+				<div className='min-h-[400px] flex justify-center items-center'>
+					<h1 className='text-center'>Brak produktów w tej kategorii</h1>
+				</div>
 			) : (
 				<div className='min-h-[400px] flex justify-center items-center'>
-					<h1 className='text-center'>Nie udało się pobrać artykułów.</h1>
+					<h1 className='text-center'>Nie udało się pobrać artykułów</h1>
 				</div>
 			)}
 		</Layout>

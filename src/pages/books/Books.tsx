@@ -27,6 +27,7 @@ const Books = ({ filterCategory }: BooksProps) => {
 	const catID = +location.pathname.replace('/shop/category/books/', '');
 	const [isLoading, setLoading] = useState(true);
 	const URL = process.env.REACT_APP_SERVER_URL;
+	const [error, setError] = useState(false);
 
 	const handleFilterByPrice = (id: string) => {
 		setFiltered(filterByPrice(id, filtered));
@@ -45,15 +46,17 @@ const Books = ({ filterCategory }: BooksProps) => {
 
 	useEffect(() => {
 		axios
-			.get(`${URL}/products/books`)
+			.get(`${URL}/products/books/`)
 			.then((res) => {
 				setItems(res.data);
 				setFiltered(res.data);
 				renderBooks();
 				setLoading(false);
+				setError(false);
 			})
 			.catch((err) => {
 				setLoading(false);
+				setError(true);
 			});
 	}, [updated, location]);
 
@@ -87,9 +90,13 @@ const Books = ({ filterCategory }: BooksProps) => {
 							: null}
 					</div>
 				</>
+			) : !error ? (
+				<div className='min-h-[400px] flex justify-center items-center'>
+					<h1 className='text-center'>Brak produktów w tej kategorii</h1>
+				</div>
 			) : (
 				<div className='min-h-[400px] flex justify-center items-center'>
-					<h1 className='text-center'>Nie udało się pobrać artykułów.</h1>
+					<h1 className='text-center'>Nie udało się pobrać artykułów</h1>
 				</div>
 			)}
 		</Layout>

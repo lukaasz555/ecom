@@ -37,6 +37,8 @@ const Product = () => {
 	const [showModal, setShowModal] = useState(false);
 	const [isLoading, setLoading] = useState(true);
 	const URL = process.env.REACT_APP_SERVER_URL;
+	const [error, setError] = useState(false);
+	const [status, setStatus] = useState(0);
 
 	const openModal = () => setShowModal(true);
 	const closeModal = () => setShowModal(false);
@@ -60,12 +62,17 @@ const Product = () => {
 				},
 			})
 			.then((res) => {
+				console.log(res);
 				setProduct(res.data);
 				setLoading(false);
+				setError(false);
+				setStatus(res.status);
 			})
 			.catch((err) => {
 				setLoading(false);
+				setError(true);
 			});
+		console.log(product.description);
 	}, [location]);
 
 	return (
@@ -74,13 +81,11 @@ const Product = () => {
 				<div className='min-h-[400px] flex justify-center items-center'>
 					<Loader />
 				</div>
-			) : product.id === undefined ? (
+			) : status === 204 ? (
 				<div className='min-h-[400px] flex justify-center items-center'>
-					<h1 className='text-center'>
-						Nie udało się załadować tej strony. <br /> Spróbuj ponownie.
-					</h1>
+					<h1 className='text-center'>Strona nie istnieje</h1>
 				</div>
-			) : (
+			) : status === 200 ? (
 				<>
 					<div className='mb-10 pb-5 border-b-[1px]'>
 						<Return />
@@ -110,6 +115,12 @@ const Product = () => {
 						showModal={showModal}
 					/>
 				</>
+			) : (
+				<div className='min-h-[400px] flex justify-center items-center'>
+					<h1 className='text-center'>
+						Problem z pobraniem zawartości. <br /> Spróbuj ponownie
+					</h1>
+				</div>
 			)}
 		</Layout>
 	);
