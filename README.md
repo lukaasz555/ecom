@@ -2,7 +2,7 @@
 
 [LIVE DEMO](https://lukaasz555-ecom.onrender.com/)
 
-This is an e-commerce app, where you can browse products, place an order or view admin panel, where you can see products & orders. My main intention was to check MERN stack, so I also created a [basic api.](https://github.com/lukaasz555/api-ecom)
+This is a mvp of my e-commerce app, where you can browse products, place an order or view admin panel, where you can see products & orders. My main intention was to check MERN stack, so I also created a [basic api.](https://github.com/lukaasz555/api-ecom)
 
 User is able to filter items by price or categories, add/remove items to/from cart and create order.
 You can check [admin panel](https://lukaasz555-ecom.onrender.com/#/admin) as well. There are not many features at the moment, but you can view orders (and sort by date or price) and see all products from store (you can add a new one / edit existing products / remove).
