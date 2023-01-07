@@ -15,7 +15,7 @@ const AdminOrders = () => {
 	const [dateFilter, setDateFilter] = useState(false);
 	const [isLoading, setLoading] = useState(true);
 	const URL = process.env.REACT_APP_SERVER_URL;
-
+	const [error, setError] = useState(false);
 	// pagination
 	const [ordersOffset, setOrdersOffset] = useState(0);
 	const ordersPerPage = 10;
@@ -33,6 +33,7 @@ const AdminOrders = () => {
 	}, [filtered]);
 
 	useEffect(() => {
+		setError(false);
 		const getOrders = async () => {
 			const res = await axios
 				.get(`${URL}/orders`)
@@ -41,7 +42,10 @@ const AdminOrders = () => {
 					setAllOrders(res.data);
 					setLoading(false);
 				})
-				.catch((err) => setLoading(false));
+				.catch((err) => {
+					setLoading(false);
+					setError(true);
+				});
 		};
 		getOrders();
 	}, []);
@@ -84,8 +88,13 @@ const AdminOrders = () => {
 						/>
 					</div>
 				</div>
-			) : (
+			) : orders.length === 0 && !error ? (
 				<p className='mt-10'>Brak zamówień.</p>
+			) : (
+				<p className='mt-10 text-brownSugar'>
+					Brak połączenia. <br />
+					Odśwież stronę i spróbuj ponownie.
+				</p>
 			)}
 		</AdminLayout>
 	);

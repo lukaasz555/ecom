@@ -10,6 +10,7 @@ import OrderSummaryTop from '../../atoms/OrderSummaryComponents/OrderSummaryTop'
 import OrderSummaryBottom from '../../atoms/OrderSummaryComponents/OrderSummaryBottom';
 import { productsValue } from '../../../helpers/productsValue';
 import axios from 'axios';
+import ALT from '../../atoms/ALT/ALT';
 
 interface OrderSummaryProps {
 	checkoutForm: ICheckoutForm;
@@ -101,11 +102,16 @@ const OrderSummary = ({
 			) : !error ? (
 				<OrderComplete orderId={newOrderId} />
 			) : (
-				<div className='py-10'>
-					<h1 className='text-center'>
-						Niestety, coś poszło nie tak. <br />
-						Spróbuj złożyć zamówienie ponownie.
-					</h1>
+				<div className='py-10 flex flex-col items-center'>
+					<div className='mt-5'>
+						<h1 className='text-center block'>
+							Niestety, coś poszło nie tak. <br />
+							Spróbuj złożyć zamówienie ponownie.
+						</h1>
+					</div>
+					<div className='mt-10 mb-5'>
+						<ALT body='Kliknij, aby wrócić do sklepu' to='/' />
+					</div>
 				</div>
 			)}
 		</div>

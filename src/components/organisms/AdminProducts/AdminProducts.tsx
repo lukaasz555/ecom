@@ -18,8 +18,10 @@ const AdminProducts = () => {
 	const [isModalOpen, setModalOpen] = useState(false);
 	const [idToReq, setIdToReq] = useState<undefined | string>('');
 	const URL = process.env.REACT_APP_SERVER_URL;
+	const [error, setError] = useState(false);
 
 	const getProducts = async () => {
+		setError(false);
 		setLoading(true);
 		axios
 			.get(`${URL}/products`)
@@ -27,7 +29,10 @@ const AdminProducts = () => {
 				setProducts(res.data);
 				setLoading(false);
 			})
-			.catch((err) => setLoading(false));
+			.catch((err) => {
+				setLoading(false);
+				setError(true);
+			});
 	};
 
 	useEffect(() => {
@@ -120,8 +125,13 @@ const AdminProducts = () => {
 						type='remove'
 					/>
 				</>
-			) : (
+			) : products.length === 0 && !error ? (
 				<p className='mt-10'>Brak produktów.</p>
+			) : (
+				<p className='mt-10 text-brownSugar'>
+					Brak połączenia. <br />
+					Odśwież stronę i spróbuj ponownie.
+				</p>
 			)}
 		</AdminLayout>
 	);
