@@ -87,17 +87,19 @@ const AdminProducts = () => {
 								+ dodaj produkt
 							</button>
 						</div>
-						<div>
-							<GrayInput
-								name='searchProduct'
-								onChange={(
-									e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-								) => setSearchingPhrase(e.target.value)}
-								type='text'
-								value={searchingPhrase}
-								placeholder='Wpisz tytuł, aby wyszukać produkt'
-							/>
-						</div>
+						{open ? null : (
+							<div>
+								<GrayInput
+									name='searchProduct'
+									onChange={(
+										e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+									) => setSearchingPhrase(e.target.value)}
+									type='text'
+									value={searchingPhrase}
+									placeholder='Wpisz tytuł, aby wyszukać produkt'
+								/>
+							</div>
+						)}
 						<div>
 							<p className='text-brownSugar mb-10 text-xl'>{message}</p>
 						</div>
