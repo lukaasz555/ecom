@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import AdminLayout from '../../components/templates/AdminLayout/AdminLayout';
+import AdminLayout from '../../templates/AdminLayout/AdminLayout';
 import axios from 'axios';
-import { ProductModel } from '../../models/Product';
-import WhiteInput from '../../components/atoms/WhiteInput/WhiteInput';
-import CTA from '../../components/atoms/CTA/CTA';
-import Return from '../../components/atoms/Return/Return';
-import Textfield from '../../components/atoms/Textfield/Textfield';
-import PasswordModal from '../../components/molecules/PasswordModal/PasswordModal';
+import { ProductModel } from '../../../models/Product';
+import WhiteInput from '../../atoms/WhiteInput/WhiteInput';
+import CTA from '../../atoms/CTA/CTA';
+import Return from '../../atoms/Return/Return';
+import Textfield from '../../atoms/Textfield/Textfield';
+import PasswordModal from '../../molecules/PasswordModal/PasswordModal';
 
 const initProduct: ProductModel = {
 	authors: [''],
