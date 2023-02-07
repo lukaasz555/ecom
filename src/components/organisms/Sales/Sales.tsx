@@ -8,7 +8,6 @@ import moment from 'moment';
 import { handleMonthName } from '../../../helpers/handleMonthName';
 import { getOrdersByMonth } from '../../../helpers/getOrdersByMonth';
 import { getTypesQty } from '../../../helpers/getTypesQty';
-//
 import {
 	AreaChart,
 	Area,
@@ -107,7 +106,6 @@ const Sales = () => {
 	};
 
 	const chartData = monthsOfOrders.map((item) => getMonthData(item));
-	console.log(chartData[0]);
 
 	return (
 		<AdminLayout>
@@ -118,6 +116,7 @@ const Sales = () => {
 						<Loader />
 					</div>
 				) : (
+					// top sold products, soon:
 					/* getMostSoldItems()
 						.slice(0, 10)
 						.map(({ item, title, qty }) => (
