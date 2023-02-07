@@ -15,8 +15,8 @@ import {
 	YAxis,
 	CartesianGrid,
 	Tooltip,
-	ResponsiveContainer,
 } from 'recharts';
+import Chart from 'react-apexcharts';
 
 const Sales = () => {
 	const [isLoading, setLoading] = useState(false);
@@ -86,6 +86,7 @@ const Sales = () => {
 			qty: number;
 		}[] = [];
 		uniqueIDs.map((item) => record.push(checkIdFreq(productsIDs, item)));
+		console.log(record.sort((a, b) => Number(b.qty) - Number(a.qty)));
 		return record.sort((a, b) => Number(b.qty) - Number(a.qty));
 	};
 
@@ -106,6 +107,38 @@ const Sales = () => {
 	};
 
 	const chartData = monthsOfOrders.map((item) => getMonthData(item));
+	getMostSoldItems();
+
+	//
+
+	const options = {
+		chart: {
+			id: 'apexchart-example',
+		},
+		xaxis: {
+			categories: getMostSoldItems()
+				.slice(0, 10)
+				.map((item) => item.title),
+		},
+		plotOptions: {
+			bar: {
+				borderRadius: 0,
+				horizontal: true,
+			},
+		},
+		dataLabels: {
+			enabled: true,
+		},
+	};
+
+	const series = [
+		{
+			name: 'Ilość sztuk: ',
+			data: getMostSoldItems()
+				.slice(0, 10)
+				.map((item) => item.qty),
+		},
+	];
 
 	return (
 		<AdminLayout>
@@ -116,55 +149,59 @@ const Sales = () => {
 						<Loader />
 					</div>
 				) : (
-					// top sold products, soon:
-					/* getMostSoldItems()
-						.slice(0, 10)
-						.map(({ item, title, qty }) => (
-							<div key={item}>
-								<p>
-									{title && title} : {qty}
-								</p>
-							</div>
-						)) */
-					<div className='w-full flex flex-col items-center my-10'>
-						<h3 className='mb-5'>Podsumowanie dotychczasowej sprzedazy:</h3>
-						<AreaChart
-							width={400}
-							height={380}
-							data={chartData}
-							margin={{
-								top: 10,
-								right: 30,
-								left: 0,
-								bottom: 0,
-							}}>
-							<CartesianGrid strokeDasharray='3 3' />
-							<XAxis dataKey='name' />
-							<YAxis />
-							<Tooltip />
-							<Area
-								type='monotone'
-								dataKey='albums'
-								stackId='2'
-								stroke='#8884d8'
-								fill='#8884d8'
+					<>
+						<div className='w-full flex flex-col items-center mt-10 pb-10 border-b-[1px] border-lightGray'>
+							<h3 className='mb-5'>Podsumowanie dotychczasowej sprzedazy:</h3>
+							<AreaChart
+								width={400}
+								height={380}
+								data={chartData}
+								margin={{
+									top: 10,
+									right: 30,
+									left: 0,
+									bottom: 0,
+								}}>
+								<CartesianGrid strokeDasharray='3 3' />
+								<XAxis dataKey='name' />
+								<YAxis />
+								<Tooltip />
+								<Area
+									type='monotone'
+									dataKey='albums'
+									stackId='2'
+									stroke='#8884d8'
+									fill='#8884d8'
+								/>
+								<Area
+									type='monotone'
+									dataKey='books'
+									stackId='2'
+									stroke='#82ca9d'
+									fill='#82ca9d'
+								/>
+								<Area
+									type='monotone'
+									dataKey='orders'
+									stackId='1'
+									stroke='#ffc658'
+									fill='#ffc658'
+								/>
+							</AreaChart>
+						</div>
+
+						<div className='w-full flex flex-col items-center my-10'>
+							<h3 className='mb-5'>Top 10 produktów:</h3>
+							<Chart
+								options={options}
+								series={series}
+								type='bar'
+								horizontal={true}
+								height={400}
+								width={400}
 							/>
-							<Area
-								type='monotone'
-								dataKey='books'
-								stackId='2'
-								stroke='#82ca9d'
-								fill='#82ca9d'
-							/>
-							<Area
-								type='monotone'
-								dataKey='orders'
-								stackId='1'
-								stroke='#ffc658'
-								fill='#ffc658'
-							/>
-						</AreaChart>
-					</div>
+						</div>
+					</>
 				)}
 			</div>
 		</AdminLayout>
