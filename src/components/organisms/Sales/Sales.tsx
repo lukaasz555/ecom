@@ -8,6 +8,16 @@ import moment from 'moment';
 import { handleMonthName } from '../../../helpers/handleMonthName';
 import { getOrdersByMonth } from '../../../helpers/getOrdersByMonth';
 import { getTypesQty } from '../../../helpers/getTypesQty';
+//
+import {
+	AreaChart,
+	Area,
+	XAxis,
+	YAxis,
+	CartesianGrid,
+	Tooltip,
+	ResponsiveContainer,
+} from 'recharts';
 
 const Sales = () => {
 	const [isLoading, setLoading] = useState(false);
@@ -89,16 +99,15 @@ const Sales = () => {
 		const ordersArray = getOrdersByMonth(allOrders, item);
 		const obj = {
 			name: handleMonthName(item),
-			orders: ordersArray,
+			orders: ordersArray.length,
 			books: getTypesQty(ordersArray, 'books'),
 			albums: getTypesQty(ordersArray, 'albums'),
 		};
 		return obj;
 	};
 
-	//console.log(getMonthData(monthsOfOrders[2]));
-
 	const chartData = monthsOfOrders.map((item) => getMonthData(item));
+	console.log(chartData[0]);
 
 	return (
 		<AdminLayout>
@@ -109,7 +118,7 @@ const Sales = () => {
 						<Loader />
 					</div>
 				) : (
-					getMostSoldItems()
+					/* getMostSoldItems()
 						.slice(0, 10)
 						.map(({ item, title, qty }) => (
 							<div key={item}>
@@ -117,7 +126,46 @@ const Sales = () => {
 									{title && title} : {qty}
 								</p>
 							</div>
-						))
+						)) */
+					<div className='w-full flex flex-col items-center my-10'>
+						<h3 className='mb-5'>Podsumowanie dotychczasowej sprzedazy:</h3>
+						<AreaChart
+							width={400}
+							height={380}
+							data={chartData}
+							margin={{
+								top: 10,
+								right: 30,
+								left: 0,
+								bottom: 0,
+							}}>
+							<CartesianGrid strokeDasharray='3 3' />
+							<XAxis dataKey='name' />
+							<YAxis />
+							<Tooltip />
+							<Area
+								type='monotone'
+								dataKey='albums'
+								stackId='2'
+								stroke='#8884d8'
+								fill='#8884d8'
+							/>
+							<Area
+								type='monotone'
+								dataKey='books'
+								stackId='2'
+								stroke='#82ca9d'
+								fill='#82ca9d'
+							/>
+							<Area
+								type='monotone'
+								dataKey='orders'
+								stackId='1'
+								stroke='#ffc658'
+								fill='#ffc658'
+							/>
+						</AreaChart>
+					</div>
 				)}
 			</div>
 		</AdminLayout>
