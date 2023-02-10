@@ -143,7 +143,9 @@ const Sales = () => {
 	return (
 		<AdminLayout>
 			<div className='min-w-[550px]'>
-				<h2 className='text-2xl'>Sprzedaż</h2>
+				<h2 className='text-2xl'>
+					Sprzedaż <span className='text-lightBlack'>(in progress)</span>{' '}
+				</h2>
 				{isLoading ? (
 					<div className='w-full flex justify-center my-10'>
 						<Loader />

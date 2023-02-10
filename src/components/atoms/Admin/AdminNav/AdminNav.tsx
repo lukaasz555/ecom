@@ -33,6 +33,15 @@ const AdminNav = () => {
 						Produkty
 					</NavLink>
 				</li>
+				<li>
+					<NavLink
+						to={`/admin/sales`}
+						className={({ isActive }) =>
+							isActive ? 'font-semibold' : 'hover:underline'
+						}>
+						Sprzedaż
+					</NavLink>
+				</li>
 			</ul>
 		</nav>
 	);
