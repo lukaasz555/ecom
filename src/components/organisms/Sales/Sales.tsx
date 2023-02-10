@@ -4,19 +4,9 @@ import axios from 'axios';
 import Loader from '../../atoms/Loader/Loader';
 import { OrderModel } from '../../../models/Order';
 import { ProductModel } from '../../../models/Product';
-import moment from 'moment';
-import { handleMonthName } from '../../../helpers/handleMonthName';
-import { getOrdersByMonth } from '../../../helpers/getOrdersByMonth';
-import { getTypesQty } from '../../../helpers/getTypesQty';
-import {
-	AreaChart,
-	Area,
-	XAxis,
-	YAxis,
-	CartesianGrid,
-	Tooltip,
-} from 'recharts';
+
 import Chart from 'react-apexcharts';
+import CurrentSales from '../../molecules/CurrentSales/CurrentSales';
 
 const Sales = () => {
 	const [isLoading, setLoading] = useState(false);
@@ -90,27 +80,6 @@ const Sales = () => {
 		return record.sort((a, b) => Number(b.qty) - Number(a.qty));
 	};
 
-	// getting data necessary to use in the chart:
-	const monthsOfOrders = Array.from(
-		new Set(allOrders.map((item) => moment(item.createdAt).format('M')))
-	);
-
-	const getMonthData = (item: string) => {
-		const ordersArray = getOrdersByMonth(allOrders, item);
-		const obj = {
-			name: handleMonthName(item),
-			orders: ordersArray.length,
-			books: getTypesQty(ordersArray, 'books'),
-			albums: getTypesQty(ordersArray, 'albums'),
-		};
-		return obj;
-	};
-
-	const chartData = monthsOfOrders.map((item) => getMonthData(item));
-	getMostSoldItems();
-
-	//
-
 	const options = {
 		chart: {
 			id: 'apexchart-example',
@@ -152,45 +121,7 @@ const Sales = () => {
 					</div>
 				) : (
 					<>
-						<div className='w-full flex flex-col items-center mt-10 pb-10 border-b-[1px] border-lightGray'>
-							<h3 className='mb-5'>Podsumowanie dotychczasowej sprzedazy:</h3>
-							<AreaChart
-								width={400}
-								height={380}
-								data={chartData}
-								margin={{
-									top: 10,
-									right: 30,
-									left: 0,
-									bottom: 0,
-								}}>
-								<CartesianGrid strokeDasharray='3 3' />
-								<XAxis dataKey='name' />
-								<YAxis />
-								<Tooltip />
-								<Area
-									type='monotone'
-									dataKey='albums'
-									stackId='2'
-									stroke='#8884d8'
-									fill='#8884d8'
-								/>
-								<Area
-									type='monotone'
-									dataKey='books'
-									stackId='2'
-									stroke='#82ca9d'
-									fill='#82ca9d'
-								/>
-								<Area
-									type='monotone'
-									dataKey='orders'
-									stackId='1'
-									stroke='#ffc658'
-									fill='#ffc658'
-								/>
-							</AreaChart>
-						</div>
+						<CurrentSales allOrders={allOrders} />
 
 						<div className='w-full flex flex-col items-center my-10'>
 							<h3 className='mb-5'>Top 10 produktów:</h3>
