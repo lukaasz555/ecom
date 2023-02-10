@@ -9,6 +9,7 @@ import AdminProductItem from '../../atoms/AdminProductItem/AdminProductItem';
 import AdminProductTemplate from '../../atoms/AdminProductTemplate/AdminProductTemplate';
 import PasswordModal from '../../molecules/PasswordModal/PasswordModal';
 import GrayInput from '../../atoms/GrayInput/GrayInput';
+import ErrorMessage from '../../atoms/ErrorMessage/ErrorMessage';
 
 const AdminProducts = () => {
 	const [open, setOpen] = useState(false);
@@ -161,10 +162,10 @@ const AdminProducts = () => {
 			) : products.length === 0 && !error ? (
 				<p className='mt-10'>Brak produktów.</p>
 			) : (
-				<p className='mt-10 text-brownSugar'>
-					Brak połączenia. <br />
-					Odśwież stronę i spróbuj ponownie.
-				</p>
+				<ErrorMessage
+					text1='Brak połączenia'
+					text2='Odśwież stronę i spróbuj ponownie'
+				/>
 			)}
 		</AdminLayout>
 	);

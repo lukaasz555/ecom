@@ -6,6 +6,7 @@ import { OrderModel } from '../../../models/Order';
 import { ProductModel } from '../../../models/Product';
 import CurrentSales from '../../molecules/CurrentSales/CurrentSales';
 import TopProducts from '../../molecules/TopProducts/TopProducts';
+import ErrorMessage from '../../atoms/ErrorMessage/ErrorMessage';
 
 const Sales = () => {
 	const [isLoading, setLoading] = useState(false);
@@ -50,11 +51,16 @@ const Sales = () => {
 					<div className='w-full flex justify-center my-10'>
 						<Loader />
 					</div>
-				) : (
+				) : !isError ? (
 					<>
 						<CurrentSales allOrders={allOrders} />
 						<TopProducts allOrders={allOrders} products={products} />
 					</>
+				) : (
+					<ErrorMessage
+						text1='Brak połączenia'
+						text2='Odśwież stronę i spróbuj ponownie'
+					/>
 				)}
 			</div>
 		</AdminLayout>

@@ -6,6 +6,7 @@ import OrderItem from '../../atoms/Admin/OrderItem/OrderItem';
 import Loader from '../../atoms/Loader/Loader';
 import ReactPaginate from 'react-paginate';
 import AdminOrderTemplate from '../../atoms/AdminOrderTemplate/AdminOrderTemplate';
+import ErrorMessage from '../../atoms/ErrorMessage/ErrorMessage';
 
 const AdminOrders = () => {
 	const [allOrders, setAllOrders] = useState<OrderModel[] | []>([]);
@@ -35,7 +36,7 @@ const AdminOrders = () => {
 	useEffect(() => {
 		setError(false);
 		const getOrders = async () => {
-			const res = await axios
+			await axios
 				.get(`${URL}/orders`)
 				.then((res) => {
 					setOrders(res.data);
@@ -91,10 +92,10 @@ const AdminOrders = () => {
 			) : orders.length === 0 && !error ? (
 				<p className='mt-10'>Brak zamówień.</p>
 			) : (
-				<p className='mt-10 text-brownSugar'>
-					Brak połączenia. <br />
-					Odśwież stronę i spróbuj ponownie.
-				</p>
+				<ErrorMessage
+					text1='Brak połączenia'
+					text2='Odśwież stronę i spróbuj ponownie'
+				/>
 			)}
 		</AdminLayout>
 	);
