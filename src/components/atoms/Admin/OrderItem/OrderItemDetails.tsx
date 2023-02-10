@@ -2,7 +2,6 @@ import React from 'react';
 import { handleNumbFormat } from '../../../../helpers/handleNumbFormat';
 import { OrderModel } from '../../../../models/Order';
 import { getQty } from '../../../../helpers/getQty';
-import axios from 'axios';
 import Status from '../../Status/Status';
 
 interface IOrderItemDetails {
@@ -52,31 +51,29 @@ const OrderItemDetails = ({ open, order }: IOrderItemDetails) => {
 					<h4 className='text-s underline'>Produkty:</h4>
 					<div>
 						<>
-							{uniqueItems.map((item) => {
-								return (
-									<>
-										{item === undefined ? null : (
-											<div className='flex justify-start text-s' key={item.id}>
-												<div id={item.id}>
-													<p>
-														<span>{item.title}</span>
-														<span className='mx-1'>
-															{getQty(item.id, order.order.items) > 1
-																? `(${getQty(item.id, order.order.items)}x)`
-																: null}
-														</span>{' '}
-													</p>
-												</div>
-												<div>
-													<p>
-														- {handleNumbFormat(item.price - item.discount)} zł
-													</p>
-												</div>
+							{uniqueItems.map((item) => (
+								<>
+									{item !== undefined ? (
+										<div className='flex justify-start text-s'>
+											<div id={item.id}>
+												<p>
+													<span>{item.title}</span>
+													<span className='mx-1'>
+														{getQty(item.id, order.order.items) > 1
+															? `(${getQty(item.id, order.order.items)}x)`
+															: null}
+													</span>{' '}
+												</p>
 											</div>
-										)}
-									</>
-								);
-							})}
+											<div>
+												<p>
+													- {handleNumbFormat(item.price - item.discount)} zł
+												</p>
+											</div>
+										</div>
+									) : null}
+								</>
+							))}
 
 							<div className='flex justify-start text-s'>
 								<div>

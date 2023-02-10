@@ -16,7 +16,6 @@ const OrderItem = ({ order }: IOrderItem) => {
 		<div className='odd:bg-white even:bg-gray'>
 			<div
 				onClick={() => setOpen(!open)}
-				key={_id}
 				className='flex justify-start items-center w-full min-w-[350px] text-s'>
 				<div className='basis-[20%] min-w-[80px] border-r-[1px] text-center py-1 w-full'>
 					<p>{status}</p>
@@ -35,7 +34,7 @@ const OrderItem = ({ order }: IOrderItem) => {
 					<p>{moment(createdAt).format('DD-MM-YYYY')}</p>
 				</div>
 			</div>
-			<OrderItemDetails open={open} order={order} key={`item-${order._id}`} />
+			<OrderItemDetails open={open} order={order} />
 		</div>
 	);
 };
