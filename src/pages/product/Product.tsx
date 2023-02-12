@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import ProductLayout from '../../components/templates/ProductLayout/ProductLayout';
 import Layout from '../../components/templates/Layout/Layout';
 import { ProductModel } from '../../models/Product';
@@ -29,7 +29,6 @@ const initValue: ProductModel = {
 const Product = () => {
 	const [product, setProduct] = useState<ProductModel>(initValue);
 	const myRef = useRef(null);
-	const location = useLocation();
 	const [showModal, setShowModal] = useState(false);
 	const [isLoading, setLoading] = useState(true);
 	const URL = process.env.REACT_APP_SERVER_URL;
@@ -58,7 +57,7 @@ const Product = () => {
 				setLoading(false);
 				setError(true);
 			});
-	}, [location]);
+	}, [id]);
 
 	return (
 		<Layout>
