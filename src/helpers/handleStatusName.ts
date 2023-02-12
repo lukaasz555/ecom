@@ -13,7 +13,12 @@ export const handleStatusName = (str: string) => {
 	}
 };
 
-export const handleNextStatus = (str: string) => {
+export const setNextStatus = (str: string) => {
+	if (str === 'new' || str === 'nowe') return 'pending';
+	if (str === 'pending' || str === 'realizowane') return 'completed';
+};
+
+export const handleNextStatusName = (str: string) => {
 	switch (str) {
 		case 'new':
 			return 'do realizacji';
@@ -21,5 +26,7 @@ export const handleNextStatus = (str: string) => {
 			return 'do realizacji';
 		case 'pending':
 			return 'zakończ';
+		default:
+			return str;
 	}
 };
