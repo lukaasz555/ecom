@@ -42,8 +42,8 @@ const StatusMainButton = ({
 		<>
 			{status === 'completed' || status === 'cancelled' ? null : (
 				<button
-					className={`mx-3 p-2 text-white bg-brownSugar ${
-						!isLoading ? 'uppercase cursor-pointer' : 'lowercase cursor-wait'
+					className={`mx-3 p-2 text-white uppercase bg-brownSugar ${
+						!isLoading ? 'cursor-pointer' : 'cursor-wait'
 					} `}
 					onClick={handleStatusUpdate}
 					disabled={isLoading ? true : false}>
