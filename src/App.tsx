@@ -12,6 +12,7 @@ import AdminOrders from './components/organisms/AdminOrders/AdminOrders';
 import AdminProducts from './components/organisms/AdminProducts/AdminProducts';
 import EditProduct from './components/organisms/EditProduct/EditProduct';
 import Sales from './components/organisms/Sales/Sales';
+import NotFound from './pages/NotFound/NotFound';
 
 function App() {
 	return (
@@ -40,6 +41,8 @@ function App() {
 				<Route path='/admin/products' element={<AdminProducts />} />
 				<Route path='/admin/products/edit/:id' element={<EditProduct />} />
 				<Route path='/admin/sales' element={<Sales />} />
+				{/* */}
+				<Route path='*' element={<NotFound />} />
 			</Routes>
 		</div>
 	);

@@ -71,6 +71,7 @@ const AdminOrders = () => {
 							orders={orders}
 							setFiltered={setFiltered}
 						/>
+
 						{currentOrders.map((order) => (
 							<OrderItem order={order} key={order._id} />
 						))}
