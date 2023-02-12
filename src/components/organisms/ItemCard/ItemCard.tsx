@@ -31,8 +31,12 @@ const ItemCard = ({ data }: ProductModel2) => {
 					/>
 				</div>
 				<div className='flex flex-col mt-2'>
-					<h3 className='text-center md:text-left text-l w-[100%] font-lato font-[400]'>
-						<Link to={`/shop/product/${type}/${id}`}>{title}</Link>
+					<h3 className='text-center md:text-left text-l w-[100%] font-lato font-[400] '>
+						<Link
+							to={`/shop/product/${type}/${id}`}
+							className='focus:underline focus:text-brownSugar outline-none'>
+							{title}
+						</Link>
 					</h3>
 					<h4 className='text-center md:text-left text-pencil text-m font-lato'>
 						{authors.join(', ')}

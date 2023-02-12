@@ -10,7 +10,7 @@ const ALT: FC<ALTProps> = ({ to, body }) => {
 	return (
 		<Link
 			to={to}
-			className='text-m pointer uppercase border-[1px] px-5 py-2 hover:bg-black hover:text-white duration-150'>
+			className='text-m pointer uppercase border-[1px] px-5 py-2 hover:bg-black hover:text-white focus:outline outline-2 outline-lightBlack outline-offset-4 active:outline-black'>
 			{body}
 		</Link>
 	);

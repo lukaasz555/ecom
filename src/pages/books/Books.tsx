@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import Layout from '../../components/templates/Layout/Layout';
-//import { books } from '../../data/books';
 import ItemCard from '../../components/organisms/ItemCard/ItemCard';
 import { ProductModel } from '../../models/Product';
 import { handleFilter } from '../../helpers/handleFilter';
@@ -91,11 +90,11 @@ const Books = ({ filterCategory }: BooksProps) => {
 					</div>
 				</>
 			) : !error ? (
-				<div className='min-h-[400px] flex justify-center items-center'>
+				<div className='min-h-[50vh] flex justify-center items-center'>
 					<h1 className='text-center'>Brak produktów w tej kategorii</h1>
 				</div>
 			) : (
-				<div className='min-h-[400px] flex justify-center items-center'>
+				<div className='min-h-[50vh] flex justify-center items-center'>
 					<h1 className='text-center'>Nie udało się pobrać artykułów</h1>
 				</div>
 			)}

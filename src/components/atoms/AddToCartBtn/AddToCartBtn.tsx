@@ -59,7 +59,9 @@ const AddToCartBtn = ({ data, body }: ButtonProps) => {
 				<CartBtnError body='Możesz kupić maksymalnie 5 szt.' />
 			) : (
 				<button
-					className='px-5 py-3 bg-black font-light text-white text-m uppercase hover:bg-sparkle duration-150 min-w-[200px]'
+					className='px-5 py-3 bg-black font-light text-white text-m uppercase hover:bg-sparkle min-w-[200px]
+					focus:outline outline-2 outline-lightBlack outline-offset-1 active:outline-black
+					'
 					onClick={addToCart}>
 					{isAdded ? (
 						<span>
