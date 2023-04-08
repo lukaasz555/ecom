@@ -18,7 +18,7 @@ const Checkout = () => {
 	const [isFormFilled, setFormFilled] = useState(false);
 	const [orderDone, setOrderDone] = useState(false);
 
-	const items = useAppSelector((state) => state.items);
+	const items = useAppSelector((state) => state.cartReducer.items);
 	const navigate = useNavigate();
 
 	useEffect(() => {

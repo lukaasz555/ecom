@@ -27,7 +27,7 @@ const OrderSummary = ({
 }: OrderSummaryProps) => {
 	const { emailAddress } = checkoutForm.email;
 	const { phoneNumber, inpost } = checkoutForm.ship;
-	const items = useAppSelector((state) => state.items);
+	const items = useAppSelector((state) => state.cartReducer.items);
 	const itemsValue = productsValue(items);
 	const deliveryCost = itemsValue >= 99 ? 0 : 9.9;
 	const dispatch = useAppDispatch();

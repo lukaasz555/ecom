@@ -6,7 +6,7 @@ import CartSummaryItems from '../../atoms/CartSummaryItems/CartSummaryItems';
 import { getDiscountsValue } from '../../../helpers/getDiscountsValue';
 
 const CartSummary = () => {
-	const items = useAppSelector((state) => state.items);
+	const items = useAppSelector((state) => state.cartReducer.items);
 	const discounts: number = getDiscountsValue(items);
 	const itemsCost: number = productsValue(items);
 	const deliveryCost: number = itemsCost >= 99 ? 0 : 9.9;

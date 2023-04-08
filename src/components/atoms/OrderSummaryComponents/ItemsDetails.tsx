@@ -5,8 +5,8 @@ import { handleNumbFormat } from '../../../helpers/handleNumbFormat';
 import { productsValue } from '../../../helpers/productsValue';
 
 const ItemsDetails = (): JSX.Element => {
-	const items = useAppSelector((state) => state.items);
-	const uniqItems = useAppSelector((state) => state.uniqueItems);
+	const items = useAppSelector((state) => state.cartReducer.items);
+	const uniqItems = useAppSelector((state) => state.cartReducer.uniqueItems);
 
 	const itemsCost: number = productsValue(items);
 	const deliveryCost: number = 9.9;

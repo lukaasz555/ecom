@@ -9,7 +9,7 @@ interface CartSumProps {
 }
 
 const CartSummaryItems = ({ items }: CartSumProps) => {
-	const uniqItems = useAppSelector((state) => state.uniqueItems);
+	const uniqItems = useAppSelector((state) => state.cartReducer.uniqueItems);
 	return (
 		<div>
 			{uniqItems.map(({ id, title, price, discount, authors }) => (

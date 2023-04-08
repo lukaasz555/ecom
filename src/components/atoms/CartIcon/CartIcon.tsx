@@ -4,7 +4,7 @@ import CartIconSVG from '../../../assets/icons/cart.svg';
 import { useAppSelector } from '../../../hooks/hooks';
 
 const CartIcon = () => {
-	const items = useAppSelector((state) => state.items);
+	const items = useAppSelector((state) => state.cartReducer.items);
 
 	return (
 		<div className='pl-2 ml-1 border-none md:border-l-[1px] md:border-solid md:border-grey'>
