@@ -22,27 +22,17 @@ const AdminOrders = () => {
 	const [isLoading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
 	// pagination
-	const [ordersOffset, setOrdersOffset] = useState(0);
-
-	// const endOffset = ordersOffset + ordersPerPage;
-	// const currentOrders = orders.slice(ordersOffset, endOffset);
-	// const pageCount = Math.ceil(orders.length / ordersPerPage);
 	const ordersPerPage: number = 5;
 	const [currentPage, setCurrentPage] = useState<number>(1);
-	// let currentPage = 1;
 	const [pageCount, setPageCount] = useState<number>(0);
 	const dispatch = useDispatch();
-
-	const handlePageClick = (e: any) => {
-		const newOffset = (e.selected * ordersPerPage) % orders.length;
-		setOrdersOffset(newOffset);
-	};
 
 	// useEffect(() => {
 	// 	setOrders(filtered);
 	// }, [filtered]);
 
 	const getOrdersFromStore = async () => {
+		console.log(currentPage);
 		const { orders, totalPages } = await fetchOrders({
 			limit: ordersPerPage,
 			page: currentPage,
@@ -51,12 +41,26 @@ const AdminOrders = () => {
 		setPageCount(totalPages);
 	};
 
-	function handlePageChange(): void {
-		setCurrentPage(currentPage + 1);
-		// setCurrentPage(currentPage + 1);
-		// console.log(currentPage);
-		getOrdersFromStore();
+	function handleNextPage(): void {
+		if (currentPage < pageCount) {
+			setCurrentPage(currentPage + 1);
+		} else {
+			setCurrentPage(currentPage);
+		}
 	}
+
+	function handlePreviousPage(): void {
+		if (currentPage > 1) {
+			setCurrentPage(currentPage - 1);
+		} else {
+			setCurrentPage(1);
+		}
+	}
+
+	useEffect(() => {
+		console.log(currentPage);
+		getOrdersFromStore();
+	}, [currentPage]);
 
 	useEffect(() => {
 		setError(false);
@@ -95,7 +99,8 @@ const AdminOrders = () => {
 					</div>
 					<div className='flex flex-col'>
 						<p>
-							Obecna strona: <strong>{currentPage}</strong>
+							Obecna strona:{' '}
+							<strong>{currentPage !== null ? currentPage : null}</strong>
 						</p>
 						<p>
 							Strony: <strong>{pageCount}</strong>{' '}
@@ -112,8 +117,8 @@ const AdminOrders = () => {
 							disabledClassName='opacity-0'
 							disabledLinkClassName='cursor-default'
 						/> */}
-
-						<button onClick={handlePageChange}>next page</button>
+						<button onClick={handlePreviousPage}>poprzednia</button>
+						<button onClick={handleNextPage}>następna</button>
 					</div>
 				</div>
 			) : orders.length === 0 && !error ? (

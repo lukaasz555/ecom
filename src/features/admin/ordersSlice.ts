@@ -14,7 +14,7 @@ export const fetchOrders = async (query: Record<string, unknown>) => {
 	const res: OrderResponse = await axios
 		.get(`${process.env.REACT_APP_SERVER_URL}/orders`, {
 			params: {
-				query,
+				query: query,
 			},
 		})
 		.then((r) => {
