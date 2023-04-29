@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../store/store';
 import { OrderModel } from '../../models/Order';
@@ -8,6 +8,10 @@ interface OrderResponse {
 	orders: OrderModel[];
 	totalPages: number;
 	currentPage: number;
+}
+
+interface OrdersState {
+	orders: OrderModel[];
 }
 
 export const fetchOrders = async (query: Record<string, unknown>) => {
@@ -25,10 +29,6 @@ export const fetchOrders = async (query: Record<string, unknown>) => {
 		});
 	return res;
 };
-
-interface OrdersState {
-	orders: OrderModel[];
-}
 
 const initialState: OrdersState = { orders: [] };
 

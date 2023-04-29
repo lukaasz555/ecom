@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 import { loadData } from '../../../features/admin/ordersSlice';
 import { fetchOrders } from '../../../features/admin/ordersSlice';
 import { useAppSelector } from '../../../hooks/hooks';
+import PaginationButtons from '../../atoms/PaginationButtons/PaginationButtons';
 
 const AdminOrders = () => {
 	// const [allOrders, setAllOrders] = useState<OrderModel[] | []>([]);
@@ -32,7 +33,6 @@ const AdminOrders = () => {
 	// }, [filtered]);
 
 	const getOrdersFromStore = async () => {
-		console.log(currentPage);
 		const { orders, totalPages } = await fetchOrders({
 			limit: ordersPerPage,
 			page: currentPage,
@@ -42,23 +42,16 @@ const AdminOrders = () => {
 	};
 
 	function handleNextPage(): void {
-		if (currentPage < pageCount) {
-			setCurrentPage(currentPage + 1);
-		} else {
-			setCurrentPage(currentPage);
-		}
+		currentPage < pageCount
+			? setCurrentPage(currentPage + 1)
+			: setCurrentPage(1);
 	}
 
 	function handlePreviousPage(): void {
-		if (currentPage > 1) {
-			setCurrentPage(currentPage - 1);
-		} else {
-			setCurrentPage(1);
-		}
+		currentPage > 1 ? setCurrentPage(currentPage - 1) : setCurrentPage(1);
 	}
 
 	useEffect(() => {
-		console.log(currentPage);
 		getOrdersFromStore();
 	}, [currentPage]);
 
@@ -97,28 +90,16 @@ const AdminOrders = () => {
 							<OrderItem order={order} key={order._id} />
 						))}
 					</div>
-					<div className='flex flex-col'>
-						<p>
-							Obecna strona:{' '}
-							<strong>{currentPage !== null ? currentPage : null}</strong>
-						</p>
-						<p>
-							Strony: <strong>{pageCount}</strong>{' '}
-						</p>
-					</div>
+
 					<div className='flex justify-center mt-3'>
-						{/* <ReactPaginate
-							className='flex gap-x-5'
-							pageCount={pageCount}
-							onPageChange={handlePageClick}
-							nextLabel='kolejna>>'
-							previousLabel='<<poprzednia'
-							activeLinkClassName='text-white bg-black px-1.5 text-center py-0.5 rounded-[4px]'
-							disabledClassName='opacity-0'
-							disabledLinkClassName='cursor-default'
-						/> */}
-						<button onClick={handlePreviousPage}>poprzednia</button>
-						<button onClick={handleNextPage}>następna</button>
+						<div>
+							<PaginationButtons
+								handleNextPage={handleNextPage}
+								handlePrevPage={handlePreviousPage}
+								currentPage={currentPage}
+								pageCount={pageCount}
+							/>
+						</div>
 					</div>
 				</div>
 			) : orders.length === 0 && !error ? (
