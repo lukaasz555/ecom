@@ -94,6 +94,7 @@ const AdminOrders = () => {
 							pageCount={pageCount}
 							setCurrentPage={setCurrentPage}
 							setOrdersPerPage={setOrdersPerPage}
+							options={[5, 10, 15, 20]}
 						/>
 					</div>
 					<OrderModal

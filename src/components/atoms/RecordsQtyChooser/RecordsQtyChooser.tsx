@@ -4,16 +4,18 @@ import clsx from 'clsx';
 type QtyChooserProps = {
 	ordersPerPage: number;
 	handleOrdersPerPageChange: (e: React.MouseEvent) => void;
+	options: number[];
 };
 
 const RecordsQtyChooser = ({
 	handleOrdersPerPageChange,
 	ordersPerPage,
+	options,
 }: QtyChooserProps) => {
 	const [isOpen, setOpen] = useState<boolean>(false);
 	const listRef = useRef<HTMLUListElement>(null);
 
-	const options = [5, 10, 15, 20];
+	// const options = [5, 10, 15, 20];
 
 	const handleChange = (e: React.MouseEvent) => {
 		handleOrdersPerPageChange(e);

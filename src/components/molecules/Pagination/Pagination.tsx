@@ -1,5 +1,4 @@
 import React from 'react';
-import clsx from 'clsx';
 import RecordsQtyChooser from '../../atoms/RecordsQtyChooser/RecordsQtyChooser';
 import PaginationButtons from '../../atoms/PaginationButtons/PaginationButtons';
 
@@ -9,6 +8,7 @@ type PaginationProps = {
 	ordersPerPage: number;
 	setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 	setOrdersPerPage: React.Dispatch<React.SetStateAction<number>>;
+	options: number[];
 };
 
 const Pagination = (props: PaginationProps) => {
@@ -41,6 +41,7 @@ const Pagination = (props: PaginationProps) => {
 			<RecordsQtyChooser
 				ordersPerPage={ordersPerPage}
 				handleOrdersPerPageChange={handleOrdersPerPageChange}
+				options={props.options}
 			/>
 		</div>
 	);

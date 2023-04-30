@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 
 interface InputProps {
 	type: string;
@@ -26,7 +27,10 @@ const GrayInput = ({
 			{label ? <label className='mb-1 font-light'>{label}</label> : null}
 			<input
 				type={`${type}`}
-				className='border-[1px] p-3 font-[300] border-pencil bg-lightGray outline-black text-m'
+				className={clsx(
+					'border-[1px] p-3 font-[300] border-pencil bg-lightGray outline-black text-m',
+					'disabled:cursor-not-allowed'
+				)}
 				name={`${name}`}
 				onChange={onChange}
 				value={value}

@@ -34,22 +34,6 @@ const AdminProducts = () => {
 	const [pageCount, setPageCount] = useState<number>(0);
 	const dispatch = useDispatch();
 
-	// const getProducts = async () => {
-	// 	setError(false);
-	// 	setLoading(true);
-	// 	axios
-	// 		.get(`${URL}/products`)
-	// 		.then((res) => {
-	// 			setProducts(res.data);
-	// 			setFiltered(res.data);
-	// 			setLoading(false);
-	// 		})
-	// 		.catch((err) => {
-	// 			setLoading(false);
-	// 			setError(true);
-	// 		});
-	// };
-
 	const getProductsFromStore = async () => {
 		const { products, totalPages } = await fetchProducts({
 			limit: ordersPerPage,
@@ -73,18 +57,6 @@ const AdminProducts = () => {
 			});
 	}, []);
 
-	// useEffect(() => {
-	// 	setFiltered(
-	// 		products.filter((prod) =>
-	// 			prod.title.toLowerCase().includes(searchingPhrase.toLowerCase())
-	// 		)
-	// 	);
-	// }, [searchingPhrase]);
-
-	// useEffect(() => {
-	// 	getProducts();
-	// }, []);
-
 	const removeProduct = (e: React.MouseEvent<HTMLButtonElement>) => {
 		const target = e.target as HTMLElement;
 		if (target.parentElement?.parentElement !== null) {
@@ -93,16 +65,6 @@ const AdminProducts = () => {
 			setModalOpen(true);
 		}
 	};
-	const [productOffset, setProductOffset] = useState(0);
-	// const productsPerPage = 10;
-	// const endOffset = productOffset + productsPerPage;
-	// const currentProducts = products.slice(productOffset, endOffset);
-	// const pageCount = Math.ceil(products.length / productsPerPage);
-
-	// const handlePageClick = (e: any) => {
-	// 	const newOffset = (e.selected * productsPerPage) % products.length;
-	// 	setProductOffset(newOffset);
-	// };
 
 	return (
 		<AdminLayout>
@@ -139,61 +101,38 @@ const AdminProducts = () => {
 							<p className='text-brownSugar mb-10 text-xl'>{message}</p>
 						</div>
 						{products.length > 0 && !open && (
-							<div className='min-h-[340px] flex flex-col justify-between'>
-								{/* <AdminProductTemplate /> */}
+							<div className='min-h-[420px] flex flex-col justify-between'>
 								<table>
 									<thead>
 										<tr className='border-b-[1px] text-left'>
-											<th>ID</th>
-											<th>TYTUŁ</th>
-											<th>CENA</th>
-											<th>RODZAJ</th>
-											<th></th>
+											<th className='font-medium w-[50px]'>ID</th>
+											<th className='font-medium'>TYTUŁ</th>
+											<th className='font-medium text-center w-[70px]'>CENA</th>
+											<th className='font-medium text-center w-[80px]'>
+												RODZAJ
+											</th>
+											<th className='font-medium w-[60px]'></th>
 										</tr>
 									</thead>
 									<tbody>
 										{products.map((p) => (
 											<AdminProductItem
-												p={p}
+												product={p}
 												key={p.id}
 												removeProduct={removeProduct}
 											/>
 										))}
 									</tbody>
 								</table>
-								{/* {products.length > 0 && searchingPhrase === ''
-										? currentProducts.map((p) => (
-												<AdminProductItem
-													p={p}
-													key={p.id}
-													removeProduct={removeProduct}
-												/>
-										  ))
-										: filtered.map((p) => (
-												<AdminProductItem
-													p={p}
-													key={p.id}
-													removeProduct={removeProduct}
-												/>
-										  ))} */}
 								<div className='flex justify-center mt-3'>
 									{searchingPhrase !== '' ? null : (
-										// <ReactPaginate
-										// 	className='flex gap-x-5'
-										// 	pageCount={pageCount}
-										// 	onPageChange={handlePageClick}
-										// 	nextLabel='kolejna>>'
-										// 	previousLabel='<<poprzednia'
-										// 	activeLinkClassName='text-white bg-black px-1.5 text-center py-0.5 rounded-[4px]'
-										// 	disabledClassName='opacity-0'
-										// 	disabledLinkClassName='cursor-default'
-										// />
 										<Pagination
 											currentPage={currentPage}
 											ordersPerPage={ordersPerPage}
 											pageCount={pageCount}
 											setCurrentPage={setCurrentPage}
 											setOrdersPerPage={setOrdersPerPage}
+											options={[10, 20, 30, 50]}
 										/>
 									)}
 								</div>
