@@ -9,8 +9,7 @@ import { useDispatch } from 'react-redux';
 import { loadData } from '../../../features/admin/ordersSlice';
 import { fetchOrders } from '../../../features/admin/ordersSlice';
 import { useAppSelector } from '../../../hooks/hooks';
-import PaginationButtons from '../../atoms/PaginationButtons/PaginationButtons';
-import RecordsQtyChooser from '../../atoms/RecordsQtyChooser/RecordsQtyChooser';
+import Pagination from '../../molecules/Pagination/Pagination';
 
 const AdminOrders = () => {
 	const orders = useAppSelector((state) => state.ordersReducer.orders);
@@ -33,16 +32,6 @@ const AdminOrders = () => {
 		setPageCount(totalPages);
 	};
 
-	function handleNextPage(): void {
-		currentPage < pageCount
-			? setCurrentPage(currentPage + 1)
-			: setCurrentPage(1);
-	}
-
-	function handlePreviousPage(): void {
-		currentPage > 1 ? setCurrentPage(currentPage - 1) : setCurrentPage(1);
-	}
-
 	useEffect(() => {
 		getOrdersFromStore();
 	}, [ordersPerPage, currentPage]);
@@ -56,11 +45,6 @@ const AdminOrders = () => {
 				setError(true);
 			});
 	}, []);
-
-	function handleOrdersPerPageChange(e: React.MouseEvent): void {
-		const target = e.target as Element;
-		setOrdersPerPage(Number(target.innerHTML));
-	}
 
 	return (
 		<AdminLayout>
@@ -89,18 +73,13 @@ const AdminOrders = () => {
 					</div>
 
 					<div className='flex justify-center mt-3'>
-						<div className='flex w-[100%] justify-end'>
-							<PaginationButtons
-								handleNextPage={handleNextPage}
-								handlePrevPage={handlePreviousPage}
-								currentPage={currentPage}
-								pageCount={pageCount}
-							/>
-							<RecordsQtyChooser
-								ordersPerPage={ordersPerPage}
-								handleOrdersPerPageChange={handleOrdersPerPageChange}
-							/>
-						</div>
+						<Pagination
+							currentPage={currentPage}
+							ordersPerPage={ordersPerPage}
+							pageCount={pageCount}
+							setCurrentPage={setCurrentPage}
+							setOrdersPerPage={setOrdersPerPage}
+						/>
 					</div>
 				</div>
 			) : orders.length === 0 && !error ? (
