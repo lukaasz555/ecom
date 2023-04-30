@@ -10,6 +10,9 @@ import { loadData } from '../../../features/admin/ordersSlice';
 import { fetchOrders } from '../../../features/admin/ordersSlice';
 import { useAppSelector } from '../../../hooks/hooks';
 import Pagination from '../../molecules/Pagination/Pagination';
+import { handleNumbFormat } from '../../../helpers/handleNumbFormat';
+import { handleStatusName } from '../../../helpers/handleStatusName';
+import moment from 'moment';
 
 const AdminOrders = () => {
 	const orders = useAppSelector((state) => state.ordersReducer.orders);
@@ -56,8 +59,24 @@ const AdminOrders = () => {
 					<Loader />
 				</div>
 			) : orders.length > 0 ? (
-				<div className='w-full'>
-					<div className='min-h-[340px]'>
+				<div className='min-h-[340px] flex flex-col justify-between'>
+					<table className='w-full mb-12'>
+						<thead>
+							<tr className='border-b-[1px] text-left'>
+								<th className='font-medium w-[120px]'>STATUS</th>
+								<th className='font-medium w-auto'>DANE KLIENTA</th>
+								<th className='font-medium w-[80px] text-center'>KWOTA</th>
+								<th className='font-medium w-[100px] text-center'>DATA</th>
+							</tr>
+						</thead>
+						<tbody>
+							{orders.map((order) => (
+								<OrderItem order={order} key={order._id} />
+							))}
+						</tbody>
+					</table>
+
+					{/* <div className='min-h-[340px]'>
 						<AdminOrderTemplate
 							setPriceFilter={setPriceFilter}
 							priceFilter={priceFilter}
@@ -70,7 +89,7 @@ const AdminOrders = () => {
 						{orders.map((order) => (
 							<OrderItem order={order} key={order._id} />
 						))}
-					</div>
+					</div> */}
 
 					<div className='flex justify-center mt-3'>
 						<Pagination
