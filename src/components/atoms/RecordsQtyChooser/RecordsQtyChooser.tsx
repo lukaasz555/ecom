@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import clsx from 'clsx';
 
 type QtyChooserProps = {
@@ -11,6 +11,7 @@ const RecordsQtyChooser = ({
 	ordersPerPage,
 }: QtyChooserProps) => {
 	const [isOpen, setOpen] = useState<boolean>(false);
+	const listRef = useRef<HTMLUListElement>(null);
 
 	const options = [5, 10, 15, 20];
 
@@ -18,6 +19,21 @@ const RecordsQtyChooser = ({
 		handleOrdersPerPageChange(e);
 		setOpen(false);
 	};
+
+	useEffect(() => {
+		// currently no idea how to replace any to make it works:|
+		const handler = (e: any) => {
+			const target = e.target as Element;
+			if (!listRef.current) {
+				return;
+			}
+			if (!listRef.current.contains(target)) {
+				setOpen(false);
+			}
+		};
+		document.addEventListener('click', handler, { capture: true });
+		return () => document.removeEventListener('click', handler);
+	}, []);
 
 	return (
 		<div className='ml-12 mr-4 px-2 relative'>
@@ -28,6 +44,7 @@ const RecordsQtyChooser = ({
 			</button>
 			{isOpen && (
 				<ul
+					ref={listRef}
 					className={clsx(
 						'border-[1px] border-brownSugar w-[60px] bg-white',
 						'absolute left-1/2 bottom-[100%] -translate-x-1/2'
@@ -36,7 +53,7 @@ const RecordsQtyChooser = ({
 						<li
 							key={item + index}
 							className={clsx(
-								'flex flex-col items-center my-1 first:mt-0 last:mb-0',
+								'flex flex-col items-center my-1 first:mt-0 last:mb-0 py-2',
 								'hover:bg-black hover:text-white',
 								item === ordersPerPage ? 'text-brownSugar ' : 'text-black'
 							)}>
