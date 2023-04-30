@@ -35,7 +35,8 @@ const AdminOrders = () => {
 	};
 
 	useEffect(() => {
-		getOrdersFromStore();
+		setLoading(true);
+		getOrdersFromStore().finally(() => setLoading(false));
 	}, [ordersPerPage, currentPage]);
 
 	useEffect(() => {

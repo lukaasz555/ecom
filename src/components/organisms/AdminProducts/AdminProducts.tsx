@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import AdminLayout from '../../templates/AdminLayout/AdminLayout';
 import AddProduct from '../../molecules/AddProduct/AddProduct';
-import axios from 'axios';
 import { ProductModel } from '../../../models/Product';
 import Loader from '../../atoms/Loader/Loader';
-import ReactPaginate from 'react-paginate';
 import AdminProductItem from '../../atoms/AdminProductItem/AdminProductItem';
-import AdminProductTemplate from '../../atoms/AdminProductTemplate/AdminProductTemplate';
 import PasswordModal from '../../molecules/PasswordModal/PasswordModal';
 import GrayInput from '../../atoms/GrayInput/GrayInput';
 import ErrorMessage from '../../atoms/ErrorMessage/ErrorMessage';
@@ -19,16 +16,14 @@ const AdminProducts = () => {
 	const products = useAppSelector((state) => state.productReducer.products);
 	const [open, setOpen] = useState(false);
 	// const [products, setProducts] = useState<ProductModel[] | []>([]);
-	const [filtered, setFiltered] = useState<ProductModel[] | []>([]);
+	// const [filtered, setFiltered] = useState<ProductModel[] | []>([]);
 	const [message, setMessage] = useState('');
 	const [isLoading, setLoading] = useState(false);
 	const [password, setPassword] = useState('');
 	const [isModalOpen, setModalOpen] = useState(false);
 	const [idToReq, setIdToReq] = useState<undefined | string>('');
-	const URL = process.env.REACT_APP_SERVER_URL;
 	const [error, setError] = useState(false);
 	const [searchingPhrase, setSearchingPhrase] = useState('');
-	//
 	const [ordersPerPage, setOrdersPerPage] = useState<number>(10);
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [pageCount, setPageCount] = useState<number>(0);
@@ -44,7 +39,8 @@ const AdminProducts = () => {
 	};
 
 	useEffect(() => {
-		getProductsFromStore();
+		setLoading(true);
+		getProductsFromStore().finally(() => setLoading(false));
 	}, [ordersPerPage, currentPage]);
 
 	useEffect(() => {
@@ -159,12 +155,12 @@ const AdminProducts = () => {
 				</>
 			) : products.length === 0 && !error ? (
 				<p className='mt-10'>Brak produktów.</p>
-			) : (
+			) : error ? (
 				<ErrorMessage
 					text1='Brak połączenia'
 					text2='Odśwież stronę i spróbuj ponownie'
 				/>
-			)}
+			) : null}
 		</AdminLayout>
 	);
 };

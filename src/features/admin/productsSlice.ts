@@ -10,6 +10,10 @@ interface ProductResponse {
 	currentPage: number;
 }
 
+interface PaginationQuery {
+	[key: string]: number;
+}
+
 interface ProductsState {
 	products: ProductModel[];
 }
@@ -18,7 +22,7 @@ const initState: ProductsState = {
 	products: [],
 };
 
-export const fetchProducts = async (query: Record<string, unknown>) => {
+export const fetchProducts = async (query: PaginationQuery) => {
 	const res: ProductResponse = await axios
 		.get(`${process.env.REACT_APP_SERVER_URL}/products`, {
 			params: {
@@ -27,7 +31,8 @@ export const fetchProducts = async (query: Record<string, unknown>) => {
 		})
 		.then((res) => res.data)
 		.catch((e) => {
-			console.log(e);
+			// console.log('errorek');
+			// console.log(e);
 		});
 	return res;
 };
