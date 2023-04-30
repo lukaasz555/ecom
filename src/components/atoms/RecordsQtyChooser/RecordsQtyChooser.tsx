@@ -36,8 +36,9 @@ const RecordsQtyChooser = ({
 						<li
 							key={item + index}
 							className={clsx(
-								'text-black flex flex-col items-center my-1 first:mt-0 last:mb-0',
-								'hover:bg-black hover:text-white'
+								'flex flex-col items-center my-1 first:mt-0 last:mb-0',
+								'hover:bg-black hover:text-white',
+								item === ordersPerPage ? 'text-brownSugar ' : 'text-black'
 							)}>
 							<button
 								onClick={(e: React.MouseEvent) => handleChange(e)}

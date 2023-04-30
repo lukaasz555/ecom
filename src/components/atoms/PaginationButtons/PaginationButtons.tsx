@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 
 type PaginationButtonsProps = {
 	currentPage: number;
@@ -17,7 +18,8 @@ const PaginationButtons = ({
 		<div className='flex items-center'>
 			<button
 				onClick={handlePrevPage}
-				disabled={currentPage === 1 ? true : false}>
+				disabled={currentPage === 1 ? true : false}
+				className={clsx('disabled:opacity-0')}>
 				<svg
 					className='mr-2'
 					width='22'
@@ -33,7 +35,8 @@ const PaginationButtons = ({
 			</p>
 			<button
 				onClick={handleNextPage}
-				disabled={currentPage === pageCount ? true : false}>
+				disabled={currentPage === pageCount ? true : false}
+				className={clsx('disabled:opacity-0')}>
 				<svg
 					className='ml-2 group-hover:translate-x-1 duration-200 rotate-180'
 					width='22'
