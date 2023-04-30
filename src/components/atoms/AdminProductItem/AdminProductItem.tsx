@@ -13,25 +13,44 @@ type AdminProductProps = {
 
 const AdminProductItem = ({ p, removeProduct }: AdminProductProps) => {
 	return (
-		<div
-			key={p.id}
-			className='flex w-full odd:bg-white even:bg-gray items-center text-s'>
-			<div className='basis-[15%]'>{p.id}</div>
-			<div className='basis-[40%]'>{p.title}</div>
-			<div className='basis-[15%] text-center'>
-				{handleNumbFormat(p.price - p.discount)}
-			</div>
-			<div className='basis-[15%] text-center'>{p.type}</div>
-			<div className='basis-[15%] flex justify-center gap-x-2'>
-				<Link to={`/admin/products/edit/${p.id}`}>
-					<FontAwesomeIcon icon={faPenToSquare} id={p.id} />
-				</Link>
+		// <div
+		// 	key={p.id}
+		// 	className='flex w-full odd:bg-white even:bg-gray items-center text-s'>
+		// 	<div className='basis-[15%]'>{p.id}</div>
+		// 	<div className='basis-[40%]'>{p.title}</div>
+		// 	<div className='basis-[15%] text-center'>
+		// 		{handleNumbFormat(p.price - p.discount)}
+		// 	</div>
+		// 	<div className='basis-[15%] text-center'>{p.type}</div>
+		// 	<div className='basis-[15%] flex justify-center gap-x-2'>
+		// 		<Link to={`/admin/products/edit/${p.id}`}>
+		// 			<FontAwesomeIcon icon={faPenToSquare} id={p.id} />
+		// 		</Link>
 
-				<button id={p.id} onClick={removeProduct}>
-					<FontAwesomeIcon icon={faTrash} />
-				</button>
-			</div>
-		</div>
+		// 		<button id={p.id} onClick={removeProduct}>
+		// 			<FontAwesomeIcon icon={faTrash} />
+		// 		</button>
+		// 	</div>
+		// </div>
+		<tr
+			key={p.id}
+			className='odd:bg-white even:bg-gray text-m hover:outline hover:outline-1 hover:outline-brownSugar'>
+			<td>{p.id}</td>
+			<td>{p.title}</td>
+			<td>{handleNumbFormat(p.price - p.discount)}</td>
+			<td>{p.type}</td>
+			<td>
+				<div className='basis-[15%] flex justify-center gap-x-2'>
+					<Link to={`/admin/products/edit/${p.id}`}>
+						<FontAwesomeIcon icon={faPenToSquare} id={p.id} />
+					</Link>
+
+					<button id={p.id} onClick={removeProduct}>
+						<FontAwesomeIcon icon={faTrash} />
+					</button>
+				</div>
+			</td>
+		</tr>
 	);
 };
 

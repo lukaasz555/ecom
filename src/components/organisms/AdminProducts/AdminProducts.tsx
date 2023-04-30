@@ -10,10 +10,15 @@ import AdminProductTemplate from '../../atoms/AdminProductTemplate/AdminProductT
 import PasswordModal from '../../molecules/PasswordModal/PasswordModal';
 import GrayInput from '../../atoms/GrayInput/GrayInput';
 import ErrorMessage from '../../atoms/ErrorMessage/ErrorMessage';
+import { useDispatch } from 'react-redux';
+import Pagination from '../../molecules/Pagination/Pagination';
+import { fetchProducts, loadData } from '../../../features/admin/productsSlice';
+import { useAppSelector } from '../../../hooks/hooks';
 
 const AdminProducts = () => {
+	const products = useAppSelector((state) => state.productReducer.products);
 	const [open, setOpen] = useState(false);
-	const [products, setProducts] = useState<ProductModel[] | []>([]);
+	// const [products, setProducts] = useState<ProductModel[] | []>([]);
 	const [filtered, setFiltered] = useState<ProductModel[] | []>([]);
 	const [message, setMessage] = useState('');
 	const [isLoading, setLoading] = useState(false);
@@ -23,34 +28,62 @@ const AdminProducts = () => {
 	const URL = process.env.REACT_APP_SERVER_URL;
 	const [error, setError] = useState(false);
 	const [searchingPhrase, setSearchingPhrase] = useState('');
+	//
+	const [ordersPerPage, setOrdersPerPage] = useState<number>(10);
+	const [currentPage, setCurrentPage] = useState<number>(1);
+	const [pageCount, setPageCount] = useState<number>(0);
+	const dispatch = useDispatch();
 
-	const getProducts = async () => {
+	// const getProducts = async () => {
+	// 	setError(false);
+	// 	setLoading(true);
+	// 	axios
+	// 		.get(`${URL}/products`)
+	// 		.then((res) => {
+	// 			setProducts(res.data);
+	// 			setFiltered(res.data);
+	// 			setLoading(false);
+	// 		})
+	// 		.catch((err) => {
+	// 			setLoading(false);
+	// 			setError(true);
+	// 		});
+	// };
+
+	const getProductsFromStore = async () => {
+		const { products, totalPages } = await fetchProducts({
+			limit: ordersPerPage,
+			page: currentPage,
+		});
+		dispatch(loadData(products));
+		setPageCount(totalPages);
+	};
+
+	useEffect(() => {
+		getProductsFromStore();
+	}, [ordersPerPage, currentPage]);
+
+	useEffect(() => {
 		setError(false);
-		setLoading(true);
-		axios
-			.get(`${URL}/products`)
-			.then((res) => {
-				setProducts(res.data);
-				setFiltered(res.data);
-				setLoading(false);
-			})
+		getProductsFromStore()
+			.then(() => setLoading(false))
 			.catch((err) => {
 				setLoading(false);
 				setError(true);
 			});
-	};
-
-	useEffect(() => {
-		setFiltered(
-			products.filter((prod) =>
-				prod.title.toLowerCase().includes(searchingPhrase.toLowerCase())
-			)
-		);
-	}, [searchingPhrase]);
-
-	useEffect(() => {
-		getProducts();
 	}, []);
+
+	// useEffect(() => {
+	// 	setFiltered(
+	// 		products.filter((prod) =>
+	// 			prod.title.toLowerCase().includes(searchingPhrase.toLowerCase())
+	// 		)
+	// 	);
+	// }, [searchingPhrase]);
+
+	// useEffect(() => {
+	// 	getProducts();
+	// }, []);
 
 	const removeProduct = (e: React.MouseEvent<HTMLButtonElement>) => {
 		const target = e.target as HTMLElement;
@@ -61,15 +94,15 @@ const AdminProducts = () => {
 		}
 	};
 	const [productOffset, setProductOffset] = useState(0);
-	const productsPerPage = 10;
-	const endOffset = productOffset + productsPerPage;
-	const currentProducts = products.slice(productOffset, endOffset);
-	const pageCount = Math.ceil(products.length / productsPerPage);
+	// const productsPerPage = 10;
+	// const endOffset = productOffset + productsPerPage;
+	// const currentProducts = products.slice(productOffset, endOffset);
+	// const pageCount = Math.ceil(products.length / productsPerPage);
 
-	const handlePageClick = (e: any) => {
-		const newOffset = (e.selected * productsPerPage) % products.length;
-		setProductOffset(newOffset);
-	};
+	// const handlePageClick = (e: any) => {
+	// 	const newOffset = (e.selected * productsPerPage) % products.length;
+	// 	setProductOffset(newOffset);
+	// };
 
 	return (
 		<AdminLayout>
@@ -98,6 +131,7 @@ const AdminProducts = () => {
 									type='text'
 									value={searchingPhrase}
 									placeholder='Wpisz tytuł, aby wyszukać produkt'
+									disabled
 								/>
 							</div>
 						)}
@@ -105,10 +139,29 @@ const AdminProducts = () => {
 							<p className='text-brownSugar mb-10 text-xl'>{message}</p>
 						</div>
 						{products.length > 0 && !open && (
-							<>
-								<div className='min-h-[340px]'>
-									<AdminProductTemplate />
-									{products.length > 0 && searchingPhrase === ''
+							<div className='min-h-[340px] flex flex-col justify-between'>
+								{/* <AdminProductTemplate /> */}
+								<table>
+									<thead>
+										<tr className='border-b-[1px] text-left'>
+											<th>ID</th>
+											<th>TYTUŁ</th>
+											<th>CENA</th>
+											<th>RODZAJ</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										{products.map((p) => (
+											<AdminProductItem
+												p={p}
+												key={p.id}
+												removeProduct={removeProduct}
+											/>
+										))}
+									</tbody>
+								</table>
+								{/* {products.length > 0 && searchingPhrase === ''
 										? currentProducts.map((p) => (
 												<AdminProductItem
 													p={p}
@@ -122,30 +175,36 @@ const AdminProducts = () => {
 													key={p.id}
 													removeProduct={removeProduct}
 												/>
-										  ))}
-								</div>
+										  ))} */}
 								<div className='flex justify-center mt-3'>
 									{searchingPhrase !== '' ? null : (
-										<ReactPaginate
-											className='flex gap-x-5'
+										// <ReactPaginate
+										// 	className='flex gap-x-5'
+										// 	pageCount={pageCount}
+										// 	onPageChange={handlePageClick}
+										// 	nextLabel='kolejna>>'
+										// 	previousLabel='<<poprzednia'
+										// 	activeLinkClassName='text-white bg-black px-1.5 text-center py-0.5 rounded-[4px]'
+										// 	disabledClassName='opacity-0'
+										// 	disabledLinkClassName='cursor-default'
+										// />
+										<Pagination
+											currentPage={currentPage}
+											ordersPerPage={ordersPerPage}
 											pageCount={pageCount}
-											onPageChange={handlePageClick}
-											nextLabel='kolejna>>'
-											previousLabel='<<poprzednia'
-											activeLinkClassName='text-white bg-black px-1.5 text-center py-0.5 rounded-[4px]'
-											disabledClassName='opacity-0'
-											disabledLinkClassName='cursor-default'
+											setCurrentPage={setCurrentPage}
+											setOrdersPerPage={setOrdersPerPage}
 										/>
 									)}
 								</div>
-							</>
+							</div>
 						)}
 					</div>
 					<div className={`${open ? 'block' : 'hidden'}`}>
 						<AddProduct
 							setMessage={setMessage}
 							setOpen={setOpen}
-							getProducts={getProducts}
+							// getProducts={getProducts}
 						/>
 					</div>
 					<PasswordModal
@@ -153,7 +212,7 @@ const AdminProducts = () => {
 						password={password}
 						setPassword={setPassword}
 						idToReq={idToReq}
-						getProducts={getProducts}
+						// getProducts={getProducts}
 						setMessage={setMessage}
 						setModalOpen={setModalOpen}
 						type='remove'

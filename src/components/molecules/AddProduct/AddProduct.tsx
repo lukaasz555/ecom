@@ -9,7 +9,7 @@ import { handleAuthors } from '../../../helpers/handleAuthors';
 interface AddProductProps {
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	setMessage: React.Dispatch<React.SetStateAction<string>>;
-	getProducts: () => Promise<void>;
+	getProducts?: () => Promise<void>;
 }
 
 const AddProduct = ({ setOpen, setMessage, getProducts }: AddProductProps) => {
@@ -63,7 +63,7 @@ const AddProduct = ({ setOpen, setMessage, getProducts }: AddProductProps) => {
 			axios.post(`${URL}/products/add`, newProduct);
 			setOpen(false);
 			setMessage('Dodano nowy produkt');
-			getProducts();
+			// getProducts();
 			setError('');
 		} else {
 			setError('Wypełnij poprawnie formularz.');

@@ -9,6 +9,7 @@ interface InputProps {
 		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 	) => void;
 	placeholder?: string;
+	disabled?: boolean;
 }
 
 const GrayInput = ({
@@ -18,6 +19,7 @@ const GrayInput = ({
 	onChange,
 	value,
 	placeholder,
+	disabled = false,
 }: InputProps) => {
 	return (
 		<div className='flex flex-col mb-5'>
@@ -29,6 +31,7 @@ const GrayInput = ({
 				onChange={onChange}
 				value={value}
 				placeholder={placeholder}
+				disabled={disabled}
 			/>
 		</div>
 	);
