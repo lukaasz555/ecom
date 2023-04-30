@@ -3,34 +3,26 @@ import { OrderModel } from '../../../models/Order';
 import AdminLayout from '../../templates/AdminLayout/AdminLayout';
 import OrderItem from '../../atoms/Admin/OrderItem/OrderItem';
 import Loader from '../../atoms/Loader/Loader';
-import ReactPaginate from 'react-paginate';
 import AdminOrderTemplate from '../../atoms/AdminOrderTemplate/AdminOrderTemplate';
 import ErrorMessage from '../../atoms/ErrorMessage/ErrorMessage';
-//
 import { useDispatch } from 'react-redux';
 import { loadData } from '../../../features/admin/ordersSlice';
 import { fetchOrders } from '../../../features/admin/ordersSlice';
 import { useAppSelector } from '../../../hooks/hooks';
 import PaginationButtons from '../../atoms/PaginationButtons/PaginationButtons';
+import RecordsQtyChooser from '../../atoms/RecordsQtyChooser/RecordsQtyChooser';
 
 const AdminOrders = () => {
-	// const [allOrders, setAllOrders] = useState<OrderModel[] | []>([]);
-	// const [orders, setOrders] = useState<OrderModel[] | []>([]);
 	const orders = useAppSelector((state) => state.ordersReducer.orders);
 	const [filtered, setFiltered] = useState<OrderModel[] | []>([]);
 	const [priceFilter, setPriceFilter] = useState(false);
 	const [dateFilter, setDateFilter] = useState(false);
 	const [isLoading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
-	// pagination
-	const ordersPerPage: number = 5;
+	const [ordersPerPage, setOrdersPerPage] = useState<number>(10);
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [pageCount, setPageCount] = useState<number>(0);
 	const dispatch = useDispatch();
-
-	// useEffect(() => {
-	// 	setOrders(filtered);
-	// }, [filtered]);
 
 	const getOrdersFromStore = async () => {
 		const { orders, totalPages } = await fetchOrders({
@@ -53,7 +45,7 @@ const AdminOrders = () => {
 
 	useEffect(() => {
 		getOrdersFromStore();
-	}, [currentPage]);
+	}, [ordersPerPage, currentPage]);
 
 	useEffect(() => {
 		setError(false);
@@ -64,6 +56,11 @@ const AdminOrders = () => {
 				setError(true);
 			});
 	}, []);
+
+	function handleOrdersPerPageChange(e: React.MouseEvent): void {
+		const target = e.target as Element;
+		setOrdersPerPage(Number(target.innerHTML));
+	}
 
 	return (
 		<AdminLayout>
@@ -92,12 +89,16 @@ const AdminOrders = () => {
 					</div>
 
 					<div className='flex justify-center mt-3'>
-						<div>
+						<div className='flex w-[100%] justify-end'>
 							<PaginationButtons
 								handleNextPage={handleNextPage}
 								handlePrevPage={handlePreviousPage}
 								currentPage={currentPage}
 								pageCount={pageCount}
+							/>
+							<RecordsQtyChooser
+								ordersPerPage={ordersPerPage}
+								handleOrdersPerPageChange={handleOrdersPerPageChange}
 							/>
 						</div>
 					</div>

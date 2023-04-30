@@ -14,7 +14,7 @@ const PaginationButtons = ({
 	pageCount,
 }: PaginationButtonsProps) => {
 	return (
-		<div className='flex'>
+		<div className='flex items-center'>
 			<button
 				onClick={handlePrevPage}
 				disabled={currentPage === 1 ? true : false}>
@@ -28,7 +28,7 @@ const PaginationButtons = ({
 					<path d='M2.117 12l7.527 6.235-.644.765-9-7.521 9-7.479.645.764-7.529 6.236h21.884v1h-21.883z' />
 				</svg>
 			</button>
-			<p className='text-xl'>
+			<p className='text-l'>
 				{currentPage}/{pageCount}
 			</p>
 			<button
