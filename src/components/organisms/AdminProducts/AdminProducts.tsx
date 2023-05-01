@@ -13,7 +13,7 @@ import { fetchProducts } from '../../../services/products.service';
 import { useAppSelector } from '../../../hooks/hooks';
 
 const AdminProducts = () => {
-	const products = useAppSelector((state) => state.productReducer.products);
+	const products = useAppSelector((state) => state.productsReducer.products);
 	const [open, setOpen] = useState(false);
 	// const [products, setProducts] = useState<ProductModel[] | []>([]);
 	// const [filtered, setFiltered] = useState<ProductModel[] | []>([]);

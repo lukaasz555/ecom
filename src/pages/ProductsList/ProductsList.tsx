@@ -14,7 +14,7 @@ import { useAppSelector } from '../../hooks/hooks';
 
 const ProductsList = () => {
 	const items: ProductModel[] = useAppSelector(
-		(state) => state.productReducer.products
+		(state) => state.productsReducer.products
 	);
 	const [isLoading, setLoading] = useState<boolean>(true);
 	const [isError, setError] = useState<boolean>(false);
