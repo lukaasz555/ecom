@@ -32,12 +32,15 @@ const Pagination = (props: PaginationProps) => {
 
 	return (
 		<div className='flex w-[100%] justify-end'>
-			<PaginationButtons
-				handleNextPage={handleNextPage}
-				handlePrevPage={handlePreviousPage}
-				currentPage={currentPage}
-				pageCount={pageCount}
-			/>
+			{pageCount < 2 ? null : (
+				<PaginationButtons
+					handleNextPage={handleNextPage}
+					handlePrevPage={handlePreviousPage}
+					currentPage={currentPage}
+					pageCount={pageCount}
+				/>
+			)}
+
 			<RecordsQtyChooser
 				ordersPerPage={ordersPerPage}
 				handleOrdersPerPageChange={handleOrdersPerPageChange}

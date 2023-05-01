@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { ProductModel } from '../../models/Product';
 import Layout from '../../components/templates/Layout/Layout';
 import Loader from '../../components/atoms/Loader/Loader';
@@ -24,6 +24,7 @@ const ProductsList = () => {
 	const [pageCount, setPageCount] = useState<number>(0);
 	const { category, catID } = useParams();
 	const dispatch = useDispatch();
+	const location = useLocation();
 
 	const updateProducts = async () => {
 		const { items: products, totalPages } = await fetchFilteredProducts({
@@ -47,7 +48,7 @@ const ProductsList = () => {
 
 	useEffect(() => {
 		handleLoading();
-	}, [currentPage, itemsPerPage]);
+	}, [currentPage, itemsPerPage, location]);
 
 	return (
 		<Layout>
@@ -64,16 +65,14 @@ const ProductsList = () => {
 							? items.map((data) => <ItemCard data={data} key={data.id} />)
 							: null}
 					</div>
-					{pageCount <= 1 ? null : (
-						<Pagination
-							currentPage={currentPage}
-							ordersPerPage={itemsPerPage}
-							pageCount={pageCount}
-							options={[10, 20, 30, 50]}
-							setCurrentPage={setCurrentPage}
-							setOrdersPerPage={setItemsPerPage}
-						/>
-					)}
+					<Pagination
+						currentPage={currentPage}
+						ordersPerPage={itemsPerPage}
+						pageCount={pageCount}
+						options={[10, 20, 30, 50]}
+						setCurrentPage={setCurrentPage}
+						setOrdersPerPage={setItemsPerPage}
+					/>
 				</>
 			) : !isError ? (
 				<div className='min-h-[400px] flex justify-center items-center'>
