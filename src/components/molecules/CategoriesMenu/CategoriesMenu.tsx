@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import CategoryButton from '../../atoms/CategoryButton/CategoryButton';
-import { getCategories } from '../../../helpers/getCategories';
 import axios from 'axios';
-import { handleCategoryNames } from '../../../helpers/handleCategoryNames';
 
 type CategoriesMenuProps = {
 	category?: string;

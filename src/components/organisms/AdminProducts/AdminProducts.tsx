@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import AdminLayout from '../../templates/AdminLayout/AdminLayout';
 import AddProduct from '../../molecules/AddProduct/AddProduct';
-import { ProductModel } from '../../../models/Product';
 import Loader from '../../atoms/Loader/Loader';
 import AdminProductItem from '../../atoms/AdminProductItem/AdminProductItem';
 import PasswordModal from '../../molecules/PasswordModal/PasswordModal';
@@ -9,7 +8,8 @@ import GrayInput from '../../atoms/GrayInput/GrayInput';
 import ErrorMessage from '../../atoms/ErrorMessage/ErrorMessage';
 import { useDispatch } from 'react-redux';
 import Pagination from '../../molecules/Pagination/Pagination';
-import { fetchProducts, loadData } from '../../../features/admin/productsSlice';
+import { loadData } from '../../../features/admin/productsSlice';
+import { fetchProducts } from '../../../services/products.service';
 import { useAppSelector } from '../../../hooks/hooks';
 
 const AdminProducts = () => {

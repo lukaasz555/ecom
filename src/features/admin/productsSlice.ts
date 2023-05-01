@@ -10,10 +10,6 @@ interface ProductsResponse {
 	currentPage: number;
 }
 
-interface PaginationQuery {
-	[key: string]: number;
-}
-
 interface ProductsState {
 	products: ProductModel[];
 }
@@ -22,44 +18,12 @@ const initState: ProductsState = {
 	products: [],
 };
 
-export const fetchProducts = async (query: PaginationQuery) => {
-	const res: ProductsResponse = await axios
-		.get(`${process.env.REACT_APP_SERVER_URL}/products`, {
-			params: {
-				query: query,
-			},
-		})
-		.then((res) => res.data)
-		.catch((e) => {
-			// console.log('errorek');
-			// console.log(e);
-		});
-	return res;
-};
-
 interface FilteredQuery {
 	currentPage: number;
 	itemsPerPage: number;
 	catID?: number;
 	category?: string;
 }
-
-export const fetchFilteredProducts = async (filter: FilteredQuery) => {
-	const res: ProductsResponse = await axios
-		.get(
-			`${process.env.REACT_APP_SERVER_URL}/products/${filter.category}/${filter.catID}`,
-			{
-				params: {
-					page: filter.currentPage,
-					limit: filter.itemsPerPage,
-					catID: filter.catID,
-				},
-			}
-		)
-		.then((res) => res.data)
-		.catch((e) => console.log(e));
-	return res;
-};
 
 export const productsSlice = createSlice({
 	name: 'products',

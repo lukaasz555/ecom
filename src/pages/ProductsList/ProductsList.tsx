@@ -7,16 +7,12 @@ import Pagination from '../../components/molecules/Pagination/Pagination';
 import ItemCard from '../../components/organisms/ItemCard/ItemCard';
 import CategoriesMenu from '../../components/molecules/CategoriesMenu/CategoriesMenu';
 import { useElementSize } from 'usehooks-ts';
-import { fetchFilteredProducts } from '../../features/admin/productsSlice';
+import { fetchFilteredProducts } from '../../services/products.service';
 import { useDispatch } from 'react-redux';
 import { loadData } from '../../features/admin/productsSlice';
 import { useAppSelector } from '../../hooks/hooks';
 
-type AlbumsProps = {
-	filterCategory?: boolean;
-};
-
-const ProductsList = ({ filterCategory }: AlbumsProps) => {
+const ProductsList = () => {
 	const items: ProductModel[] = useAppSelector(
 		(state) => state.productReducer.products
 	);
@@ -29,10 +25,10 @@ const ProductsList = ({ filterCategory }: AlbumsProps) => {
 	const { category, catID } = useParams();
 	const dispatch = useDispatch();
 
-	const getProductsFromStore = async () => {
+	const updateProducts = async () => {
 		const { products, totalPages } = await fetchFilteredProducts({
-			currentPage,
-			itemsPerPage,
+			page: currentPage,
+			limit: itemsPerPage,
 			category,
 			catID: Number(catID),
 		});
@@ -40,13 +36,17 @@ const ProductsList = ({ filterCategory }: AlbumsProps) => {
 		setPageCount(totalPages);
 	};
 
+	const handleLoading = () => {
+		setLoading(true);
+		updateProducts().finally(() => setLoading(false));
+	};
+
 	useEffect(() => {
-		getProductsFromStore().finally(() => setLoading(false));
+		handleLoading();
 	}, []);
 
 	useEffect(() => {
-		setLoading(true);
-		getProductsFromStore().finally(() => setLoading(false));
+		handleLoading();
 	}, [currentPage, itemsPerPage]);
 
 	return (
