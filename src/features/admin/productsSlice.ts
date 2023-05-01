@@ -4,7 +4,7 @@ import { RootState } from '../../store/store';
 import { ProductModel } from '../../models/Product';
 import axios from 'axios';
 
-interface ProductResponse {
+interface ProductsResponse {
 	products: ProductModel[];
 	totalPages: number;
 	currentPage: number;
@@ -23,7 +23,7 @@ const initState: ProductsState = {
 };
 
 export const fetchProducts = async (query: PaginationQuery) => {
-	const res: ProductResponse = await axios
+	const res: ProductsResponse = await axios
 		.get(`${process.env.REACT_APP_SERVER_URL}/products`, {
 			params: {
 				query: query,
@@ -34,6 +34,30 @@ export const fetchProducts = async (query: PaginationQuery) => {
 			// console.log('errorek');
 			// console.log(e);
 		});
+	return res;
+};
+
+interface FilteredQuery {
+	currentPage: number;
+	itemsPerPage: number;
+	catID?: number;
+	category?: string;
+}
+
+export const fetchFilteredProducts = async (filter: FilteredQuery) => {
+	const res: ProductsResponse = await axios
+		.get(
+			`${process.env.REACT_APP_SERVER_URL}/products/${filter.category}/${filter.catID}`,
+			{
+				params: {
+					page: filter.currentPage,
+					limit: filter.itemsPerPage,
+					catID: filter.catID,
+				},
+			}
+		)
+		.then((res) => res.data)
+		.catch((e) => console.log(e));
 	return res;
 };
 
