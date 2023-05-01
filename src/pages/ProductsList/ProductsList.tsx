@@ -26,7 +26,7 @@ const ProductsList = () => {
 	const dispatch = useDispatch();
 
 	const updateProducts = async () => {
-		const { products, totalPages } = await fetchFilteredProducts({
+		const { items: products, totalPages } = await fetchFilteredProducts({
 			page: currentPage,
 			limit: itemsPerPage,
 			category,

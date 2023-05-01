@@ -6,7 +6,7 @@ import Loader from '../../atoms/Loader/Loader';
 import ErrorMessage from '../../atoms/ErrorMessage/ErrorMessage';
 import { useDispatch } from 'react-redux';
 import { loadData } from '../../../features/admin/ordersSlice';
-import { fetchOrders } from '../../../features/admin/ordersSlice';
+import { fetchOrders } from '../../../services/orders.service';
 import { useAppSelector } from '../../../hooks/hooks';
 import Pagination from '../../molecules/Pagination/Pagination';
 import OrderModal from '../../atoms/OrderModal/OrderModal';
@@ -25,8 +25,8 @@ const AdminOrders = () => {
 	const [isModalOpen, setModalOpen] = useState<boolean>(false);
 	const [selectedOrder, setSelectedOrder] = useState<OrderModel>();
 
-	const getOrdersFromStore = async () => {
-		const { orders, totalPages } = await fetchOrders({
+	const getOrders = async () => {
+		const { items: orders, totalPages } = await fetchOrders({
 			limit: ordersPerPage,
 			page: currentPage,
 		});
@@ -34,19 +34,17 @@ const AdminOrders = () => {
 		setPageCount(totalPages);
 	};
 
-	useEffect(() => {
+	const handleLoading = () => {
 		setLoading(true);
-		getOrdersFromStore().finally(() => setLoading(false));
+		getOrders().finally(() => setLoading(false));
+	};
+
+	useEffect(() => {
+		handleLoading();
 	}, [ordersPerPage, currentPage]);
 
 	useEffect(() => {
-		setError(false);
-		getOrdersFromStore()
-			.then(() => setLoading(false))
-			.catch((err) => {
-				setLoading(false);
-				setError(true);
-			});
+		handleLoading();
 	}, []);
 
 	const selectOrder = (id: string) => {

@@ -29,8 +29,8 @@ const AdminProducts = () => {
 	const [pageCount, setPageCount] = useState<number>(0);
 	const dispatch = useDispatch();
 
-	const getProductsFromStore = async () => {
-		const { products, totalPages } = await fetchProducts({
+	const getProducts = async () => {
+		const { items: products, totalPages } = await fetchProducts({
 			limit: ordersPerPage,
 			page: currentPage,
 		});
@@ -38,19 +38,17 @@ const AdminProducts = () => {
 		setPageCount(totalPages);
 	};
 
-	useEffect(() => {
+	const handleLoading = () => {
 		setLoading(true);
-		getProductsFromStore().finally(() => setLoading(false));
+		getProducts().finally(() => setLoading(false));
+	};
+
+	useEffect(() => {
+		handleLoading();
 	}, [ordersPerPage, currentPage]);
 
 	useEffect(() => {
-		setError(false);
-		getProductsFromStore()
-			.then(() => setLoading(false))
-			.catch((err) => {
-				setLoading(false);
-				setError(true);
-			});
+		handleLoading();
 	}, []);
 
 	const removeProduct = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -71,7 +69,7 @@ const AdminProducts = () => {
 				<div className='min-h-[200px] flex justify-center items-center'>
 					<Loader />
 				</div>
-			) : products.length > 0 ? (
+			) : products && products.length > 0 ? (
 				<>
 					<div className='flex flex-col'>
 						<div className='flex justify-end my-3'>

@@ -1,11 +1,6 @@
 import { ProductModel } from '../models/Product';
+import { ResponseData } from '../models/ResponseData';
 import axios from 'axios';
-
-interface ProductsResponse {
-	products: ProductModel[];
-	totalPages: number;
-	currentPage: number;
-}
 
 interface Filter {
 	page: number;
@@ -15,7 +10,7 @@ interface Filter {
 }
 
 export const fetchProducts = async (query: Filter) => {
-	const res: ProductsResponse = await axios
+	const res: ResponseData<ProductModel> = await axios
 		.get(`${process.env.REACT_APP_SERVER_URL}/products`, {
 			params: {
 				query: query,
@@ -29,7 +24,7 @@ export const fetchProducts = async (query: Filter) => {
 };
 
 export const fetchFilteredProducts = async (filter: Filter) => {
-	const res: ProductsResponse = await axios
+	const res: ResponseData<ProductModel> = await axios
 		.get(
 			`${process.env.REACT_APP_SERVER_URL}/products/${filter.category}/${filter.catID}`,
 			{

@@ -2,13 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
 import { ProductModel } from '../../models/Product';
-import axios from 'axios';
-
-interface ProductsResponse {
-	products: ProductModel[];
-	totalPages: number;
-	currentPage: number;
-}
 
 interface ProductsState {
 	products: ProductModel[];
@@ -17,13 +10,6 @@ interface ProductsState {
 const initState: ProductsState = {
 	products: [],
 };
-
-interface FilteredQuery {
-	currentPage: number;
-	itemsPerPage: number;
-	catID?: number;
-	category?: string;
-}
 
 export const productsSlice = createSlice({
 	name: 'products',
