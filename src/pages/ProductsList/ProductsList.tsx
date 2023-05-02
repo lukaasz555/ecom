@@ -55,7 +55,7 @@ const ProductsList = () => {
 
 	return (
 		<Layout>
-			<CategoriesMenu category={category} />
+			<CategoriesMenu />
 			{isLoading ? (
 				<div className='min-h-[400px] flex justify-center items-center'>
 					<Loader />

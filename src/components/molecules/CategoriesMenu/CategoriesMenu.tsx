@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import CategoryButton from '../../atoms/CategoryButton/CategoryButton';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
-type CategoriesMenuProps = {
-	category?: string;
-};
-
-const CategoriesMenu = ({ category }: CategoriesMenuProps) => {
+const CategoriesMenu = () => {
 	const [items, setItems] = useState<number[]>([]);
+	const { category } = useParams();
 
 	const fetchCategoriesFromStore = async () => {
 		const res = await axios
@@ -26,7 +24,7 @@ const CategoriesMenu = ({ category }: CategoriesMenuProps) => {
 
 	useEffect(() => {
 		fetchCategoriesFromStore();
-	}, []);
+	}, [category]);
 
 	return (
 		<nav className='my-10 flex items-start flex-col xl:flex-row  xl:justify-center xl:flex-wrap xl:gap-3'>
