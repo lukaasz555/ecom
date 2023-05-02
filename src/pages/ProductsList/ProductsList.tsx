@@ -39,7 +39,9 @@ const ProductsList = () => {
 
 	const handleLoading = () => {
 		setLoading(true);
-		updateProducts().finally(() => setLoading(false));
+		updateProducts()
+			.catch((e) => setError(true))
+			.finally(() => setLoading(false));
 	};
 
 	useEffect(() => {
@@ -52,14 +54,13 @@ const ProductsList = () => {
 
 	return (
 		<Layout>
+			<CategoriesMenu category={category} />
 			{isLoading ? (
 				<div className='min-h-[400px] flex justify-center items-center'>
 					<Loader />
 				</div>
 			) : items.length > 0 ? (
 				<>
-					<CategoriesMenu category={category} />
-
 					<div ref={divRef} className='flex flex-wrap justify-center'>
 						{items !== undefined
 							? items.map((data) => <ItemCard data={data} key={data.id} />)

@@ -15,8 +15,6 @@ import { useAppSelector } from '../../../hooks/hooks';
 const AdminProducts = () => {
 	const products = useAppSelector((state) => state.productsReducer.products);
 	const [open, setOpen] = useState(false);
-	// const [products, setProducts] = useState<ProductModel[] | []>([]);
-	// const [filtered, setFiltered] = useState<ProductModel[] | []>([]);
 	const [message, setMessage] = useState('');
 	const [isLoading, setLoading] = useState(false);
 	const [password, setPassword] = useState('');
@@ -40,7 +38,9 @@ const AdminProducts = () => {
 
 	const handleLoading = () => {
 		setLoading(true);
-		getProducts().finally(() => setLoading(false));
+		getProducts()
+			.catch((e) => setError(true))
+			.finally(() => setLoading(false));
 	};
 
 	useEffect(() => {

@@ -13,9 +13,6 @@ import OrderModal from '../../atoms/OrderModal/OrderModal';
 
 const AdminOrders = () => {
 	const orders = useAppSelector((state) => state.ordersReducer.orders);
-	// const [filtered, setFiltered] = useState<OrderModel[] | []>([]);
-	// const [priceFilter, setPriceFilter] = useState(false);
-	// const [dateFilter, setDateFilter] = useState(false);
 	const [isLoading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
 	const [ordersPerPage, setOrdersPerPage] = useState<number>(10);
@@ -36,7 +33,9 @@ const AdminOrders = () => {
 
 	const handleLoading = () => {
 		setLoading(true);
-		getOrders().finally(() => setLoading(false));
+		getOrders()
+			.catch((e) => setError(true))
+			.finally(() => setLoading(false));
 	};
 
 	useEffect(() => {
