@@ -55,7 +55,7 @@ const ProductDetails = ({ data }: ProductModel2) => {
 				<li className='flex justify-start items-center py-1 odd:bg-white even:bg-gray font-lato px-2'>
 					<span className='text-sparkle basis-1/3'>Kategoria:</span>
 					<Link
-						to={`/shop/category/${data.type}/${data.categoryID}`}
+						to={`/shop/products/${data.type}/${data.categoryID}`}
 						className='text-sapphire'>
 						{handleCategoryNames(data.categoryID)}
 					</Link>
