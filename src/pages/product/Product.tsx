@@ -6,10 +6,10 @@ import { ProductModel } from '../../models/Product';
 import ProductHead from '../../components/organisms/ProductHead/ProductHead';
 import ProductDesc from '../../components/atoms/ProductDesc/ProductDesc';
 import ProductDetails from '../../components/atoms/ProductDetails/ProductDetails';
-import axios from 'axios';
 import Return from '../../components/atoms/Return/Return';
 import ProductModal from '../../components/atoms/ProductModal/ProductModal';
 import Loader from '../../components/atoms/Loader/Loader';
+import { fetchExactProduct } from '../../services/products.service';
 
 const initValue: ProductModel = {
 	id: '',
@@ -27,11 +27,10 @@ const initValue: ProductModel = {
 };
 
 const Product = () => {
-	const [product, setProduct] = useState<ProductModel>(initValue);
+	const [product, setProduct] = useState<ProductModel | null>(initValue);
 	const myRef = useRef(null);
 	const [showModal, setShowModal] = useState(false);
 	const [isLoading, setLoading] = useState(true);
-	const URL = process.env.REACT_APP_SERVER_URL;
 	const [error, setError] = useState(false);
 	const [status, setStatus] = useState(0);
 
@@ -40,23 +39,19 @@ const Product = () => {
 
 	const { id } = useParams();
 
+	const fetchProduct = async () => {
+		if (id) {
+			const { status, data } = await fetchExactProduct(id);
+			setStatus(status);
+			setProduct(data);
+		}
+	};
+
 	useEffect(() => {
-		axios
-			.get(`${URL}/products/${id}`, {
-				params: {
-					id,
-				},
-			})
-			.then((res) => {
-				setProduct(res.data);
-				setLoading(false);
-				setError(false);
-				setStatus(res.status);
-			})
-			.catch((err) => {
-				setLoading(false);
-				setError(true);
-			});
+		setLoading(true);
+		fetchProduct()
+			.catch((e) => setError(true))
+			.finally(() => setLoading(false));
 	}, [id]);
 
 	return (
@@ -81,7 +76,7 @@ const Product = () => {
 						/>
 					</svg>
 				</div>
-			) : status === 200 ? (
+			) : product && product.price ? (
 				<>
 					<div className='mb-10 pb-5 border-b-[1px]'>
 						<Return />

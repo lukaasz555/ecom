@@ -17,11 +17,10 @@ const CategoriesMenu = ({ category }: CategoriesMenuProps) => {
 				},
 			})
 			.then((res) => {
-				console.log(res.data);
 				setItems(res.data);
 				return res.data;
 			})
-			.catch((e) => console.log(e));
+			.catch((e) => console.error(e));
 		return res;
 	};
 

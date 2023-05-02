@@ -46,10 +46,6 @@ const ProductsList = () => {
 
 	useEffect(() => {
 		handleLoading();
-	}, []);
-
-	useEffect(() => {
-		handleLoading();
 	}, [currentPage, itemsPerPage, location]);
 
 	return (
