@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useParams, useNavigate } from 'react-router-dom';
+import {
+	useLocation,
+	useParams,
+	useNavigate,
+	useSearchParams,
+} from 'react-router-dom';
 import { ProductModel } from '../../models/Product';
 import Layout from '../../components/templates/Layout/Layout';
 import Loader from '../../components/atoms/Loader/Loader';
@@ -11,6 +16,7 @@ import { fetchFilteredProducts } from '../../services/products.service';
 import { useDispatch } from 'react-redux';
 import { loadData } from '../../features/admin/productsSlice';
 import { useAppSelector } from '../../hooks/hooks';
+import { useNavigationSearch } from '../../hooks/hooks';
 
 const ProductsList = () => {
 	const items: ProductModel[] = useAppSelector(
@@ -19,8 +25,12 @@ const ProductsList = () => {
 	const [isLoading, setLoading] = useState<boolean>(true);
 	const [isError, setError] = useState<boolean>(false);
 	const [divRef, { width }] = useElementSize();
-	const [itemsPerPage, setItemsPerPage] = useState<number>(10);
-	const [currentPage, setCurrentPage] = useState<number>(1);
+	const [searchParams, setSearchParams] = useSearchParams();
+	const navigationSearch = useNavigationSearch();
+	const limit = searchParams.get('itemsPerPage');
+	const page = searchParams.get('currentPage');
+	const [itemsPerPage, setItemsPerPage] = useState<number>(Number(limit));
+	const [currentPage, setCurrentPage] = useState<number>(Number(page));
 	const [pageCount, setPageCount] = useState<number>(0);
 	const { category, catID } = useParams();
 	const dispatch = useDispatch();
@@ -28,6 +38,10 @@ const ProductsList = () => {
 	const navigate = useNavigate();
 
 	const updateProducts = async () => {
+		navigationSearch(`/shop/products/${category}/${catID}`, {
+			itemsPerPage: String(itemsPerPage),
+			currentPage: String(currentPage),
+		});
 		const { items: products, totalPages } = await fetchFilteredProducts({
 			page: currentPage,
 			limit: itemsPerPage,
@@ -39,6 +53,10 @@ const ProductsList = () => {
 	};
 
 	const handleLoading = () => {
+		if (Number(page) === 0) {
+			setCurrentPage(1);
+			setItemsPerPage(10);
+		}
 		setLoading(true);
 		updateProducts()
 			.catch((e) => setError(true))
@@ -51,7 +69,8 @@ const ProductsList = () => {
 			navigate(URL);
 		}
 		handleLoading();
-	}, [currentPage, itemsPerPage, location]);
+		console.log(location);
+	}, [currentPage, itemsPerPage, location.search]);
 
 	return (
 		<Layout>
