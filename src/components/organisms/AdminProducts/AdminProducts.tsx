@@ -122,10 +122,10 @@ const AdminProducts = () => {
 									{searchingPhrase !== '' ? null : (
 										<Pagination
 											currentPage={currentPage}
-											ordersPerPage={ordersPerPage}
+											itemsPerPage={ordersPerPage}
 											pageCount={pageCount}
 											setCurrentPage={setCurrentPage}
-											setOrdersPerPage={setOrdersPerPage}
+											setItemsPerPage={setOrdersPerPage}
 											options={[10, 20, 30, 50]}
 										/>
 									)}

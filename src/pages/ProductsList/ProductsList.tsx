@@ -69,11 +69,11 @@ const ProductsList = () => {
 					</div>
 					<Pagination
 						currentPage={currentPage}
-						ordersPerPage={itemsPerPage}
+						itemsPerPage={itemsPerPage}
 						pageCount={pageCount}
 						options={[10, 20, 30, 50]}
 						setCurrentPage={setCurrentPage}
-						setOrdersPerPage={setItemsPerPage}
+						setItemsPerPage={setItemsPerPage}
 					/>
 				</>
 			) : !isError ? (

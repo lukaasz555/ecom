@@ -98,10 +98,10 @@ const AdminOrders = () => {
 					<div className='flex justify-center mt-3'>
 						<Pagination
 							currentPage={currentPage}
-							ordersPerPage={ordersPerPage}
+							itemsPerPage={ordersPerPage}
 							pageCount={pageCount}
 							setCurrentPage={setCurrentPage}
-							setOrdersPerPage={setOrdersPerPage}
+							setItemsPerPage={setOrdersPerPage}
 							options={[5, 10, 15, 20]}
 						/>
 					</div>

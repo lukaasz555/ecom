@@ -5,15 +5,15 @@ import PaginationButtons from '../../atoms/PaginationButtons/PaginationButtons';
 type PaginationProps = {
 	currentPage: number;
 	pageCount: number;
-	ordersPerPage: number;
+	itemsPerPage: number;
 	setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
-	setOrdersPerPage: React.Dispatch<React.SetStateAction<number>>;
+	setItemsPerPage: React.Dispatch<React.SetStateAction<number>>;
 	options: number[];
 };
 
 const Pagination = (props: PaginationProps) => {
-	const { currentPage, pageCount, ordersPerPage } = props;
-	const { setCurrentPage, setOrdersPerPage } = props;
+	const { currentPage, pageCount, itemsPerPage } = props;
+	const { setCurrentPage, setItemsPerPage } = props;
 
 	function handleNextPage(): void {
 		currentPage < pageCount
@@ -27,7 +27,7 @@ const Pagination = (props: PaginationProps) => {
 
 	function handleOrdersPerPageChange(e: React.MouseEvent): void {
 		const target = e.target as Element;
-		setOrdersPerPage(Number(target.innerHTML));
+		setItemsPerPage(Number(target.innerHTML));
 	}
 
 	return (
@@ -42,7 +42,7 @@ const Pagination = (props: PaginationProps) => {
 			)}
 
 			<RecordsQtyChooser
-				ordersPerPage={ordersPerPage}
+				ordersPerPage={itemsPerPage}
 				handleOrdersPerPageChange={handleOrdersPerPageChange}
 				options={props.options}
 			/>
