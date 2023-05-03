@@ -21,7 +21,7 @@ const AdminOrders = () => {
 	const dispatch = useDispatch();
 	const [isModalOpen, setModalOpen] = useState<boolean>(false);
 	const [selectedOrder, setSelectedOrder] = useState<OrderModel>();
-	const navigateSearch = useNavigationSearch();
+	const navigationSearch = useNavigationSearch();
 	const [searchParams, setSearchParams] = useSearchParams();
 	const limit = searchParams.get('ordersPerPage');
 	const page = searchParams.get('currentPage');
@@ -29,7 +29,7 @@ const AdminOrders = () => {
 	const [currentPage, setCurrentPage] = useState<number>(Number(page));
 
 	const getOrders = async () => {
-		navigateSearch('/admin/orders', {
+		navigationSearch('/admin/orders', {
 			ordersPerPage: String(ordersPerPage),
 			currentPage: String(currentPage),
 		});

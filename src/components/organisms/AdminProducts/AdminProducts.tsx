@@ -11,6 +11,8 @@ import Pagination from '../../molecules/Pagination/Pagination';
 import { loadData } from '../../../features/admin/productsSlice';
 import { fetchProducts } from '../../../services/products.service';
 import { useAppSelector } from '../../../hooks/hooks';
+import { useSearchParams } from 'react-router-dom';
+import { useNavigationSearch } from '../../../hooks/hooks';
 
 const AdminProducts = () => {
 	const products = useAppSelector((state) => state.productsReducer.products);
@@ -21,15 +23,23 @@ const AdminProducts = () => {
 	const [isModalOpen, setModalOpen] = useState(false);
 	const [idToReq, setIdToReq] = useState<undefined | string>('');
 	const [error, setError] = useState(false);
+	const [searchParams, setSearchParams] = useSearchParams();
+	const limit = searchParams.get('productsPerPage');
+	const page = searchParams.get('currentPage');
 	const [searchingPhrase, setSearchingPhrase] = useState('');
-	const [ordersPerPage, setOrdersPerPage] = useState<number>(10);
-	const [currentPage, setCurrentPage] = useState<number>(1);
+	const [productsPerPage, setProductsPerPage] = useState<number>(Number(limit));
+	const [currentPage, setCurrentPage] = useState<number>(Number(page));
 	const [pageCount, setPageCount] = useState<number>(0);
 	const dispatch = useDispatch();
+	const navigationSearch = useNavigationSearch();
 
 	const getProducts = async () => {
+		navigationSearch('/admin/products', {
+			productsPerPage: String(productsPerPage),
+			currentPage: String(currentPage),
+		});
 		const { items: products, totalPages } = await fetchProducts({
-			limit: ordersPerPage,
+			limit: productsPerPage,
 			page: currentPage,
 		});
 		dispatch(loadData(products));
@@ -37,6 +47,10 @@ const AdminProducts = () => {
 	};
 
 	const handleLoading = () => {
+		if (Number(page) === 0) {
+			setCurrentPage(1);
+			setProductsPerPage(10);
+		}
 		setLoading(true);
 		getProducts()
 			.catch((e) => setError(true))
@@ -45,11 +59,7 @@ const AdminProducts = () => {
 
 	useEffect(() => {
 		handleLoading();
-	}, [ordersPerPage, currentPage]);
-
-	useEffect(() => {
-		handleLoading();
-	}, []);
+	}, [productsPerPage, currentPage]);
 
 	const removeProduct = (e: React.MouseEvent<HTMLButtonElement>) => {
 		const target = e.target as HTMLElement;
@@ -122,10 +132,10 @@ const AdminProducts = () => {
 									{searchingPhrase !== '' ? null : (
 										<Pagination
 											currentPage={currentPage}
-											itemsPerPage={ordersPerPage}
+											itemsPerPage={productsPerPage}
 											pageCount={pageCount}
 											setCurrentPage={setCurrentPage}
-											setItemsPerPage={setOrdersPerPage}
+											setItemsPerPage={setProductsPerPage}
 											options={[10, 20, 30, 50]}
 										/>
 									)}
