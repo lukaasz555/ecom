@@ -10,19 +10,29 @@ import { fetchOrders } from '../../../services/orders.service';
 import { useAppSelector } from '../../../hooks/hooks';
 import Pagination from '../../molecules/Pagination/Pagination';
 import OrderModal from '../../atoms/OrderModal/OrderModal';
+import { useSearchParams } from 'react-router-dom';
+import { useNavigationSearch } from '../../../hooks/hooks';
 
 const AdminOrders = () => {
 	const orders = useAppSelector((state) => state.ordersReducer.orders);
 	const [isLoading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
-	const [ordersPerPage, setOrdersPerPage] = useState<number>(10);
-	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [pageCount, setPageCount] = useState<number>(0);
 	const dispatch = useDispatch();
 	const [isModalOpen, setModalOpen] = useState<boolean>(false);
 	const [selectedOrder, setSelectedOrder] = useState<OrderModel>();
+	const navigateSearch = useNavigationSearch();
+	const [searchParams, setSearchParams] = useSearchParams();
+	const limit = searchParams.get('ordersPerPage');
+	const page = searchParams.get('currentPage');
+	const [ordersPerPage, setOrdersPerPage] = useState<number>(Number(limit));
+	const [currentPage, setCurrentPage] = useState<number>(Number(page));
 
 	const getOrders = async () => {
+		navigateSearch('/admin/orders', {
+			ordersPerPage: String(ordersPerPage),
+			currentPage: String(currentPage),
+		});
 		const { items: orders, totalPages } = await fetchOrders({
 			limit: ordersPerPage,
 			page: currentPage,
@@ -32,6 +42,10 @@ const AdminOrders = () => {
 	};
 
 	const handleLoading = () => {
+		if (Number(page) === 0) {
+			setCurrentPage(1);
+			setOrdersPerPage(10);
+		}
 		setLoading(true);
 		getOrders()
 			.catch((e) => setError(true))
@@ -41,10 +55,6 @@ const AdminOrders = () => {
 	useEffect(() => {
 		handleLoading();
 	}, [ordersPerPage, currentPage]);
-
-	useEffect(() => {
-		handleLoading();
-	}, []);
 
 	const selectOrder = (id: string) => {
 		const order = orders.find((x) => x._id === id);
