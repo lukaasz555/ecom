@@ -33,7 +33,7 @@ const ItemCard = ({ data }: ProductModel2) => {
 				<div className='flex flex-col mt-2'>
 					<h3 className='text-center md:text-left text-l w-[100%] font-lato font-[400] '>
 						<Link
-							to={`/shop/product/${type}/${id}`}
+							to={`/shop/products/${type}/item/${id}`}
 							className='focus:underline focus:text-brownSugar outline-none'>
 							{title}
 						</Link>

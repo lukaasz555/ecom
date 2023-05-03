@@ -22,9 +22,9 @@ const OrderItemDetails = ({ open, order }: IOrderItemDetails) => {
 
 	return (
 		<div
-			className={`mb-5 py-2 px-3 bg-gray duration-150 origin-top ${
+			className={`mb-5 py-2 px-3 bg-gray ${
 				open ? 'block' : 'hidden'
-			} border-[1px] mt-2 `}>
+			} border-[1px] mt-2 w-[100%]`}>
 			<div className='flex flex-col gap-y-3 flex-wrap'>
 				<Status id={order._id} status={order.status} />
 				<div className='flex flex-col lg:flex-row lg:justify-between'>

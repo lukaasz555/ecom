@@ -3,37 +3,37 @@ import { OrderModel } from '../../../models/Order';
 import AdminLayout from '../../templates/AdminLayout/AdminLayout';
 import OrderItem from '../../atoms/Admin/OrderItem/OrderItem';
 import Loader from '../../atoms/Loader/Loader';
-import ReactPaginate from 'react-paginate';
-import AdminOrderTemplate from '../../atoms/AdminOrderTemplate/AdminOrderTemplate';
 import ErrorMessage from '../../atoms/ErrorMessage/ErrorMessage';
-//
 import { useDispatch } from 'react-redux';
 import { loadData } from '../../../features/admin/ordersSlice';
-import { fetchOrders } from '../../../features/admin/ordersSlice';
+import { fetchOrders } from '../../../services/orders.service';
 import { useAppSelector } from '../../../hooks/hooks';
+import Pagination from '../../molecules/Pagination/Pagination';
+import OrderModal from '../../atoms/OrderModal/OrderModal';
+import { useSearchParams } from 'react-router-dom';
+import { useNavigationSearch } from '../../../hooks/hooks';
 
 const AdminOrders = () => {
-	// const [allOrders, setAllOrders] = useState<OrderModel[] | []>([]);
-	// const [orders, setOrders] = useState<OrderModel[] | []>([]);
 	const orders = useAppSelector((state) => state.ordersReducer.orders);
-	const [filtered, setFiltered] = useState<OrderModel[] | []>([]);
-	const [priceFilter, setPriceFilter] = useState(false);
-	const [dateFilter, setDateFilter] = useState(false);
 	const [isLoading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
-	// pagination
-	const ordersPerPage: number = 5;
-	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [pageCount, setPageCount] = useState<number>(0);
 	const dispatch = useDispatch();
+	const [isModalOpen, setModalOpen] = useState<boolean>(false);
+	const [selectedOrder, setSelectedOrder] = useState<OrderModel>();
+	const navigationSearch = useNavigationSearch();
+	const [searchParams, setSearchParams] = useSearchParams();
+	const limit = searchParams.get('ordersPerPage');
+	const page = searchParams.get('currentPage');
+	const [ordersPerPage, setOrdersPerPage] = useState<number>(Number(limit));
+	const [currentPage, setCurrentPage] = useState<number>(Number(page));
 
-	// useEffect(() => {
-	// 	setOrders(filtered);
-	// }, [filtered]);
-
-	const getOrdersFromStore = async () => {
-		console.log(currentPage);
-		const { orders, totalPages } = await fetchOrders({
+	const getOrders = async () => {
+		navigationSearch('/admin/orders', {
+			ordersPerPage: String(ordersPerPage),
+			currentPage: String(currentPage),
+		});
+		const { items: orders, totalPages } = await fetchOrders({
 			limit: ordersPerPage,
 			page: currentPage,
 		});
@@ -41,36 +41,29 @@ const AdminOrders = () => {
 		setPageCount(totalPages);
 	};
 
-	function handleNextPage(): void {
-		if (currentPage < pageCount) {
-			setCurrentPage(currentPage + 1);
-		} else {
-			setCurrentPage(currentPage);
-		}
-	}
-
-	function handlePreviousPage(): void {
-		if (currentPage > 1) {
-			setCurrentPage(currentPage - 1);
-		} else {
+	const handleLoading = () => {
+		if (Number(page) === 0) {
 			setCurrentPage(1);
+			setOrdersPerPage(10);
 		}
-	}
+		setLoading(true);
+		getOrders()
+			.catch((e) => setError(true))
+			.finally(() => setLoading(false));
+	};
 
 	useEffect(() => {
-		console.log(currentPage);
-		getOrdersFromStore();
-	}, [currentPage]);
+		handleLoading();
+	}, [ordersPerPage, currentPage]);
 
-	useEffect(() => {
-		setError(false);
-		getOrdersFromStore()
-			.then(() => setLoading(false))
-			.catch((err) => {
-				setLoading(false);
-				setError(true);
-			});
-	}, []);
+	const selectOrder = (id: string) => {
+		const order = orders.find((x) => x._id === id);
+		setSelectedOrder(order);
+		openModal();
+	};
+
+	const openModal = () => setModalOpen(true);
+	const closeModal = () => setModalOpen(false);
 
 	return (
 		<AdminLayout>
@@ -82,44 +75,42 @@ const AdminOrders = () => {
 					<Loader />
 				</div>
 			) : orders.length > 0 ? (
-				<div className='w-full'>
-					<div className='min-h-[340px]'>
-						<AdminOrderTemplate
-							setPriceFilter={setPriceFilter}
-							priceFilter={priceFilter}
-							dateFilter={dateFilter}
-							setDateFilter={setDateFilter}
-							orders={orders}
-							setFiltered={setFiltered}
-						/>
-
-						{orders.map((order) => (
-							<OrderItem order={order} key={order._id} />
-						))}
-					</div>
-					<div className='flex flex-col'>
-						<p>
-							Obecna strona:{' '}
-							<strong>{currentPage !== null ? currentPage : null}</strong>
-						</p>
-						<p>
-							Strony: <strong>{pageCount}</strong>{' '}
-						</p>
-					</div>
+				<div className='min-h-[340px] flex flex-col justify-between'>
+					<table className='w-full mb-12'>
+						<thead>
+							<tr className='border-b-[1px] text-left'>
+								<th className='font-medium w-[120px]'>STATUS</th>
+								<th className='font-medium w-auto'>DANE KLIENTA</th>
+								<th className='font-medium w-[80px] text-center'>KWOTA</th>
+								<th className='font-medium w-[100px] text-center'>DATA</th>
+							</tr>
+						</thead>
+						<tbody>
+							{orders.map((order) => (
+								<OrderItem
+									selectOrder={selectOrder}
+									order={order}
+									key={order._id}
+								/>
+							))}
+						</tbody>
+					</table>
 					<div className='flex justify-center mt-3'>
-						{/* <ReactPaginate
-							className='flex gap-x-5'
+						<Pagination
+							currentPage={currentPage}
+							itemsPerPage={ordersPerPage}
 							pageCount={pageCount}
-							onPageChange={handlePageClick}
-							nextLabel='kolejna>>'
-							previousLabel='<<poprzednia'
-							activeLinkClassName='text-white bg-black px-1.5 text-center py-0.5 rounded-[4px]'
-							disabledClassName='opacity-0'
-							disabledLinkClassName='cursor-default'
-						/> */}
-						<button onClick={handlePreviousPage}>poprzednia</button>
-						<button onClick={handleNextPage}>następna</button>
+							setCurrentPage={setCurrentPage}
+							setItemsPerPage={setOrdersPerPage}
+							options={[5, 10, 15, 20]}
+						/>
 					</div>
+					<OrderModal
+						showModal={isModalOpen}
+						closeModal={closeModal}
+						order={selectedOrder}
+						isModalOpen={isModalOpen}
+					/>
 				</div>
 			) : orders.length === 0 && !error ? (
 				<p className='mt-10'>Brak zamówień.</p>

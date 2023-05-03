@@ -7,31 +7,33 @@ import { ProductModel } from '../../../models/Product';
 import { Link } from 'react-router-dom';
 
 type AdminProductProps = {
-	p: ProductModel;
+	product: ProductModel;
 	removeProduct: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
-const AdminProductItem = ({ p, removeProduct }: AdminProductProps) => {
+const AdminProductItem = ({ product, removeProduct }: AdminProductProps) => {
 	return (
-		<div
-			key={p.id}
-			className='flex w-full odd:bg-white even:bg-gray items-center text-s'>
-			<div className='basis-[15%]'>{p.id}</div>
-			<div className='basis-[40%]'>{p.title}</div>
-			<div className='basis-[15%] text-center'>
-				{handleNumbFormat(p.price - p.discount)}
-			</div>
-			<div className='basis-[15%] text-center'>{p.type}</div>
-			<div className='basis-[15%] flex justify-center gap-x-2'>
-				<Link to={`/admin/products/edit/${p.id}`}>
-					<FontAwesomeIcon icon={faPenToSquare} id={p.id} />
-				</Link>
+		<tr
+			key={product.id}
+			className='odd:bg-white even:bg-gray text-m hover:outline hover:outline-1 hover:outline-brownSugar'>
+			<td className='w-[50px]'>{product.id}</td>
+			<td>{product.title}</td>
+			<td className='text-center w-[70px]'>
+				{handleNumbFormat(product.price - product.discount)}
+			</td>
+			<td className='text-center  w-[80px]'>{product.type}</td>
+			<td className='w-[60px]'>
+				<div className='basis-[15%] flex justify-center gap-x-2'>
+					<Link to={`/admin/products/edit/${product.id}`}>
+						<FontAwesomeIcon icon={faPenToSquare} id={product.id} />
+					</Link>
 
-				<button id={p.id} onClick={removeProduct}>
-					<FontAwesomeIcon icon={faTrash} />
-				</button>
-			</div>
-		</div>
+					<button id={product.id} onClick={removeProduct}>
+						<FontAwesomeIcon icon={faTrash} />
+					</button>
+				</div>
+			</td>
+		</tr>
 	);
 };
 
