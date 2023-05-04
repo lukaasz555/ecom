@@ -107,7 +107,7 @@ const CartItem = ({ data, cartItems }: ICartItem) => {
 						<div className='mr-5'>
 							<div className='font-lato'>
 								<h4 className='text-m hover:underline'>
-									<Link to={`/shop/product/${type}/${id}`}>{title}</Link>
+									<Link to={`/shop/products/${type}/item/${id}`}>{title}</Link>
 								</h4>
 								<h5 className='text-sparkle text-s'>{authors.join(', ')}</h5>
 							</div>
