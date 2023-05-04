@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ProductModel } from '../../../models/Product';
 import CloseIcon from '../../atoms/CloseIcon/CloseIcon';
 import { Link } from 'react-router-dom';
@@ -17,77 +17,31 @@ interface ICartItem {
 }
 
 const CartItem = ({ data, cartItems }: ICartItem) => {
+	const [item, setItem] = useState<ProductModel | null>();
 	const { img, title, authors, price, discount, id, type } = data;
 	const dispatch = useAppDispatch();
 
 	const addToCart = () => {
-		dispatch(
-			addItem({
-				categoryID: data.categoryID,
-				description: data.description,
-				discount: data.discount,
-				format: data.format,
-				id: data.id,
-				img: data.img,
-				thumbnail: data.thumbnail,
-				price: data.price,
-				releaseYear: data.releaseYear,
-				title: data.title,
-				type: data.type,
-				label: data.label,
-				language: data.language,
-				pages: data.pages,
-				publisher: data.publisher,
-				authors: data.authors,
-			})
-		);
+		if (item) {
+			dispatch(addItem(item));
+		}
 	};
 
 	const removeItemFromCard = () => {
-		dispatch(
-			removeItem({
-				categoryID: data.categoryID,
-				description: data.description,
-				discount: data.discount,
-				format: data.format,
-				id: data.id,
-				img: data.img,
-				thumbnail: data.thumbnail,
-				price: data.price,
-				releaseYear: data.releaseYear,
-				title: data.title,
-				type: data.type,
-				label: data.label,
-				language: data.language,
-				pages: data.pages,
-				publisher: data.publisher,
-				authors: data.authors,
-			})
-		);
+		if (item) {
+			dispatch(removeItem(item));
+		}
 	};
 
 	const removeIdFromCard = () => {
-		dispatch(
-			removeID({
-				categoryID: data.categoryID,
-				description: data.description,
-				discount: data.discount,
-				format: data.format,
-				id: data.id,
-				img: data.img,
-				thumbnail: data.thumbnail,
-				price: data.price,
-				releaseYear: data.releaseYear,
-				title: data.title,
-				type: data.type,
-				label: data.label,
-				language: data.language,
-				pages: data.pages,
-				publisher: data.publisher,
-				authors: data.authors,
-			})
-		);
+		if (item) {
+			dispatch(removeID(item));
+		}
 	};
+
+	useEffect(() => {
+		setItem(data);
+	}, [data]);
 
 	return (
 		<>
