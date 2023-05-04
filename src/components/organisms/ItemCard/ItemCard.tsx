@@ -34,8 +34,9 @@ const ItemCard = ({ data }: ProductModel2) => {
 					<h3 className='text-center md:text-left text-l w-[100%] font-lato font-[400] '>
 						<Link
 							to={`/shop/products/${type}/item/${id}`}
-							className='focus:underline focus:text-brownSugar outline-none'>
-							{title}
+							className='focus:underline focus:text-brownSugar outline-none'
+							title={title}>
+							{title.length < 36 ? title : title.substring(0, 36).concat('...')}
 						</Link>
 					</h3>
 					<h4 className='text-center md:text-left text-pencil text-m font-lato'>
@@ -47,7 +48,7 @@ const ItemCard = ({ data }: ProductModel2) => {
 						</div>
 						<div>
 							{discount > 0 ? (
-								<h5 className='ml-1 md:ml-0 inline font-medium text-brownSugar'>
+								<h5 className='ml-1 text-l md:ml-0 inline font-medium text-brownSugar'>
 									SALE
 								</h5>
 							) : null}

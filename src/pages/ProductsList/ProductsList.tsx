@@ -69,7 +69,6 @@ const ProductsList = () => {
 			navigate(URL);
 		}
 		handleLoading();
-		console.log(location);
 	}, [currentPage, itemsPerPage, location.search]);
 
 	return (
