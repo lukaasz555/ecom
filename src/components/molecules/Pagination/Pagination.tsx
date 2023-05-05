@@ -31,7 +31,8 @@ const Pagination = (props: PaginationProps) => {
 	}
 
 	return (
-		<div className='flex w-[100%] justify-end'>
+		<div className='flex w-[100%] px-4 md:justify-end'>
+			<div className='mr-auto md:hidden'></div>
 			{pageCount < 2 ? null : (
 				<PaginationButtons
 					handleNextPage={handleNextPage}

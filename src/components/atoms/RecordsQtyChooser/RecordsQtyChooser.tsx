@@ -10,12 +10,10 @@ type QtyChooserProps = {
 const RecordsQtyChooser = ({
 	handleOrdersPerPageChange,
 	ordersPerPage,
-	options,
+	options = [10, 15, 25, 40],
 }: QtyChooserProps) => {
 	const [isOpen, setOpen] = useState<boolean>(false);
 	const listRef = useRef<HTMLUListElement>(null);
-
-	// const options = [5, 10, 15, 20];
 
 	const handleChange = (e: React.MouseEvent) => {
 		handleOrdersPerPageChange(e);
@@ -38,7 +36,7 @@ const RecordsQtyChooser = ({
 	}, []);
 
 	return (
-		<div className='ml-12 mr-4 px-2 relative'>
+		<div className='relative ml-auto md:ml-10'>
 			<button
 				onClick={() => setOpen(!isOpen)}
 				className='text-l border-black mb-1 py-0 border-b-2'>
