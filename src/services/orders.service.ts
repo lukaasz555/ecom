@@ -17,3 +17,13 @@ export const fetchOrders = async (query: Record<string, unknown>) => {
 		});
 	return res;
 };
+
+export const fetchOrdersForChart = async () => {
+	const res = await axios
+		.get(`${process.env.REACT_APP_SERVER_URL}/orders/sales`)
+		.then((res) => {
+			return res.data;
+		})
+		.catch((e) => console.error(e));
+	return res;
+};

@@ -7,9 +7,9 @@ import {
 	Tooltip,
 } from 'recharts';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import Loader from '../../atoms/Loader/Loader';
 import ErrorMessage from '../../atoms/ErrorMessage/ErrorMessage';
+import { fetchOrdersForChart } from '../../../services/orders.service';
 
 type ChartData = {
 	name: string;
@@ -24,13 +24,13 @@ const CurrentSales = () => {
 	const [isLoading, setLoading] = useState<boolean>(true);
 	const [isError, setError] = useState<boolean>(false);
 
+	const fetchOrders = async () => {
+		const res = await fetchOrdersForChart();
+		setData(res);
+	};
+
 	useEffect(() => {
-		axios
-			.get(`${process.env.REACT_APP_SERVER_URL}/orders/sales`)
-			.then((res) => {
-				setData(res.data);
-				setError(false);
-			})
+		fetchOrders()
 			.catch((e) => setError(true))
 			.finally(() => setLoading(false));
 	}, []);
