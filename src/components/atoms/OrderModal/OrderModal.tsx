@@ -25,22 +25,26 @@ const OrderModal = ({
 			style={{
 				overlay: {
 					backgroundColor: 'rgba(255,255,255,0.8)',
-					height: '100%',
 				},
 				content: {
 					backgroundColor: 'rgba(255,255,255,0.8)',
-					border: 'none',
+					maxWidth: '760px',
+					padding: '0',
+					maxHeight: '500px',
+					marginLeft: 'auto',
+					marginRight: 'auto',
+					display: 'flex',
+					alignItems: 'center',
 				},
 			}}>
-			<div className='h-[100%]'>
+			<div className='max-w-[760px] w-[100%] ml-auto mr-auto'>
 				{order && (
 					<div className='flex flex-col items-center justify-center'>
-						<OrderItemDetails open={isModalOpen} order={order} />
-						<button
-							className='uppercase hover:underline mt-5'
-							onClick={closeModal}>
-							zamknij
-						</button>
+						<OrderItemDetails
+							open={isModalOpen}
+							order={order}
+							closeModal={closeModal}
+						/>
 					</div>
 				)}
 			</div>

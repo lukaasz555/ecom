@@ -3,13 +3,15 @@ import { handleNumbFormat } from '../../../../helpers/handleNumbFormat';
 import { OrderModel } from '../../../../models/Order';
 import { getQty } from '../../../../helpers/getQty';
 import Status from '../../../organisms/Status/Status';
+import CloseIcon from '../../CloseIcon/CloseIcon';
 
 interface IOrderItemDetails {
 	open: boolean;
 	order: OrderModel;
+	closeModal: () => void;
 }
 
-const OrderItemDetails = ({ open, order }: IOrderItemDetails) => {
+const OrderItemDetails = ({ open, order, closeModal }: IOrderItemDetails) => {
 	const { name, lastname, nip, companyName } = order.customer.customerData;
 	const { address1, address2, postalCode, country, city } =
 		order.customer.address;
@@ -22,9 +24,14 @@ const OrderItemDetails = ({ open, order }: IOrderItemDetails) => {
 
 	return (
 		<div
-			className={`mb-5 py-2 px-3 bg-gray ${
+			className={`mb-5 py-4 px-6 bg-gray ${
 				open ? 'block' : 'hidden'
 			} border-[1px] mt-2 w-[100%]`}>
+			<div className='flex justify-end mb-6'>
+				<button>
+					<CloseIcon height={18} width={18} onClick={closeModal} />
+				</button>
+			</div>
 			<div className='flex flex-col gap-y-3 flex-wrap'>
 				<Status id={order._id} status={order.status} />
 				<div className='flex flex-col lg:flex-row lg:justify-between'>
