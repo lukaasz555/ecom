@@ -1,4 +1,5 @@
-import React, { FC } from 'react';
+import React from 'react';
+import clsx from 'clsx';
 
 interface CTAProps {
 	body: string;
@@ -8,11 +9,13 @@ interface CTAProps {
 	type?: 'button' | 'submit' | 'reset' | undefined;
 }
 
-const CTA: FC<CTAProps> = ({ body, onClick, disabled, id, type }) => {
+const CTA = ({ body, onClick, disabled, id, type }: CTAProps) => {
 	return (
 		<button
-			className='px-5 py-3 bg-black font-light text-white text-m uppercase hover:bg-sparkle duration-150 min-w-[200px] w-full
-			outline-black'
+			className={clsx(
+				'px-5 py-3 bg-black font-light text-white text-m uppercase hover:bg-sparkle duration-150 min-w-[200px] w-full',
+				'disabled:bg-lightBlack disabled:cursor-not-allowed'
+			)}
 			onClick={onClick}
 			disabled={disabled}
 			id={id}

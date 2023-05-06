@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 
 interface ITextarea {
 	onChange: (
@@ -7,17 +8,30 @@ interface ITextarea {
 	name: string;
 	label: string;
 	value: string;
+	disabled?: boolean;
 }
 
-const Textarea = ({ onChange, name, label, value }: ITextarea) => {
+const Textarea = ({
+	onChange,
+	name,
+	label,
+	value,
+	disabled = false,
+}: ITextarea) => {
 	return (
 		<div className='flex flex-col mb-5'>
-			<label className='mb-1 font-light'>{label}</label>
+			<label className={clsx('mb-1 font-light', disabled ? 'text-pencil' : '')}>
+				{label}
+			</label>
 			<textarea
-				className='border-[1px] border-pencil bg-lightGray outline-black min-h-[160px] p-3 font-[300]'
+				className={clsx(
+					'border-[1px] border-pencil bg-lightGray outline-black min-h-[160px] p-3 font-[300]',
+					'disabled:cursor-not-allowed disabled:border-lightGray disabled:bg-transparent'
+				)}
 				onChange={onChange}
 				name={`${name}`}
 				value={value}
+				disabled={disabled}
 			/>
 		</div>
 	);

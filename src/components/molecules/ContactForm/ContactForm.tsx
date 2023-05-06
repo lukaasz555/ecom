@@ -44,6 +44,7 @@ const ContactForm = () => {
 				name='email'
 				onChange={handleInputChange}
 				value={formValue.email}
+				disabled
 			/>
 			<Input
 				type='text'
@@ -51,6 +52,7 @@ const ContactForm = () => {
 				name='subject'
 				onChange={handleInputChange}
 				value={formValue.subject}
+				disabled
 			/>
 
 			<Textarea
@@ -58,6 +60,7 @@ const ContactForm = () => {
 				label='Wiadomość:'
 				onChange={handleInputChange}
 				value={formValue.message}
+				disabled
 			/>
 			{error ? (
 				<div className='mt-3 mb-6 text-xs lg:text-s text-brownSugar'>
@@ -72,7 +75,7 @@ const ContactForm = () => {
 						Dziękujemy za przesłanie wiadomości!
 					</p>
 				) : (
-					<CTA body='wyślij' onClick={handleClick} />
+					<CTA body='wyślij' onClick={handleClick} disabled />
 				)}
 			</div>
 		</form>
