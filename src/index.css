@@ -2,3 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Montserrat:wght@200;300;400;500;600;800&family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+@layer base {
+	a {
+		@apply focus:outline-brownSugar focus:outline-[1px] focus:outline-offset-2 active:outline-none active:text-black;
+	}
+
+	button {
+		&:focus {
+			@apply outline-brownSugar outline-offset-2;
+		}
+	}
+}

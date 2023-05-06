@@ -17,7 +17,7 @@ const ItemCard = ({ data }: ProductModel2) => {
                 `}>
 					<div className='absolute h-[100%] w-full bg-whiteBg z-20 flex justify-center items-center opacity-0 hover:opacity-100 duration-300'>
 						{price > 0 ? (
-							<AddToCartBtn body='do koszyka' data={data} />
+							<AddToCartBtn body='do koszyka' data={data} tabIndex={-1} />
 						) : (
 							<NotAvailable />
 						)}
@@ -34,8 +34,8 @@ const ItemCard = ({ data }: ProductModel2) => {
 					<h3 className='text-center md:text-left text-l w-[100%] font-lato font-[400] '>
 						<Link
 							to={`/shop/products/${type}/item/${id}`}
-							className='focus:underline focus:text-brownSugar outline-none'
-							title={title}>
+							title={title}
+							className='focus:outline-none focus:text-brownSugar focus:underline underline-offset-2'>
 							{title.length < 36 ? title : title.substring(0, 36).concat('...')}
 						</Link>
 					</h3>

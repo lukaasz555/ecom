@@ -12,11 +12,7 @@ const Top = () => {
 			<MobileMenu />
 			<div className='flex justify-center '>
 				<h1 className='font-medium text-2xl text-center font-montserrat absolute left-[50%] top-[50%] -translate-x-[50%] -translate-y-[50%]'>
-					<Link
-						to={`/`}
-						className='focus:outline outline-2 outline-lightBlack outline-offset-4'>
-						someStore
-					</Link>
+					<Link to={`/`}>someStore</Link>
 				</h1>
 			</div>
 			<div className='flex items-center'>

@@ -12,7 +12,7 @@ const ArrowToTop = () => {
 
 	return (
 		<button
-			className={`fixed right-5 bottom-0 bg-black px-2 py-2 animate-[fromBottom_.3s_linear_1] focus:outline outline-2 outline-lightBlack outline-offset-4 active:outline-black`}
+			className={`fixed right-5 bottom-0 bg-black px-2 py-2 animate-[fromBottom_.3s_linear_1]`}
 			onClick={toTop}>
 			<FontAwesomeIcon icon={faChevronUp} color='#fff' className='text-xl' />
 		</button>

@@ -15,9 +15,7 @@ const FilterTool = ({ open, setOpen, onClick }: FilterToolProps) => {
 		<div className={`w-${width} mx-10 border-b-[1px] mb-10  flex justify-end`}>
 			<div className={`${open ? 'bg-sparkle' : 'bg-white'} relative`}>
 				<button
-					className={`flex items-center bg-white justify-end uppercase py-2 px-5 text-s
-						w-[300px] focus:outline outline-2 outline-lightBlack outline-offset-0 active:outline-black
-					`}
+					className={`flex items-center bg-white justify-end uppercase py-2 px-5 text-s w-[300px]`}
 					onClick={() => setOpen(!open)}>
 					sortuj
 					<FontAwesomeIcon icon={faChevronDown} className='text-xs ml-1' />
@@ -29,8 +27,7 @@ const FilterTool = ({ open, setOpen, onClick }: FilterToolProps) => {
 					<li>
 						<button
 							id='declining'
-							className='uppercase text-l font-light px-5 py-3 font-[200] border-b-[1px] w-[300px] text-right
-							focus:outline outline-2 outline-lightBlack outline-offset-0 active:outline-black'
+							className='uppercase text-l font-light px-5 py-3 font-[200] border-b-[1px] w-[300px] text-right'
 							onClick={(e) => {
 								const targ = e.target as Element;
 								if (targ != null) {
@@ -44,8 +41,7 @@ const FilterTool = ({ open, setOpen, onClick }: FilterToolProps) => {
 					<li>
 						<button
 							id='growing'
-							className='uppercase text-l font-light px-5 py-3 font-[200] border-b-[1px] w-[300px] text-right
-							focus:outline outline-2 outline-lightBlack outline-offset-0 active:outline-black'
+							className='uppercase text-l px-5 py-3 font-[200] border-b-[1px] w-[300px] text-right'
 							onClick={(e) => {
 								const targ = e.target as Element;
 								if (targ != null) {
