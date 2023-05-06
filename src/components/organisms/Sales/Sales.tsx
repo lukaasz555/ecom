@@ -15,31 +15,31 @@ const Sales = () => {
 	const [allOrders, setAllOrders] = useState<OrderModel[]>([]);
 	const [products, setProducts] = useState<ProductModel[]>([]);
 
-	useEffect(() => {
-		setLoading(true);
-		axios
-			.get(`${URL}/orders`)
-			.then((res) => {
-				setAllOrders(res.data);
-				setLoading(false);
-				setError(false);
-			})
-			.catch((err) => {
-				setLoading(false);
-				setError(true);
-			});
+	// useEffect(() => {
+	// 	setLoading(true);
+	// 	axios
+	// 		.get(`${URL}/orders`)
+	// 		.then((res) => {
+	// 			setAllOrders(res.data);
+	// 			setLoading(false);
+	// 			setError(false);
+	// 		})
+	// 		.catch((err) => {
+	// 			setLoading(false);
+	// 			setError(true);
+	// 		});
 
-		axios
-			.get(`${URL}/products`)
-			.then((res) => {
-				setProducts(res.data);
-				setLoading(false);
-			})
-			.catch((err) => {
-				setLoading(false);
-				setError(true);
-			});
-	}, []);
+	// 	axios
+	// 		.get(`${URL}/products`)
+	// 		.then((res) => {
+	// 			setProducts(res.data);
+	// 			setLoading(false);
+	// 		})
+	// 		.catch((err) => {
+	// 			setLoading(false);
+	// 			setError(true);
+	// 		});
+	// }, []);
 
 	return (
 		<AdminLayout>
