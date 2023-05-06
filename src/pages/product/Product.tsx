@@ -84,11 +84,7 @@ const Product = () => {
 					<ProductLayout>
 						<section className='flex justify-center my-10'>
 							<article className='flex flex-col items-center md:items-start mb-20'>
-								<ProductHead
-									myRef={myRef}
-									data={product}
-									openModal={openModal}
-								/>
+								<ProductHead ref={myRef} data={product} openModal={openModal} />
 								<div ref={myRef} className='w-full'>
 									{product.description.length > 20 && (
 										<ProductDesc description={product.description} />

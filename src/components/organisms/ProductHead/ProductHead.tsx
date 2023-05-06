@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { forwardRef } from 'react';
 import Price from '../../molecules/Price/Price';
 import ProductAside from '../../molecules/ProductAside/ProductAside';
 import { ProductModel } from '../../../models/Product';
@@ -7,11 +7,13 @@ import AddToCartBtn from '../../atoms/AddToCartBtn/AddToCartBtn';
 
 interface ProductHeadProps {
 	data: ProductModel;
-	myRef: React.MutableRefObject<any>;
 	openModal: () => void;
 }
 
-const ProductHead = ({ data, myRef, openModal }: ProductHeadProps) => {
+const ProductHead = forwardRef<
+	React.MutableRefObject<HTMLDivElement>,
+	ProductHeadProps
+>(({ data, openModal }, ref) => {
 	const { img, title, authors, discount, price, type } = data;
 
 	return (
@@ -36,7 +38,7 @@ const ProductHead = ({ data, myRef, openModal }: ProductHeadProps) => {
 					<h3 className='text-xl mt-1 text-sparkle mb-5 lg:mb-14'>
 						{authors.join(', ')}
 					</h3>
-					<ShortDescription myRef={myRef} data={data} />
+					<ShortDescription ref={ref} data={data} />
 				</div>
 
 				<div className='flex flex-col items-center md:hidden gap-y-3'>
@@ -48,6 +50,6 @@ const ProductHead = ({ data, myRef, openModal }: ProductHeadProps) => {
 			<ProductAside data={data} />
 		</div>
 	);
-};
+});
 
 export default ProductHead;
