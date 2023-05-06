@@ -6,7 +6,7 @@ import MobileMenuLink from '../../atoms/MobileMenuLink/MobileMenuLink';
 const MobileMenu = () => {
 	const [isOpen, setOpen] = useState(false);
 	return (
-		<div className='md:hidden flex flex-col'>
+		<div className='mr-auto md:hidden flex flex-col'>
 			<button onClick={() => setOpen(!isOpen)}>
 				<Hamburger color='#4A5859' direction='right' duration={0.6} size={24} />
 			</button>

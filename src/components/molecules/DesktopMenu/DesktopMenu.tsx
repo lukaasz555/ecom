@@ -3,7 +3,7 @@ import DesktopMenuLink from '../../atoms/DesktopMenuLink/DesktopMenuLink';
 
 const DesktopMenu = () => {
 	return (
-		<nav className='hidden md:block'>
+		<nav className='hidden md:block md:mr-auto'>
 			<DesktopMenuLink body='Książki' to={`/shop/products/books/99`} />
 			<DesktopMenuLink body='Płyty' to={`/shop/products/albums/99`} />
 			<DesktopMenuLink body='Kontakt' to={`/contact`} />
