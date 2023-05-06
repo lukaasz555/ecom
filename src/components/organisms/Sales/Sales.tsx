@@ -53,7 +53,7 @@ const Sales = () => {
 					</div>
 				) : !isError ? (
 					<>
-						<CurrentSales allOrders={allOrders} />
+						<CurrentSales />
 						<TopProducts allOrders={allOrders} products={products} />
 					</>
 				) : (

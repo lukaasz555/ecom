@@ -35,7 +35,7 @@ const TopProducts = ({ allOrders, products }: CurrentSalesProps) => {
 			qty: number;
 		}[] = [];
 		uniqueIDs.map((item) => record.push(checkIdFreq(productsIDs, item)));
-		console.log(record.sort((a, b) => Number(b.qty) - Number(a.qty)));
+		// console.log(record.sort((a, b) => Number(b.qty) - Number(a.qty)));
 		return record.sort((a, b) => Number(b.qty) - Number(a.qty));
 	};
 
