@@ -1,17 +1,17 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { ProductModel2 } from '../../../models/Product';
+import { ProductModel } from '../../../models/Product';
 import { scrollToRef } from '../../../helpers/scrollToRef';
-import CTA from '../CTA/CTA';
 import NotAvailable from '../NotAvailable/NotAvailable';
 import AddToCartBtn from '../AddToCartBtn/AddToCartBtn';
 
-interface ShortDescProps extends ProductModel2 {
+interface ShortDescProps {
+	data: ProductModel;
 	myRef: React.MutableRefObject<any>;
 }
 
-const ShortDescription: FC<ShortDescProps> = ({ data, myRef }) => {
+const ShortDescription = ({ data, myRef }: ShortDescProps) => {
 	const { label, releaseYear, pages, authors, publisher, price } = data;
 
 	const handleClick = (ref: React.MutableRefObject<null>): void => {

@@ -1,8 +1,12 @@
-import { ProductModel2 } from '../../../models/Product';
+import { ProductModel } from '../../../models/Product';
 import { handleCategoryNames } from '../../../helpers/handleCategoryNames';
 import { Link } from 'react-router-dom';
 
-const ProductDetails = ({ data }: ProductModel2) => {
+type ProductDetailsProps = {
+	data: ProductModel;
+};
+
+const ProductDetails = ({ data }: ProductDetailsProps) => {
 	return (
 		<div id='details' className='mt-10  w-full'>
 			<h3 className='uppercase text-xl border-b-[1px] mb-3 font-lato font-light pb-2'>

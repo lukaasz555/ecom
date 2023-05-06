@@ -1,11 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ProductModel2 } from '../../../models/Product';
+import { ProductModel } from '../../../models/Product';
 import Price from '../../molecules/Price/Price';
 import AddToCartBtn from '../../atoms/AddToCartBtn/AddToCartBtn';
 import NotAvailable from '../../atoms/NotAvailable/NotAvailable';
 
-const ItemCard = ({ data }: ProductModel2) => {
+type ItemCardProps = {
+	data: ProductModel;
+};
+
+const ItemCard = ({ data }: ItemCardProps) => {
 	const { img, title, type, id, authors, discount, price } = data;
 	return (
 		<div className='flex flex-col mb-20 w-[260px] px-10'>

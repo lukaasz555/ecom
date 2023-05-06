@@ -1,16 +1,17 @@
 import React, { FC } from 'react';
 import Price from '../../molecules/Price/Price';
 import ProductAside from '../../molecules/ProductAside/ProductAside';
-import { ProductModel2 } from '../../../models/Product';
+import { ProductModel } from '../../../models/Product';
 import ShortDescription from '../../atoms/ShortDescription/ShortDescription';
 import AddToCartBtn from '../../atoms/AddToCartBtn/AddToCartBtn';
 
-interface PHeadProps extends ProductModel2 {
+interface ProductHeadProps {
+	data: ProductModel;
 	myRef: React.MutableRefObject<any>;
 	openModal: () => void;
 }
 
-const ProductHead: FC<PHeadProps> = ({ data, myRef, openModal }) => {
+const ProductHead = ({ data, myRef, openModal }: ProductHeadProps) => {
 	const { img, title, authors, discount, price, type } = data;
 
 	return (
