@@ -6,7 +6,7 @@ const EmptyCart = () => {
 		<div className='flex flex-col items-center mt-10'>
 			<h3 className='text-2xl font-lato mb-7'>Koszyk</h3>
 			<p className='mb-1'>Twój koszyk jest pusty.</p>
-			<Link to={`/shop`} className='group uppercase flex mt-2'>
+			<Link to={`/`} className='group uppercase flex mt-2'>
 				rozpocznij zakupy
 				<svg
 					className='ml-2 group-hover:translate-x-1 duration-200 rotate-180'

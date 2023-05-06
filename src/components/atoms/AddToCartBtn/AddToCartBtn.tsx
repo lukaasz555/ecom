@@ -15,6 +15,7 @@ interface ButtonProps {
 
 const AddToCartBtn = ({ data, body, tabIndex = 0 }: ButtonProps) => {
 	const dispatch = useAppDispatch();
+	const [item, setItem] = useState<ProductModel | null>();
 	const cartItems = useAppSelector((state) => state.cartReducer.items);
 	const [isAdded, setAdded] = useState(false);
 	const [error, setError] = useState(false);
@@ -27,28 +28,13 @@ const AddToCartBtn = ({ data, body, tabIndex = 0 }: ButtonProps) => {
 		}
 	}, [cartItems]);
 
+	useEffect(() => {
+		setItem(data);
+	}, []);
+
 	const addToCart = () => {
-		if (getQty(data.id, cartItems) < 5) {
-			dispatch(
-				addItem({
-					categoryID: data.categoryID,
-					description: data.description,
-					discount: data.discount,
-					format: data.format,
-					id: data.id,
-					img: data.img,
-					thumbnail: data.thumbnail,
-					price: data.price,
-					releaseYear: data.releaseYear,
-					title: data.title,
-					type: data.type,
-					label: data.label,
-					language: data.language,
-					pages: data.pages,
-					publisher: data.publisher,
-					authors: data.authors,
-				})
-			);
+		if (item && getQty(data.id, cartItems) < 5) {
+			dispatch(addItem(item));
 			setAdded(true);
 		} else {
 			setError(true);
