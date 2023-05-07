@@ -5,7 +5,7 @@ import CurrentSales from '../../molecules/CurrentSales/CurrentSales';
 const Sales = () => {
 	return (
 		<AdminLayout>
-			<div className='min-w-[550px]'>
+			<div>
 				<h2 className='text-2xl'>
 					Sprzedaż <span className='text-lightBlack'>(in progress)</span>{' '}
 				</h2>

@@ -14,19 +14,17 @@ import { fetchOrdersForChart } from '../../../services/orders.service';
 type ChartData = {
 	name: string;
 	orders: number;
-	ordersValue: number;
-	// books: number;
-	// albums: number;
 };
 
 const CurrentSales = () => {
-	const [data, setData] = useState<ChartData[] | []>([]);
+	const [chartData, setChartData] = useState<ChartData[] | []>([]);
 	const [isLoading, setLoading] = useState<boolean>(true);
 	const [isError, setError] = useState<boolean>(false);
+	const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
 
 	const fetchOrders = async () => {
 		const res = await fetchOrdersForChart();
-		setData(res);
+		setChartData(res);
 	};
 
 	useEffect(() => {
@@ -35,57 +33,48 @@ const CurrentSales = () => {
 			.finally(() => setLoading(false));
 	}, []);
 
+	useEffect(() => {
+		const handleResize = () => setWindowWidth(window.innerWidth);
+		window.addEventListener('resize', handleResize);
+		return () => window.removeEventListener('resize', handleResize);
+	}, []);
+
 	return (
-		<div className='w-full flex flex-col items-center mt-10 pb-10 border-b-[1px] border-lightGray'>
+		<div className='w-full flex flex-col items-center mt-10 pb-10'>
 			{isLoading ? (
 				<Loader />
 			) : !isError ? (
 				<>
 					<h3 className='mb-5'>Podsumowanie dotychczasowej sprzedaży:</h3>
-					<AreaChart
-						width={400}
-						height={380}
-						data={data}
-						margin={{
-							top: 10,
-							right: 30,
-							left: 0,
-							bottom: 0,
-						}}>
-						<CartesianGrid strokeDasharray='3 3' />
-						<XAxis dataKey='name' />
-						<YAxis />
-						<Tooltip />
-						{/*
-				<Area
-					type='monotone'
-					dataKey='albums'
-					stackId='2'
-					stroke='#8884d8'
-					fill='#8884d8'
-				/>
-				 <Area
-					type='monotone'
-					dataKey='books'
-					stackId='2'
-					stroke='#82ca9d'
-					fill='#82ca9d'
-				/>
-				*/}
-						<Area
-							type={'monotone'}
-							dataKey='ordersValue'
-							stackId='2'
-							stroke='#fab'
+					{windowWidth > 610 ? (
+						<AreaChart
+							width={600}
+							height={380}
+							data={chartData}
+							margin={{
+								top: 10,
+								right: 30,
+								left: 0,
+								bottom: 0,
+							}}>
+							<CartesianGrid strokeDasharray='3 3' />
+							<XAxis dataKey='name' />
+							<YAxis />
+							<Tooltip />
+							<Area
+								type='monotone'
+								dataKey='orders'
+								stackId='1'
+								stroke='#B96D40'
+								fill='#b96c4041'
+							/>
+						</AreaChart>
+					) : (
+						<ErrorMessage
+							text1='Zbyt niska rozdzielczość.'
+							text2='Minimalna szerokość to 610px.'
 						/>
-						<Area
-							type='monotone'
-							dataKey='orders'
-							stackId='1'
-							stroke='#ffc658'
-							fill='#ffc658'
-						/>
-					</AreaChart>
+					)}
 				</>
 			) : (
 				<ErrorMessage text1='Błąd pobierania danych' />
