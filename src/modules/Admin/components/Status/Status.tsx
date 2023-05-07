@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
-import StatusMainButton from '../../atoms/StatusMainButton/StatusMainButton';
-import StatusAltButton from '../../atoms/StatusAltButton/StatusAltButton';
+import StatusMainButton from './StatusMainButton';
+import StatusAltButton from './StatusAltButton';
 
 type StatusProps = {
 	id: string;

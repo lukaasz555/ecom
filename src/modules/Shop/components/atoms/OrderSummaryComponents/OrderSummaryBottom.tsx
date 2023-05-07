@@ -1,5 +1,5 @@
 import React from 'react';
-import CTA from '../../../../components/shared/CTA/CTA';
+import CTA from '../../../../../components/shared/CTA/CTA';
 
 interface IOrderSumBottom {
 	handleClick: () => void;

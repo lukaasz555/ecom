@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import DesktopMenu from '../../molecules/DesktopMenu/DesktopMenu';
 import MobileMenu from '../../molecules/MobileMenu/MobileMenu';
-import Socials from '../../../modules/Shop/components/Socials/Socials';
+import Socials from '../../atoms/Socials/Socials';
 import CartIcon from '../../atoms/CartIcon/CartIcon';
 
 const Top = () => {

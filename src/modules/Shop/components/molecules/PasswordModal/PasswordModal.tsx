@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import ReactModal from 'react-modal';
-import Input from '../../shared/GrayInput/GrayInput';
-import CTA from '../../atoms/CTA/CTA';
+import GrayInput from '../../../../../components/shared/GrayInput/GrayInput';
+import CTA from '../../../../../components/shared/CTA/CTA';
 import axios from 'axios';
-import { ProductModel } from '../../../models/Product';
+import { ProductModel } from '../../../../../models/Product';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
-import { handleAuthors } from '../../../helpers/handleAuthors';
+import { handleAuthors } from '../../../../../helpers/handleAuthors';
 
 type PWModalProps = {
 	isOpen: boolean;
@@ -122,7 +122,7 @@ const PasswordModal = ({
 					<FontAwesomeIcon icon={faX} />
 				</button>
 				<label className='mb-2'>Podaj hasło:</label>
-				<Input
+				<GrayInput
 					label=''
 					name='password'
 					type='password'

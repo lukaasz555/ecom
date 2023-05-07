@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import EmailSection from '../../components/molecules/EmailSection/EmailSection';
-import InvoiceSection from '../../components/molecules/InvoiceSection/InvoiceSection';
-import ShippingSection from '../../components/molecules/ShippingSection/ShippingSection';
-import { ICheckoutForm } from '../../models/CheckoutData';
-import { initialCheckoutForm } from '../../helpers/initialStates';
-import OrderSummary from '../../components/molecules/OrderSummary/OrderSummary';
-import CartSummary from '../../components/molecules/CartSummary/CartSummary';
-import { useAppSelector } from '../../hooks/hooks';
+import EmailSection from '../components/molecules/EmailSection/EmailSection';
+import InvoiceSection from '../components/molecules/InvoiceSection/InvoiceSection';
+import ShippingSection from '../components/molecules/ShippingSection/ShippingSection';
+import { ICheckoutForm } from '../../../models/CheckoutData';
+import { initialCheckoutForm } from '../../../helpers/initialStates';
+import OrderSummary from '../components/molecules/OrderSummary/OrderSummary';
+import CartSummary from '../components/molecules/CartSummary/CartSummary';
+import { useAppSelector } from '../../../hooks/hooks';
 
 const Checkout = () => {
 	const [isEmailOpen, setEmailOpen] = useState(true);

@@ -1,8 +1,8 @@
 import React from 'react';
-import { useAppSelector } from '../../../hooks/hooks';
-import { getQty } from '../../../helpers/getQty';
-import { handleNumbFormat } from '../../../helpers/handleNumbFormat';
-import { productsValue } from '../../../helpers/productsValue';
+import { useAppSelector } from '../../../../../hooks/hooks';
+import { getQty } from '../../../../../helpers/getQty';
+import { handleNumbFormat } from '../../../../../helpers/handleNumbFormat';
+import { productsValue } from '../../../../../helpers/productsValue';
 
 const ItemsDetails = (): JSX.Element => {
 	const items = useAppSelector((state) => state.cartReducer.items);

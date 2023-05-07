@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Socials from '../../../modules/Shop/components/Socials/Socials';
+import Socials from '../../atoms/Socials/Socials';
 
 const Footer = () => {
 	return (

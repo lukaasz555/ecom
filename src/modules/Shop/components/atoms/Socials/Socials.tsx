@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo from '../../../assets/logos/5335781.svg';
+import Logo from '../../../../../assets/logos/5335781.svg';
 
 const Socials = () => {
 	return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import CartIconSVG from '../../../assets/icons/cart.svg';
-import { useAppSelector } from '../../../hooks/hooks';
+import CartIconSVG from '../../../../../assets/icons/cart.svg';
+import { useAppSelector } from '../../../../../hooks/hooks';
 
 const CartIcon = () => {
 	const items = useAppSelector((state) => state.cartReducer.items);

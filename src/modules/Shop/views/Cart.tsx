@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Layout from '../../../components/templates/Layout/Layout';
+import Layout from '../components/templates/Layout/Layout';
 import CartItem from '../components/organisms/CartItem/CartItem';
 import { ProductModel } from '../../../models/Product';
-import EmptyCart from '../components/EmptyCart/EmptyCart';
+import EmptyCart from '../components/atoms/EmptyCart/EmptyCart';
 import CTA from '../../../components/shared/CTA/CTA';
 import { handleNumbFormat } from '../../../helpers/handleNumbFormat';
 import { useAppSelector, useAppDispatch } from '../../../hooks/hooks';

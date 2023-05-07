@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { ICheckoutForm } from '../../../models/CheckoutData';
+import { ICheckoutForm } from '../../../../../models/CheckoutData';
 import OrderComplete from '../OrderComplete/OrderComplete';
-import { clearCart } from '../../../features/cart/cartSlice';
-import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
+import { clearCart } from '../../../../../features/cart/cartSlice';
+import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
 import InvoiceDetails from '../../atoms/OrderSummaryComponents/InvoiceDetails';
 import ContactDetails from '../../atoms/OrderSummaryComponents/ContactDetails';
 import ItemsDetails from '../../atoms/OrderSummaryComponents/ItemsDetails';
 import OrderSummaryTop from '../../atoms/OrderSummaryComponents/OrderSummaryTop';
 import OrderSummaryBottom from '../../atoms/OrderSummaryComponents/OrderSummaryBottom';
-import { productsValue } from '../../../helpers/productsValue';
+import { productsValue } from '../../../../../helpers/productsValue';
 import axios from 'axios';
 import ALT from '../../atoms/ALT/ALT';
 

@@ -2,8 +2,8 @@ import React from 'react';
 import { handleNumbFormat } from '../../../../helpers/handleNumbFormat';
 import { OrderModel } from '../../../../models/Order';
 import { getQty } from '../../../../helpers/getQty';
-import Status from '../../../organisms/Status/Status';
-import CloseIcon from '../../../shared/CloseIcon/CloseIcon';
+import Status from '../Status/Status';
+import CloseIcon from '../../../../components/shared/CloseIcon/CloseIcon';
 
 interface IOrderItemDetails {
 	open: boolean;

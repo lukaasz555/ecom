@@ -1,8 +1,8 @@
 import React from 'react';
-import { ProductModel } from '../../../models/Product';
-import { useAppSelector } from '../../../hooks/hooks';
-import { handleNumbFormat } from '../../../helpers/handleNumbFormat';
-import { getQty } from '../../../helpers/getQty';
+import { ProductModel } from '../../../../../models/Product';
+import { useAppSelector } from '../../../../../hooks/hooks';
+import { handleNumbFormat } from '../../../../../helpers/handleNumbFormat';
+import { getQty } from '../../../../../helpers/getQty';
 
 interface CartSumProps {
 	items: ProductModel[];

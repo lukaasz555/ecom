@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
-import { OrderModel } from '../../../models/Order';
-import OrderItemDetails from '../Admin/OrderItem/OrderItemDetails';
+import { OrderModel } from '../../../../models/Order';
+import OrderItemDetails from '../OrderItem/OrderItemDetails';
 
 interface OrderModalProps {
 	closeModal: () => void;

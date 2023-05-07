@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Socials from '../../../modules/Shop/components/Socials/Socials';
+import Socials from '../../atoms/Socials/Socials';
 import { Fade as Hamburger } from 'hamburger-react';
 import MobileMenuLink from '../../atoms/MobileMenuLink/MobileMenuLink';
 

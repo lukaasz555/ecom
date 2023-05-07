@@ -1,9 +1,9 @@
 import React from 'react';
-import { handleNumbFormat } from '../../../helpers/handleNumbFormat';
+import { handleNumbFormat } from '../../../../helpers/handleNumbFormat';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { ProductModel } from '../../../models/Product';
+import { ProductModel } from '../../../../models/Product';
 import { Link } from 'react-router-dom';
 
 type AdminProductProps = {

@@ -1,7 +1,7 @@
 import {
 	handleNextStatusName,
 	setNextStatus,
-} from '../../../helpers/handleStatusName';
+} from '../../../../helpers/handleStatusName';
 import axios from 'axios';
 import { useState } from 'react';
 

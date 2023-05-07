@@ -1,9 +1,9 @@
 import React from 'react';
-import { useAppSelector } from '../../../hooks/hooks';
-import { handleNumbFormat } from '../../../helpers/handleNumbFormat';
-import { productsValue } from '../../../helpers/productsValue';
 import CartSummaryItems from '../../atoms/CartSummaryItems/CartSummaryItems';
-import { getDiscountsValue } from '../../../helpers/getDiscountsValue';
+import { useAppSelector } from '../../../../../hooks/hooks';
+import { handleNumbFormat } from '../../../../../helpers/handleNumbFormat';
+import { productsValue } from '../../../../../helpers/productsValue';
+import { getDiscountsValue } from '../../../../../helpers/getDiscountsValue';
 
 const CartSummary = () => {
 	const items = useAppSelector((state) => state.cartReducer.items);
