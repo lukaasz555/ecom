@@ -5,18 +5,17 @@ import {
 	useNavigate,
 	useSearchParams,
 } from 'react-router-dom';
-import { ProductModel } from '../../models/Product';
-import Layout from '../../components/templates/Layout/Layout';
-import Loader from '../../components/atoms/Loader/Loader';
-import Pagination from '../../components/molecules/Pagination/Pagination';
-import ItemCard from '../../components/organisms/ItemCard/ItemCard';
-import CategoriesMenu from '../../components/molecules/CategoriesMenu/CategoriesMenu';
+import { ProductModel } from '../../../models/Product';
+import Layout from '../components/templates/Layout/Layout';
+import ItemCard from '../components/organisms/ItemCard/ItemCard';
+import CategoriesMenu from '../components/molecules/CategoriesMenu/CategoriesMenu';
+import { fetchFilteredProducts } from '../../../services/products.service';
 import { useElementSize } from 'usehooks-ts';
-import { fetchFilteredProducts } from '../../services/products.service';
 import { useDispatch } from 'react-redux';
-import { loadData } from '../../features/admin/productsSlice';
-import { useAppSelector } from '../../hooks/hooks';
-import { useNavigationSearch } from '../../hooks/hooks';
+import { loadData } from '../../../features/admin/productsSlice';
+import Pagination from '../../../components/shared/Pagination/Pagination';
+import Loader from '../../../components/shared/Loader/Loader';
+import { useAppSelector, useNavigationSearch } from '../../../hooks/hooks';
 
 const ProductsList = () => {
 	const items: ProductModel[] = useAppSelector(

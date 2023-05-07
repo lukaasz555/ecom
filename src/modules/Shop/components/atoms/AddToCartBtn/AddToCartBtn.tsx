@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { addItem } from '../../../features/cart/cartSlice';
-import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
-import { ProductModel } from '../../../models/Product';
-import { getQty } from '../../../helpers/getQty';
+import { addItem } from '../../../../../features/cart/cartSlice';
+import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
+import { ProductModel } from '../../../../../models/Product';
+import { getQty } from '../../../../../helpers/getQty';
 import CartBtnError from '../CartBtnError/CartBtnError';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';

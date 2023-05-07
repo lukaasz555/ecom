@@ -1,6 +1,6 @@
 import React from 'react';
-import Layout from '../../components/templates/Layout/Layout';
-import ContactForm from '../../components/molecules/ContactForm/ContactForm';
+import Layout from '../components/templates/Layout/Layout';
+import ContactForm from '../components/molecules/ContactForm/ContactForm';
 
 const Contact = () => {
 	return (

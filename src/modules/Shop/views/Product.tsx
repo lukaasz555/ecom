@@ -1,15 +1,15 @@
 import { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import ProductLayout from '../../components/templates/ProductLayout/ProductLayout';
-import Layout from '../../components/templates/Layout/Layout';
-import { ProductModel } from '../../models/Product';
-import ProductHead from '../../components/organisms/ProductHead/ProductHead';
-import ProductDesc from '../../components/atoms/ProductDesc/ProductDesc';
-import ProductDetails from '../../components/atoms/ProductDetails/ProductDetails';
-import Return from '../../components/atoms/Return/Return';
-import ProductModal from '../../components/atoms/ProductModal/ProductModal';
-import Loader from '../../components/atoms/Loader/Loader';
-import { fetchExactProduct } from '../../services/products.service';
+import ProductLayout from '../components/templates/ProductLayout/ProductLayout';
+import Layout from '../components/templates/Layout/Layout';
+import { ProductModel } from '../../../models/Product';
+import ProductHead from '../components/organisms/ProductHead/ProductHead';
+import ProductDesc from '../components/atoms/ProductDesc/ProductDesc';
+import ProductDetails from '../components/atoms/ProductDetails/ProductDetails';
+import ProductModal from '../components/atoms/ProductModal/ProductModal';
+import Loader from '../../../components/shared/Loader/Loader';
+import Return from '../components/atoms/Return/Return';
+import { fetchExactProduct } from '../../../services/products.service';
 
 const initValue: ProductModel = {
 	id: '',

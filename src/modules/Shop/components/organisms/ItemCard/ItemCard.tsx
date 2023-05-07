@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ProductModel } from '../../../models/Product';
+import { ProductModel } from '../../../../../models/Product';
 import Price from '../../molecules/Price/Price';
 import AddToCartBtn from '../../atoms/AddToCartBtn/AddToCartBtn';
 import NotAvailable from '../../atoms/NotAvailable/NotAvailable';

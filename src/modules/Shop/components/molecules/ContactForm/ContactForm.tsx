@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Input from '../../shared/GrayInput/GrayInput';
-import Textarea from '../../atoms/Textarea/Textarea';
-import CTA from '../../atoms/CTA/CTA';
-import { emailValidation } from '../../../helpers/validations';
+import GrayInput from '../../../../../components/shared/GrayInput/GrayInput';
+import Textarea from '../../../../../components/shared/Textarea/Textarea';
+import CTA from '../../../../../components/shared/CTA/CTA';
+import { emailValidation } from '../../../../../helpers/validations';
 
 interface IContactForm {
 	email: string;
@@ -38,7 +38,7 @@ const ContactForm = () => {
 
 	return (
 		<form className='flex flex-col lg:basis-[50%]'>
-			<Input
+			<GrayInput
 				type='email'
 				label='Twój e-mail:'
 				name='email'
@@ -46,7 +46,7 @@ const ContactForm = () => {
 				value={formValue.email}
 				disabled
 			/>
-			<Input
+			<GrayInput
 				type='text'
 				label='Temat:'
 				name='subject'

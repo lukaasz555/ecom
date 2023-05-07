@@ -3,7 +3,7 @@ import Price from '../Price/Price';
 import ALT from '../../atoms/ALT/ALT';
 import { Link } from 'react-router-dom';
 import AddToCartBtn from '../../atoms/AddToCartBtn/AddToCartBtn';
-import { ProductModel } from '../../../models/Product';
+import { ProductModel } from '../../../../../models/Product';
 
 type PAsideProps = {
 	data: ProductModel;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { InvoiceDataModel } from '../../../models/CheckoutData';
+import { InvoiceDataModel } from '../../../../../models/CheckoutData';
 
 interface IInvoiceDetails {
 	invoiceDetails: InvoiceDataModel;

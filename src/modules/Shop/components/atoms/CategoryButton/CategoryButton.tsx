@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { handleCategoryNames } from '../../../helpers/handleCategoryNames';
+import { handleCategoryNames } from '../../../../../helpers/handleCategoryNames';
 
 interface ICategoryButton {
 	to: string;

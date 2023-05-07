@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import Price from '../../molecules/Price/Price';
 import ProductAside from '../../molecules/ProductAside/ProductAside';
-import { ProductModel } from '../../../models/Product';
+import { ProductModel } from '../../../../../models/Product';
 import ShortDescription from '../../atoms/ShortDescription/ShortDescription';
 import AddToCartBtn from '../../atoms/AddToCartBtn/AddToCartBtn';
 

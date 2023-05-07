@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import WhiteInput from '../../shared/WhiteInput/WhiteInput';
-import CTA from '../../atoms/CTA/CTA';
+import WhiteInput from '../../../../../components/shared/WhiteInput/WhiteInput';
+import CTA from '../../../../../components/shared/CTA/CTA';
 import PhoneInput from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
-import { ICheckoutForm } from '../../../models/CheckoutData';
-import { inpostValidation } from '../../../helpers/validations';
+import { ICheckoutForm } from '../../../../../models/CheckoutData';
+import { inpostValidation } from '../../../../../helpers/validations';
 
 interface IShippingSection {
 	isShippingOpen: boolean;

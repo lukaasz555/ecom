@@ -1,4 +1,4 @@
-import Layout from '../../components/templates/Layout/Layout';
+import Layout from '../components/templates/Layout/Layout';
 
 const NotFound = () => {
 	return (
