@@ -1,17 +1,21 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Shop from './pages/shop/Shop';
-import Contact from './pages/contact/Contact';
-import Product from './pages/product/Product';
-import Cart from './pages/cart/Cart';
-import Checkout from './pages/Checkout/Checkout';
-import Admin from './pages/admin/Admin';
-import AdminOrders from './components/organisms/AdminOrders/AdminOrders';
-import AdminProducts from './components/organisms/AdminProducts/AdminProducts';
-import EditProduct from './components/organisms/EditProduct/EditProduct';
-import Sales from './components/organisms/Sales/Sales';
-import ProductsList from './pages/ProductsList/ProductsList';
-import NotFound from './pages/NotFound/NotFound';
+import Shop from './modules/Shop/views/Shop';
+import Contact from './modules/Shop/views/Contact';
+import Product from './modules/Shop/views/Product';
+import Cart from './modules/Shop/views/Cart';
+import Checkout from './modules/Shop/views/Checkout';
+import Admin from './modules/Admin/views/Admin';
+import AdminOrders from './modules/Admin/views/Orders';
+// import AdminProducts from './components/organisms/AdminProducts/AdminProducts';
+// import EditProduct from './components/organisms/EditProduct/EditProduct';
+// import Sales from './components/organisms/Sales/Sales';
+import AdminProducts from './modules/Admin/views/Products';
+import EditProduct from './modules/Admin/views/EditProduct';
+import Sales from './modules/Admin/views/Sales';
+
+import ProductsList from './modules/Shop/views/ProductsList';
+import NotFound from './modules/Shop/views/NotFound';
 
 function App() {
 	return (
