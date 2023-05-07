@@ -40,6 +40,7 @@ function App() {
 				<Route path='/admin/products' element={<AdminProducts />} />
 				<Route path='/admin/products/edit/:id' element={<EditProduct />} />
 				<Route path='/admin/sales' element={<Sales />} />
+				<Route path='/admin/*' element={<Admin />} />
 				<Route path='*' element={<NotFound />} />
 			</Routes>
 		</div>

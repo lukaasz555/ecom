@@ -49,7 +49,7 @@ const CartItem = ({ data, cartItems }: ICartItem) => {
 				<div className='flex justify-between border-b-[1px] border-lightBlack pb-2 mb-7 w-full relative pr-10'>
 					<section className='flex'>
 						<div className=' mr-3 flex justify-end'>
-							<Link to={`/shop/product/${type}/${id}`}>
+							<Link to={`/shop/products/${type}/item/${id}`}>
 								<img
 									src={img}
 									alt={`${title} - ${authors}`}
