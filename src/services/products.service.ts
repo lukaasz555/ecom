@@ -70,3 +70,11 @@ export const fetchFilteredProducts = async (filter: Filter) => {
 		.catch((e) => console.error(e));
 	return res;
 };
+
+export const postNewProduct = async (newProduct: ProductModel) => {
+	const res = await axios.post(
+		`${process.env.REACT_APP_SERVER_URL}/products/add`,
+		newProduct
+	);
+	return res;
+};

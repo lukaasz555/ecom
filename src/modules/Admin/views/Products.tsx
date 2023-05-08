@@ -147,7 +147,7 @@ const AdminProducts = () => {
 						<AddProduct
 							setMessage={setMessage}
 							setOpen={setOpen}
-							// getProducts={getProducts}
+							getProducts={getProducts}
 						/>
 					</div>
 					<PasswordModal

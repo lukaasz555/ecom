@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import WhiteInput from '../../../../../components/shared/WhiteInput/WhiteInput';
-import axios from 'axios';
 import CTA from '../../../../../components/shared/CTA/CTA';
 import { ProductModel } from '../../../../../models/Product';
 import Textfield from '../../../../../components/shared/Textfield/Textfield';
 import { handleAuthors } from '../../../../../helpers/handleAuthors';
+import { postNewProduct } from '../../../../../services/products.service';
 
 interface AddProductProps {
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	setMessage: React.Dispatch<React.SetStateAction<string>>;
-	getProducts?: () => Promise<void>;
+	getProducts: () => Promise<void>;
 }
 
 const AddProduct = ({ setOpen, setMessage, getProducts }: AddProductProps) => {
@@ -34,7 +34,6 @@ const AddProduct = ({ setOpen, setMessage, getProducts }: AddProductProps) => {
 		language: '',
 		pages: 0,
 	});
-	const URL = process.env.REACT_APP_SERVER_URL;
 
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -60,11 +59,16 @@ const AddProduct = ({ setOpen, setMessage, getProducts }: AddProductProps) => {
 		newProduct.discount = +newProduct.discount;
 		newProduct.authors = handleAuthors(authors);
 		if (checkForm(newProduct)) {
-			axios.post(`${URL}/products/add`, newProduct);
-			setOpen(false);
-			setMessage('Dodano nowy produkt');
-			// getProducts();
-			setError('');
+			postNewProduct(newProduct)
+				.then(() => {
+					setOpen(false);
+					setMessage('Dodano nowy produkt');
+					setError('');
+					getProducts();
+				})
+				.catch((e) => {
+					setError('Sth went wrong...');
+				});
 		} else {
 			setError('Wypełnij poprawnie formularz.');
 		}
@@ -103,7 +107,7 @@ const AddProduct = ({ setOpen, setMessage, getProducts }: AddProductProps) => {
 				/>
 				<p className='text-s'>
 					{newProduct.authors[0].length === 0
-						? 'W przypadku kilku autorów, rozdziel ich nazwiska przecinkami'
+						? 'W przypadku kilku autorów rozdziel ich nazwiska przecinkami'
 						: null}
 				</p>
 			</div>
