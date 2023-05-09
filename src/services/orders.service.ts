@@ -2,9 +2,20 @@ import { OrderModel } from '../models/Order';
 import { ResponseData } from '../models/ResponseData';
 import axios from 'axios';
 
-export const fetchOrders = async (query: Record<string, unknown>) => {
+const URL = process.env.REACT_APP_SERVER_URL;
+
+interface Query {
+	[key: string]: unknown;
+}
+
+interface UpdateStatus {
+	id: string;
+	status?: string;
+}
+
+export const fetchOrders = async (query: Query) => {
 	const res: ResponseData<OrderModel> = await axios
-		.get(`${process.env.REACT_APP_SERVER_URL}/orders`, {
+		.get(`${URL}/orders`, {
 			params: {
 				query: query,
 			},
@@ -20,10 +31,25 @@ export const fetchOrders = async (query: Record<string, unknown>) => {
 
 export const fetchOrdersForChart = async () => {
 	const res = await axios
-		.get(`${process.env.REACT_APP_SERVER_URL}/orders/sales`)
+		.get(`${URL}/orders/sales`)
 		.then((res) => {
 			return res.data;
 		})
 		.catch((e) => console.error(e));
+	return res;
+};
+
+export const updateOrderStatus = async (
+	obj: UpdateStatus
+): Promise<number | void> => {
+	const res = await axios
+		.put(`${URL}/orders/${obj.id}`, {
+			id: obj.id,
+			status: obj.status,
+		})
+		.then((res) => res.status)
+		.catch((e) => {
+			console.error(e);
+		});
 	return res;
 };
