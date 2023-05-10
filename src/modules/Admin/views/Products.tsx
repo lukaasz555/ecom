@@ -155,7 +155,7 @@ const AdminProducts = () => {
 						password={password}
 						setPassword={setPassword}
 						idToReq={idToReq}
-						// getProducts={getProducts}
+						getProducts={handleLoading}
 						setMessage={setMessage}
 						setModalOpen={setModalOpen}
 						type='remove'

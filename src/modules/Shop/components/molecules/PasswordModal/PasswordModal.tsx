@@ -2,24 +2,22 @@ import React, { useState } from 'react';
 import ReactModal from 'react-modal';
 import GrayInput from '../../../../../components/shared/GrayInput/GrayInput';
 import CTA from '../../../../../components/shared/CTA/CTA';
-import axios from 'axios';
 import { ProductModel } from '../../../../../models/Product';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
-import { handleAuthors } from '../../../../../helpers/handleAuthors';
+import { deleteProduct } from '../../../../../services/products.service';
 
 type PWModalProps = {
 	isOpen: boolean;
 	password: string;
-	setPassword: React.Dispatch<React.SetStateAction<string>>;
 	idToReq: string | undefined;
-	setMessage?: React.Dispatch<React.SetStateAction<string>>;
-	getProducts?: () => Promise<void>;
-	setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	getProducts?: () => void;
 	type: 'edit' | 'remove';
 	product?: ProductModel;
 	authors?: string;
+	setPassword: React.Dispatch<React.SetStateAction<string>>;
+	setMessage?: React.Dispatch<React.SetStateAction<string>>;
+	setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const PasswordModal = ({
@@ -35,60 +33,32 @@ const PasswordModal = ({
 	authors,
 }: PWModalProps) => {
 	const [passwordMessage, setPasswordMessage] = useState('');
-	const URL = process.env.REACT_APP_SERVER_URL;
-	const navigate = useNavigate();
 
 	const sendReq = (
 		type: 'remove' | 'edit',
 		id: string | unknown,
 		password: string
 	) => {
-		if (type === 'edit' && product !== undefined && authors) {
-			axios
-				.put(`${URL}/products/edit/` + idToReq, {
-					params: {
-						id: idToReq,
-					},
-					password,
-					price: +product.price,
-					discount: +product.discount,
-					title: product.title,
-					authors: handleAuthors(authors),
-					description: product.description,
-				})
-				.then((res) => {
-					if (res.status === 200) {
-						navigate(-1);
-					}
-				})
-				.catch((err) => {
-					setPassword('');
-					setPasswordMessage('Hasło jest niepoprawne.');
-				});
-		}
 		if (type === 'remove' && getProducts && setMessage) {
-			axios
-				.delete(`${URL}/products/remove/` + id, {
-					params: {
-						id: idToReq,
-					},
-					data: {
-						password,
-					},
+			if (idToReq) {
+				deleteProduct({
+					id: idToReq,
+					password,
 				})
-				.then((res) => {
-					if (res.status === 200) {
-						setMessage(`Usunięto produkt.`);
-						getProducts();
-						setModalOpen(false);
-						setPasswordMessage('');
+					.then((res) => {
+						if (res.status === 200) {
+							setMessage('Produkt usunięty');
+							getProducts();
+							setModalOpen(false);
+							setPasswordMessage('');
+							setPassword('');
+						}
+					})
+					.catch((e) => {
 						setPassword('');
-					}
-				})
-				.catch((err) => {
-					setPassword('');
-					setPasswordMessage('Hasło jest niepoprawne.');
-				});
+						setPasswordMessage('Hasło jest niepoprawne.');
+					});
+			}
 		}
 	};
 
