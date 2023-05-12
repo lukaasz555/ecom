@@ -9,9 +9,9 @@ interface Filter {
 	category?: string;
 }
 
-interface ExactProductRes {
+interface ProductResponse {
 	status: number;
-	data: ProductModel | null;
+	data?: ProductModel;
 }
 
 const URL = process.env.REACT_APP_SERVER_URL;
@@ -31,24 +31,22 @@ export const fetchProducts = async (query: Filter) => {
 };
 
 export const fetchExactProduct = async (productId: string) => {
-	const res: ExactProductRes = await axios
+	const res: ProductResponse = await axios
 		.get(`${URL}/products/${productId}`, {
 			params: {
 				id: productId,
 			},
 		})
 		.then((res) => {
-			const respond: ExactProductRes = {
+			const respond: ProductResponse = {
 				data: res.data,
 				status: res.status,
 			};
 			return respond;
 		})
 		.catch((err) => {
-			console.log('sdadasdsadsadas', err);
 			console.error(err);
-			const respond: ExactProductRes = {
-				data: null,
+			const respond: ProductResponse = {
 				status: err.Response.status,
 			};
 			return respond;
@@ -75,9 +73,14 @@ export const postNewProduct = async (newProduct: ProductModel) => {
 	return res;
 };
 
-interface DeleteParams {
+interface ProductParams {
 	id: string;
 	password: string;
+	price?: number;
+	discount?: number;
+	title?: string;
+	authors?: string[];
+	description?: string;
 }
 
 interface DeleteRes {
@@ -85,7 +88,7 @@ interface DeleteRes {
 }
 
 export const deleteProduct = async (
-	params: DeleteParams
+	params: ProductParams
 ): Promise<DeleteRes> => {
 	const res = await axios.delete(`${URL}/products/remove/${params.id}`, {
 		params: {
@@ -98,4 +101,27 @@ export const deleteProduct = async (
 	return {
 		status: res.status,
 	};
+};
+
+export const updateProduct = async (params: ProductParams) => {
+	const res = await axios
+		.put(`${URL}/products/edit/${params.id}`, {
+			password: params.password,
+			price: params.price,
+			discount: params.discount,
+			title: params.title,
+			authors: params.authors,
+			description: params.description,
+		})
+		.then((res) => {
+			return {
+				status: res.status,
+			};
+		})
+		.catch((e) => {
+			return {
+				status: e.response.status,
+			};
+		});
+	return res;
 };

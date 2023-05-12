@@ -5,7 +5,11 @@ import CTA from '../../../../../components/shared/CTA/CTA';
 import { ProductModel } from '../../../../../models/Product';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
-import { deleteProduct } from '../../../../../services/products.service';
+import {
+	deleteProduct,
+	updateProduct,
+} from '../../../../../services/products.service';
+import Loader from '../../../../../components/shared/Loader/Loader';
 
 type PWModalProps = {
 	isOpen: boolean;
@@ -32,6 +36,7 @@ const PasswordModal = ({
 	product,
 	authors,
 }: PWModalProps) => {
+	const [isLoading, setLoading] = useState(false);
 	const [passwordMessage, setPasswordMessage] = useState('');
 
 	const sendReq = (
@@ -58,6 +63,37 @@ const PasswordModal = ({
 						setPassword('');
 						setPasswordMessage('Hasło jest niepoprawne.');
 					});
+			}
+		}
+		if (type === 'edit' && product !== undefined && authors) {
+			// ...
+			if (idToReq) {
+				setLoading(true);
+				setPasswordMessage('');
+				updateProduct({
+					id: idToReq,
+					password: password,
+					price: +product.price,
+					discount: +product.discount,
+					title: product.title,
+					authors: product.authors,
+					description: product.description,
+				})
+					.then(({ status }) => {
+						console.log(status);
+						if (status === 200) {
+							setPasswordMessage('Aktualizacja udana');
+							setTimeout(() => setModalOpen(false), 2000);
+						}
+						if (status === 401) {
+							setPasswordMessage('Błędne hasło');
+						}
+					})
+					.catch((e) => {
+						setPasswordMessage('Coś poszło nie tak');
+						console.error(e);
+					})
+					.finally(() => setLoading(false));
 			}
 		}
 	};
@@ -99,10 +135,15 @@ const PasswordModal = ({
 					value={password}
 					onChange={(e) => setPassword(e.target.value)}
 				/>
-				<CTA
-					body='Potwierdź'
-					onClick={() => sendReq(type, idToReq, password)}
-				/>
+				{!isLoading ? (
+					<CTA
+						body='Potwierdź'
+						onClick={() => sendReq(type, idToReq, password)}
+					/>
+				) : (
+					<Loader />
+				)}
+
 				<p className='text-brownSugar mt-5'>
 					{passwordMessage === '' ? null : passwordMessage}
 				</p>

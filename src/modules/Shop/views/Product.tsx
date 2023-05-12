@@ -27,7 +27,7 @@ const initValue: ProductModel = {
 };
 
 const Product = () => {
-	const [product, setProduct] = useState<ProductModel | null>(initValue);
+	const [product, setProduct] = useState<ProductModel | undefined>(initValue);
 	const myRef = useRef(null);
 	const [showModal, setShowModal] = useState(false);
 	const [isLoading, setLoading] = useState(true);
