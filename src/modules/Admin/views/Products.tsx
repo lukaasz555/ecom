@@ -3,7 +3,7 @@ import AdminLayout from '../components/AdminLayout/AdminLayout';
 import AddProduct from '../../Shop/components/molecules/AddProduct/AddProduct';
 import Loader from '../../../components/shared/Loader/Loader';
 import AdminProductItem from '../components/AdminProductItem/AdminProductItem';
-import PasswordModal from '../../Shop/components/molecules/PasswordModal/PasswordModal';
+import ConfirmPasswordModal from '../components/ConfirmPasswordModal/ConfirmPasswordModal';
 import GrayInput from '../../../components/shared/GrayInput/GrayInput';
 import ErrorMessage from '../../../components/shared/ErrorMessage/ErrorMessage';
 import { useDispatch } from 'react-redux';
@@ -151,11 +151,10 @@ const AdminProducts = () => {
 							getProducts={getProducts}
 						/>
 					</div>
-					<PasswordModal
+					<ConfirmPasswordModal
 						isOpen={isModalOpen}
 						idToReq={idToReq}
 						getProducts={handleLoading}
-						setMessage={setMessage}
 						setModalOpen={setModalOpen}
 						type={ModalActionTypesEnum.Remove}
 					/>

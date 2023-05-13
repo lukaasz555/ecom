@@ -6,7 +6,7 @@ import WhiteInput from '../../../components/shared/WhiteInput/WhiteInput';
 import CTA from '../../../components/shared/CTA/CTA';
 import Return from '../../Shop/components/atoms/Return/Return';
 import Textfield from '../../../components/shared/Textfield/Textfield';
-import PasswordModal from '../../Shop/components/molecules/PasswordModal/PasswordModal';
+import ConfirmPasswordModal from '../components/ConfirmPasswordModal/ConfirmPasswordModal';
 import { fetchExactProduct } from '../../../services/products.service';
 import { initialProductModel } from '../../../helpers/initialStates';
 import { ModalActionTypesEnum } from '../../../enums/ModalActionTypesEnum';
@@ -112,7 +112,7 @@ const EditProduct = () => {
 						</div>
 
 						<CTA body='Zapisz' onClick={handleSave} />
-						<PasswordModal
+						<ConfirmPasswordModal
 							isOpen={isModalOpen}
 							setModalOpen={setModalOpen}
 							idToReq={currentID}
