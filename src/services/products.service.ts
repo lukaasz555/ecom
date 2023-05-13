@@ -1,13 +1,7 @@
 import { ProductModel } from '../models/Product';
 import { ResponseData } from '../models/ResponseData';
+import { PaginationFilter } from '../models/PaginationFilter';
 import axios from 'axios';
-
-interface Filter {
-	page: number;
-	limit: number;
-	catID?: number;
-	category?: string;
-}
 
 interface ProductResponse {
 	status: number;
@@ -26,7 +20,7 @@ interface ProductParams {
 
 const URL = process.env.REACT_APP_SERVER_URL;
 
-export const fetchProducts = async (query: Filter) => {
+export const fetchProducts = async (query: PaginationFilter) => {
 	const res: ResponseData<ProductModel> = await axios
 		.get(`${URL}/products`, {
 			params: {
@@ -64,7 +58,7 @@ export const fetchExactProduct = async (productId: string) => {
 	return res;
 };
 
-export const fetchFilteredProducts = async (filter: Filter) => {
+export const fetchFilteredProducts = async (filter: PaginationFilter) => {
 	const res: ResponseData<ProductModel> = await axios
 		.get(`${URL}/products/${filter.category}/${filter.catID}`, {
 			params: {
@@ -79,7 +73,6 @@ export const fetchFilteredProducts = async (filter: Filter) => {
 };
 
 export const addProduct = async (newProduct: ProductModel) => {
-	console.log(newProduct);
 	const res = await axios.post(`${URL}/products`, newProduct);
 	return res;
 };

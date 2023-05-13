@@ -115,8 +115,8 @@ const EditProduct = () => {
 						<ConfirmPasswordModal
 							isOpen={isModalOpen}
 							setModalOpen={setModalOpen}
-							idToReq={currentID}
-							type={ModalActionTypesEnum.Edit}
+							idForRequest={currentID}
+							requestType={ModalActionTypesEnum.Edit}
 							authors={authors}
 							product={product}
 						/>
