@@ -1,3 +1,5 @@
+import { ProductModel } from '../models/Product';
+
 export const initialCheckoutForm = {
 	email: {
 		emailAddress: '',
@@ -23,18 +25,19 @@ export const initialCheckoutForm = {
 	},
 };
 
-export const initialProductModel = {
+export const initialProductModel: ProductModel = {
 	id: '',
 	title: '',
 	authors: [''],
 	releaseYear: '',
 	description: '',
-	img: '',
+	img: 'https://ecsmedia.pl/b/mp/img/defaults/w.gif',
 	price: 0,
 	discount: 0,
 	categoryID: 0,
 	format: '',
 	type: 'books',
+	thumbnail: 'https://ecsmedia.pl/b/mp/img/defaults/w.gif',
 };
 
 export const initialOrderModel = {

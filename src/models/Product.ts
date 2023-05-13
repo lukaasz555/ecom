@@ -1,3 +1,4 @@
+import { ProductTypeEnum } from '../enums/ProductTypesEnum';
 export interface ProductModel {
 	id: string;
 	title: string;
@@ -10,7 +11,7 @@ export interface ProductModel {
 	discount: number;
 	categoryID: number;
 	format: string;
-	type: 'books' | 'albums';
+	type: ProductTypeEnum;
 	pages?: number;
 	language?: string;
 	label?: string;

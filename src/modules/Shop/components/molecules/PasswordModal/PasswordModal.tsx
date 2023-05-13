@@ -10,24 +10,21 @@ import {
 	updateProduct,
 } from '../../../../../services/products.service';
 import Loader from '../../../../../components/shared/Loader/Loader';
+import { ModalActionTypesEnum } from '../../../../../enums/ModalActionTypesEnum';
 
 type PWModalProps = {
 	isOpen: boolean;
-	password: string;
 	idToReq: string | undefined;
 	getProducts?: () => void;
-	type: 'edit' | 'remove';
+	type: ModalActionTypesEnum;
 	product?: ProductModel;
 	authors?: string;
-	setPassword: React.Dispatch<React.SetStateAction<string>>;
 	setMessage?: React.Dispatch<React.SetStateAction<string>>;
 	setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const PasswordModal = ({
 	isOpen,
-	password,
-	setPassword,
 	idToReq,
 	setMessage,
 	getProducts,
@@ -38,13 +35,14 @@ const PasswordModal = ({
 }: PWModalProps) => {
 	const [isLoading, setLoading] = useState(false);
 	const [passwordMessage, setPasswordMessage] = useState('');
+	const [password, setPassword] = useState('');
 
 	const sendReq = (
-		type: 'remove' | 'edit',
+		type: ModalActionTypesEnum,
 		id: string | unknown,
 		password: string
 	) => {
-		if (type === 'remove' && getProducts && setMessage) {
+		if (type === ModalActionTypesEnum.Remove && getProducts && setMessage) {
 			if (idToReq) {
 				deleteProduct({
 					id: idToReq,
@@ -65,8 +63,11 @@ const PasswordModal = ({
 					});
 			}
 		}
-		if (type === 'edit' && product !== undefined && authors) {
-			// ...
+		if (
+			type === ModalActionTypesEnum.Edit &&
+			product !== undefined &&
+			authors
+		) {
 			if (idToReq) {
 				setLoading(true);
 				setPasswordMessage('');
@@ -80,10 +81,13 @@ const PasswordModal = ({
 					description: product.description,
 				})
 					.then(({ status }) => {
-						console.log(status);
 						if (status === 200) {
 							setPasswordMessage('Aktualizacja udana');
-							setTimeout(() => setModalOpen(false), 2000);
+							setTimeout(() => {
+								setModalOpen(false);
+								setPasswordMessage('');
+								setPassword('');
+							}, 2000);
 						}
 						if (status === 401) {
 							setPasswordMessage('Błędne hasło');

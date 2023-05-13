@@ -8,25 +8,10 @@ import Return from '../../Shop/components/atoms/Return/Return';
 import Textfield from '../../../components/shared/Textfield/Textfield';
 import PasswordModal from '../../Shop/components/molecules/PasswordModal/PasswordModal';
 import { fetchExactProduct } from '../../../services/products.service';
+import { initialProductModel } from '../../../helpers/initialStates';
+import { ModalActionTypesEnum } from '../../../enums/ModalActionTypesEnum';
 
-const initProduct: ProductModel = {
-	authors: [''],
-	categoryID: 0,
-	description: '',
-	discount: 0,
-	price: 0,
-	format: '',
-	id: '',
-	img: '',
-	thumbnail: '',
-	label: '',
-	language: '',
-	pages: 0,
-	publisher: '',
-	releaseYear: '',
-	title: '',
-	type: 'books',
-};
+const initProduct: ProductModel = initialProductModel;
 
 const EditProduct = () => {
 	const location = useLocation();
@@ -34,7 +19,6 @@ const EditProduct = () => {
 	const currentID = location.pathname.replace('/admin/products/edit/', '');
 	const [isModalOpen, setModalOpen] = useState(false);
 	const [authors, setAuthors] = useState('');
-	const [password, setPassword] = useState('');
 
 	useEffect(() => {
 		fetchExactProduct(currentID).then((res) => {
@@ -131,10 +115,8 @@ const EditProduct = () => {
 						<PasswordModal
 							isOpen={isModalOpen}
 							setModalOpen={setModalOpen}
-							password={password}
-							setPassword={setPassword}
 							idToReq={currentID}
-							type='edit'
+							type={ModalActionTypesEnum.Edit}
 							authors={authors}
 							product={product}
 						/>

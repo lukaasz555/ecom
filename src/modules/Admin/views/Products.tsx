@@ -13,6 +13,7 @@ import { fetchProducts } from '../../../services/products.service';
 import { useAppSelector } from '../../../hooks/hooks';
 import { useSearchParams } from 'react-router-dom';
 import { useNavigationSearch } from '../../../hooks/hooks';
+import { ModalActionTypesEnum } from '../../../enums/ModalActionTypesEnum';
 
 const AdminProducts = () => {
 	const products = useAppSelector((state) => state.productsReducer.products);
@@ -152,13 +153,11 @@ const AdminProducts = () => {
 					</div>
 					<PasswordModal
 						isOpen={isModalOpen}
-						password={password}
-						setPassword={setPassword}
 						idToReq={idToReq}
 						getProducts={handleLoading}
 						setMessage={setMessage}
 						setModalOpen={setModalOpen}
-						type='remove'
+						type={ModalActionTypesEnum.Remove}
 					/>
 				</>
 			) : products.length === 0 && !error ? (
