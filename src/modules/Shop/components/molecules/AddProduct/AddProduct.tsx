@@ -4,7 +4,7 @@ import CTA from '../../../../../components/shared/CTA/CTA';
 import { ProductModel } from '../../../../../models/Product';
 import Textfield from '../../../../../components/shared/Textfield/Textfield';
 import { handleAuthors } from '../../../../../helpers/handleAuthors';
-import { postNewProduct } from '../../../../../services/products.service';
+import { addProduct } from '../../../../../services/products.service';
 import { initialProductModel } from '../../../../../helpers/initialStates';
 
 interface AddProductProps {
@@ -14,7 +14,6 @@ interface AddProductProps {
 }
 
 const AddProduct = ({ setOpen, setMessage, getProducts }: AddProductProps) => {
-	const id = crypto.randomUUID().slice(0, 3);
 	const [authors, setAuthors] = useState('');
 	const [error, setError] = useState('');
 	const [newProduct, setNewProduct] =
@@ -44,7 +43,7 @@ const AddProduct = ({ setOpen, setMessage, getProducts }: AddProductProps) => {
 		newProduct.discount = +newProduct.discount;
 		newProduct.authors = handleAuthors(authors);
 		if (checkForm(newProduct)) {
-			postNewProduct(newProduct)
+			addProduct(newProduct)
 				.then(() => {
 					setOpen(false);
 					setMessage('Dodano nowy produkt');

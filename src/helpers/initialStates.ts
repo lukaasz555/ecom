@@ -28,7 +28,7 @@ export const initialCheckoutForm: ICheckoutForm = {
 };
 
 export const initialProductModel: ProductModel = {
-	id: '',
+	id: crypto.randomUUID().slice(0, 3),
 	title: '',
 	authors: [''],
 	releaseYear: '',

@@ -68,7 +68,7 @@ export const fetchFilteredProducts = async (filter: Filter) => {
 	return res;
 };
 
-export const postNewProduct = async (newProduct: ProductModel) => {
+export const addProduct = async (newProduct: ProductModel) => {
 	const res = await axios.post(`${URL}/products/add`, newProduct);
 	return res;
 };
