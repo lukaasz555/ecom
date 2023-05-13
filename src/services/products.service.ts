@@ -14,6 +14,16 @@ interface ProductResponse {
 	data?: ProductModel;
 }
 
+interface ProductParams {
+	id: string;
+	password: string;
+	price?: number;
+	discount?: number;
+	title?: string;
+	authors?: string[];
+	description?: string;
+}
+
 const URL = process.env.REACT_APP_SERVER_URL;
 
 export const fetchProducts = async (query: Filter) => {
@@ -69,28 +79,15 @@ export const fetchFilteredProducts = async (filter: Filter) => {
 };
 
 export const addProduct = async (newProduct: ProductModel) => {
-	const res = await axios.post(`${URL}/products/add`, newProduct);
+	console.log(newProduct);
+	const res = await axios.post(`${URL}/products`, newProduct);
 	return res;
 };
 
-interface ProductParams {
-	id: string;
-	password: string;
-	price?: number;
-	discount?: number;
-	title?: string;
-	authors?: string[];
-	description?: string;
-}
-
-interface DeleteRes {
-	status: number;
-}
-
 export const deleteProduct = async (
 	params: ProductParams
-): Promise<DeleteRes> => {
-	const res = await axios.delete(`${URL}/products/remove/${params.id}`, {
+): Promise<ProductResponse> => {
+	const res = await axios.delete(`${URL}/products/${params.id}`, {
 		params: {
 			id: params.id,
 		},
@@ -105,7 +102,7 @@ export const deleteProduct = async (
 
 export const updateProduct = async (params: ProductParams) => {
 	const res = await axios
-		.put(`${URL}/products/edit/${params.id}`, {
+		.put(`${URL}/products/${params.id}`, {
 			password: params.password,
 			price: params.price,
 			discount: params.discount,

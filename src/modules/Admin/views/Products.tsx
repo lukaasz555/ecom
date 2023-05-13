@@ -153,10 +153,10 @@ const AdminProducts = () => {
 					</div>
 					<ConfirmPasswordModal
 						isOpen={isModalOpen}
-						idToReq={idToReq}
+						idForRequest={idToReq}
 						getProducts={handleLoading}
 						setModalOpen={setModalOpen}
-						type={ModalActionTypesEnum.Remove}
+						requestType={ModalActionTypesEnum.Remove}
 					/>
 				</>
 			) : products.length === 0 && !error ? (

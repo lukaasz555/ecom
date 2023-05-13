@@ -14,9 +14,9 @@ import { ModalActionTypesEnum } from '../../../../enums/ModalActionTypesEnum';
 
 type ConfirmPasswordModalProps = {
 	isOpen: boolean;
-	idToReq: string | undefined;
+	idForRequest: string | undefined;
 	getProducts?: () => void;
-	type: ModalActionTypesEnum;
+	requestType: ModalActionTypesEnum;
 	product?: ProductModel;
 	authors?: string;
 	setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -24,10 +24,10 @@ type ConfirmPasswordModalProps = {
 
 const ConfirmPasswordModal = ({
 	isOpen,
-	idToReq,
+	idForRequest,
 	getProducts,
 	setModalOpen,
-	type,
+	requestType,
 	product,
 	authors,
 }: ConfirmPasswordModalProps) => {
@@ -37,20 +37,24 @@ const ConfirmPasswordModal = ({
 	const [password, setPassword] = useState('');
 
 	const closeModal = () => {
+		setModalOpen(false);
 		setPassword('');
 		setModalMessage('');
-		setModalOpen(false);
+		setButtonVisible(true);
 	};
 
-	const modalSuccess = () => {
+	const modalSuccess = (type: ModalActionTypesEnum, str: string) => {
 		setButtonVisible(false);
+		setModalMessage(str);
 		setTimeout(() => {
 			closeModal();
-			setButtonVisible(true);
-		}, 2000);
+			if (type === ModalActionTypesEnum.Remove && getProducts) {
+				getProducts();
+			}
+		}, 1500);
 	};
 
-	const sendReq = (
+	const sendRequest = (
 		type: ModalActionTypesEnum,
 		id: string | unknown,
 		password: string
@@ -59,21 +63,18 @@ const ConfirmPasswordModal = ({
 			setModalMessage('Wpisz hasło');
 		} else {
 			if (type === ModalActionTypesEnum.Remove && getProducts) {
-				if (idToReq) {
+				if (idForRequest) {
 					setLoading(true);
+					setModalMessage('');
 					deleteProduct({
-						id: idToReq,
+						id: idForRequest,
 						password,
 					})
-						.then((res) => {
-							if (res.status === 200) {
-								setModalMessage('Usunięto produkt');
-								getProducts();
-								modalSuccess();
-							}
-						})
+						.then(
+							(res) =>
+								res.status === 200 && modalSuccess(type, 'Usunięto produkt')
+						)
 						.catch((e) => {
-							setPassword('');
 							setModalMessage('Hasło jest niepoprawne.');
 						})
 						.finally(() => setLoading(false));
@@ -84,11 +85,11 @@ const ConfirmPasswordModal = ({
 				product !== undefined &&
 				authors
 			) {
-				if (idToReq) {
+				if (idForRequest) {
 					setLoading(true);
 					setModalMessage('');
 					updateProduct({
-						id: idToReq,
+						id: idForRequest,
 						password: password,
 						price: +product.price,
 						discount: +product.discount,
@@ -98,8 +99,7 @@ const ConfirmPasswordModal = ({
 					})
 						.then(({ status }) => {
 							if (status === 200) {
-								setModalMessage('Aktualizacja udana');
-								modalSuccess();
+								modalSuccess(type, 'Aktualizacja udana');
 							}
 							if (status === 401) {
 								setModalMessage('Błędne hasło');
@@ -149,7 +149,7 @@ const ConfirmPasswordModal = ({
 				{isButtonVisible ? (
 					<CTA
 						body='Potwierdź'
-						onClick={() => sendReq(type, idToReq, password)}
+						onClick={() => sendRequest(requestType, idForRequest, password)}
 					/>
 				) : isLoading ? (
 					<Loader />
