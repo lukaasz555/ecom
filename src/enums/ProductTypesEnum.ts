@@ -1,4 +1,4 @@
-export enum ProductTypeEnum {
+export enum ProductTypesEnum {
 	Book = 'books',
 	Album = 'albums',
 }

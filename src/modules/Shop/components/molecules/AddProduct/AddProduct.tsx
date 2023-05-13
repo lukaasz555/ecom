@@ -5,6 +5,7 @@ import { ProductModel } from '../../../../../models/Product';
 import Textfield from '../../../../../components/shared/Textfield/Textfield';
 import { handleAuthors } from '../../../../../helpers/handleAuthors';
 import { postNewProduct } from '../../../../../services/products.service';
+import { initialProductModel } from '../../../../../helpers/initialStates';
 
 interface AddProductProps {
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -16,24 +17,8 @@ const AddProduct = ({ setOpen, setMessage, getProducts }: AddProductProps) => {
 	const id = crypto.randomUUID().slice(0, 3);
 	const [authors, setAuthors] = useState('');
 	const [error, setError] = useState('');
-	const [newProduct, setNewProduct] = useState<ProductModel>({
-		id,
-		title: '',
-		authors: [''],
-		releaseYear: '',
-		description: '',
-		img: 'https://ecsmedia.pl/b/mp/img/defaults/w.gif',
-		thumbnail: '',
-		price: 0,
-		discount: 0,
-		categoryID: 0,
-		format: '',
-		type: 'books',
-		publisher: '',
-		label: '',
-		language: '',
-		pages: 0,
-	});
+	const [newProduct, setNewProduct] =
+		useState<ProductModel>(initialProductModel);
 
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>

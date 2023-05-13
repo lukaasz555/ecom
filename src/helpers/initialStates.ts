@@ -1,6 +1,8 @@
 import { ProductModel } from '../models/Product';
+import { ICheckoutForm } from '../models/CheckoutData';
+import { ProductTypesEnum } from '../enums/ProductTypesEnum';
 
-export const initialCheckoutForm = {
+export const initialCheckoutForm: ICheckoutForm = {
 	email: {
 		emailAddress: '',
 		isConsent: false,
@@ -36,7 +38,7 @@ export const initialProductModel: ProductModel = {
 	discount: 0,
 	categoryID: 0,
 	format: '',
-	type: 'books',
+	type: ProductTypesEnum.Book,
 	thumbnail: 'https://ecsmedia.pl/b/mp/img/defaults/w.gif',
 };
 
