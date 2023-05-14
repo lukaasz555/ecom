@@ -59,7 +59,7 @@ export const fetchFilteredProducts = async (filter: PaginationFilter) => {
 			params: {
 				page: filter.page,
 				limit: filter.limit,
-				catID: filter.catID,
+				catID: filter.catID || 99,
 			},
 		})
 		.then((res) => res.data)
