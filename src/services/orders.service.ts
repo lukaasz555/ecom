@@ -1,19 +1,17 @@
 import { OrderModel } from '../models/Order';
 import { ResponseData } from '../models/ResponseData';
+import { PaginationFilter } from '../models/PaginationFilter';
+import { NewOrderModel } from '../models/Order';
 import axios from 'axios';
 
 const URL = process.env.REACT_APP_SERVER_URL;
-
-interface Query {
-	[key: string]: unknown;
-}
 
 interface UpdateStatus {
 	id: string;
 	status?: string;
 }
 
-export const fetchOrders = async (query: Query) => {
+export const fetchOrders = async (query: PaginationFilter) => {
 	const res: ResponseData<OrderModel> = await axios
 		.get(`${URL}/orders`, {
 			params: {
@@ -51,5 +49,11 @@ export const updateOrderStatus = async (
 		.catch((e) => {
 			console.error(e);
 		});
+	return res;
+};
+
+export const addOrder = async (newOrder: NewOrderModel) => {
+	const res = await axios.post(`${URL}/orders`, newOrder);
+	console.log(res);
 	return res;
 };

@@ -11,6 +11,9 @@ import OrderSummaryBottom from '../../atoms/OrderSummaryComponents/OrderSummaryB
 import { productsValue } from '../../../../../helpers/productsValue';
 import axios from 'axios';
 import ALT from '../../atoms/ALT/ALT';
+import { addOrder } from '../../../../../services/orders.service';
+import { OrderModel, NewOrderModel } from '../../../../../models/Order';
+import { ProductModel } from '../../../../../models/Product';
 
 interface OrderSummaryProps {
 	checkoutForm: ICheckoutForm;
@@ -27,7 +30,9 @@ const OrderSummary = ({
 }: OrderSummaryProps) => {
 	const { emailAddress } = checkoutForm.email;
 	const { phoneNumber, inpost } = checkoutForm.ship;
-	const items = useAppSelector((state) => state.cartReducer.items);
+	const items: ProductModel[] = useAppSelector(
+		(state) => state.cartReducer.items
+	);
 	const itemsValue = productsValue(items);
 	const deliveryCost = itemsValue >= 99 ? 0 : 9.9;
 	const dispatch = useAppDispatch();
@@ -35,7 +40,7 @@ const OrderSummary = ({
 	const [error, setError] = useState(false);
 	const URL = process.env.REACT_APP_SERVER_URL;
 
-	const newOrder = {
+	const newOrder: NewOrderModel = {
 		customer: {
 			customerData: {
 				name: checkoutForm.invoice.name,
@@ -62,8 +67,7 @@ const OrderSummary = ({
 		order: {
 			items: items,
 			qty: items.length,
-			value: itemsValue,
-
+			value: parseFloat(itemsValue.toFixed(2)),
 			ship: {
 				inpost: checkoutForm.ship.inpost,
 				cost: deliveryCost,
@@ -71,18 +75,30 @@ const OrderSummary = ({
 		},
 	};
 
+	// const handleClick = () => {
+	// 	axios
+	// 		.post(`${URL}/orders/new`, newOrder)
+	// 		.then((res) => {
+	// 			setNewOrderId(res.data._id);
+	// 			dispatch(clearCart());
+	// 			setError(false);
+	// 		})
+	// 		.catch((err) => {
+	// 			setError(true);
+	// 		});
+	// 	setOrderDone(true);
+	// };
+
 	const handleClick = () => {
-		axios
-			.post(`${URL}/orders/new`, newOrder)
+		addOrder(newOrder)
 			.then((res) => {
+				console.log(res.data);
 				setNewOrderId(res.data._id);
 				dispatch(clearCart());
 				setError(false);
 			})
-			.catch((err) => {
-				setError(true);
-			});
-		setOrderDone(true);
+			.catch((e) => setError(true))
+			.finally(() => setOrderDone(true));
 	};
 
 	return (
