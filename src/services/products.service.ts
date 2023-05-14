@@ -1,12 +1,7 @@
 import { ProductModel } from '../models/Product';
-import { ResponseData } from '../models/ResponseData';
+import { ApiResponse, ApiPaginationResponse } from '../models/api';
 import { PaginationFilter } from '../models/PaginationFilter';
 import axios from 'axios';
-
-interface ProductResponse {
-	status: number;
-	data?: ProductModel;
-}
 
 interface ProductParams {
 	id: string;
@@ -21,7 +16,7 @@ interface ProductParams {
 const URL = process.env.REACT_APP_SERVER_URL;
 
 export const fetchProducts = async (query: PaginationFilter) => {
-	const res: ResponseData<ProductModel> = await axios
+	const res: ApiPaginationResponse<ProductModel> = await axios
 		.get(`${URL}/products`, {
 			params: {
 				query: query,
@@ -35,22 +30,22 @@ export const fetchProducts = async (query: PaginationFilter) => {
 };
 
 export const fetchExactProduct = async (productId: string) => {
-	const res: ProductResponse = await axios
+	const res: ApiResponse<ProductModel> = await axios
 		.get(`${URL}/products/${productId}`, {
 			params: {
 				id: productId,
 			},
 		})
 		.then((res) => {
-			const respond: ProductResponse = {
+			const result = {
 				data: res.data,
 				status: res.status,
 			};
-			return respond;
+			return result;
 		})
 		.catch((err) => {
 			console.error(err);
-			const respond: ProductResponse = {
+			const respond: ApiResponse<ProductModel> = {
 				status: err.Response.status,
 			};
 			return respond;
@@ -59,7 +54,7 @@ export const fetchExactProduct = async (productId: string) => {
 };
 
 export const fetchFilteredProducts = async (filter: PaginationFilter) => {
-	const res: ResponseData<ProductModel> = await axios
+	const res: ApiPaginationResponse<ProductModel> = await axios
 		.get(`${URL}/products/${filter.category}/${filter.catID}`, {
 			params: {
 				page: filter.page,
@@ -79,7 +74,7 @@ export const addProduct = async (newProduct: ProductModel) => {
 
 export const deleteProduct = async (
 	params: ProductParams
-): Promise<ProductResponse> => {
+): Promise<ApiResponse<ProductModel>> => {
 	const res = await axios.delete(`${URL}/products/${params.id}`, {
 		params: {
 			id: params.id,

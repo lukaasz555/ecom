@@ -1,5 +1,5 @@
 import { OrderModel } from '../models/Order';
-import { ResponseData } from '../models/ResponseData';
+import { ApiPaginationResponse, ApiResponse } from '../models/api';
 import { PaginationFilter } from '../models/PaginationFilter';
 import { NewOrderModel } from '../models/Order';
 import axios from 'axios';
@@ -12,7 +12,7 @@ interface UpdateStatus {
 }
 
 export const fetchOrders = async (query: PaginationFilter) => {
-	const res: ResponseData<OrderModel> = await axios
+	const res: ApiPaginationResponse<OrderModel> = await axios
 		.get(`${URL}/orders`, {
 			params: {
 				query: query,
@@ -31,7 +31,10 @@ export const fetchOrdersForChart = async () => {
 	const res = await axios
 		.get(`${URL}/orders/sales`)
 		.then((res) => {
-			return res.data;
+			return {
+				status: res.status,
+				data: res.data,
+			};
 		})
 		.catch((e) => console.error(e));
 	return res;
@@ -53,7 +56,12 @@ export const updateOrderStatus = async (
 };
 
 export const addOrder = async (newOrder: NewOrderModel) => {
-	const res = await axios.post(`${URL}/orders`, newOrder);
-	console.log(res);
-	return res;
+	const res: ApiResponse<OrderModel> = await axios.post(
+		`${URL}/orders`,
+		newOrder
+	);
+	return {
+		data: res.data,
+		status: res.status,
+	};
 };
