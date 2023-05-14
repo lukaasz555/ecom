@@ -12,6 +12,7 @@ import EditProduct from './modules/Admin/views/EditProduct';
 import Sales from './modules/Admin/views/Sales';
 import ProductsList from './modules/Shop/views/ProductsList';
 import NotFound from './modules/Shop/views/NotFound';
+import SearchResult from './modules/Shop/views/SearchResult';
 
 function App() {
 	return (
@@ -22,6 +23,7 @@ function App() {
 				<Route path='/contact' element={<Contact />} />
 				<Route path='/cart' element={<Cart />} />
 				<Route path='/checkout' element={<Checkout />} />
+				<Route path='/search-result' element={<SearchResult />} />
 				<Route path={`/shop/products/:category`} element={<ProductsList />} />
 				<Route
 					path={`/shop/products/:category/:catID`}
