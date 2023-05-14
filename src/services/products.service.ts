@@ -13,6 +13,11 @@ interface ProductParams {
 	description?: string;
 }
 
+interface SearchProductParams {
+	key: string;
+	value?: string;
+}
+
 const URL = process.env.REACT_APP_SERVER_URL;
 
 export const fetchProducts = async (query: PaginationFilter) => {
@@ -37,11 +42,10 @@ export const fetchExactProduct = async (productId: string) => {
 			},
 		})
 		.then((res) => {
-			const result = {
+			return {
 				data: res.data,
 				status: res.status,
 			};
-			return result;
 		})
 		.catch((err) => {
 			console.error(err);
@@ -106,6 +110,28 @@ export const updateProduct = async (params: ProductParams) => {
 		.catch((e) => {
 			return {
 				status: e.response.status,
+			};
+		});
+	return res;
+};
+
+export const searchProduct = async (params: SearchProductParams) => {
+	const res: ApiResponse<ProductModel[]> = await axios
+		.get(`${URL}/products/search`, {
+			params: {
+				params,
+			},
+		})
+		.then((res) => {
+			return {
+				status: res.status,
+				data: res.data,
+			};
+		})
+		.catch((e) => {
+			console.log(e);
+			return {
+				status: e.Response.status,
 			};
 		});
 	return res;

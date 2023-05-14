@@ -23,17 +23,29 @@ const ProductDetails = ({ data }: ProductDetailsProps) => {
 				</li>
 				<li className='flex justify-start items-center  py-1 odd:bg-white even:bg-gray font-lato px-2'>
 					<span className='text-sparkle basis-1/3'>Autor:</span>
-					<p className='basis-2/3'>{data.authors.join(`, `)}</p>
+					<Link
+						to={`/search-result?authors=${data.authors.join('')}`}
+						className='text-sapphire hover:underline'>
+						{data.authors.join(', ')}
+					</Link>
 				</li>
 				{data.publisher ? (
 					<li className='flex justify-start items-center  py-1 odd:bg-white even:bg-gray font-lato px-2'>
 						<span className='text-sparkle basis-1/3'>Wydawnictwo:</span>
-						<p className='basis-2/3'>{data.publisher}</p>
+						<Link
+							to={`/search-result?publisher=${data.publisher}`}
+							className='text-sapphire hover:underline'>
+							{data.publisher}
+						</Link>
 					</li>
 				) : (
 					<li className='flex justify-start items-center  py-1 odd:bg-white even:bg-gray font-lato px-2'>
 						<span className='text-sparkle basis-1/3'>Wytwórnia:</span>
-						<p className='basis-2/3'>{data.label}</p>
+						<Link
+							to={`/search-result?label=${data.label}`}
+							className='text-sapphire hover:underline'>
+							{data.label}
+						</Link>
 					</li>
 				)}
 
@@ -60,7 +72,7 @@ const ProductDetails = ({ data }: ProductDetailsProps) => {
 					<span className='text-sparkle basis-1/3'>Kategoria:</span>
 					<Link
 						to={`/shop/products/${data.type}/${data.categoryID}`}
-						className='text-sapphire'>
+						className='text-sapphire hover:underline'>
 						{handleCategoryNames(data.categoryID)}
 					</Link>
 				</li>
