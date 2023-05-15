@@ -17,6 +17,7 @@ import { useAppSelector } from '../../../hooks/hooks';
 import { useSearchParams } from 'react-router-dom';
 import { useNavigationSearch } from '../../../hooks/hooks';
 import { ModalActionTypesEnum } from '../../../enums/ModalActionTypesEnum';
+import ProductsTable from '../components/ProductsTable/ProductsTable';
 
 const AdminProducts = () => {
 	const products = useAppSelector((state) => state.productsReducer.products);
@@ -108,6 +109,7 @@ const AdminProducts = () => {
 									type='text'
 									value={searchingPhrase}
 									placeholder='Wpisz tytuł, aby wyszukać produkt'
+									disabled
 								/>
 							</div>
 						)}
@@ -116,28 +118,10 @@ const AdminProducts = () => {
 						</div>
 						{products.length > 0 && !open && (
 							<div className='min-h-[420px] flex flex-col justify-between'>
-								<table>
-									<thead>
-										<tr className='border-b-[1px] text-left'>
-											<th className='font-medium w-[50px]'>ID</th>
-											<th className='font-medium'>TYTUŁ</th>
-											<th className='font-medium text-center w-[70px]'>CENA</th>
-											<th className='font-medium text-center w-[80px]'>
-												RODZAJ
-											</th>
-											<th className='font-medium w-[60px]'></th>
-										</tr>
-									</thead>
-									<tbody>
-										{products.map((p) => (
-											<AdminProductItem
-												product={p}
-												key={p.id}
-												removeProduct={removeProduct}
-											/>
-										))}
-									</tbody>
-								</table>
+								<ProductsTable
+									products={products}
+									removeProduct={removeProduct}
+								/>
 								<div className='flex justify-center mt-3'>
 									{searchingPhrase !== '' ? null : (
 										<Pagination
@@ -165,6 +149,7 @@ const AdminProducts = () => {
 						idForRequest={idForRequest}
 						getProducts={handleLoading}
 						setModalOpen={setModalOpen}
+						setMessage={setMessage}
 						requestType={ModalActionTypesEnum.Remove}
 					/>
 				</>

@@ -20,6 +20,7 @@ type ConfirmPasswordModalProps = {
 	product?: ProductModel;
 	authors?: string;
 	setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	setMessage?: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const ConfirmPasswordModal = ({
@@ -30,6 +31,7 @@ const ConfirmPasswordModal = ({
 	requestType,
 	product,
 	authors,
+	setMessage,
 }: ConfirmPasswordModalProps) => {
 	const [isLoading, setLoading] = useState(false);
 	const [isButtonVisible, setButtonVisible] = useState(true);
@@ -48,8 +50,9 @@ const ConfirmPasswordModal = ({
 		setModalMessage(str);
 		setTimeout(() => {
 			closeModal();
-			if (type === ModalActionTypesEnum.Remove && getProducts) {
+			if (type === ModalActionTypesEnum.Remove && getProducts && setMessage) {
 				getProducts();
+				setMessage('');
 			}
 		}, 1500);
 	};
