@@ -9,7 +9,10 @@ import ErrorMessage from '../../../components/shared/ErrorMessage/ErrorMessage';
 import { useDispatch } from 'react-redux';
 import Pagination from '../../../components/shared/Pagination/Pagination';
 import { loadData } from '../../../features/admin/productsSlice';
-import { fetchProducts } from '../../../services/products.service';
+import {
+	fetchProducts,
+	searchProduct,
+} from '../../../services/products.service';
 import { useAppSelector } from '../../../hooks/hooks';
 import { useSearchParams } from 'react-router-dom';
 import { useNavigationSearch } from '../../../hooks/hooks';
@@ -22,7 +25,7 @@ const AdminProducts = () => {
 	const [isLoading, setLoading] = useState(false);
 	const [password, setPassword] = useState('');
 	const [isModalOpen, setModalOpen] = useState(false);
-	const [idToReq, setIdToReq] = useState<undefined | string>('');
+	const [idForRequest, setIdForRequest] = useState<undefined | string>('');
 	const [error, setError] = useState(false);
 	const [searchParams, setSearchParams] = useSearchParams();
 	const limit = searchParams.get('productsPerPage');
@@ -58,18 +61,25 @@ const AdminProducts = () => {
 			.finally(() => setLoading(false));
 	};
 
-	useEffect(() => {
-		handleLoading();
-	}, [productsPerPage, currentPage]);
-
 	const removeProduct = (e: React.MouseEvent<HTMLButtonElement>) => {
 		const target = e.target as HTMLElement;
 		if (target.parentElement?.parentElement !== null) {
 			const productId = target.parentElement?.parentElement.id;
-			setIdToReq(productId);
+			setIdForRequest(productId);
 			setModalOpen(true);
 		}
 	};
+
+	useEffect(() => {
+		handleLoading();
+	}, [productsPerPage, currentPage]);
+
+	useEffect(() => {
+		searchProduct({
+			type: 'text',
+			searchPhrase: searchingPhrase,
+		});
+	}, [searchingPhrase]);
 
 	return (
 		<AdminLayout>
@@ -98,7 +108,6 @@ const AdminProducts = () => {
 									type='text'
 									value={searchingPhrase}
 									placeholder='Wpisz tytuł, aby wyszukać produkt'
-									disabled
 								/>
 							</div>
 						)}
@@ -153,7 +162,7 @@ const AdminProducts = () => {
 					</div>
 					<ConfirmPasswordModal
 						isOpen={isModalOpen}
-						idForRequest={idToReq}
+						idForRequest={idForRequest}
 						getProducts={handleLoading}
 						setModalOpen={setModalOpen}
 						requestType={ModalActionTypesEnum.Remove}

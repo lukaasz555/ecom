@@ -14,8 +14,10 @@ interface ProductParams {
 }
 
 interface SearchProductParams {
-	key: string;
+	key?: string;
 	value?: string;
+	type?: string;
+	searchPhrase?: string;
 }
 
 const URL = process.env.REACT_APP_SERVER_URL;

@@ -10,7 +10,7 @@ import ErrorMessage from '../../../components/shared/ErrorMessage/ErrorMessage';
 import Loader from '../../../components/shared/Loader/Loader';
 
 interface SearchResultParams {
-	key: string;
+	key?: string;
 	value?: string;
 }
 
