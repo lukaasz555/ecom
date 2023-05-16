@@ -18,13 +18,13 @@ import { ModalActionTypesEnum } from '../../../enums/ModalActionTypesEnum';
 import ProductsTable from '../components/ProductsTable/ProductsTable';
 import clsx from 'clsx';
 import { ProductModel } from '../../../models/Product';
+import { useDebounce } from 'usehooks-ts';
 
 const AdminProducts = () => {
 	const [filteredProducts, setFilteredProducts] = useState<ProductModel[]>([]);
 	const [isAddProductOpen, setAddProductOpen] = useState(false);
 	const [message, setMessage] = useState('');
 	const [isLoading, setLoading] = useState(true);
-	// const [password, setPassword] = useState('');
 	const [isModalOpen, setModalOpen] = useState(false);
 	const [idForRequest, setIdForRequest] = useState<undefined | string>('');
 	const [isError, setError] = useState(false);
@@ -33,6 +33,7 @@ const AdminProducts = () => {
 	const limit = searchParams.get('productsPerPage');
 	const page = searchParams.get('currentPage');
 	const [searchingPhrase, setSearchingPhrase] = useState('');
+	const debouncedSearchingPhrase = useDebounce<string>(searchingPhrase, 300);
 	const [productsPerPage, setProductsPerPage] = useState<number>(Number(limit));
 	const [currentPage, setCurrentPage] = useState<number>(Number(page));
 	const [pageCount, setPageCount] = useState<number>(0);
@@ -77,24 +78,28 @@ const AdminProducts = () => {
 		handleLoading();
 	}, [productsPerPage, currentPage]);
 
+	const searchByText = () => {
+		setPaginationVisible(false);
+		searchProduct({
+			type: 'text',
+			searchPhrase: searchingPhrase,
+		})
+			.then((res) => {
+				if (res.data) {
+					setFilteredProducts(res.data);
+				}
+			})
+			.catch((e) => console.error(e));
+	};
+
 	useEffect(() => {
 		if (searchingPhrase.trim() === '') {
 			getProducts();
 			setPaginationVisible(true);
 		} else {
-			setPaginationVisible(false);
-			searchProduct({
-				type: 'text',
-				searchPhrase: searchingPhrase,
-			})
-				.then((res) => {
-					if (res.data) {
-						setFilteredProducts(res.data);
-					}
-				})
-				.catch((e) => console.error(e));
+			searchByText();
 		}
-	}, [searchingPhrase]);
+	}, [debouncedSearchingPhrase]);
 
 	return (
 		<AdminLayout>
