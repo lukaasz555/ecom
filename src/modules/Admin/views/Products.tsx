@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import AdminLayout from '../components/AdminLayout/AdminLayout';
 import AddProduct from '../../Shop/components/molecules/AddProduct/AddProduct';
 import Loader from '../../../components/shared/Loader/Loader';
-import AdminProductItem from '../components/AdminProductItem/AdminProductItem';
 import ConfirmPasswordModal from '../components/ConfirmPasswordModal/ConfirmPasswordModal';
 import GrayInput from '../../../components/shared/GrayInput/GrayInput';
 import ErrorMessage from '../../../components/shared/ErrorMessage/ErrorMessage';
@@ -13,22 +12,24 @@ import {
 	fetchProducts,
 	searchProduct,
 } from '../../../services/products.service';
-import { useAppSelector } from '../../../hooks/hooks';
 import { useSearchParams } from 'react-router-dom';
 import { useNavigationSearch } from '../../../hooks/hooks';
 import { ModalActionTypesEnum } from '../../../enums/ModalActionTypesEnum';
 import ProductsTable from '../components/ProductsTable/ProductsTable';
+import clsx from 'clsx';
+import { ProductModel } from '../../../models/Product';
 
 const AdminProducts = () => {
-	const products = useAppSelector((state) => state.productsReducer.products);
-	const [open, setOpen] = useState(false);
+	const [filteredProducts, setFilteredProducts] = useState<ProductModel[]>([]);
+	const [isAddProductOpen, setAddProductOpen] = useState(false);
 	const [message, setMessage] = useState('');
-	const [isLoading, setLoading] = useState(false);
-	const [password, setPassword] = useState('');
+	const [isLoading, setLoading] = useState(true);
+	// const [password, setPassword] = useState('');
 	const [isModalOpen, setModalOpen] = useState(false);
 	const [idForRequest, setIdForRequest] = useState<undefined | string>('');
-	const [error, setError] = useState(false);
+	const [isError, setError] = useState(false);
 	const [searchParams, setSearchParams] = useSearchParams();
+	const [isPaginationVisible, setPaginationVisible] = useState(true);
 	const limit = searchParams.get('productsPerPage');
 	const page = searchParams.get('currentPage');
 	const [searchingPhrase, setSearchingPhrase] = useState('');
@@ -49,6 +50,7 @@ const AdminProducts = () => {
 		});
 		dispatch(loadData(products));
 		setPageCount(totalPages);
+		setFilteredProducts(products);
 	};
 
 	const handleLoading = () => {
@@ -76,74 +78,97 @@ const AdminProducts = () => {
 	}, [productsPerPage, currentPage]);
 
 	useEffect(() => {
-		searchProduct({
-			type: 'text',
-			searchPhrase: searchingPhrase,
-		});
+		if (searchingPhrase.trim() === '') {
+			getProducts();
+			setPaginationVisible(true);
+		} else {
+			setPaginationVisible(false);
+			searchProduct({
+				type: 'text',
+				searchPhrase: searchingPhrase,
+			})
+				.then((res) => {
+					if (res.data) {
+						setFilteredProducts(res.data);
+					}
+				})
+				.catch((e) => console.error(e));
+		}
 	}, [searchingPhrase]);
 
 	return (
 		<AdminLayout>
 			<div className='min-w-[550px]'>
 				<h2 className='text-2xl'>Produkty</h2>
+				<div>
+					<div className='flex justify-end my-3'>
+						{isAddProductOpen ? (
+							<button
+								onClick={() => setAddProductOpen(false)}
+								className='hover:underline'>
+								<span>{'<<'}</span> powrót do listy
+							</button>
+						) : (
+							<button
+								onClick={() => setAddProductOpen(true)}
+								className='hover:underline'>
+								+ dodaj produkt
+							</button>
+						)}
+					</div>
+					<div className={clsx(isAddProductOpen ? 'hidden' : '')}>
+						<GrayInput
+							name='searchProduct'
+							onChange={(
+								e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+							) => setSearchingPhrase(e.target.value)}
+							type='text'
+							value={searchingPhrase}
+							placeholder='Wpisz tytuł, aby wyszukać produkt'
+						/>
+					</div>
+				</div>
 			</div>
+
 			{isLoading ? (
 				<div className='min-h-[200px] flex justify-center items-center'>
 					<Loader />
 				</div>
-			) : products && products.length > 0 ? (
-				<>
-					<div className='flex flex-col'>
-						<div className='flex justify-end my-3'>
-							<button onClick={() => setOpen(true)} className='hover:underline'>
-								+ dodaj produkt
-							</button>
+			) : isError ? (
+				<ErrorMessage
+					text1='Brak połączenia'
+					text2='Odśwież stronę i spróbuj ponownie'
+				/>
+			) : (
+				<div className='flex flex-col'>
+					{isAddProductOpen ? (
+						<div className={`${isAddProductOpen ? 'block' : 'hidden'}`}>
+							<AddProduct
+								setMessage={setMessage}
+								setOpen={setAddProductOpen}
+								getProducts={getProducts}
+							/>
 						</div>
-						{open ? null : (
-							<div>
-								<GrayInput
-									name='searchProduct'
-									onChange={(
-										e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-									) => setSearchingPhrase(e.target.value)}
-									type='text'
-									value={searchingPhrase}
-									placeholder='Wpisz tytuł, aby wyszukać produkt'
-									disabled
-								/>
+					) : (
+						<>
+							<ProductsTable
+								products={filteredProducts}
+								removeProduct={removeProduct}
+							/>
+							<div className='flex justify-center mt-3'>
+								{isPaginationVisible ? (
+									<Pagination
+										currentPage={currentPage}
+										itemsPerPage={productsPerPage}
+										pageCount={pageCount}
+										setCurrentPage={setCurrentPage}
+										setItemsPerPage={setProductsPerPage}
+										options={[10, 20, 30, 50]}
+									/>
+								) : null}
 							</div>
-						)}
-						<div>
-							<p className='text-brownSugar mb-10 text-xl'>{message}</p>
-						</div>
-						{products.length > 0 && !open && (
-							<div className='min-h-[420px] flex flex-col justify-between'>
-								<ProductsTable
-									products={products}
-									removeProduct={removeProduct}
-								/>
-								<div className='flex justify-center mt-3'>
-									{searchingPhrase !== '' ? null : (
-										<Pagination
-											currentPage={currentPage}
-											itemsPerPage={productsPerPage}
-											pageCount={pageCount}
-											setCurrentPage={setCurrentPage}
-											setItemsPerPage={setProductsPerPage}
-											options={[10, 20, 30, 50]}
-										/>
-									)}
-								</div>
-							</div>
-						)}
-					</div>
-					<div className={`${open ? 'block' : 'hidden'}`}>
-						<AddProduct
-							setMessage={setMessage}
-							setOpen={setOpen}
-							getProducts={getProducts}
-						/>
-					</div>
+						</>
+					)}
 					<ConfirmPasswordModal
 						isOpen={isModalOpen}
 						idForRequest={idForRequest}
@@ -152,15 +177,8 @@ const AdminProducts = () => {
 						setMessage={setMessage}
 						requestType={ModalActionTypesEnum.Remove}
 					/>
-				</>
-			) : products.length === 0 && !error ? (
-				<p className='mt-10'>Brak produktów.</p>
-			) : error ? (
-				<ErrorMessage
-					text1='Brak połączenia'
-					text2='Odśwież stronę i spróbuj ponownie'
-				/>
-			) : null}
+				</div>
+			)}
 		</AdminLayout>
 	);
 };

@@ -131,7 +131,7 @@ export const searchProduct = async (params: SearchProductParams) => {
 			};
 		})
 		.catch((e) => {
-			console.log(e);
+			console.error(e);
 			return {
 				status: e.Response.status,
 			};
