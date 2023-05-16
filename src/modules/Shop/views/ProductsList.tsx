@@ -61,14 +61,14 @@ const ProductsList = () => {
 			.catch((e) => setError(true))
 			.finally(() => setLoading(false));
 	};
-
 	useEffect(() => {
-		if (!catID) {
+		if (category && !catID) {
 			const URL = `/shop/products/${category}/99`;
 			navigate(URL);
+			navigate(0);
 		}
 		handleLoading();
-	}, [currentPage, itemsPerPage, location.search]);
+	}, [currentPage, itemsPerPage, location.pathname]);
 
 	return (
 		<Layout>

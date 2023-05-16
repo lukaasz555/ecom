@@ -24,7 +24,9 @@ const CurrentSales = () => {
 
 	const fetchOrders = async () => {
 		const res = await fetchOrdersForChart();
-		setChartData(res);
+		if (res) {
+			setChartData(res.data);
+		}
 	};
 
 	useEffect(() => {

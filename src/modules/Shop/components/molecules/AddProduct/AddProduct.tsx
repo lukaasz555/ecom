@@ -1,40 +1,23 @@
 import React, { useState } from 'react';
 import WhiteInput from '../../../../../components/shared/WhiteInput/WhiteInput';
-import axios from 'axios';
 import CTA from '../../../../../components/shared/CTA/CTA';
 import { ProductModel } from '../../../../../models/Product';
 import Textfield from '../../../../../components/shared/Textfield/Textfield';
 import { handleAuthors } from '../../../../../helpers/handleAuthors';
+import { addProduct } from '../../../../../services/products.service';
+import { initialProductModel } from '../../../../../helpers/initialStates';
 
 interface AddProductProps {
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	setMessage: React.Dispatch<React.SetStateAction<string>>;
-	getProducts?: () => Promise<void>;
+	getProducts: () => Promise<void>;
 }
 
 const AddProduct = ({ setOpen, setMessage, getProducts }: AddProductProps) => {
-	const id = crypto.randomUUID().slice(0, 3);
 	const [authors, setAuthors] = useState('');
 	const [error, setError] = useState('');
-	const [newProduct, setNewProduct] = useState<ProductModel>({
-		id,
-		title: '',
-		authors: [''],
-		releaseYear: '',
-		description: '',
-		img: 'https://ecsmedia.pl/b/mp/img/defaults/w.gif',
-		thumbnail: '',
-		price: 0,
-		discount: 0,
-		categoryID: 0,
-		format: '',
-		type: 'books',
-		publisher: '',
-		label: '',
-		language: '',
-		pages: 0,
-	});
-	const URL = process.env.REACT_APP_SERVER_URL;
+	const [newProduct, setNewProduct] =
+		useState<ProductModel>(initialProductModel);
 
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -60,11 +43,16 @@ const AddProduct = ({ setOpen, setMessage, getProducts }: AddProductProps) => {
 		newProduct.discount = +newProduct.discount;
 		newProduct.authors = handleAuthors(authors);
 		if (checkForm(newProduct)) {
-			axios.post(`${URL}/products/add`, newProduct);
-			setOpen(false);
-			setMessage('Dodano nowy produkt');
-			// getProducts();
-			setError('');
+			addProduct(newProduct)
+				.then(() => {
+					setOpen(false);
+					setMessage('Dodano nowy produkt');
+					setError('');
+					getProducts();
+				})
+				.catch((e) => {
+					setError('Sth went wrong...');
+				});
 		} else {
 			setError('Wypełnij poprawnie formularz.');
 		}
@@ -103,7 +91,7 @@ const AddProduct = ({ setOpen, setMessage, getProducts }: AddProductProps) => {
 				/>
 				<p className='text-s'>
 					{newProduct.authors[0].length === 0
-						? 'W przypadku kilku autorów, rozdziel ich nazwiska przecinkami'
+						? 'W przypadku kilku autorów rozdziel ich nazwiska przecinkami'
 						: null}
 				</p>
 			</div>

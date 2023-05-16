@@ -7,15 +7,12 @@ import Cart from './modules/Shop/views/Cart';
 import Checkout from './modules/Shop/views/Checkout';
 import Admin from './modules/Admin/views/Admin';
 import AdminOrders from './modules/Admin/views/Orders';
-// import AdminProducts from './components/organisms/AdminProducts/AdminProducts';
-// import EditProduct from './components/organisms/EditProduct/EditProduct';
-// import Sales from './components/organisms/Sales/Sales';
 import AdminProducts from './modules/Admin/views/Products';
 import EditProduct from './modules/Admin/views/EditProduct';
 import Sales from './modules/Admin/views/Sales';
-
 import ProductsList from './modules/Shop/views/ProductsList';
 import NotFound from './modules/Shop/views/NotFound';
+import SearchResult from './modules/Shop/views/SearchResult';
 
 function App() {
 	return (
@@ -26,6 +23,7 @@ function App() {
 				<Route path='/contact' element={<Contact />} />
 				<Route path='/cart' element={<Cart />} />
 				<Route path='/checkout' element={<Checkout />} />
+				<Route path='/search-result' element={<SearchResult />} />
 				<Route path={`/shop/products/:category`} element={<ProductsList />} />
 				<Route
 					path={`/shop/products/:category/:catID`}

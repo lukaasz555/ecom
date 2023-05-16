@@ -10,24 +10,12 @@ import ProductModal from '../components/atoms/ProductModal/ProductModal';
 import Loader from '../../../components/shared/Loader/Loader';
 import Return from '../components/atoms/Return/Return';
 import { fetchExactProduct } from '../../../services/products.service';
+import { initialProductModel } from '../../../helpers/initialStates';
 
-const initValue: ProductModel = {
-	id: '',
-	title: '',
-	authors: [''],
-	releaseYear: '',
-	description: '',
-	img: '',
-	price: 0,
-	discount: 0,
-	categoryID: 0,
-	thumbnail: '',
-	format: '',
-	type: 'albums',
-};
+const initValue: ProductModel = initialProductModel;
 
 const Product = () => {
-	const [product, setProduct] = useState<ProductModel | null>(initValue);
+	const [product, setProduct] = useState<ProductModel | undefined>(initValue);
 	const myRef = useRef(null);
 	const [showModal, setShowModal] = useState(false);
 	const [isLoading, setLoading] = useState(true);

@@ -2,8 +2,8 @@ import {
 	handleNextStatusName,
 	setNextStatus,
 } from '../../../../helpers/handleStatusName';
-import axios from 'axios';
 import { useState } from 'react';
+import { updateOrderStatus } from '../../../../services/orders.service';
 
 type StatusMainButtonProps = {
 	status: string;
@@ -16,26 +16,23 @@ const StatusMainButton = ({
 	id,
 	setMessage,
 }: StatusMainButtonProps) => {
-	const URL = process.env.REACT_APP_SERVER_URL;
 	const [isLoading, setLoading] = useState(false);
 
 	const handleStatusUpdate = () => {
 		setLoading(true);
-		axios
-			.put(`${URL}/orders/${id}`, {
-				id,
-				status: setNextStatus(status),
-			})
+		updateOrderStatus({
+			id,
+			status: setNextStatus(status),
+		})
 			.then((res) => {
-				if (res.status === 200) {
+				if (res === 200) {
 					setMessage('Status zaktualizowany');
-					setLoading(false);
 				}
 			})
-			.catch((err) => {
+			.catch((e) => {
 				setMessage('Aktualizacja nieudana');
-				setLoading(false);
-			});
+			})
+			.finally(() => setLoading(false));
 	};
 
 	return (

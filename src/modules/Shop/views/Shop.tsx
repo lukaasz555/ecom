@@ -40,14 +40,14 @@ const Shop = () => {
 						<div className='absolute left-0 top-0 h-[100%] w-[100%] bg-black opacity-0 hover:opacity-80 duration-150 flex justify-center items-center'>
 							<div className='flex flex-col justify-between xl:flex-row xl:items-center xl:w-[100%] xl:justify-center xl:gap-x-10'>
 								<Link
-									to={`/shop/books`}
+									to={`/shop/products/books/`}
 									className='group block uppercase  text-white relative text-2xl my-5 font-[300]'>
 									zobacz książki
 									<span className='absolute left-0 bottom-0 w-[100%] h-[1px] bg-white origin-left scale-x-0 group-hover:scale-x-100 duration-300'></span>
 								</Link>
 
 								<Link
-									to={`/shop/albums`}
+									to={`/shop/products/albums/`}
 									className='group block uppercase text-white relative text-2xl my-5  font-[300]'>
 									zobacz płyty
 									<span className='absolute right-0 bottom-0 w-[100%] h-[1px] bg-white origin-right scale-x-0 group-hover:scale-x-100 duration-300'></span>

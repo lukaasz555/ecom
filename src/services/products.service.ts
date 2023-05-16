@@ -1,22 +1,30 @@
 import { ProductModel } from '../models/Product';
-import { ResponseData } from '../models/ResponseData';
+import { ApiResponse, ApiPaginationResponse } from '../models/api';
+import { PaginationFilter } from '../models/PaginationFilter';
 import axios from 'axios';
 
-interface Filter {
-	page: number;
-	limit: number;
-	catID?: number;
-	category?: string;
+interface ProductParams {
+	id: string;
+	password: string;
+	price?: number;
+	discount?: number;
+	title?: string;
+	authors?: string[];
+	description?: string;
 }
 
-interface ExactProductRes {
-	status: number;
-	data: ProductModel | null;
+interface SearchProductParams {
+	key?: string;
+	value?: string;
+	type?: string;
+	searchPhrase?: string;
 }
 
-export const fetchProducts = async (query: Filter) => {
-	const res: ResponseData<ProductModel> = await axios
-		.get(`${process.env.REACT_APP_SERVER_URL}/products`, {
+const URL = process.env.REACT_APP_SERVER_URL;
+
+export const fetchProducts = async (query: PaginationFilter) => {
+	const res: ApiPaginationResponse<ProductModel> = await axios
+		.get(`${URL}/products`, {
 			params: {
 				query: query,
 			},
@@ -29,24 +37,21 @@ export const fetchProducts = async (query: Filter) => {
 };
 
 export const fetchExactProduct = async (productId: string) => {
-	const res: ExactProductRes = await axios
-		.get(`${process.env.REACT_APP_SERVER_URL}/products/${productId}`, {
+	const res: ApiResponse<ProductModel> = await axios
+		.get(`${URL}/products/${productId}`, {
 			params: {
 				id: productId,
 			},
 		})
 		.then((res) => {
-			const respond: ExactProductRes = {
+			return {
 				data: res.data,
 				status: res.status,
 			};
-			return respond;
 		})
 		.catch((err) => {
-			console.log('sdadasdsadsadas', err);
 			console.error(err);
-			const respond: ExactProductRes = {
-				data: null,
+			const respond: ApiResponse<ProductModel> = {
 				status: err.Response.status,
 			};
 			return respond;
@@ -54,19 +59,82 @@ export const fetchExactProduct = async (productId: string) => {
 	return res;
 };
 
-export const fetchFilteredProducts = async (filter: Filter) => {
-	const res: ResponseData<ProductModel> = await axios
-		.get(
-			`${process.env.REACT_APP_SERVER_URL}/products/${filter.category}/${filter.catID}`,
-			{
-				params: {
-					page: filter.page,
-					limit: filter.limit,
-					catID: filter.catID,
-				},
-			}
-		)
+export const fetchFilteredProducts = async (filter: PaginationFilter) => {
+	const res: ApiPaginationResponse<ProductModel> = await axios
+		.get(`${URL}/products/${filter.category}/${filter.catID}`, {
+			params: {
+				page: filter.page,
+				limit: filter.limit,
+				catID: filter.catID || 99,
+			},
+		})
 		.then((res) => res.data)
 		.catch((e) => console.error(e));
+	return res;
+};
+
+export const addProduct = async (newProduct: ProductModel) => {
+	const res = await axios.post(`${URL}/products`, newProduct);
+	return res;
+};
+
+export const deleteProduct = async (
+	params: ProductParams
+): Promise<ApiResponse<ProductModel>> => {
+	const res = await axios.delete(`${URL}/products/${params.id}`, {
+		params: {
+			id: params.id,
+		},
+		data: {
+			password: params.password,
+		},
+	});
+	return {
+		status: res.status,
+	};
+};
+
+export const updateProduct = async (params: ProductParams) => {
+	const res = await axios
+		.put(`${URL}/products/${params.id}`, {
+			password: params.password,
+			price: params.price,
+			discount: params.discount,
+			title: params.title,
+			authors: params.authors,
+			description: params.description,
+		})
+		.then((res) => {
+			return {
+				status: res.status,
+			};
+		})
+		.catch((e) => {
+			return {
+				status: e.response.status,
+			};
+		});
+	return res;
+};
+
+export const searchProduct = async (params: SearchProductParams) => {
+	const res: ApiResponse<ProductModel[]> = await axios
+		.get(`${URL}/products/search`, {
+			params: {
+				params,
+			},
+		})
+		.then((res) => {
+			return {
+				status: res.status,
+				data: res.data,
+			};
+		})
+		.catch((e) => {
+			console.error(e);
+			return {
+				status: e.Response.status,
+			};
+		});
 	return res;
 };

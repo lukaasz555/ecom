@@ -1,32 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import AdminLayout from '../components/AdminLayout/AdminLayout';
-import axios from 'axios';
 import { ProductModel } from '../../../models/Product';
 import WhiteInput from '../../../components/shared/WhiteInput/WhiteInput';
 import CTA from '../../../components/shared/CTA/CTA';
 import Return from '../../Shop/components/atoms/Return/Return';
 import Textfield from '../../../components/shared/Textfield/Textfield';
-import PasswordModal from '../../Shop/components/molecules/PasswordModal/PasswordModal';
+import ConfirmPasswordModal from '../components/ConfirmPasswordModal/ConfirmPasswordModal';
+import { fetchExactProduct } from '../../../services/products.service';
+import { initialProductModel } from '../../../helpers/initialStates';
+import { ModalActionTypesEnum } from '../../../enums/ModalActionTypesEnum';
 
-const initProduct: ProductModel = {
-	authors: [''],
-	categoryID: 0,
-	description: '',
-	discount: 0,
-	price: 0,
-	format: '',
-	id: '',
-	img: '',
-	thumbnail: '',
-	label: '',
-	language: '',
-	pages: 0,
-	publisher: '',
-	releaseYear: '',
-	title: '',
-	type: 'books',
-};
+const initProduct: ProductModel = initialProductModel;
 
 const EditProduct = () => {
 	const location = useLocation();
@@ -34,21 +19,14 @@ const EditProduct = () => {
 	const currentID = location.pathname.replace('/admin/products/edit/', '');
 	const [isModalOpen, setModalOpen] = useState(false);
 	const [authors, setAuthors] = useState('');
-	const [password, setPassword] = useState('');
-
-	const URL = process.env.REACT_APP_SERVER_URL;
 
 	useEffect(() => {
-		axios
-			.get(`${URL}/products/${currentID}`, {
-				params: {
-					id: currentID,
-				},
-			})
-			.then((res) => {
+		fetchExactProduct(currentID).then((res) => {
+			if (res.data) {
 				setProduct(res.data);
 				setAuthors(res.data.authors.join(', '));
-			});
+			}
+		});
 	}, []);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,7 +54,7 @@ const EditProduct = () => {
 								Edytujesz:{' '}
 								<a
 									className='font-[500] hover:underline'
-									href={`https://lukaasz555-ecom.onrender.com/#/shop/product/${product.type}/${product.id}`}>
+									href={`https://lukaasz555-ecom.onrender.com/#/shop/products/${product.type}/item/${product.id}`}>
 									{' '}
 									{product.title} - {product.id}
 								</a>
@@ -134,13 +112,11 @@ const EditProduct = () => {
 						</div>
 
 						<CTA body='Zapisz' onClick={handleSave} />
-						<PasswordModal
+						<ConfirmPasswordModal
 							isOpen={isModalOpen}
 							setModalOpen={setModalOpen}
-							password={password}
-							setPassword={setPassword}
-							idToReq={currentID}
-							type='edit'
+							idForRequest={currentID}
+							requestType={ModalActionTypesEnum.Edit}
 							authors={authors}
 							product={product}
 						/>

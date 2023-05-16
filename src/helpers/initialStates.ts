@@ -1,4 +1,8 @@
-export const initialCheckoutForm = {
+import { ProductModel } from '../models/Product';
+import { ICheckoutForm } from '../models/CheckoutData';
+import { ProductTypesEnum } from '../enums/ProductTypesEnum';
+
+export const initialCheckoutForm: ICheckoutForm = {
 	email: {
 		emailAddress: '',
 		isConsent: false,
@@ -23,18 +27,19 @@ export const initialCheckoutForm = {
 	},
 };
 
-export const initialProductModel = {
-	id: '',
+export const initialProductModel: ProductModel = {
+	id: crypto.randomUUID().slice(0, 3),
 	title: '',
 	authors: [''],
 	releaseYear: '',
 	description: '',
-	img: '',
+	img: 'https://ecsmedia.pl/b/mp/img/defaults/w.gif',
 	price: 0,
 	discount: 0,
 	categoryID: 0,
 	format: '',
-	type: 'books',
+	type: ProductTypesEnum.Book,
+	thumbnail: 'https://ecsmedia.pl/b/mp/img/defaults/w.gif',
 };
 
 export const initialOrderModel = {

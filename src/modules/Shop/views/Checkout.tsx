@@ -16,13 +16,13 @@ const Checkout = () => {
 	const [checkoutForm, setCheckoutForm] =
 		useState<ICheckoutForm>(initialCheckoutForm);
 	const [isFormFilled, setFormFilled] = useState(false);
-	const [orderDone, setOrderDone] = useState(false);
+	const [isOrderDone, setOrderDone] = useState(false);
 
 	const items = useAppSelector((state) => state.cartReducer.items);
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (items.length < 1 && !orderDone) {
+		if (items.length < 1 && !isOrderDone) {
 			navigate('/cart');
 		}
 	}, [items]);
@@ -41,7 +41,7 @@ const Checkout = () => {
 					<OrderSummary
 						checkoutForm={checkoutForm}
 						setFormFilled={setFormFilled}
-						orderDone={orderDone}
+						isOrderDone={isOrderDone}
 						setOrderDone={setOrderDone}
 					/>
 				) : (

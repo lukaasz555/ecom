@@ -9,33 +9,36 @@ import ItemsDetails from '../../atoms/OrderSummaryComponents/ItemsDetails';
 import OrderSummaryTop from '../../atoms/OrderSummaryComponents/OrderSummaryTop';
 import OrderSummaryBottom from '../../atoms/OrderSummaryComponents/OrderSummaryBottom';
 import { productsValue } from '../../../../../helpers/productsValue';
-import axios from 'axios';
 import ALT from '../../atoms/ALT/ALT';
+import { addOrder } from '../../../../../services/orders.service';
+import { NewOrderModel } from '../../../../../models/Order';
+import { ProductModel } from '../../../../../models/Product';
 
 interface OrderSummaryProps {
 	checkoutForm: ICheckoutForm;
 	setFormFilled: React.Dispatch<React.SetStateAction<boolean>>;
-	orderDone: boolean;
+	isOrderDone: boolean;
 	setOrderDone: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const OrderSummary = ({
 	checkoutForm,
 	setFormFilled,
-	orderDone,
+	isOrderDone,
 	setOrderDone,
 }: OrderSummaryProps) => {
 	const { emailAddress } = checkoutForm.email;
 	const { phoneNumber, inpost } = checkoutForm.ship;
-	const items = useAppSelector((state) => state.cartReducer.items);
+	const items: ProductModel[] = useAppSelector(
+		(state) => state.cartReducer.items
+	);
 	const itemsValue = productsValue(items);
 	const deliveryCost = itemsValue >= 99 ? 0 : 9.9;
 	const dispatch = useAppDispatch();
 	const [newOrderId, setNewOrderId] = useState('');
 	const [error, setError] = useState(false);
-	const URL = process.env.REACT_APP_SERVER_URL;
 
-	const newOrder = {
+	const newOrder: NewOrderModel = {
 		customer: {
 			customerData: {
 				name: checkoutForm.invoice.name,
@@ -62,8 +65,7 @@ const OrderSummary = ({
 		order: {
 			items: items,
 			qty: items.length,
-			value: itemsValue,
-
+			value: parseFloat(itemsValue.toFixed(2)),
 			ship: {
 				inpost: checkoutForm.ship.inpost,
 				cost: deliveryCost,
@@ -72,22 +74,21 @@ const OrderSummary = ({
 	};
 
 	const handleClick = () => {
-		axios
-			.post(`${URL}/orders/new`, newOrder)
+		addOrder(newOrder)
 			.then((res) => {
-				setNewOrderId(res.data._id);
-				dispatch(clearCart());
-				setError(false);
+				if (res.data) {
+					setNewOrderId(res.data._id);
+					dispatch(clearCart());
+					setError(false);
+				}
 			})
-			.catch((err) => {
-				setError(true);
-			});
+			.catch((e) => setError(true));
 		setOrderDone(true);
 	};
 
 	return (
 		<div className='OrderSummary bg-white px-4 py-5 border-[#C7C7C7] border-[1px] w-full flex flex-col gap-y-8 '>
-			{!orderDone ? (
+			{!isOrderDone ? (
 				<>
 					<OrderSummaryTop setFormFilled={setFormFilled} />
 					<ContactDetails
