@@ -3,6 +3,7 @@ import { ApiPaginationResponse, ApiResponse } from '../models/api';
 import { PaginationFilter } from '../models/PaginationFilter';
 import { NewOrderModel } from '../models/Order';
 import axios from 'axios';
+import { ChartData } from '../modules/Admin/components/CurrentSales/CurrentSales';
 
 const URL = process.env.REACT_APP_SERVER_URL;
 
@@ -11,24 +12,23 @@ interface UpdateStatus {
 	status?: string;
 }
 
-export const fetchOrders = async (query: PaginationFilter) => {
-	const res: ApiPaginationResponse<OrderModel> = await axios
+export const fetchOrders = async (
+	query: PaginationFilter
+): Promise<ApiPaginationResponse<OrderModel>> => {
+	return await axios
 		.get(`${URL}/orders`, {
 			params: {
-				query: query,
+				query,
 			},
 		})
-		.then((r) => {
-			return r.data;
-		})
-		.catch((e) => {
-			console.error(e);
-		});
-	return res;
+		.then((res) => res.data)
+		.catch((e) => console.error(e));
 };
 
-export const fetchOrdersForChart = async () => {
-	const res = await axios
+export const fetchOrdersForChart = async (): Promise<
+	ApiResponse<ChartData[]>
+> => {
+	return await axios
 		.get(`${URL}/orders/sales`)
 		.then((res) => {
 			return {
@@ -36,32 +36,34 @@ export const fetchOrdersForChart = async () => {
 				data: res.data,
 			};
 		})
-		.catch((e) => console.error(e));
-	return res;
+		.catch((e) => ({ status: e.response.status }));
 };
 
 export const updateOrderStatus = async (
 	obj: UpdateStatus
-): Promise<number | void> => {
-	const res = await axios
-		.put(`${URL}/orders/${obj.id}`, {
+): Promise<ApiResponse<OrderModel>> => {
+	return await axios
+		.put(`${URL}/orders`, {
 			id: obj.id,
 			status: obj.status,
 		})
-		.then((res) => res.status)
-		.catch((e) => {
-			console.error(e);
-		});
-	return res;
+		.then((res) => {
+			return {
+				status: res.status,
+				data: res.data,
+			};
+		})
+		.catch((e) => ({ status: e.response.status }));
 };
 
-export const addOrder = async (newOrder: NewOrderModel) => {
-	const res: ApiResponse<OrderModel> = await axios.post(
-		`${URL}/orders`,
-		newOrder
-	);
-	return {
-		data: res.data,
-		status: res.status,
-	};
+export const addOrder = async (
+	newOrder: NewOrderModel
+): Promise<ApiResponse<OrderModel>> => {
+	return await axios
+		.post(`${URL}/orders`, newOrder)
+		.then((res) => ({
+			data: res.data,
+			status: res.status,
+		}))
+		.catch((e) => ({ status: e.response.status }));
 };

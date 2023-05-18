@@ -75,7 +75,7 @@ const ConfirmPasswordModal = ({
 					})
 						.then(
 							(res) =>
-								res.status === 200 && modalSuccess(type, 'Usunięto produkt')
+								Number(res) === 200 && modalSuccess(type, 'Usunięto produkt')
 						)
 						.catch((e) => {
 							setModalMessage('Hasło jest niepoprawne.');

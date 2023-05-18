@@ -25,7 +25,7 @@ const StatusMainButton = ({
 			status: setNextStatus(status),
 		})
 			.then((res) => {
-				if (res === 200) {
+				if (res.status === 200) {
 					setMessage('Status zaktualizowany');
 				}
 			})

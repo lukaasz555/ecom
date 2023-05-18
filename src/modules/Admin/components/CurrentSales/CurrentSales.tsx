@@ -11,7 +11,7 @@ import Loader from '../../../../components/shared/Loader/Loader';
 import ErrorMessage from '../../../../components/shared/ErrorMessage/ErrorMessage';
 import { fetchOrdersForChart } from '../../../../services/orders.service';
 
-type ChartData = {
+export type ChartData = {
 	name: string;
 	orders: number;
 };
@@ -24,7 +24,7 @@ const CurrentSales = () => {
 
 	const fetchOrders = async () => {
 		const res = await fetchOrdersForChart();
-		if (res) {
+		if (res.data) {
 			setChartData(res.data);
 		}
 	};

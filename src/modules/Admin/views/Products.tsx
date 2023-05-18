@@ -83,13 +83,11 @@ const AdminProducts = () => {
 		searchProduct({
 			type: 'text',
 			searchPhrase: searchingPhrase,
-		})
-			.then((res) => {
-				if (res.data) {
-					setFilteredProducts(res.data);
-				}
-			})
-			.catch((e) => console.error(e));
+		}).then(({ data }) => {
+			if (data) {
+				setFilteredProducts(data);
+			}
+		});
 	};
 
 	useEffect(() => {
