@@ -105,7 +105,7 @@ const AdminProducts = () => {
 		<AdminLayout>
 			<div className='min-w-[550px]'>
 				<h2 className='text-2xl'>Produkty</h2>
-				<div>
+				<div className={clsx(isError ? 'hidden' : '')}>
 					<div className='flex justify-end my-3'>
 						{isAddProductOpen ? (
 							<button
@@ -116,7 +116,8 @@ const AdminProducts = () => {
 						) : (
 							<button
 								onClick={() => setAddProductOpen(true)}
-								className='hover:underline'>
+								className='hover:underline'
+								disabled={isLoading}>
 								+ dodaj produkt
 							</button>
 						)}
@@ -129,6 +130,7 @@ const AdminProducts = () => {
 							) => setSearchingPhrase(e.target.value)}
 							type='text'
 							value={searchingPhrase}
+							disabled={isLoading}
 							placeholder='Wpisz tytuł, aby wyszukać produkt'
 						/>
 					</div>

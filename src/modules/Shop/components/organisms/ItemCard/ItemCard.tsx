@@ -19,7 +19,7 @@ const ItemCard = ({ data }: ItemCardProps) => {
                 after:content-[''] after:absolute after:left-0 after:top-0 after:h-[100%] after:w-full after:shadow-xl
                 after:opacity-0 hover:after:opacity-100
                 `}>
-					<div className='absolute h-[100%] w-full bg-whiteBg z-20 flex justify-center items-center opacity-0 hover:opacity-100 duration-300'>
+					<div className='absolute h-[100%] w-full bg-whiteBg z-10 flex justify-center items-center opacity-0 hover:opacity-100 duration-300'>
 						{price > 0 ? (
 							<AddToCartBtn body='do koszyka' data={data} tabIndex={-1} />
 						) : (
