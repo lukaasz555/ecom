@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 import StatusMainButton from './StatusMainButton';
 import StatusAltButton from './StatusAltButton';
+import { OrderStatusesEnum } from '../../../../enums/OrderStatusesEnum';
 
 type StatusProps = {
 	id: string;
@@ -62,11 +63,17 @@ const Status = ({ id, status }: StatusProps) => {
 			) : null}
 
 			<p className='font-[500]'>Zamówienie nr: {id}</p>
-			<button
-				className='border-solid border-[1px] py-1 px-2 text-[14px] uppercase'
-				onClick={() => setOpen(!isOpen)}>
-				zmień status
-			</button>
+			{status === OrderStatusesEnum.Cancelled ? (
+				<p className='text-[13px] uppercase text-pencil'>
+					zamówienie anulowane
+				</p>
+			) : (
+				<button
+					className='border-solid border-[1px] py-1 px-2 text-[14px] uppercase'
+					onClick={() => setOpen(!isOpen)}>
+					zmień status
+				</button>
+			)}
 		</div>
 	);
 };
