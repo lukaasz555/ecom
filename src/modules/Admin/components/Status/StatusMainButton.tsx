@@ -9,12 +9,14 @@ type StatusMainButtonProps = {
 	status: string;
 	id: string;
 	setMessage: React.Dispatch<React.SetStateAction<string>>;
+	operationSuccess: (t: string) => void;
 };
 
 const StatusMainButton = ({
 	status,
 	id,
 	setMessage,
+	operationSuccess,
 }: StatusMainButtonProps) => {
 	const [isLoading, setLoading] = useState(false);
 
@@ -26,7 +28,7 @@ const StatusMainButton = ({
 		})
 			.then((res) => {
 				if (res.status === 200) {
-					setMessage('Status zaktualizowany');
+					operationSuccess('Status zakutalizowany');
 				}
 			})
 			.catch((e) => {
@@ -39,7 +41,7 @@ const StatusMainButton = ({
 		<>
 			{status === 'completed' || status === 'cancelled' ? null : (
 				<button
-					className={`mx-3 p-2 text-white uppercase bg-brownSugar ${
+					className={`mx-3 p-2 text-white lowercase bg-brownSugar ${
 						!isLoading ? 'cursor-pointer' : 'cursor-wait'
 					} `}
 					onClick={handleStatusUpdate}

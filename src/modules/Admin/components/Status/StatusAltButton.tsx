@@ -5,9 +5,15 @@ type StatusAltButtonProps = {
 	id: string;
 	setMessage: React.Dispatch<React.SetStateAction<string>>;
 	status: string;
+	operationSuccess: (t: string) => void;
 };
 
-const StatusAltButton = ({ id, setMessage, status }: StatusAltButtonProps) => {
+const StatusAltButton = ({
+	id,
+	setMessage,
+	status,
+	operationSuccess,
+}: StatusAltButtonProps) => {
 	const URL = process.env.REACT_APP_SERVER_URL;
 	const [isLoading, setLoading] = useState(false);
 
@@ -20,7 +26,7 @@ const StatusAltButton = ({ id, setMessage, status }: StatusAltButtonProps) => {
 			})
 			.then((res) => {
 				if (res.status === 200) {
-					setMessage('Zamówienie anulowane');
+					operationSuccess('Zamówienie zostało anulowane');
 					setLoading(false);
 				}
 			})
@@ -34,7 +40,7 @@ const StatusAltButton = ({ id, setMessage, status }: StatusAltButtonProps) => {
 		<>
 			{status !== 'cancelled' ? (
 				<button
-					className={`mx-3 uppercase py-2 px-3 ${
+					className={`mx-3 lowercase py-2 px-3 ${
 						isLoading ? 'no-underline cursor-wait' : 'underline cursor-pointer'
 					}`}
 					disabled={isLoading ? true : false}

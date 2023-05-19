@@ -1,12 +1,14 @@
+import { OrderStatusesEnum } from '../enums/OrderStatusesEnum';
+
 export const handleStatusName = (str: string) => {
 	switch (str) {
-		case 'new':
+		case OrderStatusesEnum.New:
 			return 'nowe';
-		case 'pending':
+		case OrderStatusesEnum.Pending:
 			return 'realizowane';
-		case 'cancelled':
+		case OrderStatusesEnum.Cancelled:
 			return 'anulowane';
-		case 'completed':
+		case OrderStatusesEnum.Completed:
 			return 'zakończone';
 		default:
 			return str;
@@ -14,17 +16,18 @@ export const handleStatusName = (str: string) => {
 };
 
 export const setNextStatus = (str: string) => {
-	if (str === 'new' || str === 'nowe') return 'pending';
-	if (str === 'pending' || str === 'realizowane') return 'completed';
+	if (str === OrderStatusesEnum.New || str === 'nowe') return 'pending';
+	if (str === OrderStatusesEnum.Pending || str === 'realizowane')
+		return OrderStatusesEnum.Completed;
 };
 
 export const handleNextStatusName = (str: string) => {
 	switch (str) {
-		case 'new':
+		case OrderStatusesEnum.New:
 			return 'do realizacji';
 		case 'nowe':
 			return 'do realizacji';
-		case 'pending':
+		case OrderStatusesEnum.Pending:
 			return 'zakończ';
 		default:
 			return str;

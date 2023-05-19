@@ -36,7 +36,8 @@ const OrderModal = ({
 					display: 'flex',
 					alignItems: 'center',
 				},
-			}}>
+			}}
+			appElement={document.getElementsByTagName('div.root')}>
 			<div className='max-w-[760px] w-[100%] ml-auto mr-auto'>
 				{order && (
 					<div className='flex flex-col items-center justify-center'>
