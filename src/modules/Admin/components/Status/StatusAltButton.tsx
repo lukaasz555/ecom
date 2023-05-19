@@ -1,5 +1,6 @@
-import axios from 'axios';
 import { useState } from 'react';
+import { updateOrderStatus } from '../../../../services/orders.service';
+import { OrderStatusesEnum } from '../../../../enums/OrderStatusesEnum';
 
 type StatusAltButtonProps = {
 	id: string;
@@ -14,31 +15,26 @@ const StatusAltButton = ({
 	status,
 	operationSuccess,
 }: StatusAltButtonProps) => {
-	const URL = process.env.REACT_APP_SERVER_URL;
 	const [isLoading, setLoading] = useState(false);
 
 	const handleOrderCancelling = () => {
 		setLoading(true);
-		axios
-			.put(`${URL}/orders/${id}`, {
-				id,
-				status: 'cancelled',
-			})
+		updateOrderStatus({
+			id,
+			status: OrderStatusesEnum.Cancelled,
+		})
 			.then((res) => {
 				if (res.status === 200) {
 					operationSuccess('Zamówienie zostało anulowane');
-					setLoading(false);
 				}
 			})
-			.catch((err) => {
-				setMessage('Nie udało się anulować');
-				setLoading(false);
-			});
+			.catch((e) => setMessage('Nie udało się anulować zamówienia'))
+			.finally(() => setLoading(false));
 	};
 
 	return (
 		<>
-			{status !== 'cancelled' ? (
+			{status !== OrderStatusesEnum.Cancelled ? (
 				<button
 					className={`mx-3 lowercase py-2 px-3 ${
 						isLoading ? 'no-underline cursor-wait' : 'underline cursor-pointer'
