@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 import StatusMainButton from './StatusMainButton';
 import StatusAltButton from './StatusAltButton';
 import { OrderStatusesEnum } from '../../../../enums/OrderStatusesEnum';
+import { OrdersContext } from '../../views/Orders';
+import { fetchOrders } from '../../../../services/orders.service';
+import { useDispatch } from 'react-redux';
+import { loadData } from '../../../../features/admin/ordersSlice';
 
 type StatusProps = {
 	id: string;
@@ -11,13 +15,21 @@ type StatusProps = {
 };
 
 const Status = ({ id, status }: StatusProps) => {
+	const paginationData = useContext(OrdersContext);
 	const [isOpen, setOpen] = useState(false);
 	const [message, setMessage] = useState('');
 	const [areButtonsVisible, setButtonsVisible] = useState(true);
+	const dispatch = useDispatch();
+
+	const refetchOrders = async () => {
+		const { items: orders } = await fetchOrders(paginationData);
+		dispatch(loadData(orders));
+	};
 
 	const operationSuccess = (text: string) => {
 		setButtonsVisible(false);
 		setMessage(text);
+		refetchOrders();
 		setTimeout(() => {
 			setOpen(false);
 		}, 700);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, createContext } from 'react';
 import { OrderModel } from '../../../models/Order';
 import AdminLayout from '../components/AdminLayout/AdminLayout';
 import OrderItem from '../components/OrderItem/OrderItem';
@@ -12,6 +12,12 @@ import Pagination from '../../../components/shared/Pagination/Pagination';
 import OrderModal from '../components/OrderModal/OrderModal';
 import { useSearchParams } from 'react-router-dom';
 import { useNavigationSearch } from '../../../hooks/hooks';
+import { PaginationFilter } from '../../../models/PaginationFilter';
+
+export const OrdersContext = createContext<PaginationFilter>({
+	limit: 1,
+	page: 10,
+});
 
 const AdminOrders = () => {
 	const orders = useAppSelector((state) => state.ordersReducer.orders);
@@ -27,6 +33,10 @@ const AdminOrders = () => {
 	const page = searchParams.get('currentPage');
 	const [ordersPerPage, setOrdersPerPage] = useState<number>(Number(limit));
 	const [currentPage, setCurrentPage] = useState<number>(Number(page));
+	const [paginationData, setPaginationData] = useState<PaginationFilter>({
+		limit: ordersPerPage,
+		page: currentPage,
+	});
 
 	const getOrders = async () => {
 		navigationSearch('/admin/orders', {
@@ -54,6 +64,10 @@ const AdminOrders = () => {
 
 	useEffect(() => {
 		handleLoading();
+		setPaginationData({
+			limit: ordersPerPage,
+			page: currentPage,
+		});
 	}, [ordersPerPage, currentPage]);
 
 	const selectOrder = (id: string) => {
@@ -105,12 +119,14 @@ const AdminOrders = () => {
 							options={[5, 10, 15, 20]}
 						/>
 					</div>
-					<OrderModal
-						showModal={isModalOpen}
-						closeModal={closeModal}
-						order={selectedOrder}
-						isModalOpen={isModalOpen}
-					/>
+					<OrdersContext.Provider value={paginationData}>
+						<OrderModal
+							showModal={isModalOpen}
+							closeModal={closeModal}
+							order={selectedOrder}
+							isModalOpen={isModalOpen}
+						/>
+					</OrdersContext.Provider>
 				</div>
 			) : orders.length === 0 && !error ? (
 				<p className='mt-10'>Brak zamówień.</p>
