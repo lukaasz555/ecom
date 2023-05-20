@@ -24,12 +24,12 @@ const ProductHead = forwardRef<
 				}`}>
 				<div
 					className={`flex justify-center md:justify-start ${
-						type === 'books' ? 'h-[360px]' : 'md:h-[340px] md:w-[390px]'
+						type === 'books' ? 'h-[360px]' : 'md:h-[340px] md:w-[390px] mr-6'
 					}`}>
 					<img
 						src={img}
 						alt={title}
-						className='object-cover cursor-pointer'
+						className='object-cover cursor-pointer border-2 border-blush'
 						onClick={openModal}
 					/>
 				</div>
