@@ -18,6 +18,7 @@ module.exports = {
 			pencil: '#707070',
 			sapphire: '#0C6291',
 			transparent: 'transparent',
+			error: '#F52500',
 		},
 
 		fontSize: {

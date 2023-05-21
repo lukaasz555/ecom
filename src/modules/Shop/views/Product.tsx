@@ -64,7 +64,7 @@ const Product = () => {
 						/>
 					</svg>
 				</div>
-			) : product && product.price ? (
+			) : product && product.price >= 0 ? (
 				<>
 					<div className='mb-10 pb-5 border-b-[1px]'>
 						<Return />

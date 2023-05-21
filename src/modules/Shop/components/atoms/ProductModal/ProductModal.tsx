@@ -15,6 +15,7 @@ const ProductModal = ({ img, title, closeModal, showModal }: IProductModal) => {
 			shouldCloseOnOverlayClick={true}
 			shouldCloseOnEsc={true}
 			onRequestClose={closeModal}
+			appElement={document.getElementsByTagName('div.root')}
 			style={{
 				overlay: {
 					backgroundColor: 'rgba(255,255,255,0.8)',
