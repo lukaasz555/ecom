@@ -1,18 +1,26 @@
 import React from 'react';
 import { Oval } from 'react-loader-spinner';
 
-const Loader = () => {
+type LoaderProps = {
+	size?: 'large' | 'medium' | 'small';
+	dark?: boolean;
+};
+
+const Loader = ({ size = 'large', dark = true }: LoaderProps) => {
+	const color = dark ? '#140004' : '#FFF';
+	const dimension: number = size === 'large' ? 60 : size === 'medium' ? 40 : 20;
+
 	return (
 		<Oval
-			height={60}
-			width={60}
-			color='#140004'
+			height={dimension}
+			width={dimension}
+			color={color}
 			wrapperStyle={{}}
 			wrapperClass=''
 			visible={true}
 			ariaLabel='oval-loading'
-			secondaryColor='#140004'
-			strokeWidth={1}
+			secondaryColor={color}
+			strokeWidth={dark ? 1 : 3}
 			strokeWidthSecondary={1}
 		/>
 	);
