@@ -14,6 +14,8 @@ import ProductsList from './modules/Shop/views/ProductsList';
 import NotFound from './modules/Shop/views/NotFound';
 import SearchResult from './modules/Shop/views/SearchResult';
 import PreCheckout from './modules/Shop/views/PreCheckout';
+import Register from './modules/Shop/views/Register';
+import Login from './modules/Shop/views/Login';
 
 function App() {
 	return (
@@ -23,6 +25,8 @@ function App() {
 				<Route path='/shop' element={<Shop />} />
 				<Route path='/contact' element={<Contact />} />
 				<Route path='/cart' element={<Cart />} />
+				<Route path='/login' element={<Login />} />
+				<Route path='/register' element={<Register />} />
 				<Route path='/precheckout' element={<PreCheckout />} />
 				<Route path='/checkout' element={<Checkout />} />
 				<Route path='/search-result' element={<SearchResult />} />
