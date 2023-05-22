@@ -28,7 +28,8 @@ const Cart = () => {
 	const total: number = itemsCost + deliveryCost;
 
 	const handleClick = () => {
-		const target = '/checkout';
+		// if !user:
+		const target = '/precheckout';
 		navigate(target);
 	};
 
@@ -66,7 +67,7 @@ const Cart = () => {
 							<p>Koszt wysyłki: {handleNumbFormat(deliveryCost)}zł</p>
 
 							{items instanceof Array ? (
-								<p className='my-3 font-[500] text-[18px]'>
+								<p className='my-3 font-[500] text-l'>
 									Całkowita wartość zamówienia: {handleNumbFormat(total)}zł
 								</p>
 							) : null}
