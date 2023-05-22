@@ -1,11 +1,28 @@
 import React from 'react';
-import Layout from '../components/templates/Layout/Layout';
+import CheckoutLayout from '../components/templates/CheckoutLayout/CheckoutLayout';
+import { useNavigate } from 'react-router-dom';
 
 const PreCheckout = () => {
+	const navigate = useNavigate();
+
 	return (
-		<Layout>
-			<div>pre-checkout</div>
-		</Layout>
+		<CheckoutLayout>
+			<div className='flex flex-col items-center bg-white px-4 py-5 border-altBorder border-[1px]'>
+				<div className='mb-12'>pre-checkout page</div>
+				<div className='flex justify-between gap-24'>
+					<div>login form?</div>
+					<button onClick={() => navigate('/register')}>rejestracja</button>
+				</div>
+				<div className='mt-6'>
+					<button onClick={() => navigate('/checkout')}>
+						zakup bez zakładania konta
+					</button>
+				</div>
+				<button className='mt-10 self-start' onClick={() => navigate(-1)}>
+					powrót?
+				</button>
+			</div>
+		</CheckoutLayout>
 	);
 };
 
