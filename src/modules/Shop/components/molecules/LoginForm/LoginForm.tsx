@@ -3,6 +3,7 @@ import GrayInput from '../../../../../components/shared/GrayInput/GrayInput';
 import { loginValidation } from '../../../../../helpers/validations';
 import { useFormik } from 'formik';
 import CTA from '../../../../../components/shared/CTA/CTA';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
 	const formik = useFormik({
@@ -16,13 +17,15 @@ const LoginForm = () => {
 		},
 	});
 
+	const navigate = useNavigate();
+
 	const handleClick = (e: React.MouseEvent) => {
 		e.preventDefault();
 		formik.handleSubmit();
 	};
 
 	return (
-		<form onSubmit={formik.handleSubmit}>
+		<form onSubmit={formik.handleSubmit} className='min-w-[280px]'>
 			<GrayInput
 				type='email'
 				label='E-mail:'
@@ -39,7 +42,16 @@ const LoginForm = () => {
 				value={formik.values.password}
 				error={formik.errors.password}
 			/>
-			<CTA body='Zaloguj się' type='submit' onClick={handleClick} />
+			<div className='flex flex-col gap-y-5 mt-8'>
+				<CTA body='Zaloguj się' type='submit' onClick={handleClick} />
+				<div className='flex justify-center'>
+					<button
+						onClick={() => navigate('/register')}
+						className='px-2 underline underline-offset-4'>
+						Chcę założyć konto
+					</button>
+				</div>
+			</div>
 		</form>
 	);
 };

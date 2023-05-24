@@ -9,9 +9,12 @@ const PreCheckout = () => {
 	return (
 		<CheckoutLayout>
 			<div className='flex flex-col items-center bg-white px-4 py-5 border-altBorder border-[1px]'>
+				<LoginForm />
+			</div>
+			{/* <div className='flex flex-col items-center bg-white px-4 py-5 border-altBorder border-[1px]'>
 				<div className='mb-12'>pre-checkout page</div>
 				<div className='flex justify-between gap-24'>
-					{/* <div>login form?</div> */}
+					<div>login form?</div>
 					<LoginForm />
 					<button onClick={() => navigate('/register')}>rejestracja</button>
 				</div>
@@ -23,7 +26,7 @@ const PreCheckout = () => {
 				<button className='mt-10 self-start' onClick={() => navigate(-1)}>
 					powrót?
 				</button>
-			</div>
+			</div> */}
 		</CheckoutLayout>
 	);
 };
