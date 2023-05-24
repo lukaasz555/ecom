@@ -4,7 +4,7 @@ import Textarea from '../../../../../components/shared/Textarea/Textarea';
 import CTA from '../../../../../components/shared/CTA/CTA';
 import { sendMessage } from '../../../../../services/contact.service';
 import { useFormik } from 'formik';
-import { validateMessage } from '../../../../../helpers/validations';
+import { messageValidation } from '../../../../../helpers/validations';
 
 const ContactForm = () => {
 	const [postError, setPostError] = useState(false);
@@ -22,9 +22,8 @@ const ContactForm = () => {
 			subject: '',
 			message: '',
 		},
-		validationSchema: validateMessage,
+		validationSchema: messageValidation,
 		onSubmit: (values) => {
-			console.log(values);
 			setLoading(true);
 			sendMessage(values)
 				.then(() => {
@@ -84,6 +83,7 @@ const ContactForm = () => {
 						onClick={handleClick}
 						isLoading={isLoading}
 						size='small'
+						type='submit'
 					/>
 				)}
 			</div>

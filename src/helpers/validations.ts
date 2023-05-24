@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-export const validateMessage = Yup.object({
+export const messageValidation = Yup.object({
 	email: Yup.string()
 		.email('Wprowadź poprawny adres e-mail')
 		.required('To pole jest wymagane'),
@@ -8,6 +8,13 @@ export const validateMessage = Yup.object({
 		.required('To pole jest wymagane')
 		.max(42, 'Wprowadzono zbyt wiele znaków'),
 	message: Yup.string().required('To pole jest wymagane'),
+});
+
+export const loginValidation = Yup.object({
+	email: Yup.string()
+		.email('Wprowadź poprawny adres e-mail')
+		.required('To pole jest wymagane'),
+	password: Yup.string().required('To pole jest wymagane'),
 });
 
 export const emailValidation = (email: string) => {

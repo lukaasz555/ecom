@@ -1,6 +1,7 @@
 import React from 'react';
 import CheckoutLayout from '../components/templates/CheckoutLayout/CheckoutLayout';
 import { useNavigate } from 'react-router-dom';
+import LoginForm from '../components/molecules/LoginForm/LoginForm';
 
 const PreCheckout = () => {
 	const navigate = useNavigate();
@@ -10,7 +11,8 @@ const PreCheckout = () => {
 			<div className='flex flex-col items-center bg-white px-4 py-5 border-altBorder border-[1px]'>
 				<div className='mb-12'>pre-checkout page</div>
 				<div className='flex justify-between gap-24'>
-					<div>login form?</div>
+					{/* <div>login form?</div> */}
+					<LoginForm />
 					<button onClick={() => navigate('/register')}>rejestracja</button>
 				</div>
 				<div className='mt-6'>
