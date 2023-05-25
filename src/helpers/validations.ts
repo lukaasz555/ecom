@@ -17,6 +17,20 @@ export const loginValidation = Yup.object({
 	password: Yup.string().required('To pole jest wymagane'),
 });
 
+export const registerValidation = Yup.object({
+	email: Yup.string()
+		.email('Wprowadź poprawny adres e-mail')
+		.required('To pole jest wymagane'),
+	password: Yup.string().required('To pole jest wymagane'),
+	name: Yup.string()
+		.required('To pole jest wymagane')
+		.max(40, 'Przekroczono 40 znaków'),
+	lastname: Yup.string()
+		.required('To pole jest wymagane')
+		.max(40, 'Przekroczono 40 znaków'),
+	consent: Yup.boolean().oneOf([true], 'Wymagana zgoda'),
+});
+
 export const emailValidation = (email: string) => {
 	const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/;
 	if (regex.test(email) && email.length >= 3) {

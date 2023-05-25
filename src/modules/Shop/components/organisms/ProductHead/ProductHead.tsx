@@ -29,7 +29,7 @@ const ProductHead = forwardRef<
 					<img
 						src={img}
 						alt={title}
-						className='object-cover cursor-pointer border-2 border-blush'
+						className='object-cover cursor-pointer border-[1px]'
 						onClick={openModal}
 					/>
 				</div>
