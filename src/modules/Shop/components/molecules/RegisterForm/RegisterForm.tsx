@@ -3,11 +3,14 @@ import { useFormik } from 'formik';
 import { registerValidation } from '../../../../../helpers/validations';
 import GrayInput from '../../../../../components/shared/GrayInput/GrayInput';
 import CTA from '../../../../../components/shared/CTA/CTA';
+import InputErrorMessage from '../../../../../components/shared/InputErrorMessage/InputErrorMessage';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterForm = () => {
 	const [passwordConfirmation, setPasswordConfirmation] = useState<string>('');
 	const [passwordConfirmationMessage, setPasswordConfirmationMessage] =
 		useState<string>('');
+	const navigate = useNavigate();
 
 	const formik = useFormik({
 		initialValues: {
@@ -25,15 +28,20 @@ const RegisterForm = () => {
 
 	function handleClick(e: React.MouseEvent): void {
 		e.preventDefault();
-		formik.handleSubmit();
+		if (formik.values.password === passwordConfirmation) {
+			formik.handleSubmit();
+		}
 	}
 
 	useEffect(() => {
 		if (
 			formik.values.password !== '' &&
-			formik.values.password !== passwordConfirmation
+			formik.values.password !== passwordConfirmation &&
+			passwordConfirmation.trim() !== ''
 		) {
 			setPasswordConfirmationMessage('Podane hasła nie są zgodne');
+		} else {
+			setPasswordConfirmationMessage('');
 		}
 	}, [formik.values.password, passwordConfirmation]);
 
@@ -81,7 +89,35 @@ const RegisterForm = () => {
 					e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 				) => setPasswordConfirmation(e.target.value)}
 				value={passwordConfirmation}
+				error={passwordConfirmationMessage}
 			/>
+
+			<div className='flex flex-col mt-6 mb-8'>
+				<div className='flex items-center'>
+					<input
+						type='checkbox'
+						checked={formik.values.consent}
+						name='consent'
+						className='mr-2 cursor-pointer outline-black outline-offset-2 h-[16px] w-[16px] checked:bg-brownSugar'
+						onChange={formik.handleChange}
+						required
+					/>
+					<p>
+						Akceptuję{' '}
+						<button
+							className='text-brownSugar hover:underline'
+							onClick={() => navigate('/terms')}>
+							regulamin
+						</button>{' '}
+						sklepu
+					</p>
+				</div>
+				{formik.errors.consent && (
+					<div>
+						<InputErrorMessage text={formik.errors.consent} />
+					</div>
+				)}
+			</div>
 			<CTA body='Stwórz konto' onClick={handleClick} />
 		</form>
 	);
