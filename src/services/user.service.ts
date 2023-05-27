@@ -9,17 +9,14 @@ export interface UserLogin {
 	password: string;
 }
 
-function login(user: UserLogin): ApiResponse<User> {
-	const mockRes = {
-		status: 200,
-		data: {
-			name: 'Jan',
-			lastname: 'Janowski',
-			email: 'jan@jano.wp.pl',
-			password: 'dupa',
-		},
-	};
-	return mockRes;
+async function login(user: UserLogin): Promise<ApiResponse<User>> {
+	return await axios
+		.post(`${URL}/user/login`, user)
+		.then((res) => ({
+			status: res.status,
+			data: res.data,
+		}))
+		.catch((e) => ({ status: e.response.status }));
 }
 
 async function register(newUser: User): Promise<ApiResponse<User>> {
