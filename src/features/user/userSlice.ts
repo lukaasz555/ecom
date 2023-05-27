@@ -31,18 +31,23 @@ export const userRegister = createAsyncThunk(
 	}
 );
 
+export const userLogout = createAsyncThunk('user/logout', async () => {
+	await userService.logout();
+});
+
 export const userSlice = createSlice({
 	name: 'user',
 	initialState,
 	reducers: {},
 	extraReducers(builder) {
 		builder.addCase(userLogin.fulfilled, (state, action) => {
-			console.log(action.type);
-			console.log(action.payload);
 			state.isUserLoggedIn = true;
 			state.user = action.payload;
 		});
-		// builder.addCase
+		builder.addCase(userLogout.fulfilled, (state, action) => {
+			state.isUserLoggedIn = false;
+			state.user = undefined;
+		});
 	},
 });
 

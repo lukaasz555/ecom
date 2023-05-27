@@ -32,7 +32,7 @@ async function register(newUser: User): Promise<ApiResponse<User>> {
 		.catch((e) => ({ status: e.response.status }));
 }
 
-function logout(): void {
+async function logout(): Promise<void> {
 	localStorage.removeItem('user');
 }
 
