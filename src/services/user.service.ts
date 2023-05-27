@@ -4,7 +4,25 @@ import axios from 'axios';
 
 const URL = process.env.REACT_APP_SERVER_URL;
 
-export async function createNewUser(newUser: User): Promise<ApiResponse<User>> {
+export interface UserLogin {
+	email: string;
+	password: string;
+}
+
+function login(user: UserLogin): ApiResponse<User> {
+	const mockRes = {
+		status: 200,
+		data: {
+			name: 'Jan',
+			lastname: 'Janowski',
+			email: 'jan@jano.wp.pl',
+			password: 'dupa',
+		},
+	};
+	return mockRes;
+}
+
+async function register(newUser: User): Promise<ApiResponse<User>> {
 	return await axios
 		.post(`${URL}/user/register`, newUser)
 		.then((res) => ({
@@ -13,3 +31,10 @@ export async function createNewUser(newUser: User): Promise<ApiResponse<User>> {
 		}))
 		.catch((e) => ({ status: e.response.status }));
 }
+
+function logout(): void {
+	localStorage.removeItem('user');
+}
+
+const userService = { register, login, logout };
+export default userService;

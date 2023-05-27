@@ -4,20 +4,28 @@ import { loginValidation } from '../../../../../helpers/validations';
 import { useFormik } from 'formik';
 import CTA from '../../../../../components/shared/CTA/CTA';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { userLogin } from '../../../../../features/user/userSlice';
+import { ThunkDispatch } from '@reduxjs/toolkit';
 
 const LoginForm = () => {
+	const navigate = useNavigate();
+	const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
 	const formik = useFormik({
 		initialValues: {
 			email: '',
 			password: '',
 		},
 		validationSchema: loginValidation,
-		onSubmit: (values) => {
-			// console.log(values);
+		onSubmit: async (values) => {
+			await dispatch(
+				userLogin({
+					email: values.email,
+					password: values.password,
+				})
+			);
 		},
 	});
-
-	const navigate = useNavigate();
 
 	const handleClick = (e: React.MouseEvent) => {
 		e.preventDefault();

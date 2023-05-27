@@ -5,9 +5,10 @@ import GrayInput from '../../../../../components/shared/GrayInput/GrayInput';
 import CTA from '../../../../../components/shared/CTA/CTA';
 import InputErrorMessage from '../../../../../components/shared/InputErrorMessage/InputErrorMessage';
 import { useNavigate } from 'react-router-dom';
-import { addNewUser } from '../../../../../features/user/userSlice';
 import { User } from '../../../../../models/User';
 import { useDispatch } from 'react-redux';
+import { userRegister } from '../../../../../features/user/userSlice';
+import { ThunkDispatch } from '@reduxjs/toolkit';
 
 const RegisterForm = () => {
 	const [passwordConfirmation, setPasswordConfirmation] = useState<string>('');
@@ -15,7 +16,7 @@ const RegisterForm = () => {
 		useState<string>('');
 
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
+	const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
 
 	const formik = useFormik({
 		initialValues: {
@@ -33,7 +34,7 @@ const RegisterForm = () => {
 				val.email,
 				val.password
 			);
-			dispatch(addNewUser(user));
+			dispatch(userRegister(user));
 		},
 	});
 
