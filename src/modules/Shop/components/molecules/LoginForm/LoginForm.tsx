@@ -7,8 +7,10 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { userLogin } from '../../../../../features/user/userSlice';
 import { ThunkDispatch } from '@reduxjs/toolkit';
+import { useAppSelector } from '../../../../../hooks/hooks';
 
 const LoginForm = () => {
+	const message = useAppSelector((state) => state.userReducer.message);
 	const navigate = useNavigate();
 	const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
 	const formik = useFormik({
@@ -50,6 +52,7 @@ const LoginForm = () => {
 				value={formik.values.password}
 				error={formik.errors.password}
 			/>
+			<p>{message}</p>
 			<div className='flex flex-col gap-y-5 mt-8'>
 				<CTA body='Zaloguj się' type='submit' onClick={handleClick} />
 				<div className='flex justify-center'>
