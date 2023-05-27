@@ -5,12 +5,17 @@ import GrayInput from '../../../../../components/shared/GrayInput/GrayInput';
 import CTA from '../../../../../components/shared/CTA/CTA';
 import InputErrorMessage from '../../../../../components/shared/InputErrorMessage/InputErrorMessage';
 import { useNavigate } from 'react-router-dom';
+import { addNewUser } from '../../../../../features/user/userSlice';
+import { User } from '../../../../../models/User';
+import { useDispatch } from 'react-redux';
 
 const RegisterForm = () => {
 	const [passwordConfirmation, setPasswordConfirmation] = useState<string>('');
 	const [passwordConfirmationMessage, setPasswordConfirmationMessage] =
 		useState<string>('');
+
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const formik = useFormik({
 		initialValues: {
@@ -22,7 +27,13 @@ const RegisterForm = () => {
 		},
 		validationSchema: registerValidation,
 		onSubmit: (val) => {
-			console.log(val);
+			const user = new User(
+				val.lastname,
+				val.lastname,
+				val.email,
+				val.password
+			);
+			dispatch(addNewUser(user));
 		},
 	});
 
@@ -118,7 +129,7 @@ const RegisterForm = () => {
 					</div>
 				)}
 			</div>
-			<CTA body='Stwórz konto' onClick={handleClick} />
+			<CTA body='Stwórz konto' type='submit' onClick={handleClick} />
 		</form>
 	);
 };
