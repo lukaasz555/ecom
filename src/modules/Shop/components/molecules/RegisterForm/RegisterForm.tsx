@@ -60,7 +60,7 @@ const RegisterForm = () => {
 	}, [formik.values.password, passwordConfirmation]);
 
 	return (
-		<form onSubmit={formik.handleSubmit} className='min-w-[280px]'>
+		<form onSubmit={formik.handleSubmit} className='w-[280px]'>
 			<GrayInput
 				type='text'
 				label='Imię:'

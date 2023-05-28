@@ -26,7 +26,9 @@ const LoginForm = () => {
 					email: values.email,
 					password: values.password,
 				})
-			);
+			).then(() => {
+				navigate('/account');
+			});
 		},
 	});
 

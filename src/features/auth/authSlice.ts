@@ -7,11 +7,13 @@ import { User } from '../../models/User';
 interface AuthState {
 	loading: boolean;
 	message?: string;
+	isRegistrationSuccessful: boolean;
 }
 
 const initialState: AuthState = {
 	loading: false,
 	message: undefined,
+	isRegistrationSuccessful: false,
 };
 
 export const userLogin = createAsyncThunk(
@@ -51,6 +53,7 @@ export const authSlice = createSlice({
 			}
 			if (payload.status === 200) {
 				state.message = '';
+				state.isRegistrationSuccessful = true;
 			}
 			state.loading = false;
 		});
