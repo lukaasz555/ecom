@@ -7,14 +7,15 @@ import InputErrorMessage from '../../../../../components/shared/InputErrorMessag
 import { useNavigate } from 'react-router-dom';
 import { User } from '../../../../../models/User';
 import { useDispatch } from 'react-redux';
-import { userRegister } from '../../../../../features/user/userSlice';
+import { userRegister } from '../../../../../features/auth/authSlice';
 import { ThunkDispatch } from '@reduxjs/toolkit';
+import { useAppSelector } from '../../../../../hooks/hooks';
 
 const RegisterForm = () => {
+	const message = useAppSelector((state) => state.authReducer.message);
 	const [passwordConfirmation, setPasswordConfirmation] = useState<string>('');
 	const [passwordConfirmationMessage, setPasswordConfirmationMessage] =
 		useState<string>('');
-
 	const navigate = useNavigate();
 	const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
 
@@ -130,6 +131,7 @@ const RegisterForm = () => {
 					</div>
 				)}
 			</div>
+			<p>{message}</p>
 			<CTA body='Stwórz konto' type='submit' onClick={handleClick} />
 		</form>
 	);

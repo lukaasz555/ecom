@@ -5,12 +5,12 @@ import { useFormik } from 'formik';
 import CTA from '../../../../../components/shared/CTA/CTA';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { userLogin } from '../../../../../features/user/userSlice';
+import { userLogin } from '../../../../../features/auth/authSlice';
 import { ThunkDispatch } from '@reduxjs/toolkit';
 import { useAppSelector } from '../../../../../hooks/hooks';
 
 const LoginForm = () => {
-	const message = useAppSelector((state) => state.userReducer.message);
+	const message = useAppSelector((state) => state.authReducer.message);
 	const navigate = useNavigate();
 	const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
 	const formik = useFormik({

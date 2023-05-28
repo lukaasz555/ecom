@@ -3,6 +3,7 @@ import cartReducer from '../features/cart/cartSlice';
 import ordersReducer from '../features/admin/ordersSlice';
 import productsReducer from '../features/admin/productsSlice';
 import userReducer from '../features/user/userSlice';
+import authReducer from '../features/auth/authSlice';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import thunk from 'redux-thunk';
@@ -21,6 +22,7 @@ export const store = configureStore({
 		userReducer: persistedUserReducer,
 		productsReducer,
 		ordersReducer,
+		authReducer,
 	},
 	devTools: process.env.NODE_ENV !== 'production',
 	middleware: [thunk],

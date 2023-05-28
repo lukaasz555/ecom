@@ -2,7 +2,7 @@ import React from 'react';
 import CheckoutLayout from '../components/templates/CheckoutLayout/CheckoutLayout';
 import { useNavigate } from 'react-router-dom';
 import LoginForm from '../components/molecules/LoginForm/LoginForm';
-import { userLogout } from '../../../features/user/userSlice';
+import { userLogout } from '../../../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
 import { ThunkDispatch } from '@reduxjs/toolkit';
 
