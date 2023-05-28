@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import GrayInput from '../../../../../components/shared/GrayInput/GrayInput';
 import { loginValidation } from '../../../../../helpers/validations';
 import { useFormik } from 'formik';
@@ -10,6 +10,7 @@ import { ThunkDispatch } from '@reduxjs/toolkit';
 import { useAppSelector } from '../../../../../hooks/hooks';
 
 const LoginForm = () => {
+	const user = useAppSelector((state) => state.userReducer.user);
 	const message = useAppSelector((state) => state.authReducer.message);
 	const loading = useAppSelector((state) => state.authReducer.loading);
 	const navigate = useNavigate();
@@ -26,9 +27,7 @@ const LoginForm = () => {
 					email: values.email,
 					password: values.password,
 				})
-			).then(() => {
-				navigate('/account');
-			});
+			);
 		},
 	});
 
@@ -36,6 +35,12 @@ const LoginForm = () => {
 		e.preventDefault();
 		formik.handleSubmit();
 	};
+
+	useEffect(() => {
+		if (user) {
+			navigate('/account');
+		}
+	}, [user]);
 
 	return (
 		<form onSubmit={formik.handleSubmit} className='min-w-[280px]'>
