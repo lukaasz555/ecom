@@ -11,7 +11,7 @@ export interface UserLogin {
 
 async function login(user: UserLogin): Promise<ApiResponse<User>> {
 	return await axios
-		.post(`${URL}/user/login`, user)
+		.post(`${URL}/auth/login`, user)
 		.then((res) => ({
 			status: res.status,
 			data: res.data,
@@ -21,7 +21,7 @@ async function login(user: UserLogin): Promise<ApiResponse<User>> {
 
 async function register(newUser: User): Promise<ApiResponse<User>> {
 	return await axios
-		.post(`${URL}/user/register`, newUser)
+		.post(`${URL}/auth/register`, newUser)
 		.then((res) => ({
 			status: res.status,
 			data: res.data,
