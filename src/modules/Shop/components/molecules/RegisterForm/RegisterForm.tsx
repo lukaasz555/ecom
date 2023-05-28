@@ -13,6 +13,7 @@ import { useAppSelector } from '../../../../../hooks/hooks';
 
 const RegisterForm = () => {
 	const message = useAppSelector((state) => state.authReducer.message);
+	const loading = useAppSelector((state) => state.authReducer.loading);
 	const [passwordConfirmation, setPasswordConfirmation] = useState<string>('');
 	const [passwordConfirmationMessage, setPasswordConfirmationMessage] =
 		useState<string>('');
@@ -132,7 +133,13 @@ const RegisterForm = () => {
 				)}
 			</div>
 			<p>{message}</p>
-			<CTA body='Stwórz konto' type='submit' onClick={handleClick} />
+			<CTA
+				body='Stwórz konto'
+				type='submit'
+				onClick={handleClick}
+				size='small'
+				isLoading={loading}
+			/>
 		</form>
 	);
 };

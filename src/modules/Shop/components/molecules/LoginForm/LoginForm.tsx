@@ -11,6 +11,7 @@ import { useAppSelector } from '../../../../../hooks/hooks';
 
 const LoginForm = () => {
 	const message = useAppSelector((state) => state.authReducer.message);
+	const loading = useAppSelector((state) => state.authReducer.loading);
 	const navigate = useNavigate();
 	const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
 	const formik = useFormik({
@@ -54,7 +55,13 @@ const LoginForm = () => {
 			/>
 			<p>{message}</p>
 			<div className='flex flex-col gap-y-5 mt-8'>
-				<CTA body='Zaloguj się' type='submit' onClick={handleClick} />
+				<CTA
+					body='Zaloguj się'
+					type='submit'
+					onClick={handleClick}
+					isLoading={loading}
+					size='small'
+				/>
 				<div className='flex justify-center'>
 					<button
 						onClick={() => navigate('/register')}
