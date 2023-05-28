@@ -16,12 +16,14 @@ import SearchResult from './modules/Shop/views/SearchResult';
 import PreCheckout from './modules/Shop/views/PreCheckout';
 import Register from './modules/Shop/views/Register';
 import Login from './modules/Shop/views/Login';
+import Account from './modules/Shop/views/Account';
 
 function App() {
 	return (
 		<div className='min-h-screen w-full'>
 			<Routes>
 				<Route path='/' element={<Shop />} />
+				<Route path='/account' element={<Account />} />
 				<Route path='/shop' element={<Shop />} />
 				<Route path='/contact' element={<Contact />} />
 				<Route path='/cart' element={<Cart />} />
