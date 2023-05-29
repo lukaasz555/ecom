@@ -54,20 +54,27 @@ export const shippingValidation = Yup.object({
 		.max(10, 'Błędny kod'),
 });
 
-export const emailValidation = (email: string) => {
-	const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/;
-	if (regex.test(email) && email.length >= 3) {
-		return true;
-	} else {
-		return false;
-	}
-};
+export const invoiceValidation = Yup.object({
+	name: Yup.string().required('To pole jest obowiązkowe'),
+	lastname: Yup.string().required('To pole jest obowiązkowe'),
+	address1: Yup.string().required('Uzupełnij adres'),
+	address2: Yup.string().notRequired(),
+	city: Yup.string().required('Podaj miasto'),
+	postalCode: Yup.string()
+		.required('Wymagane pole')
+		.min(6, 'Podaj kod w formacie XX-XXX')
+		.max(6, 'Podaj kod w formacie XX-XXX'),
+	country: Yup.string().required(),
+	isInvoice: Yup.boolean(),
 
-export const inpostValidation = (inpost: string) => {
-	const regex = /[A-Z]+[0-9]+[A-Z]/;
-	if (regex.test(inpost) && inpost.length >= 5 && inpost.length <= 10) {
-		return true;
-	} else {
-		return false;
-	}
-};
+	nip: Yup.string().when('isInvoice', {
+		is: true,
+		then: () => Yup.string().required('Numer NIP jest wymagany'),
+		otherwise: () => Yup.string().notRequired(),
+	}),
+	companyName: Yup.string().when('isInvoice', {
+		is: true,
+		then: () => Yup.string().required('Nazwa firmy jest wymagana'),
+		otherwise: () => Yup.string().notRequired(),
+	}),
+});

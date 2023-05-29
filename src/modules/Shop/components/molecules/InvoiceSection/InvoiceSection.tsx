@@ -34,13 +34,17 @@ const InvoiceSection = ({
 		},
 		validationSchema: invoiceValidation,
 		onSubmit: (val) => {
-			val.isInvoice = isInvoiceNeeded;
-			console.log(val);
-			console.log(formData);
-			// 	setInvoiceOpen(false);
-			// 	setShippingOpen(true);
+			setInvoiceOpen(false);
+			setShippingOpen(true);
 		},
 	});
+
+	function handleForm(e: React.MouseEvent): void {
+		e.preventDefault();
+		console.log('handleFOrm');
+		console.log(formik.values);
+		formik.handleSubmit();
+	}
 
 	useEffect(() => {
 		isInvoiceNeeded
@@ -174,7 +178,12 @@ const InvoiceSection = ({
 							</div>
 						</div>
 					</div>
-					<CTA body='Kontynuuj' id='invoiceButton' type='submit' />
+					<CTA
+						body='Kontynuuj'
+						id='invoiceButton'
+						type='submit'
+						onClick={handleForm}
+					/>
 				</form>
 			) : null}
 		</div>
