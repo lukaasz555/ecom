@@ -3,8 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import EmailSection from '../components/molecules/EmailSection/EmailSection';
 import InvoiceSection from '../components/molecules/InvoiceSection/InvoiceSection';
 import ShippingSection from '../components/molecules/ShippingSection/ShippingSection';
-import { ICheckoutForm, CheckoutForm } from '../../../models/CheckoutData';
-import { initialCheckoutForm } from '../../../helpers/initialStates';
+import { CheckoutForm } from '../../../models/CheckoutData';
 import OrderSummary from '../components/molecules/OrderSummary/OrderSummary';
 import CartSummary from '../components/molecules/CartSummary/CartSummary';
 import { useAppSelector } from '../../../hooks/hooks';
@@ -15,10 +14,8 @@ const Checkout = () => {
 	const user = useAppSelector((state) => state.userReducer.user);
 	const items = useAppSelector((state) => state.cartReducer.items);
 	const [isEmailOpen, setEmailOpen] = useState(true);
-	const [isInvoiceOpen, setInvoiceOpen] = useState(false);
-	const [isShippingOpen, setShippingOpen] = useState(true);
-	// const [checkoutForm, setCheckoutForm] =
-	// 	useState<ICheckoutForm>(initialCheckoutForm);
+	const [isInvoiceOpen, setInvoiceOpen] = useState(true);
+	const [isShippingOpen, setShippingOpen] = useState(false);
 	const [isFormFilled, setFormFilled] = useState(false);
 	const [isOrderDone, setOrderDone] = useState(false);
 	const navigate = useNavigate();
@@ -55,18 +52,14 @@ const Checkout = () => {
 								setEmailOpen={setEmailOpen}
 								setInvoiceOpen={setInvoiceOpen}
 							/>
-							{/* <InvoiceSection
+							<InvoiceSection
 								isInvoiceOpen={isInvoiceOpen}
 								setInvoiceOpen={setInvoiceOpen}
 								setShippingOpen={setShippingOpen}
-								// checkoutForm={checkoutForm}
-								// setCheckoutForm={setCheckoutForm}
-							/> */}
+							/>
 							<ShippingSection
 								isShippingOpen={isShippingOpen}
 								setShippingOpen={setShippingOpen}
-								// checkoutForm={checkoutForm}
-								// setCheckoutForm={setCheckoutForm}
 								setFormFilled={setFormFilled}
 							/>
 						</div>
