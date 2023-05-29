@@ -31,6 +31,29 @@ export const registerValidation = Yup.object({
 	consent: Yup.boolean().oneOf([true], 'Wymagana zgoda'),
 });
 
+export const emailOnlyValidation = Yup.object({
+	email: Yup.string()
+		.email('Wprowadź poprawny adres e-mail')
+		.required('To pole jest wymagane'),
+});
+
+const phoneRegExp =
+	/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+const inpostRegExp = /[A-Z]+[0-9]+[A-Z]/;
+
+export const shippingValidation = Yup.object({
+	phoneNumber: Yup.string()
+		.matches(phoneRegExp, 'Podaj poprawny nr telefonu')
+		.required('To pole jest wymagane')
+		.min(9, 'Numer powinien zawierać 9 znaków')
+		.max(9, 'Numer powinien zawierać 9 znaków'),
+	inpost: Yup.string()
+		.matches(inpostRegExp, 'Niepoprawny format')
+		.required('Wprowadź kod paczkomatu')
+		.min(5, 'Błędny kod')
+		.max(10, 'Błędny kod'),
+});
+
 export const emailValidation = (email: string) => {
 	const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/;
 	if (regex.test(email) && email.length >= 3) {
