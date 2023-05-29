@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/templates/Layout/Layout';
 import CartItem from '../components/organisms/CartItem/CartItem';
-import { ProductModel } from '../../../models/Product';
 import EmptyCart from '../components/atoms/EmptyCart/EmptyCart';
 import CTA from '../../../components/shared/CTA/CTA';
 import { handleNumbFormat } from '../../../helpers/handleNumbFormat';
@@ -11,26 +10,24 @@ import { clearCart } from '../../../features/cart/cartSlice';
 import { productsValue } from '../../../helpers/productsValue';
 
 const Cart = () => {
-	const [items, setItems] = useState<ProductModel[] | []>([]);
 	const cartItems = useAppSelector((state) => state.cartReducer.items);
 	const uniqueItems = useAppSelector((state) => state.cartReducer.uniqueItems);
+	const isUserLoggedIn = useAppSelector(
+		(state) => state.userReducer.isUserLoggedIn
+	);
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
-
-	useEffect(() => {
-		if (cartItems.length > 0) {
-			setItems(uniqueItems);
-		}
-	}, [cartItems, uniqueItems]);
 
 	const itemsCost: number = productsValue(cartItems);
 	const deliveryCost: number = itemsCost >= 99 ? 0 : 9.9;
 	const total: number = itemsCost + deliveryCost;
 
 	const handleClick = () => {
-		// if !user:
-		const target = '/precheckout';
-		navigate(target);
+		if (isUserLoggedIn) {
+			navigate('/checkout');
+		} else {
+			navigate('/login');
+		}
 	};
 
 	const handleClear = () => {
@@ -52,25 +49,21 @@ const Cart = () => {
 							</button>
 						</div>
 						<div className='flex flex-col w-full'>
-							{items.map((item) => (
+							{uniqueItems.map((item) => (
 								<CartItem data={item} key={item.id} cartItems={cartItems} />
 							))}
 						</div>
 						<div className='text-center lg:text-right font-lato font-light'>
-							{items instanceof Array ? (
-								<p>
-									Wartość produktów:{' '}
-									{handleNumbFormat(productsValue(cartItems))}zł
-								</p>
-							) : null}
+							<p>
+								Wartość produktów: {handleNumbFormat(productsValue(cartItems))}
+								zł
+							</p>
 
 							<p>Koszt wysyłki: {handleNumbFormat(deliveryCost)}zł</p>
 
-							{items instanceof Array ? (
-								<p className='my-3 font-[500] text-l'>
-									Całkowita wartość zamówienia: {handleNumbFormat(total)}zł
-								</p>
-							) : null}
+							<p className='my-3 font-[500] text-l'>
+								Całkowita wartość zamówienia: {handleNumbFormat(total)}zł
+							</p>
 						</div>
 						<div>
 							<CTA body='dalej' onClick={handleClick} />
