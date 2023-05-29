@@ -14,12 +14,12 @@ const Checkout = () => {
 	const user = useAppSelector((state) => state.userReducer.user);
 	const items = useAppSelector((state) => state.cartReducer.items);
 	const [isEmailOpen, setEmailOpen] = useState(true);
-	const [isInvoiceOpen, setInvoiceOpen] = useState(true);
+	const [isInvoiceOpen, setInvoiceOpen] = useState(false);
 	const [isShippingOpen, setShippingOpen] = useState(false);
 	const [isFormFilled, setFormFilled] = useState(false);
 	const [isOrderDone, setOrderDone] = useState(false);
 	const navigate = useNavigate();
-	const formData = new CheckoutForm(user?.email);
+	const [formData] = useState<CheckoutForm>(new CheckoutForm(user?.email));
 
 	useEffect(() => {
 		if (items.length < 1 && !isOrderDone) {

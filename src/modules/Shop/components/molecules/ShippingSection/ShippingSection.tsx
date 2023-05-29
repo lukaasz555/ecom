@@ -26,7 +26,6 @@ const ShippingSection = ({
 		onSubmit: (val) => {
 			formData.setShipSection(val.inpost, val.phoneNumber);
 			setFormFilled(true);
-			console.log(formData);
 		},
 	});
 
@@ -63,6 +62,7 @@ const ShippingSection = ({
 								error={formik.errors.phoneNumber}
 								type='number'
 								name='phoneNumber'
+								maxLength={9}
 								placeholder='Numer telefonu (bez numeru kierunkowego)'
 							/>
 						</div>

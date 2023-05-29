@@ -30,7 +30,6 @@ const EmailSection = ({
 			formData.setEmailSection(val.email, consent);
 			setEmailOpen(false);
 			setInvoiceOpen(true);
-			// console.log(formData);
 		},
 	});
 
@@ -60,7 +59,7 @@ const EmailSection = ({
 							name='email'
 							error={formik.errors.email}
 						/>
-						<p className='text-xs'>
+						<p className='text-xs mt-2'>
 							Na ten mail otrzymasz fakturę oraz powiadomienia dot. zamówienia.
 						</p>
 					</div>

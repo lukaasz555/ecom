@@ -21,19 +21,20 @@ const InvoiceSection = ({
 
 	const formik = useFormik({
 		initialValues: {
-			address1: '',
-			address2: '',
-			city: '',
-			companyName: '',
-			country: 'Polska',
-			isInvoice: false,
-			lastname: '',
-			name: '',
-			nip: '',
-			postalCode: '',
+			address1: formData.invoice.address1,
+			address2: formData.invoice.address2,
+			city: formData.invoice.city,
+			companyName: formData.invoice.companyName,
+			country: formData.invoice.country,
+			isInvoice: formData.invoice.isInvoice,
+			lastname: formData.invoice.lastname,
+			name: formData.invoice.name,
+			nip: formData.invoice.nip,
+			postalCode: formData.invoice.postalCode,
 		},
 		validationSchema: invoiceValidation,
 		onSubmit: (val) => {
+			formData.setInvoiceData(val);
 			setInvoiceOpen(false);
 			setShippingOpen(true);
 		},
@@ -41,8 +42,6 @@ const InvoiceSection = ({
 
 	function handleForm(e: React.MouseEvent): void {
 		e.preventDefault();
-		console.log('handleFOrm');
-		console.log(formik.values);
 		formik.handleSubmit();
 	}
 
@@ -50,7 +49,6 @@ const InvoiceSection = ({
 		isInvoiceNeeded
 			? (formik.values.isInvoice = true)
 			: (formik.values.isInvoice = false);
-		console.log(formik.values);
 	}, [isInvoiceNeeded]);
 
 	return (
@@ -94,24 +92,28 @@ const InvoiceSection = ({
 					</div>
 
 					<div className='flex gap-x-3'>
-						<WhiteInput
-							name='name'
-							type='text'
-							placeholder='Imię'
-							value={formik.values.name}
-							error={formik.errors.name}
-							onChange={formik.handleChange}
-						/>
-						<WhiteInput
-							name='lastname'
-							type='text'
-							placeholder='Nazwisko'
-							value={formik.values.lastname}
-							error={formik.errors.lastname}
-							onChange={formik.handleChange}
-						/>
+						<div className='basis-1/2'>
+							<WhiteInput
+								name='name'
+								type='text'
+								placeholder='Imię'
+								value={formik.values.name}
+								error={formik.errors.name}
+								onChange={formik.handleChange}
+							/>
+						</div>
+						<div className='basis-1/2'>
+							<WhiteInput
+								name='lastname'
+								type='text'
+								placeholder='Nazwisko'
+								value={formik.values.lastname}
+								error={formik.errors.lastname}
+								onChange={formik.handleChange}
+							/>
+						</div>
 					</div>
-					<div className='flex flex-col gap-y-3'>
+					<div className='flex flex-col gap-y-3 w-full'>
 						{isInvoiceNeeded ? (
 							<>
 								<WhiteInput
@@ -159,15 +161,17 @@ const InvoiceSection = ({
 						/>
 
 						<div className='flex gap-x-3'>
-							<WhiteInput
-								name='postalCode'
-								type='text'
-								placeholder='Kod pocztowy (xx-xxx)'
-								value={formik.values.postalCode}
-								error={formik.errors.postalCode}
-								onChange={formik.handleChange}
-								maxLength={6}
-							/>
+							<div className='basis-1/2'>
+								<WhiteInput
+									name='postalCode'
+									type='text'
+									placeholder='Kod pocztowy (xx-xxx)'
+									value={formik.values.postalCode}
+									error={formik.errors.postalCode}
+									onChange={formik.handleChange}
+									maxLength={6}
+								/>
+							</div>
 							<div className='basis-1/2'>
 								<select
 									className='border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full'

@@ -6,10 +6,10 @@ export interface EmailDataModel {
 export interface InvoiceDataModel {
 	name: string;
 	lastname: string;
-	companyName: string;
-	nip: string;
+	companyName: string | undefined;
+	nip: string | undefined;
 	address1: string;
-	address2: string;
+	address2: string | undefined;
 	city: string;
 	postalCode: string;
 	country: string;
@@ -46,7 +46,7 @@ export class CheckoutForm {
 			address2: '',
 			city: '',
 			postalCode: '',
-			country: '',
+			country: 'Polska',
 		};
 		this.ship = {
 			inpost: '',
@@ -60,10 +60,10 @@ export class CheckoutForm {
 		}
 	}
 
-	setEmailSection(emailAddress: string, isConsent: boolean) {
+	setEmailSection(email: string, consent: boolean) {
 		this.email = {
-			emailAddress,
-			isConsent,
+			emailAddress: email,
+			isConsent: consent,
 		};
 	}
 	setInvoiceData(invoice: InvoiceDataModel) {
