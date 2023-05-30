@@ -27,6 +27,7 @@ const OrderSummary = ({
 	isOrderDone,
 	setOrderDone,
 }: OrderSummaryProps) => {
+	const user = useAppSelector((state) => state.userReducer.user);
 	const { emailAddress } = checkoutForm.email;
 	const { phoneNumber, inpost } = checkoutForm.ship;
 	const items: ProductModel[] = useAppSelector(
@@ -40,6 +41,7 @@ const OrderSummary = ({
 
 	const newOrder: NewOrderModel = {
 		customer: {
+			customerId: user?.id || 'guest',
 			customerData: {
 				name: checkoutForm.invoice.name,
 				lastname: checkoutForm.invoice.lastname,

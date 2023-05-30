@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { ThunkDispatch } from '@reduxjs/toolkit';
 import { userLogout } from '../../../features/auth/authSlice';
+import { fetchUserOrders } from '../../../services/orders.service';
 
 const Account = () => {
 	const user = useAppSelector((state) => state.userReducer.user);
@@ -14,6 +15,9 @@ const Account = () => {
 	useEffect(() => {
 		if (!user) {
 			navigate('/login');
+		}
+		if (user) {
+			fetchUserOrders(user.id);
 		}
 	}, [user]);
 

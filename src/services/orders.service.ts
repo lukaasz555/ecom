@@ -12,6 +12,16 @@ interface UpdateStatus {
 	status?: string;
 }
 
+export const fetchUserOrders = async (customerId: string) => {
+	return await axios
+		.get(`${URL}/orders/${customerId}`)
+		.then((res) => {
+			// console.log(res);
+			return res.data;
+		})
+		.catch((e) => console.log(e));
+};
+
 export const fetchOrders = async (
 	query: PaginationFilter
 ): Promise<ApiPaginationResponse<OrderModel>> => {
