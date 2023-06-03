@@ -21,8 +21,7 @@ const MobileMenu = () => {
 			<nav
 				className={clsx(
 					isOpen ? '-translate-x-[50%]' : '-translate-x-[150%]',
-					'absolute left-[50%] flex flex-col z-20 w-full items-center bg-white justify-center py-8 duration-300 origin-left shadow-lg',
-					user ? '-bottom-[300%]' : '-bottom-[200%]'
+					'absolute left-[50%] flex flex-col z-20 w-full items-center bg-white justify-center py-8 duration-300 origin-left shadow-lg bottom-[-300%]'
 				)}>
 				<MobileMenuLink to='/shop/products/books/99' body='Książki' />
 				<MobileMenuLink to='/shop/products/albums/99' body='Płyty' />
@@ -36,7 +35,9 @@ const MobileMenu = () => {
 							Wyloguj
 						</button>
 					</div>
-				) : null}
+				) : (
+					<MobileMenuLink to='/account' body='Zaloguj się' />
+				)}
 				<div className='border-t-[1px] mt-5 pt-5'>
 					<Socials />
 				</div>

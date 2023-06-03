@@ -25,13 +25,11 @@ const Top = () => {
 					<Socials />
 				</div>
 				<CartIcon />
-				{user ? (
-					<button
-						onClick={() => navigate('/account')}
-						className='ml-3 hidden md:block'>
-						<img src={UserIcon} alt='account' />
-					</button>
-				) : null}
+				<button
+					onClick={() => navigate('/account')}
+					className='ml-3 hidden md:block'>
+					<img src={UserIcon} alt='account' />
+				</button>
 			</div>
 		</div>
 	);

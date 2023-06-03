@@ -25,7 +25,12 @@ const Account = () => {
 		<Layout>
 			<div className='flex flex-col items-center'>
 				<div className='flex justify-center'>/account</div>
-				<button className='mt-4' onClick={() => dispatch(userLogout())}>
+				<button
+					className='mt-4'
+					onClick={() => {
+						dispatch(userLogout());
+						navigate('/');
+					}}>
 					logout
 				</button>
 			</div>
