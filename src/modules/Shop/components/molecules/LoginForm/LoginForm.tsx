@@ -50,7 +50,7 @@ const LoginForm = () => {
 				name='email'
 				onChange={formik.handleChange}
 				value={formik.values.email}
-				error={formik.errors.email}
+				error={formik.touched.email ? formik.errors.email : undefined}
 			/>
 			<GrayInput
 				type='password'
@@ -58,7 +58,7 @@ const LoginForm = () => {
 				name='password'
 				onChange={formik.handleChange}
 				value={formik.values.password}
-				error={formik.errors.password}
+				error={formik.touched.password ? formik.errors.password : undefined}
 			/>
 			<p>{message}</p>
 			<div className='flex flex-col gap-y-5 mt-8'>

@@ -67,7 +67,7 @@ const RegisterForm = () => {
 				name='name'
 				onChange={formik.handleChange}
 				value={formik.values.name}
-				error={formik.errors.name}
+				error={formik.touched.name ? formik.errors.name : undefined}
 			/>
 
 			<GrayInput
@@ -76,7 +76,7 @@ const RegisterForm = () => {
 				name='lastname'
 				onChange={formik.handleChange}
 				value={formik.values.lastname}
-				error={formik.errors.lastname}
+				error={formik.touched.lastname ? formik.errors.lastname : undefined}
 			/>
 
 			<GrayInput
@@ -85,7 +85,7 @@ const RegisterForm = () => {
 				name='email'
 				onChange={formik.handleChange}
 				value={formik.values.email}
-				error={formik.errors.email}
+				error={formik.touched.email ? formik.errors.email : undefined}
 			/>
 			<GrayInput
 				type='password'
@@ -93,7 +93,7 @@ const RegisterForm = () => {
 				name='password'
 				onChange={formik.handleChange}
 				value={formik.values.password}
-				error={formik.errors.password}
+				error={formik.touched.password ? formik.errors.password : undefined}
 			/>
 			<GrayInput
 				type='password'
@@ -128,7 +128,9 @@ const RegisterForm = () => {
 				</div>
 				{formik.errors.consent && (
 					<div>
-						<InputErrorMessage text={formik.errors.consent} />
+						<InputErrorMessage
+							text={formik.touched.consent ? formik.errors.consent : ''}
+						/>
 					</div>
 				)}
 			</div>
