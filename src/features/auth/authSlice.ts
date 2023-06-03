@@ -33,7 +33,7 @@ export const userRegister = createAsyncThunk(
 );
 
 export const userLogout = createAsyncThunk('user/logout', async () => {
-	await userService.logout();
+	await userService.logout().then(() => (window.location.href = '/'));
 });
 
 export const authSlice = createSlice({

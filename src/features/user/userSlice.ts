@@ -1,7 +1,7 @@
 import type { RootState } from '../../store/store';
 import { createSlice } from '@reduxjs/toolkit';
 import { User } from '../../models/User';
-import { userLogin, userRegister, userLogout } from '../auth/authSlice';
+import { userLogin, userLogout } from '../auth/authSlice';
 
 interface UserState {
 	isUserLoggedIn: boolean;
