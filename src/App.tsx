@@ -17,14 +17,19 @@ import PreCheckout from './modules/Shop/views/PreCheckout';
 import Register from './modules/Shop/views/Register';
 import Login from './modules/Shop/views/Login';
 import Account from './modules/Shop/views/Account';
+import Settings from './modules/Shop/components/organisms/Settings/Settings';
+import OrdersHistory from './modules/Shop/components/organisms/OrdersHistory/OrdersHistory';
 
 function App() {
 	return (
 		<div className='min-h-screen w-full'>
 			<Routes>
 				<Route path='/' element={<Shop />} />
-				<Route path='/account' element={<Account />} />
-				<Route path='/shop' element={<Shop />} />
+				<Route path='account' element={<Account />}>
+					<Route path='my-orders' element={<OrdersHistory />} />
+					<Route path='settings' element={<Settings />} />
+				</Route>
+				<Route path='shop' element={<Shop />} />
 				<Route path='/contact' element={<Contact />} />
 				<Route path='/cart' element={<Cart />} />
 				<Route path='/login' element={<Login />} />

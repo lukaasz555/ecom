@@ -24,11 +24,11 @@ const AccountMenu = React.forwardRef<HTMLDivElement, AccountMenuProps>(
 						: 'opacity-0 invisible -translate-y-[30px] duration-200'
 				)}>
 				<div className='text-sparkle hover:text-black border-b-[1px] border-lightBlack w-[100%] pb-1 mb-2'>
-					<button onClick={() => navigate('/account')}>Konto</button>
+					<button onClick={() => navigate('/account/settings')}>Konto</button>
 				</div>
 
 				<div className='text-sparkle  hover:text-black border-b-[1px] border-lightBlack w-[100%] pb-1 mb-2'>
-					<button onClick={() => navigate('/account/orders')}>Zakupy</button>
+					<button onClick={() => navigate('/account/my-orders')}>Zakupy</button>
 				</div>
 				<div className='text-sparkle hover:text-black border-b-[1px] border-lightBlack w-[100%] pb-1 mb-2'>
 					<button onClick={() => dispatch(userLogout())}>Wyloguj</button>
