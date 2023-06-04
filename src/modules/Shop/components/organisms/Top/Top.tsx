@@ -37,7 +37,11 @@ const Top = () => {
 		<div className='mb-10 mt-2 md:mt-5 lg:mt-10 flex justify-between items-center min-h-[120px] min-w-s px-5 relative'>
 			<DesktopMenu />
 			<MobileMenu />
-			<AccountMenu ref={accMenuRef} isOpen={isAccMenuOpen} />
+			<AccountMenu
+				ref={accMenuRef}
+				isOpen={isAccMenuOpen}
+				setAccMenuOpen={setAccMenuOpen}
+			/>
 			<div>
 				<h1 className='font-medium text-2xl'>
 					<Link to={`/`}>someStore</Link>

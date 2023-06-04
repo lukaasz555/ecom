@@ -7,12 +7,18 @@ import clsx from 'clsx';
 
 type AccountMenuProps = {
 	isOpen: boolean;
+	setAccMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const AccountMenu = React.forwardRef<HTMLDivElement, AccountMenuProps>(
-	({ isOpen }, ref) => {
+	({ isOpen, setAccMenuOpen }, ref) => {
 		const navigate = useNavigate();
 		const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
+
+		function handleClick(location: string): void {
+			navigate(`/account/${location}`);
+			setAccMenuOpen(false);
+		}
 
 		return (
 			<div
@@ -24,11 +30,11 @@ const AccountMenu = React.forwardRef<HTMLDivElement, AccountMenuProps>(
 						: 'opacity-0 invisible -translate-y-[30px] duration-200'
 				)}>
 				<div className='text-sparkle hover:text-black border-b-[1px] border-lightBlack w-[100%] pb-1 mb-2'>
-					<button onClick={() => navigate('/account/settings')}>Konto</button>
+					<button onClick={() => handleClick('settings')}>Konto</button>
 				</div>
 
 				<div className='text-sparkle  hover:text-black border-b-[1px] border-lightBlack w-[100%] pb-1 mb-2'>
-					<button onClick={() => navigate('/account/my-orders')}>Zakupy</button>
+					<button onClick={() => handleClick('my-orders')}>Zakupy</button>
 				</div>
 				<div className='text-sparkle hover:text-black border-b-[1px] border-lightBlack w-[100%] pb-1 mb-2'>
 					<button onClick={() => dispatch(userLogout())}>Wyloguj</button>
