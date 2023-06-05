@@ -33,17 +33,17 @@ const Account = ({ children }: AccountProps) => {
 			<div className='flex items-start'>
 				<aside className='flex flex-col items-start gap-y-2 border-r-[1px] border-lightGray py-2 w-[200px]'>
 					<button
-						className='hover:underline'
+						className='w-[180px] flex justify-start hover:underline'
 						onClick={() => navigate('settings')}>
 						Moje dane
 					</button>
 					<button
-						className='hover:underline'
+						className='w-[180px] flex justify-start hover:underline'
 						onClick={() => navigate('my-orders')}>
 						Historia zakupów
 					</button>
 					<button
-						className='hover:underline'
+						className='w-[180px] flex justify-start hover:underline'
 						onClick={() => {
 							dispatch(userLogout());
 							navigate('/');
@@ -51,7 +51,7 @@ const Account = ({ children }: AccountProps) => {
 						Wyloguj
 					</button>
 				</aside>
-				<section className='flex flex-col w-[100%]'>
+				<section className='flex flex-col w-[100%] min-h-[400px]'>
 					<Routes>
 						<Route path='my-orders' element={<OrdersHistory />} />
 						<Route path='settings' element={<Settings />} />
