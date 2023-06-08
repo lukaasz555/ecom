@@ -33,5 +33,5 @@ async function logout(): Promise<void> {
 	localStorage.removeItem('user');
 }
 
-const userService = { register, login, logout };
-export default userService;
+const authService = { register, login, logout };
+export default authService;

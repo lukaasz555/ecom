@@ -8,6 +8,11 @@ interface UserState {
 	user?: User;
 }
 
+interface UserAction {
+	type: string;
+	payload: User;
+}
+
 const initialState: UserState = {
 	isUserLoggedIn: false,
 	user: undefined,
@@ -16,7 +21,11 @@ const initialState: UserState = {
 export const userSlice = createSlice({
 	name: 'user',
 	initialState,
-	reducers: {},
+	reducers: {
+		setUser: (state, action: UserAction) => {
+			state.user = action.payload;
+		},
+	},
 	extraReducers(builder) {
 		builder.addCase(userLogin.fulfilled, (state, action) => {
 			if (action.payload.data) {
@@ -31,5 +40,6 @@ export const userSlice = createSlice({
 	},
 });
 
+export const { setUser } = userSlice.actions;
 export const selectUser = (state: RootState) => state.userReducer.user;
 export default userSlice.reducer;
