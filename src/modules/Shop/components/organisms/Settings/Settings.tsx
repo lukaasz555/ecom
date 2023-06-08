@@ -1,16 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import GrayInput from '../../../../../components/shared/GrayInput/GrayInput';
 import { useAppSelector } from '../../../../../hooks/hooks';
 import CTA from '../../../../../components/shared/CTA/CTA';
+import { edit } from '../../../../../services/user.service';
+import { useDispatch } from 'react-redux';
+import { ThunkDispatch } from '@reduxjs/toolkit';
+import { setUser } from '../../../../../features/user/userSlice';
+import InputErrorMessage from '../../../../../components/shared/InputErrorMessage/InputErrorMessage';
 
 const Settings = () => {
+	const [isLoading, setLoading] = useState(false);
+	const [isError, setError] = useState(false);
+	const [isEditMode, setEditMode] = useState(false);
 	const user = useAppSelector((state) => state.userReducer.user);
+	const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
+
+	function handleUpdateClick(): void {
+		setLoading(true);
+		user &&
+			edit(user)
+				.then((res) => {
+					if (res.data) {
+						dispatch(setUser(res.data));
+						setError(false);
+					}
+					if (res.status !== 200) {
+						setError(true);
+					}
+				})
+				.catch((e) => setError(true))
+				.finally(() => setLoading(false));
+	}
+
 	return (
 		<>
 			<div className='flex flex-col items-start mx-8'>
 				<header className='flex justify-between items-center w-[100%]'>
 					<h2 className='uppercase text-xl font-lato'>moje dane</h2>
-					<button>zmień dane</button>
+					<button onClick={() => setEditMode(!isEditMode)}>zmień dane</button>
 				</header>
 				{user ? (
 					<div>
@@ -24,7 +51,7 @@ const Settings = () => {
 									onChange={(
 										e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 									) => (user.name = e.target.value)}
-									disabled
+									disabled={!isEditMode}
 								/>
 								<GrayInput
 									name='lastname'
@@ -34,7 +61,7 @@ const Settings = () => {
 									onChange={(
 										e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 									) => (user.lastname = e.target.value)}
-									disabled
+									disabled={!isEditMode}
 								/>
 							</div>
 							<div className='flex flex-col w-[300px]'>
@@ -46,7 +73,7 @@ const Settings = () => {
 									onChange={(
 										e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 									) => (user.email = e.target.value)}
-									disabled
+									disabled={!isEditMode}
 								/>
 								<GrayInput
 									name='password'
@@ -56,12 +83,19 @@ const Settings = () => {
 									onChange={(
 										e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 									) => (user.password = e.target.value)}
-									disabled
+									disabled={!isEditMode}
 								/>
 							</div>
 						</div>
 						<div className='flex flex-col w-[300px]'>
-							<CTA disabled body='zapisz zmiany' />
+							<CTA
+								body='zapisz zmiany'
+								onClick={handleUpdateClick}
+								isLoading={isLoading}
+							/>
+							{isError ? (
+								<InputErrorMessage text='Aktualizacja nieudana. Spróbuj ponownie' />
+							) : null}
 						</div>
 					</div>
 				) : null}
