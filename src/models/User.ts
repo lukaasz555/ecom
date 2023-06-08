@@ -1,4 +1,5 @@
 import { UserRolesEnum } from '../enums/UserRolesEnum';
+
 export class User {
 	id = '';
 	name: string;

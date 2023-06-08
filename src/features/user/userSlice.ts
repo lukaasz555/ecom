@@ -1,16 +1,12 @@
 import type { RootState } from '../../store/store';
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { User } from '../../models/User';
 import { userLogin, userLogout } from '../auth/authSlice';
+import userService from '../../services/user.service';
 
 interface UserState {
 	isUserLoggedIn: boolean;
 	user?: User;
-}
-
-interface UserAction {
-	type: string;
-	payload: User;
 }
 
 const initialState: UserState = {
@@ -18,14 +14,20 @@ const initialState: UserState = {
 	user: undefined,
 };
 
+export const userEdit = createAsyncThunk(
+	'user/edit',
+	async (user: User, thunkAPI) => {
+		console.log(user);
+		const res = await userService.edit(user);
+		console.log(res);
+		return res;
+	}
+);
+
 export const userSlice = createSlice({
 	name: 'user',
 	initialState,
-	reducers: {
-		setUser: (state, action: UserAction) => {
-			state.user = action.payload;
-		},
-	},
+	reducers: {},
 	extraReducers(builder) {
 		builder.addCase(userLogin.fulfilled, (state, action) => {
 			if (action.payload.data) {
@@ -37,9 +39,11 @@ export const userSlice = createSlice({
 			state.isUserLoggedIn = false;
 			state.user = undefined;
 		});
+		builder.addCase(userEdit.fulfilled, (state, action) => {
+			state.user = action.payload.data;
+		});
 	},
 });
 
-export const { setUser } = userSlice.actions;
 export const selectUser = (state: RootState) => state.userReducer.user;
 export default userSlice.reducer;

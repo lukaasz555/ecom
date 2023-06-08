@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import GrayInput from '../../../../../components/shared/GrayInput/GrayInput';
 import { useAppSelector } from '../../../../../hooks/hooks';
 import CTA from '../../../../../components/shared/CTA/CTA';
-import { edit } from '../../../../../services/user.service';
 import { useDispatch } from 'react-redux';
 import { ThunkDispatch } from '@reduxjs/toolkit';
-import { setUser } from '../../../../../features/user/userSlice';
 import InputErrorMessage from '../../../../../components/shared/InputErrorMessage/InputErrorMessage';
+import { userEdit } from '../../../../../features/user/userSlice';
 
 const Settings = () => {
 	const [isLoading, setLoading] = useState(false);
@@ -14,22 +13,36 @@ const Settings = () => {
 	const [isEditMode, setEditMode] = useState(false);
 	const user = useAppSelector((state) => state.userReducer.user);
 	const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
+	const [formValues, setFormValues] = useState({
+		name: user?.name || '',
+		lastname: user?.lastname || '',
+		email: user?.email || '',
+		password: user?.password || '',
+	});
 
-	function handleUpdateClick(): void {
-		setLoading(true);
-		user &&
-			edit(user)
-				.then((res) => {
-					if (res.data) {
-						dispatch(setUser(res.data));
-						setError(false);
-					}
-					if (res.status !== 200) {
-						setError(true);
-					}
-				})
+	function handleFormChange(
+		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+	): void {
+		setFormValues({
+			...formValues,
+			[e.target.name]: e.target.value,
+		});
+	}
+
+	async function handleUpdateClick(): Promise<void> {
+		if (user) {
+			setLoading(true);
+			const updatedUser = {
+				...user,
+				email: formValues.email,
+				name: formValues.name,
+				lastname: formValues.lastname,
+			};
+			await dispatch(userEdit(updatedUser))
+				.then(() => setError(false))
 				.catch((e) => setError(true))
 				.finally(() => setLoading(false));
+		}
 	}
 
 	return (
@@ -47,20 +60,20 @@ const Settings = () => {
 									name='name'
 									type='text'
 									label='Imię'
-									value={user.name}
+									value={formValues.name}
 									onChange={(
 										e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-									) => (user.name = e.target.value)}
+									) => handleFormChange(e)}
 									disabled={!isEditMode}
 								/>
 								<GrayInput
 									name='lastname'
 									type='text'
 									label='Nazwisko'
-									value={user.lastname}
+									value={formValues.lastname}
 									onChange={(
 										e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-									) => (user.lastname = e.target.value)}
+									) => handleFormChange(e)}
 									disabled={!isEditMode}
 								/>
 							</div>
@@ -69,20 +82,20 @@ const Settings = () => {
 									name='email'
 									type='email'
 									label='E-mail'
-									value={user.email}
+									value={formValues.email}
 									onChange={(
 										e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-									) => (user.email = e.target.value)}
+									) => handleFormChange(e)}
 									disabled={!isEditMode}
 								/>
 								<GrayInput
 									name='password'
 									type='password'
 									label='Hasło'
-									value={user.password}
+									value={formValues.password}
 									onChange={(
 										e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-									) => (user.password = e.target.value)}
+									) => handleFormChange(e)}
 									disabled={!isEditMode}
 								/>
 							</div>
@@ -92,6 +105,7 @@ const Settings = () => {
 								body='zapisz zmiany'
 								onClick={handleUpdateClick}
 								isLoading={isLoading}
+								disabled={!isEditMode}
 							/>
 							{isError ? (
 								<InputErrorMessage text='Aktualizacja nieudana. Spróbuj ponownie' />
