@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import Shop from './modules/Shop/views/Shop';
 import Contact from './modules/Shop/views/Contact';
 import Product from './modules/Shop/views/Product';
@@ -19,8 +19,12 @@ import Login from './modules/Shop/views/Login';
 import Account from './modules/Shop/views/Account';
 import Settings from './modules/Shop/components/organisms/Settings/Settings';
 import OrdersHistory from './modules/Shop/components/organisms/OrdersHistory/OrdersHistory';
+import { useAppSelector } from './hooks/hooks';
+import { UserRolesEnum } from './enums/UserRolesEnum';
 
 function App() {
+	const user = useAppSelector((state) => state.userReducer.user);
+
 	return (
 		<div className='min-h-screen w-full'>
 			<Routes>
@@ -46,12 +50,19 @@ function App() {
 					path={`/shop/products/:category/item/:id`}
 					element={<Product />}
 				/>
-				<Route path='/admin' element={<Admin />} />
-				<Route path='/admin/orders' element={<AdminOrders />} />
-				<Route path='/admin/products' element={<AdminProducts />} />
-				<Route path='/admin/products/edit/:id' element={<EditProduct />} />
-				<Route path='/admin/sales' element={<Sales />} />
-				<Route path='/admin/*' element={<Admin />} />
+				{user && user.role === UserRolesEnum.Admin ? (
+					<>
+						<Route path='/admin' element={<Admin />} />
+						<Route path='/admin/orders' element={<AdminOrders />} />
+						<Route path='/admin/products' element={<AdminProducts />} />
+						<Route path='/admin/products/edit/:id' element={<EditProduct />} />
+						<Route path='/admin/sales' element={<Sales />} />
+						<Route path='/admin/*' element={<Admin />} />
+					</>
+				) : (
+					<Route path='/admin/*' element={<Navigate to='/' />} />
+				)}
+
 				<Route path='*' element={<NotFound />} />
 			</Routes>
 		</div>

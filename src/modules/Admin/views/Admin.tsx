@@ -1,19 +1,8 @@
-import React, { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import AdminLayout from '../components/AdminLayout/AdminLayout';
-import { useAppSelector } from '../../../hooks/hooks';
-import { UserRolesEnum } from '../../../enums/UserRolesEnum';
 
 const Admin = () => {
-	const user = useAppSelector((state) => state.userReducer.user);
-	const navigate = useNavigate();
-
-	useEffect(() => {
-		if (user?.role !== UserRolesEnum.Admin) {
-			navigate('/');
-		}
-	}, [user]);
-
 	return (
 		<AdminLayout>
 			<div className='min-w-[550px]'>

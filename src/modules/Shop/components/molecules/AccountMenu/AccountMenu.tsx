@@ -20,6 +20,13 @@ const AccountMenu = React.forwardRef<HTMLDivElement, AccountMenuProps>(
 			setAccMenuOpen(false);
 		}
 
+		function handleLogout(): void {
+			dispatch(userLogout()).then(() => {
+				navigate('/');
+				setAccMenuOpen(false);
+			});
+		}
+
 		return (
 			<div
 				ref={ref}
@@ -37,7 +44,7 @@ const AccountMenu = React.forwardRef<HTMLDivElement, AccountMenuProps>(
 					<button onClick={() => handleClick('my-orders')}>Zakupy</button>
 				</div>
 				<div className='text-sparkle hover:text-black border-b-[1px] border-lightBlack w-[100%] pb-1 mb-2'>
-					<button onClick={() => dispatch(userLogout())}>Wyloguj</button>
+					<button onClick={() => handleLogout()}>Wyloguj</button>
 				</div>
 			</div>
 		);

@@ -1,7 +1,6 @@
 import { RootState } from '../../store/store';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import userService from '../../services/auth.service';
-import { UserLogin } from '../../services/auth.service';
+import authService, { UserLogin } from '../../services/auth.service';
 import { User } from '../../models/User';
 
 interface AuthState {
@@ -17,23 +16,23 @@ const initialState: AuthState = {
 };
 
 export const userLogin = createAsyncThunk(
-	'user/login',
+	'auth/login',
 	async (user: UserLogin, thunkAPI) => {
-		const res = await userService.login(user);
+		const res = await authService.login(user);
 		return res;
 	}
 );
 
 export const userRegister = createAsyncThunk(
-	'user/register',
+	'auth/register',
 	async (user: User) => {
-		const res = await userService.register(user);
+		const res = await authService.register(user);
 		return res;
 	}
 );
 
-export const userLogout = createAsyncThunk('user/logout', async () => {
-	await userService.logout().then(() => (window.location.href = '/'));
+export const userLogout = createAsyncThunk('auth/logout', async () => {
+	await authService.logout();
 });
 
 export const authSlice = createSlice({
