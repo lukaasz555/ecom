@@ -49,6 +49,20 @@ export const fetchFilteredProducts = async (
 		.catch((e) => console.error(e));
 };
 
+export const fetchCategories = async (
+	category: string
+): Promise<ApiResponse<Array<number>>> => {
+	return await axios
+		.get(`${URL}/products/categories`, {
+			params: { category },
+		})
+		.then((res) => ({
+			status: res.status,
+			data: res.data,
+		}))
+		.catch((e) => ({ status: e.response.status }));
+};
+
 export const addProduct = async (
 	newProduct: ProductModel
 ): Promise<ApiResponse<ProductModel>> => {
