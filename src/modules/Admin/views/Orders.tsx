@@ -43,12 +43,14 @@ const AdminOrders = () => {
 			ordersPerPage: String(ordersPerPage),
 			currentPage: String(currentPage),
 		});
-		const { items: orders, totalPages } = await fetchOrders({
-			limit: ordersPerPage,
-			page: currentPage,
-		});
-		dispatch(loadData(orders));
-		setPageCount(totalPages);
+		if (ordersPerPage > 0 || currentPage > 0) {
+			const { items: orders, totalPages } = await fetchOrders({
+				limit: ordersPerPage,
+				page: currentPage,
+			});
+			dispatch(loadData(orders));
+			setPageCount(totalPages);
+		}
 	};
 
 	const handleLoading = () => {

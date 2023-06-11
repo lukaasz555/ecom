@@ -27,9 +27,7 @@ export const fetchOrders = async (
 ): Promise<ApiPaginationResponse<OrderModel>> => {
 	return await axios
 		.get(`${URL}/orders`, {
-			params: {
-				query,
-			},
+			params: query,
 		})
 		.then((res) => res.data)
 		.catch((e) => console.error(e));
