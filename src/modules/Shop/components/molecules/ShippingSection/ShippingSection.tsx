@@ -59,7 +59,11 @@ const ShippingSection = ({
 							<WhiteInput
 								value={formik.values.phoneNumber}
 								onChange={formik.handleChange}
-								error={formik.errors.phoneNumber}
+								error={
+									formik.touched.phoneNumber
+										? formik.errors.phoneNumber
+										: undefined
+								}
 								type='number'
 								name='phoneNumber'
 								maxLength={9}
@@ -73,7 +77,7 @@ const ShippingSection = ({
 								placeholder='Numer paczkomatu (np. GDA147M)'
 								onChange={formik.handleChange}
 								name='inpost'
-								error={formik.errors.inpost}
+								error={formik.touched.inpost ? formik.errors.inpost : undefined}
 							/>
 
 							<div className='flex justify-between items-start'>

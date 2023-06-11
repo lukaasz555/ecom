@@ -98,7 +98,7 @@ const InvoiceSection = ({
 								type='text'
 								placeholder='Imię'
 								value={formik.values.name}
-								error={formik.errors.name}
+								error={formik.touched.name ? formik.errors.name : undefined}
 								onChange={formik.handleChange}
 							/>
 						</div>
@@ -108,7 +108,9 @@ const InvoiceSection = ({
 								type='text'
 								placeholder='Nazwisko'
 								value={formik.values.lastname}
-								error={formik.errors.lastname}
+								error={
+									formik.touched.lastname ? formik.errors.lastname : undefined
+								}
 								onChange={formik.handleChange}
 							/>
 						</div>
@@ -121,7 +123,11 @@ const InvoiceSection = ({
 									type='text'
 									placeholder='Nazwa firmy'
 									value={formik.values.companyName}
-									error={formik.errors.companyName}
+									error={
+										formik.touched.companyName && isInvoiceNeeded
+											? formik.errors.companyName
+											: undefined
+									}
 									onChange={formik.handleChange}
 								/>
 								<WhiteInput
@@ -129,7 +135,11 @@ const InvoiceSection = ({
 									type='number'
 									placeholder='NIP firmy'
 									value={formik.values.nip}
-									error={formik.errors.nip}
+									error={
+										formik.touched.nip && isInvoiceNeeded
+											? formik.errors.nip
+											: undefined
+									}
 									onChange={formik.handleChange}
 								/>
 							</>
@@ -139,7 +149,9 @@ const InvoiceSection = ({
 							type='text'
 							placeholder='Adres (ulica, nr budynku/lokal)'
 							value={formik.values.address1}
-							error={formik.errors.address1}
+							error={
+								formik.touched.address1 ? formik.errors.address1 : undefined
+							}
 							onChange={formik.handleChange}
 						/>
 
@@ -156,7 +168,7 @@ const InvoiceSection = ({
 							type='text'
 							placeholder='Miasto'
 							value={formik.values.city}
-							error={formik.errors.city}
+							error={formik.touched.city ? formik.errors.city : undefined}
 							onChange={formik.handleChange}
 						/>
 
@@ -167,7 +179,11 @@ const InvoiceSection = ({
 									type='text'
 									placeholder='Kod pocztowy (xx-xxx)'
 									value={formik.values.postalCode}
-									error={formik.errors.postalCode}
+									error={
+										formik.touched.postalCode
+											? formik.errors.postalCode
+											: undefined
+									}
 									onChange={formik.handleChange}
 									maxLength={6}
 								/>
