@@ -29,10 +29,15 @@ function App() {
 		<div className='min-h-screen w-full'>
 			<Routes>
 				<Route path='/' element={<Shop />} />
-				<Route path='account' element={<Account />}>
-					<Route path='my-orders' element={<OrdersHistory />} />
-					<Route path='settings' element={<Settings />} />
-				</Route>
+				{user ? (
+					<Route path='account' element={<Account />}>
+						<Route path='my-orders' element={<OrdersHistory />} />
+						<Route path='settings' element={<Settings />} />
+					</Route>
+				) : (
+					<Route path='/account/*' element={<Navigate to='/login' />} />
+				)}
+
 				<Route path='shop' element={<Shop />} />
 				<Route path='/contact' element={<Contact />} />
 				<Route path='/cart' element={<Cart />} />
