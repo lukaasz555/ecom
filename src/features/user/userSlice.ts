@@ -17,9 +17,7 @@ const initialState: UserState = {
 export const userEdit = createAsyncThunk(
 	'user/edit',
 	async (user: User, thunkAPI) => {
-		console.log(user);
 		const res = await userService.edit(user);
-		console.log(res);
 		return res;
 	}
 );

@@ -10,6 +10,7 @@ import { userEdit } from '../../../../../features/user/userSlice';
 const Settings = () => {
 	const [isLoading, setLoading] = useState(false);
 	const [isError, setError] = useState(false);
+	const [isSuccess, setSuccess] = useState(false);
 	const [isEditMode, setEditMode] = useState(false);
 	const user = useAppSelector((state) => state.userReducer.user);
 	const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
@@ -39,8 +40,14 @@ const Settings = () => {
 				lastname: formValues.lastname,
 			};
 			await dispatch(userEdit(updatedUser))
-				.then(() => setError(false))
-				.catch((e) => setError(true))
+				.then((res) => {
+					setSuccess(true);
+					setError(false);
+				})
+				.catch((e) => {
+					setSuccess(false);
+					setError(true);
+				})
 				.finally(() => setLoading(false));
 		}
 	}
@@ -106,9 +113,16 @@ const Settings = () => {
 								onClick={handleUpdateClick}
 								isLoading={isLoading}
 								disabled={!isEditMode}
+								size='small'
 							/>
 							{isError ? (
 								<InputErrorMessage text='Aktualizacja nieudana. Spróbuj ponownie' />
+							) : isSuccess ? (
+								<div className='mt-2'>
+									<p className='text-brownSugar text-[13px]'>
+										Zaktualizowano profil
+									</p>
+								</div>
 							) : null}
 						</div>
 					</div>
