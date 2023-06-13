@@ -2,16 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useAppSelector } from '../../../../../hooks/hooks';
 import { fetchUserOrders } from '../../../../../services/orders.service';
 import { OrderModel } from '../../../../../models/Order';
-import { handleNumbFormat } from '../../../../../helpers/handleNumbFormat';
-import moment from 'moment';
 import Loader from '../../../../../components/shared/Loader/Loader';
 import ErrorMessage from '../../../../../components/shared/ErrorMessage/ErrorMessage';
+import OrdersAccordion from '../../molecules/OrdersAccordion/OrdersAccordion';
 
 const OrdersHistory = () => {
 	const user = useAppSelector((state) => state.userReducer.user);
 	const [isLoading, setLoading] = useState(false);
 	const [isError, setError] = useState(false);
-	const [usersOrder, setUsersOrder] = useState<OrderModel[]>([]);
+	const [userOrders, setUserOrders] = useState<OrderModel[]>([]);
 
 	useEffect(() => {
 		if (user) {
@@ -19,7 +18,7 @@ const OrdersHistory = () => {
 			fetchUserOrders(user.id)
 				.then((res) => {
 					if (Array.isArray(res)) {
-						setUsersOrder(res);
+						setUserOrders(res);
 						setError(false);
 					} else setError(true);
 				})
@@ -40,15 +39,9 @@ const OrdersHistory = () => {
 							text2='Spróbuj ponownie'
 							align='left'
 						/>
-					) : Array.isArray(usersOrder) && usersOrder.length > 0 ? (
-						usersOrder.map((x) => (
-							<div key={x._id} className='flex gap-x-4'>
-								<p>{moment(x.createdAt).format('DD-MM-YYYY')}</p>
-								<p className='font-medium'>Nr zam: {x._id}</p>
-								<p>kwota - {handleNumbFormat(x.order.value)} zł</p>
-							</div>
-						))
-					) : !Array.isArray(usersOrder) ? (
+					) : Array.isArray(userOrders) && userOrders.length > 0 ? (
+						<OrdersAccordion items={userOrders} />
+					) : !Array.isArray(userOrders) ? (
 						<p>Brak zamówień w historii</p>
 					) : null}
 				</div>
