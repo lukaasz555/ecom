@@ -4,6 +4,7 @@ import ProductAside from '../../molecules/ProductAside/ProductAside';
 import { ProductModel } from '../../../../../models/Product';
 import ShortDescription from '../../atoms/ShortDescription/ShortDescription';
 import AddToCartBtn from '../../atoms/AddToCartBtn/AddToCartBtn';
+import { useNavigate } from 'react-router-dom';
 
 interface ProductHeadProps {
 	data: ProductModel;
@@ -14,6 +15,7 @@ const ProductHead = forwardRef<
 	React.MutableRefObject<HTMLDivElement>,
 	ProductHeadProps
 >(({ data, openModal }, ref) => {
+	const navigate = useNavigate();
 	const { img, title, authors, discount, price, type } = data;
 
 	return (
@@ -35,7 +37,11 @@ const ProductHead = forwardRef<
 				</div>
 				<div className='text-center md:text-left font-lato md:min-w-[340px] md:max-w-[400px]'>
 					<h2 className='text-2xl mt-5 md:mt-0'>{title}</h2>
-					<h3 className='text-xl mt-1 text-sparkle mb-5 lg:mb-14'>
+					<h3
+						className='text-xl mt-1 text-sparkle mb-5 lg:mb-14 hover:text-sapphire cursor-pointer'
+						onClick={() =>
+							navigate(`/search-result?authors=${data.authors.join('')}`)
+						}>
 						{authors.join(', ')}
 					</h3>
 					<ShortDescription ref={ref} data={data} />
