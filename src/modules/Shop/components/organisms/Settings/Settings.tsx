@@ -6,6 +6,8 @@ import { useDispatch } from 'react-redux';
 import { ThunkDispatch } from '@reduxjs/toolkit';
 import InputErrorMessage from '../../../../../components/shared/InputErrorMessage/InputErrorMessage';
 import { userEdit } from '../../../../../features/user/userSlice';
+import { ApiResponse } from '../../../../../models/api';
+import { User } from '../../../../../models/User';
 
 const Settings = () => {
 	const [isLoading, setLoading] = useState(false);
@@ -18,7 +20,7 @@ const Settings = () => {
 		name: user?.name || '',
 		lastname: user?.lastname || '',
 		email: user?.email || '',
-		password: user?.password || '',
+		password: '',
 	});
 
 	function handleFormChange(
@@ -38,13 +40,15 @@ const Settings = () => {
 				email: formValues.email,
 				name: formValues.name,
 				lastname: formValues.lastname,
+				password: formValues.password,
 			};
 			await dispatch(userEdit(updatedUser))
 				.then((res) => {
-					setSuccess(true);
-					setError(false);
-				})
-				.catch((e) => {
+					const data = res.payload as ApiResponse<User>;
+					if (data.status === 200) {
+						setSuccess(true);
+						setError(false);
+					}
 					setSuccess(false);
 					setError(true);
 				})
@@ -95,36 +99,37 @@ const Settings = () => {
 									) => handleFormChange(e)}
 									disabled={!isEditMode}
 								/>
+							</div>
+						</div>
+						{isEditMode ? (
+							<div className='flex flex-col w-[300px]'>
 								<GrayInput
 									name='password'
 									type='password'
-									label='Hasło'
+									label='Potwierdź hasło'
 									value={formValues.password}
 									onChange={(
 										e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 									) => handleFormChange(e)}
-									disabled={!isEditMode}
 								/>
+
+								<CTA
+									body='zapisz zmiany'
+									onClick={handleUpdateClick}
+									isLoading={isLoading}
+									size='small'
+								/>
+								{isError ? (
+									<InputErrorMessage text='Aktualizacja nieudana. Spróbuj ponownie' />
+								) : isSuccess ? (
+									<div className='mt-2'>
+										<p className='text-brownSugar text-[13px]'>
+											Zaktualizowano profil
+										</p>
+									</div>
+								) : null}
 							</div>
-						</div>
-						<div className='flex flex-col w-[300px]'>
-							<CTA
-								body='zapisz zmiany'
-								onClick={handleUpdateClick}
-								isLoading={isLoading}
-								disabled={!isEditMode}
-								size='small'
-							/>
-							{isError ? (
-								<InputErrorMessage text='Aktualizacja nieudana. Spróbuj ponownie' />
-							) : isSuccess ? (
-								<div className='mt-2'>
-									<p className='text-brownSugar text-[13px]'>
-										Zaktualizowano profil
-									</p>
-								</div>
-							) : null}
-						</div>
+						) : null}
 					</div>
 				) : null}
 			</div>

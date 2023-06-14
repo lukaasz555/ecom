@@ -38,7 +38,9 @@ export const userSlice = createSlice({
 			state.user = undefined;
 		});
 		builder.addCase(userEdit.fulfilled, (state, action) => {
-			state.user = action.payload.data;
+			if (action.payload.data) {
+				state.user = action.payload.data;
+			}
 		});
 	},
 });
