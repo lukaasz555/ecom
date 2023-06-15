@@ -45,12 +45,12 @@ const Settings = () => {
 			await dispatch(userEdit(updatedUser))
 				.then((res) => {
 					const data = res.payload as ApiResponse<User>;
-					if (data.status === 200) {
-						setSuccess(true);
-						setError(false);
-					}
 					setSuccess(false);
 					setError(true);
+					if (data.status === 200) {
+						setError(false);
+						setSuccess(true);
+					}
 				})
 				.finally(() => setLoading(false));
 		}
