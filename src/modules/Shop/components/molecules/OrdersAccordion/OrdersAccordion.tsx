@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
 import { handleStatusName } from '../../../../../helpers/handleStatusName';
+import { ProductModel } from '../../../../../models/Product';
+import { getQty } from '../../../../../helpers/getQty';
 
 interface OrdersAccordionProps {
 	items: OrderModel[];
@@ -25,6 +27,11 @@ const OrdersAccordion = ({ items }: OrdersAccordionProps) => {
 	function isActive(id: string): boolean {
 		if (activeItemId === id) return true;
 		else return false;
+	}
+
+	function getUniqueProductsList(items: ProductModel[]) {
+		const productsIds = Array.from(new Set(items.map((item) => item.id)));
+		return productsIds.map((id) => items.find((x) => x.id === id));
 	}
 
 	return (
@@ -60,9 +67,18 @@ const OrdersAccordion = ({ items }: OrdersAccordionProps) => {
 							</div>
 							<div className='flex flex-col'>
 								<p className='font-medium underline'>Produkty:</p>
-								{x.order.items.map((x, i) => (
-									<p className=''>{x.title}</p>
-								))}
+								{getUniqueProductsList(x.order.items).map((p) =>
+									p ? (
+										<p>
+											{p.title}
+											<span>
+												{getQty(p.id, x.order.items) > 1
+													? ` - ${getQty(p.id, x.order.items)}x`
+													: null}
+											</span>
+										</p>
+									) : null
+								)}
 							</div>
 							<div>
 								<p className='font-medium underline'>Dostawa:</p>
