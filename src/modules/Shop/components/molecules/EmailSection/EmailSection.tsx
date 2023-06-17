@@ -1,54 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import WhiteInput from '../../../../../components/shared/WhiteInput/WhiteInput';
 import CTA from '../../../../../components/shared/CTA/CTA';
-import { emailValidation } from '../../../../../helpers/validations';
-import { ICheckoutForm } from '../../../../../models/CheckoutData';
+import { useAppSelector } from '../../../../../hooks/hooks';
+import { emailOnlyValidation } from '../../../../../helpers/validations';
+import { CheckoutCtx } from '../../../views/Checkout';
+import { useFormik } from 'formik';
 
 interface IEmailSection {
 	isEmailOpen: boolean;
 	setEmailOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	setInvoiceOpen: React.Dispatch<React.SetStateAction<boolean>>;
-	checkoutForm: ICheckoutForm;
-	setCheckoutForm: React.Dispatch<React.SetStateAction<ICheckoutForm>>;
 }
 
 const EmailSection = ({
 	isEmailOpen,
 	setEmailOpen,
 	setInvoiceOpen,
-	checkoutForm,
-	setCheckoutForm,
 }: IEmailSection) => {
-	const [email, setEmail] = useState('');
+	const user = useAppSelector((state) => state.userReducer.user);
+	const formData = useContext(CheckoutCtx);
 	const [consent, setConsent] = useState(false);
-	const [errorMsg, setErrorMsg] = useState('');
 
-	useEffect(() => {
-		setCheckoutForm((prev) => ({
-			...prev,
-			email: {
-				emailAddress: email,
-				isConsent: consent,
-			},
-		}));
-	}, [email, consent]);
+	const formik = useFormik({
+		initialValues: {
+			email: formData.email.emailAddress,
+		},
+		validationSchema: emailOnlyValidation,
+		onSubmit: (val) => {
+			formData.setEmailSection(val.email, consent);
+			setEmailOpen(false);
+			setInvoiceOpen(true);
+		},
+	});
 
 	const handleConsentChange = (e: React.ChangeEvent<HTMLInputElement>) =>
 		setConsent(!consent);
-
-	const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setEmail(e.target.value);
-	};
-
-	const handleContinue = (e: React.MouseEvent) => {
-		if (emailValidation(email)) {
-			setErrorMsg('');
-			setEmailOpen(false);
-			setInvoiceOpen(true);
-		} else {
-			setErrorMsg('Wprowadź prawidłowy adres e-mail');
-		}
-	};
 
 	return (
 		<div className='bg-white px-4 py-5 border-[#C7C7C7] border-[1px] flex flex-col gap-y-5'>
@@ -63,35 +49,32 @@ const EmailSection = ({
 					</button>
 				)}
 			</div>
-
 			{isEmailOpen ? (
-				<div className='w-full'>
-					<WhiteInput
-						type='email'
-						value={checkoutForm.email.emailAddress}
-						onChange={handleEmailChange}
-						name='email'
-					/>
-					<p className='text-xs'>
-						Na ten mail otrzymasz fakturę oraz powiadomienia dot. zamówienia.
-					</p>
-					<p className='text-xs text-brownSugar'>{errorMsg}</p>
-				</div>
-			) : null}
-
-			{isEmailOpen ? (
-				<div className='flex items-center'>
-					<input
-						type='checkbox'
-						className='mr-2 hover:cursor-pointer outline-black text-black'
-						onChange={handleConsentChange}
-					/>
-					<p className='text-s'>Chcę zapisać się do newslettera</p>
-				</div>
-			) : null}
-
-			{isEmailOpen ? (
-				<CTA body='Kontynuuj' id='emailButton' onClick={handleContinue} />
+				<form onSubmit={formik.handleSubmit}>
+					<div className='w-full mb-2'>
+						<WhiteInput
+							type='email'
+							value={formik.values.email}
+							onChange={formik.handleChange}
+							name='email'
+							error={formik.errors.email}
+						/>
+						<p className='text-xs mt-2'>
+							Na ten mail otrzymasz fakturę oraz powiadomienia dot. zamówienia.
+						</p>
+					</div>
+					{!user ? (
+						<div className='flex items-center mb-4'>
+							<input
+								type='checkbox'
+								className='mr-2 hover:cursor-pointer outline-black text-black'
+								onChange={handleConsentChange}
+							/>
+							<p className='text-s'>Chcę zapisać się do newslettera</p>
+						</div>
+					) : null}
+					<CTA body='Kontynuuj' type='submit' id='emailButton' />
+				</form>
 			) : null}
 		</div>
 	);

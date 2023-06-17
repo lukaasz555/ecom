@@ -1,51 +1,61 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import CTA from '../../../../../components/shared/CTA/CTA';
-import { InvoiceDataModel } from '../../../../../models/CheckoutData';
-import { useForm } from 'react-hook-form';
-import { ICheckoutForm } from '../../../../../models/CheckoutData';
+import { CheckoutCtx } from '../../../views/Checkout';
+import { useFormik } from 'formik';
+import { invoiceValidation } from '../../../../../helpers/validations';
+import WhiteInput from '../../../../../components/shared/WhiteInput/WhiteInput';
 
 interface IInvoiceSection {
 	isInvoiceOpen: boolean;
 	setInvoiceOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	setShippingOpen: React.Dispatch<React.SetStateAction<boolean>>;
-	setCheckoutForm: React.Dispatch<React.SetStateAction<ICheckoutForm>>;
-	checkoutForm: ICheckoutForm;
 }
 
 const InvoiceSection = ({
 	isInvoiceOpen,
 	setInvoiceOpen,
 	setShippingOpen,
-	setCheckoutForm,
-	checkoutForm,
 }: IInvoiceSection) => {
+	const formData = useContext(CheckoutCtx);
 	const [isInvoiceNeeded, setInvoiceNeeded] = useState(false);
-	const {
-		handleSubmit,
-		register,
-		formState: { errors },
-	} = useForm<InvoiceDataModel>();
 
-	const onSubmit = (data: InvoiceDataModel) => {
-		setCheckoutForm((prev) => ({ ...prev, invoice: data }));
-		setCheckoutForm((prev) => ({
-			...prev,
-			invoice: {
-				...prev.invoice,
-				isInvoice: isInvoiceNeeded,
-			},
-		}));
-		setInvoiceOpen(false);
-		setShippingOpen(true);
-	};
+	const formik = useFormik({
+		initialValues: {
+			address1: formData.invoice.address1,
+			address2: formData.invoice.address2,
+			city: formData.invoice.city,
+			companyName: formData.invoice.companyName,
+			country: formData.invoice.country,
+			isInvoice: formData.invoice.isInvoice,
+			lastname: formData.invoice.lastname,
+			name: formData.invoice.name,
+			nip: formData.invoice.nip,
+			postalCode: formData.invoice.postalCode,
+		},
+		validationSchema: invoiceValidation,
+		onSubmit: (val) => {
+			formData.setInvoiceData(val);
+			setInvoiceOpen(false);
+			setShippingOpen(true);
+		},
+	});
+
+	function handleForm(e: React.MouseEvent): void {
+		e.preventDefault();
+		formik.handleSubmit();
+	}
+
+	useEffect(() => {
+		isInvoiceNeeded
+			? (formik.values.isInvoice = true)
+			: (formik.values.isInvoice = false);
+	}, [isInvoiceNeeded]);
 
 	return (
-		<form
-			onSubmit={handleSubmit(onSubmit)}
-			className='bg-white px-4 py-5 border-[#C7C7C7] border-[1px] flex flex-col gap-y-3'>
+		<div className='bg-white px-4 py-5 border-[#C7C7C7] border-[1px] flex flex-col gap-y-3'>
 			<div className='flex justify-between'>
 				<h2 className='text-xl font-[400] font-lato'>2. Dane do faktury</h2>
-				{checkoutForm.invoice.name !== '' && !isInvoiceOpen ? (
+				{!isInvoiceOpen ? (
 					<button
 						onClick={() => setInvoiceOpen(true)}
 						className='hover:underline text-pencil'>
@@ -54,7 +64,7 @@ const InvoiceSection = ({
 				) : null}
 			</div>
 			{isInvoiceOpen ? (
-				<>
+				<form className='flex flex-col gap-y-3' onSubmit={formik.handleSubmit}>
 					<div className='text-s'>
 						<p className='mb-1'>Kupuję jako:</p>
 						<div className='flex gap-x-5'>
@@ -83,160 +93,120 @@ const InvoiceSection = ({
 
 					<div className='flex gap-x-3'>
 						<div className='basis-1/2'>
-							<input
+							<WhiteInput
+								name='name'
 								type='text'
 								placeholder='Imię'
-								{...register('name', { required: true })}
-								className='border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full'
+								value={formik.values.name}
+								error={formik.touched.name ? formik.errors.name : undefined}
+								onChange={formik.handleChange}
 							/>
-							<p className='text-xs text-brownSugar'>
-								{errors.name ? 'Imię jest wymagane' : null}
-							</p>
 						</div>
-
 						<div className='basis-1/2'>
-							<input
+							<WhiteInput
+								name='lastname'
 								type='text'
 								placeholder='Nazwisko'
-								{...register('lastname', { required: true })}
-								className='border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full'
+								value={formik.values.lastname}
+								error={
+									formik.touched.lastname ? formik.errors.lastname : undefined
+								}
+								onChange={formik.handleChange}
 							/>
-							<p className='text-xs text-brownSugar'>
-								{errors.lastname ? 'Nazwisko jest wymagane' : null}
-							</p>
 						</div>
 					</div>
-					{isInvoiceNeeded ? (
-						<div className='flex flex-col gap-y-3'>
-							<div>
-								<input
+					<div className='flex flex-col gap-y-3 w-full'>
+						{isInvoiceNeeded ? (
+							<>
+								<WhiteInput
+									name='companyName'
 									type='text'
 									placeholder='Nazwa firmy'
-									{...register('companyName', {
-										required: isInvoiceNeeded ? true : false,
-										minLength: 5,
-									})}
-									className='border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full'
+									value={formik.values.companyName}
+									error={
+										formik.touched.companyName && isInvoiceNeeded
+											? formik.errors.companyName
+											: undefined
+									}
+									onChange={formik.handleChange}
 								/>
-								<p className='text-xs text-brownSugar'>
-									{errors.companyName && isInvoiceNeeded
-										? 'Wprowadź nazwę firmy'
-										: null}
-								</p>
-							</div>
-
-							<div>
-								<input
-									type='text'
+								<WhiteInput
+									name='nip'
+									type='number'
 									placeholder='NIP firmy'
-									{...register('nip', {
-										required: {
-											value: isInvoiceNeeded ? true : false,
-											message: 'Wprowadź NIP firmy',
-										},
-										minLength: {
-											value: 10,
-											message: 'Wprowadzony NIP jest za krótki',
-										},
-										maxLength: {
-											value: 10,
-											message: 'Wprowadzono zbyt wiele znaków',
-										},
-									})}
-									className='border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full'
+									value={formik.values.nip}
+									error={
+										formik.touched.nip && isInvoiceNeeded
+											? formik.errors.nip
+											: undefined
+									}
+									onChange={formik.handleChange}
 								/>
+							</>
+						) : null}
+						<WhiteInput
+							name='address1'
+							type='text'
+							placeholder='Adres (ulica, nr budynku/lokal)'
+							value={formik.values.address1}
+							error={
+								formik.touched.address1 ? formik.errors.address1 : undefined
+							}
+							onChange={formik.handleChange}
+						/>
 
-								{errors.nip && (
-									<p className='text-xs text-brownSugar'>
-										{errors.nip.message}
-									</p>
-								)}
-							</div>
-						</div>
-					) : null}
-
-					<div className='flex flex-col'>
-						<div className='mb-3'>
-							<input
-								type='text'
-								placeholder='Adres (ulica, nr budynku / nr lokalu)'
-								{...register('address1', { required: true })}
-								className='border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full'
-							/>
-							<p className='text-xs text-brownSugar'>
-								{errors.address1 ? 'Wprowadź adres' : null}
-							</p>
-						</div>
-
-						<input
+						<WhiteInput
+							name='address2'
 							type='text'
 							placeholder='Adres cz.2 (opcjonalnie)'
-							{...register('address2', { required: false })}
-							className='border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full'
+							value={formik.values.address2}
+							onChange={formik.handleChange}
 						/>
-						<p className='text-xs text-brownSugar'>
-							{errors.address2 ? 'Wprowadź adres' : null}
-						</p>
-					</div>
 
-					<div>
-						<input
+						<WhiteInput
+							name='city'
 							type='text'
 							placeholder='Miasto'
-							{...register('city', { required: true })}
-							className='border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full'
+							value={formik.values.city}
+							error={formik.touched.city ? formik.errors.city : undefined}
+							onChange={formik.handleChange}
 						/>
-						<p className='text-xs text-brownSugar'>
-							{errors.city ? 'Podaj miasto' : null}
-						</p>
-					</div>
 
-					<div className='flex gap-x-3'>
-						<div className='basis-1/2'>
-							<input
-								type='text'
-								placeholder='Kod pocztowy (xx-xxx)'
-								className='border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full'
-								{...register('postalCode', {
-									required: {
-										value: true,
-										message: 'Prawidłowy format to XX-XXX',
-									},
-									maxLength: {
-										value: 6,
-										message: 'Wprowadzono zbyt wiele znaków',
-									},
-									minLength: {
-										value: 6,
-										message: 'Wprowadzony kod jest za krótki',
-									},
-								})}
-							/>
-
-							{errors.postalCode && (
-								<p className='text-xs text-brownSugar text-center'>
-									{errors.postalCode.message}
-								</p>
-							)}
-						</div>
-
-						<div className='basis-1/2'>
-							<select
-								className='border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full'
-								{...register('country', { required: true })}>
-								<option selected value='Polska'>
-									Polska
-								</option>
-							</select>
+						<div className='flex gap-x-3'>
+							<div className='basis-1/2'>
+								<WhiteInput
+									name='postalCode'
+									type='text'
+									placeholder='Kod pocztowy (xx-xxx)'
+									value={formik.values.postalCode}
+									error={
+										formik.touched.postalCode
+											? formik.errors.postalCode
+											: undefined
+									}
+									onChange={formik.handleChange}
+									maxLength={6}
+								/>
+							</div>
+							<div className='basis-1/2'>
+								<select
+									className='border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full'
+									value={formik.values.country}
+									onChange={formik.handleChange}>
+									<option value='Polska'>Polska</option>
+								</select>
+							</div>
 						</div>
 					</div>
-				</>
+					<CTA
+						body='Kontynuuj'
+						id='invoiceButton'
+						type='submit'
+						onClick={handleForm}
+					/>
+				</form>
 			) : null}
-
-			{isInvoiceOpen ? (
-				<CTA body='Kontynuuj' id='invoiceButton' type='submit' />
-			) : null}
-		</form>
+		</div>
 	);
 };
 

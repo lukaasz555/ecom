@@ -37,8 +37,8 @@ export interface OrderModel {
 }
 
 export interface NewOrderModel {
-	// status: string;
 	customer: {
+		customerId: string;
 		customerData: {
 			name: string;
 			lastname: string;

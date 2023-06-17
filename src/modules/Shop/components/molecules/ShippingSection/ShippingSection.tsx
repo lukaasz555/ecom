@@ -1,65 +1,39 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import WhiteInput from '../../../../../components/shared/WhiteInput/WhiteInput';
 import CTA from '../../../../../components/shared/CTA/CTA';
-import PhoneInput from 'react-phone-number-input';
-import 'react-phone-number-input/style.css';
-import { ICheckoutForm } from '../../../../../models/CheckoutData';
-import { inpostValidation } from '../../../../../helpers/validations';
+import { CheckoutCtx } from '../../../views/Checkout';
+import { shippingValidation } from '../../../../../helpers/validations';
+import { useFormik } from 'formik';
 
 interface IShippingSection {
 	isShippingOpen: boolean;
 	setShippingOpen: React.Dispatch<React.SetStateAction<boolean>>;
-	setCheckoutForm: React.Dispatch<React.SetStateAction<ICheckoutForm>>;
-	checkoutForm: ICheckoutForm;
 	setFormFilled: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ShippingSection = ({
 	isShippingOpen,
 	setShippingOpen,
-	checkoutForm,
-	setCheckoutForm,
 	setFormFilled,
 }: IShippingSection) => {
-	const [phoneNoError, setPhoneNoError] = useState(false);
-	const [inpostError, setInpostError] = useState(false);
-
-	const validation = (phone: string, inpost: string) => {
-		if (phone.length === 12 && inpost.length >= 5 && inpost.length <= 10) {
-			return true;
-		} else {
-			return false;
-		}
-	};
-
-	const handleContinue = (e: React.MouseEvent) => {
-		let isPhoneValid = false;
-		let isInpostValid = false;
-		const { phoneNumber, inpost } = checkoutForm.ship;
-		if (phoneNumber.length !== 12) {
-			setPhoneNoError(true);
-		} else {
-			setPhoneNoError(false);
-			isPhoneValid = true;
-		}
-
-		if (inpostValidation(inpost)) {
-			setInpostError(false);
-			isInpostValid = true;
-		} else {
-			setInpostError(true);
-		}
-
-		if (isPhoneValid && isInpostValid) {
+	const formData = useContext(CheckoutCtx);
+	const formik = useFormik({
+		initialValues: {
+			inpost: formData.ship.inpost,
+			phoneNumber: formData.ship.phoneNumber,
+		},
+		validationSchema: shippingValidation,
+		onSubmit: (val) => {
+			formData.setShipSection(val.inpost, val.phoneNumber);
 			setFormFilled(true);
-		}
-	};
+		},
+	});
 
 	return (
 		<div className='bg-white px-4 py-5 border-[#C7C7C7] border-[1px] flex flex-col gap-y-5'>
 			<div className='flex justify-between'>
 				<h2 className='text-xl font-[400] font-lato'>3. Dostawa</h2>
-				{isShippingOpen ? (
+				{!isShippingOpen ? (
 					<button
 						onClick={() => setShippingOpen(false)}
 						className='hover:underline text-pencil'>
@@ -78,54 +52,34 @@ const ShippingSection = ({
 							</li>
 						</ul>
 					</div>
-					<div className='flex flex-col gap-y-3'>
+					<form
+						className='flex flex-col gap-y-3'
+						onSubmit={formik.handleSubmit}>
 						<div>
-							<div className='border-[1px] p-2 font-[300] border-[#C7C7C7] bg-white outline-black text-m w-full'>
-								<PhoneInput
-									name='phoneNumber'
-									countries={['PL']}
-									style={{ outline: 'black' }}
-									addInternationalOption={false}
-									placeholder='Numer telefonu'
-									limitMaxLength={true}
-									onChange={(value: string) =>
-										setCheckoutForm((prev) => ({
-											...prev,
-											ship: {
-												...prev.ship,
-												phoneNumber: value,
-											},
-										}))
-									}
-								/>
-							</div>
-
-							<p className='text-s font-lato mt-1 text-brownSugar'>
-								{phoneNoError ? 'Wprowadź poprawny numer telefonu' : null}
-							</p>
+							<WhiteInput
+								value={formik.values.phoneNumber}
+								onChange={formik.handleChange}
+								error={
+									formik.touched.phoneNumber
+										? formik.errors.phoneNumber
+										: undefined
+								}
+								type='number'
+								name='phoneNumber'
+								maxLength={9}
+								placeholder='Numer telefonu (bez numeru kierunkowego)'
+							/>
 						</div>
 						<div>
 							<WhiteInput
 								type='text'
-								value={checkoutForm.ship.inpost}
+								value={formik.values.inpost}
 								placeholder='Numer paczkomatu (np. GDA147M)'
-								onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-									const value = e.target.value;
-									setCheckoutForm((prev) => ({
-										...prev,
-										ship: {
-											...prev.ship,
-											inpost: value.toUpperCase(),
-										},
-									}));
-								}}
+								onChange={formik.handleChange}
 								name='inpost'
-								maxLength={9}
-								minLength={5}
+								error={formik.touched.inpost ? formik.errors.inpost : undefined}
 							/>
-							<p className='text-s font-lato mt-1 mb-2 text-brownSugar'>
-								{inpostError ? 'Kod paczkomatu jest nieprawidłowy' : null}
-							</p>
+
 							<div className='flex justify-between items-start'>
 								<a
 									href='https://inpost.pl/znajdz-paczkomat'
@@ -136,16 +90,8 @@ const ShippingSection = ({
 								</a>
 							</div>
 						</div>
-					</div>
-					<div>
-						{isShippingOpen ? (
-							<CTA
-								body='podsumowanie'
-								id='shipButton'
-								onClick={handleContinue}
-							/>
-						) : null}
-					</div>
+						<CTA body='podsumowanie' id='shipButton' type='submit' />
+					</form>
 				</>
 			) : null}
 		</div>

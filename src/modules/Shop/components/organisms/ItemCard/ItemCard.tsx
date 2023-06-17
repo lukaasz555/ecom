@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ProductModel } from '../../../../../models/Product';
 import Price from '../../molecules/Price/Price';
 import AddToCartBtn from '../../atoms/AddToCartBtn/AddToCartBtn';
@@ -10,6 +10,7 @@ type ItemCardProps = {
 };
 
 const ItemCard = ({ data }: ItemCardProps) => {
+	const navigate = useNavigate();
 	const { img, title, type, id, authors, discount, price } = data;
 	return (
 		<div className='flex flex-col mb-20 w-[260px] px-10'>
@@ -43,7 +44,11 @@ const ItemCard = ({ data }: ItemCardProps) => {
 							{title.length < 36 ? title : title.substring(0, 36).concat('...')}
 						</Link>
 					</h3>
-					<h4 className='text-center md:text-left text-pencil text-m font-lato'>
+					<h4
+						className='text-center md:text-left text-pencil text-m font-lato hover:text-sapphire cursor-pointer'
+						onClick={() =>
+							navigate(`/search-result?authors=${data.authors.join('')}`)
+						}>
 						{authors.join(', ')}
 					</h4>
 					<div className='flex justify-center  md:justify-between items-center mt-1'>

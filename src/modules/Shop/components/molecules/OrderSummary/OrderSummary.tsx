@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ICheckoutForm } from '../../../../../models/CheckoutData';
+import { CheckoutForm } from '../../../../../models/CheckoutData';
 import OrderComplete from '../OrderComplete/OrderComplete';
 import { clearCart } from '../../../../../features/cart/cartSlice';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
@@ -15,7 +15,7 @@ import { NewOrderModel } from '../../../../../models/Order';
 import { ProductModel } from '../../../../../models/Product';
 
 interface OrderSummaryProps {
-	checkoutForm: ICheckoutForm;
+	checkoutForm: CheckoutForm;
 	setFormFilled: React.Dispatch<React.SetStateAction<boolean>>;
 	isOrderDone: boolean;
 	setOrderDone: React.Dispatch<React.SetStateAction<boolean>>;
@@ -27,6 +27,7 @@ const OrderSummary = ({
 	isOrderDone,
 	setOrderDone,
 }: OrderSummaryProps) => {
+	const user = useAppSelector((state) => state.userReducer.user);
 	const { emailAddress } = checkoutForm.email;
 	const { phoneNumber, inpost } = checkoutForm.ship;
 	const items: ProductModel[] = useAppSelector(
@@ -40,6 +41,7 @@ const OrderSummary = ({
 
 	const newOrder: NewOrderModel = {
 		customer: {
+			customerId: user?.id || 'guest',
 			customerData: {
 				name: checkoutForm.invoice.name,
 				lastname: checkoutForm.invoice.lastname,

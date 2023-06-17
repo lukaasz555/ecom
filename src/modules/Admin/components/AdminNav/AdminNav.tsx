@@ -1,7 +1,14 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { ThunkDispatch } from '@reduxjs/toolkit';
+import { userLogout } from '../../../../features/auth/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 const AdminNav = () => {
+	const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
+	const navigate = useNavigate();
+
 	return (
 		<nav className='text-m'>
 			<ul className='flex lg:flex-col gap-y-2 gap-x-5'>
@@ -40,6 +47,21 @@ const AdminNav = () => {
 							isActive ? 'font-semibold' : 'hover:underline'
 						}>
 						Sprzedaż
+					</NavLink>
+				</li>
+				<li>
+					<button
+						className='hover:underline'
+						onClick={() => {
+							dispatch(userLogout());
+							navigate('/');
+						}}>
+						Wyloguj
+					</button>
+				</li>
+				<li>
+					<NavLink to={`/`} className='hover:underline text-xs'>
+						powrót do sklepu
 					</NavLink>
 				</li>
 			</ul>

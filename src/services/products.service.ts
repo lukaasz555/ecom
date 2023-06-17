@@ -22,19 +22,6 @@ interface SearchProductParams {
 
 const URL = process.env.REACT_APP_SERVER_URL;
 
-export const fetchProducts = async (
-	query: PaginationFilter
-): Promise<ApiPaginationResponse<ProductModel>> => {
-	return await axios
-		.get(`${URL}/products`, {
-			params: {
-				query: query,
-			},
-		})
-		.then((res) => res.data)
-		.catch((e) => console.error(e));
-};
-
 export const fetchExactProduct = async (
 	productId: string
 ): Promise<ApiResponse<ProductModel>> => {
@@ -60,6 +47,20 @@ export const fetchFilteredProducts = async (
 		})
 		.then((res) => res.data)
 		.catch((e) => console.error(e));
+};
+
+export const fetchCategories = async (
+	category: string
+): Promise<ApiResponse<Array<number>>> => {
+	return await axios
+		.get(`${URL}/products/categories`, {
+			params: { category },
+		})
+		.then((res) => ({
+			status: res.status,
+			data: res.data,
+		}))
+		.catch((e) => ({ status: e.response.status }));
 };
 
 export const addProduct = async (
@@ -108,13 +109,27 @@ export const updateProduct = async (
 		.catch((e) => ({ status: e.response.status }));
 };
 
+export const fetchProducts = async (
+	query: PaginationFilter
+): Promise<ApiPaginationResponse<ProductModel>> => {
+	return await axios
+		.get(`${URL}/products`, {
+			params: query,
+		})
+		.then((res) => res.data)
+		.catch((e) => console.error(e));
+};
+
 export const searchProduct = async (
-	params: SearchProductParams
+	query: SearchProductParams
 ): Promise<ApiResponse<ProductModel[]>> => {
 	return await axios
 		.get(`${URL}/products/search`, {
 			params: {
-				params,
+				key: query.key,
+				value: query.value,
+				type: query.type,
+				searchPhrase: query.searchPhrase,
 			},
 		})
 		.then((res) => ({

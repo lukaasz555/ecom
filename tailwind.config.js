@@ -19,6 +19,7 @@ module.exports = {
 			sapphire: '#0C6291',
 			transparent: 'transparent',
 			error: '#F52500',
+			altBorder: '#C7C7C7',
 		},
 
 		fontSize: {

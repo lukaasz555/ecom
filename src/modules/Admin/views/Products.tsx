@@ -45,13 +45,15 @@ const AdminProducts = () => {
 			productsPerPage: String(productsPerPage),
 			currentPage: String(currentPage),
 		});
-		const { items: products, totalPages } = await fetchProducts({
-			limit: productsPerPage,
-			page: currentPage,
-		});
-		dispatch(loadData(products));
-		setPageCount(totalPages);
-		setFilteredProducts(products);
+		if (productsPerPage > 0 || currentPage > 0) {
+			const { items: products, totalPages } = await fetchProducts({
+				limit: productsPerPage,
+				page: currentPage,
+			});
+			dispatch(loadData(products));
+			setFilteredProducts(products);
+			setPageCount(totalPages);
+		}
 	};
 
 	const handleLoading = () => {
