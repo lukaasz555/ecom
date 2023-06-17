@@ -58,15 +58,15 @@ const Settings = () => {
 
 	return (
 		<>
-			<div className='flex flex-col items-start mx-8'>
-				<header className='flex justify-between items-center w-[100%]'>
+			<div className='flex flex-col items-center md:items-start mx-8'>
+				<header className='flex flex-col md:flex-row md:justify-between items-center w-[100%]'>
 					<h2 className='uppercase text-xl font-lato'>moje dane</h2>
 					<button onClick={() => setEditMode(!isEditMode)}>zmień dane</button>
 				</header>
 				{user ? (
 					<div>
 						<div className='flex gap-x-4 mt-6 flex-wrap'>
-							<div className='flex flex-col w-[300px]'>
+							<div className='flex flex-col w-[100%] md:w-[300px]'>
 								<GrayInput
 									name='name'
 									type='text'
@@ -88,7 +88,7 @@ const Settings = () => {
 									disabled={!isEditMode}
 								/>
 							</div>
-							<div className='flex flex-col w-[300px]'>
+							<div className='flex flex-col w-[100%] md:w-[300px]'>
 								<GrayInput
 									name='email'
 									type='email'
@@ -102,7 +102,7 @@ const Settings = () => {
 							</div>
 						</div>
 						{isEditMode ? (
-							<div className='flex flex-col w-[300px]'>
+							<div className='flex flex-col w-[100%] md:w-[300px]'>
 								<GrayInput
 									name='password'
 									type='password'
