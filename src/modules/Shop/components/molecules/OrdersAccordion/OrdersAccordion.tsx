@@ -35,9 +35,9 @@ const OrdersAccordion = ({ items }: OrdersAccordionProps) => {
 	}
 
 	return (
-		<div className='w-[500px]'>
+		<div className='w-[400px] min-w-[260px] lg:w-[500px]'>
 			{items.map((x) => (
-				<div className='mb-6 text-s min-w-[260px] w-[100%]'>
+				<div className='mb-6 text-s w-[100%]'>
 					<header
 						key={x._id}
 						className='flex justify-between items-center border-b-[1px] border-lightGray hover:cursor-pointer text-m'
