@@ -8,6 +8,7 @@ import { getDataFromJWT } from '../../helpers/getDataFromJWT';
 interface UserState {
 	isUserLoggedIn: boolean;
 	user?: User;
+	token?: string;
 }
 
 const initialState: UserState = {
@@ -31,6 +32,7 @@ export const userSlice = createSlice({
 		builder.addCase(userLogin.fulfilled, (state, action) => {
 			if (action.payload.token) {
 				state.isUserLoggedIn = true;
+				state.token = action.payload.token;
 				state.user = getDataFromJWT<User>(action.payload.token);
 			}
 		});
@@ -47,4 +49,5 @@ export const userSlice = createSlice({
 });
 
 export const selectUser = (state: RootState) => state.userReducer.user;
+export const selectToken = (state: RootState) => state.userReducer.token;
 export default userSlice.reducer;
