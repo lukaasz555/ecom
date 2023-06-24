@@ -39,10 +39,12 @@ export const userSlice = createSlice({
 		builder.addCase(userLogout.fulfilled, (state, action) => {
 			state.isUserLoggedIn = false;
 			state.user = undefined;
+			state.token = undefined;
 		});
 		builder.addCase(userEdit.fulfilled, (state, action) => {
-			if (action.payload.data) {
-				state.user = action.payload.data;
+			if (action.payload.token) {
+				state.token = action.payload.token;
+				state.user = getDataFromJWT<User>(action.payload.token);
 			}
 		});
 	},

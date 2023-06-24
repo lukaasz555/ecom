@@ -63,7 +63,6 @@ export const authSlice = createSlice({
 		});
 		builder.addCase(userLogin.fulfilled, (state, action) => {
 			if (action.payload.token) {
-				getDataFromJWT(action.payload.token);
 				state.message = undefined;
 			}
 			if (action.payload.status === 401) {
@@ -71,6 +70,9 @@ export const authSlice = createSlice({
 			}
 			if (action.payload.status === 404) {
 				state.message = 'Brak uzytkownika w systemie';
+			}
+			if (action.payload.status === 500) {
+				state.message = 'Spróbuj ponownie';
 			}
 			state.loading = false;
 		});

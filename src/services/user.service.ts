@@ -1,18 +1,18 @@
 import { User } from '../models/User';
-import { ApiResponse } from '../models/api';
-import axios from 'axios';
+import { ApiUserResponse } from '../models/api';
+import api from '../utils/api';
 
-const URL = process.env.REACT_APP_SERVER_URL;
-
-export async function edit(user: User): Promise<ApiResponse<User>> {
-	return await axios
-		.put(`${URL}/user`, {
+export async function edit(user: User): Promise<ApiUserResponse> {
+	return await api
+		.put('user', {
 			user,
 		})
-		.then((res) => ({
-			status: res.status,
-			data: res.data,
-		}))
+		.then((res) => {
+			return {
+				status: res.status,
+				token: res.data,
+			};
+		})
 		.catch((e) => ({ status: e.response.status }));
 }
 
