@@ -2,6 +2,7 @@ import { RootState } from '../../store/store';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import authService, { UserLogin } from '../../services/auth.service';
 import { User } from '../../models/User';
+import { getDataFromJWT } from '../../helpers/getDataFromJWT';
 
 interface AuthState {
 	loading: boolean;
@@ -61,7 +62,8 @@ export const authSlice = createSlice({
 			state.loading = true;
 		});
 		builder.addCase(userLogin.fulfilled, (state, action) => {
-			if (action.payload.data) {
+			if (action.payload.token) {
+				getDataFromJWT(action.payload.token);
 				state.message = undefined;
 			}
 			if (action.payload.status === 401) {

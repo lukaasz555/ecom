@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { User } from '../../models/User';
 import { userLogin, userLogout } from '../auth/authSlice';
 import userService from '../../services/user.service';
+import { getDataFromJWT } from '../../helpers/getDataFromJWT';
 
 interface UserState {
 	isUserLoggedIn: boolean;
@@ -28,9 +29,9 @@ export const userSlice = createSlice({
 	reducers: {},
 	extraReducers(builder) {
 		builder.addCase(userLogin.fulfilled, (state, action) => {
-			if (action.payload.data) {
+			if (action.payload.token) {
 				state.isUserLoggedIn = true;
-				state.user = action.payload.data;
+				state.user = getDataFromJWT<User>(action.payload.token);
 			}
 		});
 		builder.addCase(userLogout.fulfilled, (state, action) => {
