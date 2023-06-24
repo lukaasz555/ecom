@@ -1,6 +1,7 @@
 import { User } from '../models/User';
 import { ApiResponse } from '../models/api';
 import axios from 'axios';
+import { ApiUserResponse } from '../models/api';
 
 const URL = process.env.REACT_APP_SERVER_URL;
 
@@ -9,12 +10,12 @@ export interface UserLogin {
 	password: string;
 }
 
-async function login(user: UserLogin): Promise<ApiResponse<User>> {
+async function login(user: UserLogin): Promise<ApiUserResponse> {
 	return await axios
 		.post(`${URL}/auth/login`, user)
 		.then((res) => ({
 			status: res.status,
-			data: res.data,
+			token: res.data,
 		}))
 		.catch((e) => ({ status: e.response.status }));
 }
