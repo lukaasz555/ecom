@@ -2,32 +2,28 @@ import { OrderModel } from '../models/Order';
 import { ApiPaginationResponse, ApiResponse } from '../models/api';
 import { PaginationFilter } from '../models/PaginationFilter';
 import { NewOrderModel } from '../models/Order';
-import axios from 'axios';
 import { ChartData } from '../modules/Admin/components/CurrentSales/CurrentSales';
-
-const URL = process.env.REACT_APP_SERVER_URL;
+import api from '../utils/api';
 
 interface UpdateStatus {
 	id: string;
 	status?: string;
 }
 
-export const fetchUserOrders = async (customerId: string) => {
-	return await axios
-		.get(`${URL}/orders/${customerId}`)
-		.then((res) => {
-			return res.data;
-		})
-		.catch((e) => console.log(e));
-};
-
 export const fetchOrders = async (
 	query: PaginationFilter
 ): Promise<ApiPaginationResponse<OrderModel>> => {
-	return await axios
-		.get(`${URL}/orders`, {
+	return await api
+		.get('/orders', {
 			params: query,
 		})
+		.then((res) => res.data)
+		.catch((e) => console.error(e));
+};
+
+export const fetchUserOrders = async (customerId: string) => {
+	return api
+		.get(`orders/${customerId}`)
 		.then((res) => res.data)
 		.catch((e) => console.error(e));
 };
@@ -35,8 +31,8 @@ export const fetchOrders = async (
 export const fetchOrdersForChart = async (): Promise<
 	ApiResponse<ChartData[]>
 > => {
-	return await axios
-		.get(`${URL}/orders/sales`)
+	return await api
+		.get('orders/sales')
 		.then((res) => {
 			return {
 				status: res.status,
@@ -49,8 +45,8 @@ export const fetchOrdersForChart = async (): Promise<
 export const updateOrderStatus = async (
 	obj: UpdateStatus
 ): Promise<ApiResponse<OrderModel>> => {
-	return await axios
-		.put(`${URL}/orders`, {
+	return await api
+		.put('orders', {
 			id: obj.id,
 			status: obj.status,
 		})
@@ -66,8 +62,8 @@ export const updateOrderStatus = async (
 export const addOrder = async (
 	newOrder: NewOrderModel
 ): Promise<ApiResponse<OrderModel>> => {
-	return await axios
-		.post(`${URL}/orders`, newOrder)
+	return await api
+		.post('orders', newOrder)
 		.then((res) => ({
 			data: res.data,
 			status: res.status,
