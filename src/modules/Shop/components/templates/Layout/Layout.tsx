@@ -23,7 +23,7 @@ const Layout: FC<ILayout> = ({ children }) => {
 	}, []);
 
 	return (
-		<div className='min-h-screen max-w-screen bg-white mx-auto xl:px-20 py-5'>
+		<div className='min-h-screen max-w-screen bg-white mx-auto xl:px-20 py-5 flex flex-col justify-between'>
 			<Top />
 			<main className='px-5'>{children}</main>
 			{showArrow ? <ArrowToTop /> : null}

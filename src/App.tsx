@@ -26,7 +26,7 @@ function App() {
 	const user = useAppSelector((state) => state.userReducer.user);
 
 	return (
-		<div className='min-h-screen w-full'>
+		<div className='min-h-[101vh] w-full'>
 			<Routes>
 				<Route path='/' element={<Shop />} />
 				{user ? (
