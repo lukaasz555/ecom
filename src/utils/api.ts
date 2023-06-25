@@ -1,5 +1,4 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
-import { store } from '../store/store';
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL as string;
 
@@ -11,9 +10,7 @@ const api: AxiosInstance = axios.create({
 });
 
 api.interceptors.request.use((config: AxiosRequestConfig) => {
-	const state = store.getState();
-	const token = state.userReducer.token;
-
+	const token = localStorage.getItem('token');
 	if (token) {
 		config.headers = {
 			...config.headers,

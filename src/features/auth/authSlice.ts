@@ -1,8 +1,12 @@
 import { RootState } from '../../store/store';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import authService, { UserLogin } from '../../services/auth.service';
+import {
+	UserLogin,
+	login,
+	register,
+	logout,
+} from '../../services/auth.service';
 import { User } from '../../models/User';
-import { getDataFromJWT } from '../../helpers/getDataFromJWT';
 
 interface AuthState {
 	loading: boolean;
@@ -19,7 +23,7 @@ const initialState: AuthState = {
 export const userLogin = createAsyncThunk(
 	'auth/login',
 	async (user: UserLogin, thunkAPI) => {
-		const res = await authService.login(user);
+		const res = await login(user);
 		return res;
 	}
 );
@@ -27,13 +31,13 @@ export const userLogin = createAsyncThunk(
 export const userRegister = createAsyncThunk(
 	'auth/register',
 	async (user: User) => {
-		const res = await authService.register(user);
+		const res = await register(user);
 		return res;
 	}
 );
 
 export const userLogout = createAsyncThunk('auth/logout', async () => {
-	await authService.logout();
+	await logout();
 });
 
 export const authSlice = createSlice({
