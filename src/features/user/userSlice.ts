@@ -2,7 +2,7 @@ import type { RootState } from '../../store/store';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { User } from '../../models/User';
 import { userLogin, userLogout } from '../auth/authSlice';
-import userService from '../../services/user.service';
+import { edit } from '../../services/user.service';
 import { getDataFromJWT } from '../../helpers/getDataFromJWT';
 
 interface UserState {
@@ -19,7 +19,7 @@ const initialState: UserState = {
 export const userEdit = createAsyncThunk(
 	'user/edit',
 	async (user: User, thunkAPI) => {
-		const res = await userService.edit(user);
+		const res = await edit(user);
 		return res;
 	}
 );

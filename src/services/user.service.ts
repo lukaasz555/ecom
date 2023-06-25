@@ -15,6 +15,3 @@ export async function edit(user: User): Promise<ApiUserResponse> {
 		})
 		.catch((e) => ({ status: e.response.status }));
 }
-
-const userService = { edit };
-export default userService;
