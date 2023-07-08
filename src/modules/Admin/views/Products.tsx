@@ -103,7 +103,7 @@ const AdminProducts = () => {
 
 	return (
 		<AdminLayout>
-			<div className='min-w-[550px]'>
+			<div className='min-w-[320px]'>
 				<h2 className='text-2xl'>Produkty</h2>
 				<div className={clsx(isError ? 'hidden' : '')}>
 					<div className='flex justify-end my-3'>

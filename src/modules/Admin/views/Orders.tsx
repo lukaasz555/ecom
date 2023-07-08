@@ -83,7 +83,7 @@ const AdminOrders = () => {
 
 	return (
 		<AdminLayout>
-			<div className='min-w-[550px]'>
+			<div className='min-w-[320px]'>
 				<h2 className='text-2xl'>Zamówienia</h2>
 			</div>
 			{isLoading ? (

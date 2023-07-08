@@ -5,7 +5,7 @@ import AdminLayout from '../components/AdminLayout/AdminLayout';
 const Admin = () => {
 	return (
 		<AdminLayout>
-			<div className='min-w-[550px]'>
+			<div className='min-w-[320px]'>
 				<h2 className='text-2xl'>Admin panel - start</h2>
 			</div>
 			<div className='flex items-center'>
