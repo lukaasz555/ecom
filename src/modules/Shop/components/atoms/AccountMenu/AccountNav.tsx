@@ -30,6 +30,11 @@ const AccountNav = () => {
 					Panel administratora
 				</button>
 			) : null}
+			<button
+				className='lg:w-[180px] flex justify-center lg:justify-start hover:underline'
+				onClick={() => navigate('password')}>
+				Zmiana hasła
+			</button>
 
 			<button
 				className='lg:w-[180px] flex justify-center lg:justify-start hover:underline'

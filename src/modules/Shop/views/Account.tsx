@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import Settings from '../components/organisms/Settings/Settings';
 import OrdersHistory from '../components/organisms/OrdersHistory/OrdersHistory';
 import AccountNav from '../components/atoms/AccountMenu/AccountNav';
+import Password from '../components/organisms/Password/Password';
 
 interface AccountProps {
 	children?: React.ReactNode;
@@ -18,6 +19,7 @@ const Account = ({ children }: AccountProps) => {
 					<Routes>
 						<Route path='my-orders' element={<OrdersHistory />} />
 						<Route path='settings' element={<Settings />} />
+						<Route path='password' element={<Password />} />
 					</Routes>
 				</section>
 			</div>
