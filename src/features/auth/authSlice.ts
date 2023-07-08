@@ -1,8 +1,12 @@
 import { RootState } from '../../store/store';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import authService, { UserLogin } from '../../services/auth.service';
+import {
+	UserLogin,
+	login,
+	register,
+	logout,
+} from '../../services/auth.service';
 import { User } from '../../models/User';
-import { getDataFromJWT } from '../../helpers/getDataFromJWT';
 
 interface AuthState {
 	loading: boolean;
@@ -19,7 +23,7 @@ const initialState: AuthState = {
 export const userLogin = createAsyncThunk(
 	'auth/login',
 	async (user: UserLogin, thunkAPI) => {
-		const res = await authService.login(user);
+		const res = await login(user);
 		return res;
 	}
 );
@@ -27,13 +31,13 @@ export const userLogin = createAsyncThunk(
 export const userRegister = createAsyncThunk(
 	'auth/register',
 	async (user: User) => {
-		const res = await authService.register(user);
+		const res = await register(user);
 		return res;
 	}
 );
 
 export const userLogout = createAsyncThunk('auth/logout', async () => {
-	await authService.logout();
+	await logout();
 });
 
 export const authSlice = createSlice({
@@ -63,14 +67,17 @@ export const authSlice = createSlice({
 		});
 		builder.addCase(userLogin.fulfilled, (state, action) => {
 			if (action.payload.token) {
-				getDataFromJWT(action.payload.token);
 				state.message = undefined;
+				localStorage.setItem('token', action.payload.token);
 			}
 			if (action.payload.status === 401) {
 				state.message = 'Błędne dane logowania';
 			}
 			if (action.payload.status === 404) {
 				state.message = 'Brak uzytkownika w systemie';
+			}
+			if (action.payload.status === 500) {
+				state.message = 'Spróbuj ponownie';
 			}
 			state.loading = false;
 		});

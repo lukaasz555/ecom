@@ -1,7 +1,7 @@
 import { ProductModel } from '../models/Product';
 import { ApiResponse, ApiPaginationResponse } from '../models/api';
 import { PaginationFilter } from '../models/PaginationFilter';
-import axios from 'axios';
+import api from '../utils/api';
 
 interface ProductParams {
 	id: string;
@@ -20,13 +20,11 @@ interface SearchProductParams {
 	searchPhrase?: string;
 }
 
-const URL = process.env.REACT_APP_SERVER_URL;
-
 export const fetchExactProduct = async (
 	productId: string
 ): Promise<ApiResponse<ProductModel>> => {
-	return await axios
-		.get(`${URL}/products/${productId}`)
+	return await api
+		.get(`products/${productId}`)
 		.then((res) => ({
 			data: res.data,
 			status: res.status,
@@ -37,8 +35,8 @@ export const fetchExactProduct = async (
 export const fetchFilteredProducts = async (
 	filter: PaginationFilter
 ): Promise<ApiPaginationResponse<ProductModel>> => {
-	return await axios
-		.get(`${URL}/products/${filter.category}/${filter.catID}`, {
+	return await api
+		.get(`products/${filter.category}/${filter.catID}`, {
 			params: {
 				page: filter.page,
 				limit: filter.limit,
@@ -52,8 +50,8 @@ export const fetchFilteredProducts = async (
 export const fetchCategories = async (
 	category: string
 ): Promise<ApiResponse<Array<number>>> => {
-	return await axios
-		.get(`${URL}/products/categories`, {
+	return await api
+		.get(`products/categories`, {
 			params: { category },
 		})
 		.then((res) => ({
@@ -66,8 +64,8 @@ export const fetchCategories = async (
 export const addProduct = async (
 	newProduct: ProductModel
 ): Promise<ApiResponse<ProductModel>> => {
-	return await axios
-		.post(`${URL}/products`, newProduct)
+	return await api
+		.post(`products`, newProduct)
 		.then((res) => ({
 			status: res.status,
 			data: res.data,
@@ -78,8 +76,8 @@ export const addProduct = async (
 export const deleteProduct = async (
 	params: ProductParams
 ): Promise<ApiResponse<ProductModel>> => {
-	return await axios
-		.delete(`${URL}/products`, {
+	return await api
+		.delete(`products`, {
 			data: {
 				id: params.id,
 				password: params.password,
@@ -92,8 +90,8 @@ export const deleteProduct = async (
 export const updateProduct = async (
 	params: ProductParams
 ): Promise<ApiResponse<ProductModel>> => {
-	return await axios
-		.put(`${URL}/products`, {
+	return await api
+		.put(`products`, {
 			id: params.id,
 			password: params.password,
 			price: params.price,
@@ -112,8 +110,8 @@ export const updateProduct = async (
 export const fetchProducts = async (
 	query: PaginationFilter
 ): Promise<ApiPaginationResponse<ProductModel>> => {
-	return await axios
-		.get(`${URL}/products`, {
+	return await api
+		.get(`products`, {
 			params: query,
 		})
 		.then((res) => res.data)
@@ -123,8 +121,8 @@ export const fetchProducts = async (
 export const searchProduct = async (
 	query: SearchProductParams
 ): Promise<ApiResponse<ProductModel[]>> => {
-	return await axios
-		.get(`${URL}/products/search`, {
+	return await api
+		.get(`products/search`, {
 			params: {
 				key: query.key,
 				value: query.value,

@@ -42,7 +42,7 @@ const CurrentSales = () => {
 	}, []);
 
 	return (
-		<div className='w-full flex flex-col items-center mt-10 pb-10'>
+		<div className='w-full flex flex-col items-center mt-10 pb-10 min-w-[320px]'>
 			{isLoading ? (
 				<Loader />
 			) : !isError ? (

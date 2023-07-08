@@ -1,28 +1,28 @@
 import { User } from '../models/User';
-import { ApiResponse } from '../models/api';
-import axios from 'axios';
-import { ApiUserResponse } from '../models/api';
-
-const URL = process.env.REACT_APP_SERVER_URL;
+import { ApiResponse, ApiUserResponse } from '../models/api';
+import api from '../utils/api';
 
 export interface UserLogin {
 	email: string;
 	password: string;
 }
 
-async function login(user: UserLogin): Promise<ApiUserResponse> {
-	return await axios
-		.post(`${URL}/auth/login`, user)
-		.then((res) => ({
-			status: res.status,
-			token: res.data,
-		}))
+export async function login(user: UserLogin): Promise<ApiUserResponse> {
+	return await api
+		.post(`auth/login`, user)
+		.then((res) => {
+			localStorage.setItem('token', res.data);
+			return {
+				status: res.status,
+				token: res.data,
+			};
+		})
 		.catch((e) => ({ status: e.response.status }));
 }
 
-async function register(newUser: User): Promise<ApiResponse<User>> {
-	return await axios
-		.post(`${URL}/auth/register`, newUser)
+export async function register(newUser: User): Promise<ApiResponse<User>> {
+	return await api
+		.post(`auth/register`, newUser)
 		.then((res) => ({
 			status: res.status,
 			data: res.data,
@@ -30,9 +30,7 @@ async function register(newUser: User): Promise<ApiResponse<User>> {
 		.catch((e) => ({ status: e.response.status }));
 }
 
-async function logout(): Promise<void> {
+export async function logout(): Promise<void> {
 	localStorage.removeItem('user');
+	localStorage.removeItem('token');
 }
-
-const authService = { register, login, logout };
-export default authService;

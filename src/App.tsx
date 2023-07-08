@@ -19,6 +19,7 @@ import Login from './modules/Shop/views/Login';
 import Account from './modules/Shop/views/Account';
 import Settings from './modules/Shop/components/organisms/Settings/Settings';
 import OrdersHistory from './modules/Shop/components/organisms/OrdersHistory/OrdersHistory';
+import Password from './modules/Shop/components/organisms/Password/Password';
 import { useAppSelector } from './hooks/hooks';
 import { UserRolesEnum } from './enums/UserRolesEnum';
 
@@ -33,6 +34,7 @@ function App() {
 					<Route path='account' element={<Account />}>
 						<Route path='my-orders' element={<OrdersHistory />} />
 						<Route path='settings' element={<Settings />} />
+						<Route path='password' element={<Password />} />
 					</Route>
 				) : (
 					<Route path='/account/*' element={<Navigate to='/login' />} />

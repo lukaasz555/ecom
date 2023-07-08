@@ -11,7 +11,7 @@ const AdminNav = () => {
 
 	return (
 		<nav className='text-m'>
-			<ul className='flex lg:flex-col gap-y-2 gap-x-5'>
+			<ul className='flex flex-wrap lg:flex-nowrap lg:flex-col gap-y-5 lg:gap-y-2 gap-x-5'>
 				<li>
 					<NavLink
 						end
@@ -59,7 +59,7 @@ const AdminNav = () => {
 						Wyloguj
 					</button>
 				</li>
-				<li>
+				<li className='flex items-end'>
 					<NavLink to={`/`} className='hover:underline text-xs'>
 						powrót do sklepu
 					</NavLink>

@@ -17,7 +17,7 @@ const AdminLayout = ({ children }: IAdminLayout) => {
 				</header>
 			</div>
 			<main className='w-full max-w-[900px] my-10 px-2 lg:px-0 lg:grid lg:grid-cols-[200px_1fr] gap-x-5 items-start'>
-				<aside className='bg-white px-4 py-5 border-[#C7C7C7] border-[1px] mb-2'>
+				<aside className='bg-white px-4 py-5 border-[#C7C7C7] border-[1px] mb-2 lg:min-w-[100%]'>
 					<AdminNav />
 				</aside>
 				<section className='flex flex-col gap-y-3 bg-white px-4 py-5 border-altBorder border-[1px]'>
