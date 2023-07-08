@@ -14,6 +14,7 @@ export async function edit(user: User): Promise<ApiUserResponse> {
 			user,
 		})
 		.then((res) => {
+			console.log(res.data);
 			localStorage.setItem('token', res.data);
 			return {
 				status: res.status,

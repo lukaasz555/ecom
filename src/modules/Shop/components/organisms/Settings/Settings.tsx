@@ -1,18 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import GrayInput from '../../../../../components/shared/GrayInput/GrayInput';
 import { useAppSelector } from '../../../../../hooks/hooks';
 import CTA from '../../../../../components/shared/CTA/CTA';
 import { useDispatch } from 'react-redux';
 import { ThunkDispatch } from '@reduxjs/toolkit';
-import InputErrorMessage from '../../../../../components/shared/InputErrorMessage/InputErrorMessage';
 import { userEdit } from '../../../../../features/user/userSlice';
-import { ApiResponse } from '../../../../../models/api';
-import { User } from '../../../../../models/User';
+import { resetMessage } from '../../../../../features/user/userSlice';
 
 const Settings = () => {
-	const [isLoading, setLoading] = useState(false);
-	const [isError, setError] = useState(false);
-	const [isSuccess, setSuccess] = useState(false);
+	const loading = useAppSelector((state) => state.userReducer.isLoading);
+	const stateMessage = useAppSelector((state) => state.userReducer.message);
 	const [isEditMode, setEditMode] = useState(false);
 	const user = useAppSelector((state) => state.userReducer.user);
 	const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
@@ -34,7 +31,6 @@ const Settings = () => {
 
 	async function handleUpdateClick(): Promise<void> {
 		if (user) {
-			setLoading(true);
 			const updatedUser = {
 				...user,
 				email: formValues.email,
@@ -42,19 +38,13 @@ const Settings = () => {
 				lastname: formValues.lastname,
 				password: formValues.password,
 			};
-			await dispatch(userEdit(updatedUser))
-				.then((res) => {
-					const data = res.payload as ApiResponse<User>;
-					setSuccess(false);
-					setError(true);
-					if (data.status === 200) {
-						setError(false);
-						setSuccess(true);
-					}
-				})
-				.finally(() => setLoading(false));
+			await dispatch(userEdit(updatedUser));
 		}
 	}
+
+	useEffect(() => {
+		dispatch(resetMessage());
+	}, [window.location.href]);
 
 	return (
 		<>
@@ -116,18 +106,12 @@ const Settings = () => {
 								<CTA
 									body='zapisz zmiany'
 									onClick={handleUpdateClick}
-									isLoading={isLoading}
+									isLoading={loading}
 									size='small'
 								/>
-								{isError ? (
-									<InputErrorMessage text='Aktualizacja nieudana. Spróbuj ponownie' />
-								) : isSuccess ? (
-									<div className='mt-2'>
-										<p className='text-brownSugar text-[13px]'>
-											Zaktualizowano profil
-										</p>
-									</div>
-								) : null}
+								<div className='mt-2'>
+									<p className='text-brownSugar text-[13px]'>{stateMessage}</p>
+								</div>
 							</div>
 						) : null}
 					</div>

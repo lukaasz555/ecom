@@ -63,12 +63,18 @@ export const userSlice = createSlice({
 			state.user = undefined;
 			state.token = undefined;
 		});
+		builder.addCase(userEdit.pending, (state) => {
+			state.isLoading = true;
+		});
 		builder.addCase(userEdit.fulfilled, (state, action) => {
 			if (action.payload.token) {
 				state.token = action.payload.token;
 				state.user = getDataFromJWT<User>(action.payload.token);
-				localStorage.setItem('token', action.payload.token);
+				state.message = 'Aktualizacja zakończona pomyślnie';
+			} else {
+				state.message = 'Aktualizacja nieudana';
 			}
+			state.isLoading = false;
 		});
 		builder.addCase(userPasswordEdit.pending, (state, action) => {
 			state.isLoading = true;
@@ -78,7 +84,6 @@ export const userSlice = createSlice({
 				state.token = action.payload.token;
 				state.user = getDataFromJWT<User>(action.payload.token);
 				state.message = 'Aktualizacja zakończona pomyślnie';
-				localStorage.setItem('token', action.payload.token);
 			} else {
 				state.message = 'Aktualizacja nieudana';
 			}
