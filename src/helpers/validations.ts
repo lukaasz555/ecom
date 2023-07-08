@@ -17,6 +17,11 @@ export const loginValidation = Yup.object({
 	password: Yup.string().required('To pole jest wymagane'),
 });
 
+export const passwordUpdateValidation = Yup.object({
+	password: Yup.string().required('To pole jest wymagane'),
+	newPassword: Yup.string().required('To pole jest wymagane'),
+});
+
 export const registerValidation = Yup.object({
 	email: Yup.string()
 		.email('Wprowadź poprawny adres e-mail')
