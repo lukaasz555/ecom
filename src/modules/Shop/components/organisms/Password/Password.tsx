@@ -4,13 +4,18 @@ import { passwordUpdateValidation } from '../../../../../helpers/validations';
 import GrayInput from '../../../../../components/shared/GrayInput/GrayInput';
 import CTA from '../../../../../components/shared/CTA/CTA';
 import { useAppSelector } from '../../../../../hooks/hooks';
-import { changePassword } from '../../../../../services/user.service';
+import { userPasswordEdit } from '../../../../../features/user/userSlice';
+import { useDispatch } from 'react-redux';
+import { ThunkDispatch } from '@reduxjs/toolkit';
+import { ApiResponse } from '../../../../../models/api';
+import { User } from '../../../../../models/User';
+import { resetMessage } from '../../../../../features/user/userSlice';
 
 const Password = () => {
 	const user = useAppSelector((state) => state.userReducer.user);
-	const [isLoading, setLoading] = useState(false);
-	const [isError, setError] = useState(false);
-	const [isSuccess, setSuccess] = useState(false);
+	const loading = useAppSelector((state) => state.userReducer.isLoading);
+	const stateMessage = useAppSelector((state) => state.userReducer.message);
+	const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
 	const [newPasswordConfirmation, setNewPasswordConfirmation] = useState('');
 	const [confirmationError, setConfirmationError] = useState('');
 	const [isPasswordConfirmed, setPasswordConfirmed] = useState(false);
@@ -21,10 +26,19 @@ const Password = () => {
 		},
 		validationSchema: passwordUpdateValidation,
 		onSubmit: async (values) => {
-			changePassword({
-				email: user!.email,
-				password: values.password,
-				newPassword: values.newPassword,
+			dispatch(
+				userPasswordEdit({
+					email: user!.email,
+					password: values.password,
+					newPassword: values.newPassword,
+				})
+			).then((res) => {
+				const data = res.payload as ApiResponse<User>;
+				if (data.status === 200) {
+					values.password = '';
+					values.newPassword = '';
+					setNewPasswordConfirmation('');
+				}
 			});
 		},
 	});
@@ -33,6 +47,10 @@ const Password = () => {
 		e.preventDefault();
 		formik.handleSubmit();
 	}
+
+	useEffect(() => {
+		dispatch(resetMessage());
+	}, [window.location.href]);
 
 	useEffect(() => {
 		if (formik.values.newPassword === newPasswordConfirmation) {
@@ -91,7 +109,10 @@ const Password = () => {
 								!isPasswordConfirmed || formik.values.password.trim() === ''
 							}
 							onClick={handleClick}
+							isLoading={loading}
+							size='small'
 						/>
+						<p className='text-brownSugar text-[13px] mt-2'>{stateMessage}</p>
 					</div>
 				</div>
 			</div>

@@ -14,6 +14,7 @@ export async function edit(user: User): Promise<ApiUserResponse> {
 			user,
 		})
 		.then((res) => {
+			localStorage.setItem('token', res.data);
 			return {
 				status: res.status,
 				token: res.data,
@@ -30,6 +31,7 @@ export async function changePassword(
 			...data,
 		})
 		.then((res) => {
+			localStorage.setItem('token', res.data);
 			return {
 				status: res.status,
 				token: res.data,

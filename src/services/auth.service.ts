@@ -10,10 +10,13 @@ export interface UserLogin {
 export async function login(user: UserLogin): Promise<ApiUserResponse> {
 	return await api
 		.post(`auth/login`, user)
-		.then((res) => ({
-			status: res.status,
-			token: res.data,
-		}))
+		.then((res) => {
+			localStorage.setItem('token', res.data);
+			return {
+				status: res.status,
+				token: res.data,
+			};
+		})
 		.catch((e) => ({ status: e.response.status }));
 }
 
@@ -29,4 +32,5 @@ export async function register(newUser: User): Promise<ApiResponse<User>> {
 
 export async function logout(): Promise<void> {
 	localStorage.removeItem('user');
+	localStorage.removeItem('token');
 }
