@@ -68,6 +68,7 @@ export const authSlice = createSlice({
 		builder.addCase(userLogin.fulfilled, (state, action) => {
 			if (action.payload.token) {
 				state.message = undefined;
+				localStorage.setItem('token', action.payload.token);
 			}
 			if (action.payload.status === 401) {
 				state.message = 'Błędne dane logowania';
