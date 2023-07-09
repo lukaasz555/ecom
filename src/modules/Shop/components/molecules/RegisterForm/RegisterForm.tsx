@@ -30,7 +30,7 @@ const RegisterForm = () => {
 		},
 		validationSchema: registerValidation,
 		onSubmit: (val) => {
-			const user = new User(val.name, val.lastname, val.email, val.password);
+			const user = new User(val);
 			dispatch(userRegister(user));
 		},
 	});
