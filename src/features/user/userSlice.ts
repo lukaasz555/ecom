@@ -7,11 +7,10 @@ import { changePassword } from '../../services/user.service';
 import { getDataFromJWT } from '../../helpers/getDataFromJWT';
 
 interface UserState {
-	isUserLoggedIn: boolean;
 	isLoading: boolean;
+	isError: boolean;
 	message?: string;
 	user?: User;
-	token?: string;
 }
 
 interface PasswordChange {
@@ -21,10 +20,10 @@ interface PasswordChange {
 }
 
 const initialState: UserState = {
-	isUserLoggedIn: false,
 	user: undefined,
 	message: undefined,
 	isLoading: false,
+	isError: false,
 };
 
 export const userEdit = createAsyncThunk(
@@ -53,22 +52,17 @@ export const userSlice = createSlice({
 	extraReducers(builder) {
 		builder.addCase(userLogin.fulfilled, (state, action) => {
 			if (action.payload.token) {
-				state.isUserLoggedIn = true;
-				state.token = action.payload.token;
 				state.user = getDataFromJWT<User>(action.payload.token);
 			}
 		});
 		builder.addCase(userLogout.fulfilled, (state, action) => {
-			state.isUserLoggedIn = false;
 			state.user = undefined;
-			state.token = undefined;
 		});
 		builder.addCase(userEdit.pending, (state) => {
 			state.isLoading = true;
 		});
 		builder.addCase(userEdit.fulfilled, (state, action) => {
 			if (action.payload.token) {
-				state.token = action.payload.token;
 				state.user = getDataFromJWT<User>(action.payload.token);
 				state.message = 'Aktualizacja zakończona pomyślnie';
 			} else {
@@ -81,7 +75,6 @@ export const userSlice = createSlice({
 		});
 		builder.addCase(userPasswordEdit.fulfilled, (state, action) => {
 			if (action.payload.token) {
-				state.token = action.payload.token;
 				state.user = getDataFromJWT<User>(action.payload.token);
 				state.message = 'Aktualizacja zakończona pomyślnie';
 			} else {
@@ -94,5 +87,4 @@ export const userSlice = createSlice({
 
 export const { resetMessage } = userSlice.actions;
 export const selectUser = (state: RootState) => state.userReducer.user;
-export const selectToken = (state: RootState) => state.userReducer.token;
 export default userSlice.reducer;

@@ -12,9 +12,7 @@ import { productsValue } from '../../../helpers/productsValue';
 const Cart = () => {
 	const cartItems = useAppSelector((state) => state.cartReducer.items);
 	const uniqueItems = useAppSelector((state) => state.cartReducer.uniqueItems);
-	const isUserLoggedIn = useAppSelector(
-		(state) => state.userReducer.isUserLoggedIn
-	);
+	const isUser = useAppSelector((state) => state.userReducer.user);
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 
@@ -23,7 +21,7 @@ const Cart = () => {
 	const total: number = itemsCost + deliveryCost;
 
 	const handleClick = () => {
-		if (isUserLoggedIn) {
+		if (!!isUser) {
 			navigate('/checkout');
 		} else {
 			navigate('/login');
