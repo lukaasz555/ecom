@@ -22,6 +22,7 @@ import OrdersHistory from './modules/Shop/components/organisms/OrdersHistory/Ord
 import Password from './modules/Shop/components/organisms/Password/Password';
 import { useAppSelector } from './hooks/hooks';
 import { UserRolesEnum } from './enums/UserRolesEnum';
+import { AdminRoutesNames } from './modules/Admin/AdminRoutesNames';
 
 function App() {
 	const user = useAppSelector((state) => state.userReducer.user);
@@ -59,15 +60,21 @@ function App() {
 				/>
 				{user && user.role === UserRolesEnum.Admin ? (
 					<>
-						<Route path='/admin' element={<Admin />} />
-						<Route path='/admin/orders' element={<AdminOrders />} />
-						<Route path='/admin/products' element={<AdminProducts />} />
-						<Route path='/admin/products/edit/:id' element={<EditProduct />} />
-						<Route path='/admin/sales' element={<Sales />} />
-						<Route path='/admin/*' element={<Admin />} />
+						<Route path={AdminRoutesNames.Admin} element={<Admin />} />
+						<Route path={AdminRoutesNames.Orders} element={<AdminOrders />} />
+						<Route
+							path={AdminRoutesNames.Products}
+							element={<AdminProducts />}
+						/>
+						<Route
+							path={AdminRoutesNames.ProductEdit}
+							element={<EditProduct />}
+						/>
+						<Route path={AdminRoutesNames.Sales} element={<Sales />} />
+						<Route path={AdminRoutesNames.None} element={<Admin />} />
 					</>
 				) : (
-					<Route path='/admin/*' element={<Navigate to='/' />} />
+					<Route path={AdminRoutesNames.None} element={<Navigate to='/' />} />
 				)}
 
 				<Route path='*' element={<NotFound />} />
