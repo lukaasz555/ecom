@@ -2,21 +2,21 @@ import React, { useEffect, useState, useRef } from 'react';
 import clsx from 'clsx';
 
 type QtyChooserProps = {
-	ordersPerPage: number;
-	handleOrdersPerPageChange: (e: React.MouseEvent) => void;
-	options: number[];
+	limit: number;
+	handleLimitChange: (e: React.MouseEvent) => void;
+	options?: number[];
 };
 
 const RecordsQtyChooser = ({
-	handleOrdersPerPageChange,
-	ordersPerPage,
+	limit,
+	handleLimitChange,
 	options = [10, 15, 25, 40],
 }: QtyChooserProps) => {
 	const [isOpen, setOpen] = useState<boolean>(false);
 	const listRef = useRef<HTMLUListElement>(null);
 
 	const handleChange = (e: React.MouseEvent) => {
-		handleOrdersPerPageChange(e);
+		handleLimitChange(e);
 		setOpen(false);
 	};
 
@@ -40,7 +40,7 @@ const RecordsQtyChooser = ({
 			<button
 				onClick={() => setOpen(!isOpen)}
 				className='text-l border-black mb-1 py-0 border-b-2'>
-				{ordersPerPage}
+				{limit}
 			</button>
 			{isOpen && (
 				<ul
@@ -55,7 +55,7 @@ const RecordsQtyChooser = ({
 							className={clsx(
 								'flex flex-col items-center my-1 first:mt-0 last:mb-0 py-2',
 								'hover:bg-black hover:text-white',
-								item === ordersPerPage ? 'text-brownSugar ' : 'text-black'
+								item === limit ? 'text-brownSugar ' : 'text-black'
 							)}>
 							<button
 								onClick={(e: React.MouseEvent) => handleChange(e)}

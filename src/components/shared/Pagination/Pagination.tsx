@@ -1,33 +1,52 @@
 import React from 'react';
 import RecordsQtyChooser from './RecordsQtyChooser';
 import PaginationButtons from './PaginationButtons';
+import { useSearchParams } from 'react-router-dom';
 
 type PaginationProps = {
-	currentPage: number;
 	pageCount: number;
-	itemsPerPage: number;
-	setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
-	setItemsPerPage: React.Dispatch<React.SetStateAction<number>>;
-	options: number[];
+	options?: number[];
 };
 
 const Pagination = (props: PaginationProps) => {
-	const { currentPage, pageCount, itemsPerPage } = props;
-	const { setCurrentPage, setItemsPerPage } = props;
+	const { pageCount } = props;
+	const [searchParams, setSearchParams] = useSearchParams();
+	const limit = searchParams.get('limit');
+	const page = searchParams.get('page');
+	console.log(limit, page, 'pagination component');
+
+	if (!limit || !page) {
+		setSearchParams((prev) => {
+			prev.set('page', '1');
+			prev.set('limit', '10');
+			return prev;
+		});
+	}
 
 	function handleNextPage(): void {
-		currentPage < pageCount
-			? setCurrentPage(currentPage + 1)
-			: setCurrentPage(1);
+		if (Number(page) < pageCount) {
+			setSearchParams((prev) => {
+				prev.set('page', String(Number(page) + 1));
+				return prev;
+			});
+		}
 	}
 
 	function handlePreviousPage(): void {
-		currentPage > 1 ? setCurrentPage(currentPage - 1) : setCurrentPage(1);
+		if (Number(page) > 1) {
+			setSearchParams((prev) => {
+				prev.set('page', String(Number(page) - 1));
+				return prev;
+			});
+		}
 	}
 
-	function handleOrdersPerPageChange(e: React.MouseEvent): void {
+	function handleLimitChange(e: React.MouseEvent): void {
 		const target = e.target as Element;
-		setItemsPerPage(Number(target.innerHTML));
+		setSearchParams((prev) => {
+			prev.set('limit', target.innerHTML);
+			return prev;
+		});
 	}
 
 	return (
@@ -37,14 +56,14 @@ const Pagination = (props: PaginationProps) => {
 				<PaginationButtons
 					handleNextPage={handleNextPage}
 					handlePrevPage={handlePreviousPage}
-					currentPage={currentPage}
+					currentPage={Number(page)}
 					pageCount={pageCount}
 				/>
 			)}
 
 			<RecordsQtyChooser
-				ordersPerPage={itemsPerPage}
-				handleOrdersPerPageChange={handleOrdersPerPageChange}
+				limit={Number(limit)}
+				handleLimitChange={handleLimitChange}
 				options={props.options}
 			/>
 		</div>

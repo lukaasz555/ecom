@@ -23,6 +23,7 @@ import Password from './modules/Shop/components/organisms/Password/Password';
 import { useAppSelector } from './hooks/hooks';
 import { UserRolesEnum } from './enums/UserRolesEnum';
 import { AdminRoutesNames } from './modules/Admin/AdminRoutesNames';
+import ProductsView from './modules/Admin/views/ProductsView';
 
 function App() {
 	const user = useAppSelector((state) => state.userReducer.user);
@@ -64,7 +65,7 @@ function App() {
 						<Route path={AdminRoutesNames.Orders} element={<AdminOrders />} />
 						<Route
 							path={AdminRoutesNames.Products}
-							element={<AdminProducts />}
+							element={<ProductsView />}
 						/>
 						<Route
 							path={AdminRoutesNames.ProductEdit}
