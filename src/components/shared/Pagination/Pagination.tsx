@@ -13,7 +13,6 @@ const Pagination = (props: PaginationProps) => {
 	const [searchParams, setSearchParams] = useSearchParams();
 	const limit = searchParams.get('limit');
 	const page = searchParams.get('page');
-	console.log(limit, page, 'pagination component');
 
 	if (!limit || !page) {
 		setSearchParams((prev) => {

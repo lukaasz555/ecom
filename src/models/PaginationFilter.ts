@@ -3,6 +3,7 @@ export interface PaginationFilter {
 	limit: number;
 	catID?: number;
 	category?: string;
+	searchPhrase?: string | null;
 }
 
 export class PaginationData {
