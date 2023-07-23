@@ -162,7 +162,7 @@ const AdminProducts = () => {
 								products={filteredProducts}
 								removeProduct={removeProduct}
 							/>
-							<div className='flex justify-center mt-3'>
+							{/* <div className='flex justify-center mt-3'>
 								{isPaginationVisible ? (
 									<Pagination
 										currentPage={currentPage}
@@ -173,7 +173,7 @@ const AdminProducts = () => {
 										options={[10, 20, 30, 50]}
 									/>
 								) : null}
-							</div>
+							</div> */}
 						</>
 					)}
 					<ConfirmPasswordModal
